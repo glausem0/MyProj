@@ -4,12 +4,18 @@ package mytest;
 /** Token Manager. */
 public class MyTestTokenManager implements MyTestConstants
 {
+        //TODO changement dans cette classe = enlève les imports
         public static void CommonTokenAction(Token t) {
-                String m = "mov";
-                String comp = t.toString();
 
-                if( m.equals(comp)) {System.out.println("ok"); }
-        }
+                        switch ( t.toString() ) {
+                          case "mov":
+                                Instruction.movInstr();
+                                break;
+                          case "add":
+                                Instruction.addInstr();
+                                break;
+                        }
+                 }
 
   /** Debug output. */
   public static  java.io.PrintStream debugStream = System.out;

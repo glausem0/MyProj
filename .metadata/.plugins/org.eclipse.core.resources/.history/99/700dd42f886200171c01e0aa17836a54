@@ -1,0 +1,14 @@
+package registers;
+
+public class Register {
+
+	private Hashtable<String, Integer> registers;
+	
+	public Register(){
+		
+		
+		
+	}
+	
+	
+}

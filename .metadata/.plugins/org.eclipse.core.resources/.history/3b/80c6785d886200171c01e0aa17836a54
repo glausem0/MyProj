@@ -1,0 +1,16 @@
+package registers;
+
+import java.util.Hashtable;
+
+public class Register {
+
+	private Maptable<String, Integer> registers;
+	
+	public Register(){
+		
+		
+		
+	}
+	
+	
+}

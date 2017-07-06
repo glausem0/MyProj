@@ -1,0 +1,14 @@
+package instructions;
+
+public class Instruction {
+
+	//test: 
+	public static void movInstr(){
+		System.out.println("ok");
+	}
+	
+	public void addInstr(){
+		System.out.println("okok");
+	}
+	
+}

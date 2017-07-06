@@ -8,12 +8,18 @@ public class MyTest{    public static void main(String args []) throws ParseEx
    }}PARSER_END(MyTest)
 TOKEN_MGR_DECLS :
 {
+	//TODO changement dans cette classe = enlève les imports
 	public static void CommonTokenAction(Token t) {
-		String m = "mov";
-		String comp = t.toString();
 		
-		if( m.equals(comp)) {System.out.println("ok"); }
-	}
+	  		switch ( t.toString() ) {
+			  case "mov":
+		  		Instruction.movInstr();
+		  		break;
+			  case "add":
+		  		Instruction.addInstr();
+		  		break;
+		  	}
+		 }
 }
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* OPERATORS */{  < MOV : "mov" >| < ADD : "add" >
 | < COMA: "," >}TOKEN :{

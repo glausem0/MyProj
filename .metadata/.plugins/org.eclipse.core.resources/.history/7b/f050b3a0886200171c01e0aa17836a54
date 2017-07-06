@@ -1,0 +1,18 @@
+package registers;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Register {
+
+	private Map<String, Integer> registers;
+	
+	public Register(){
+		this.registers = new HashMap();
+		registers.put("r0", 0);
+		
+		
+	}
+	
+	
+}

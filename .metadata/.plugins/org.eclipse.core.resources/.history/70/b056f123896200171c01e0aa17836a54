@@ -1,0 +1,42 @@
+package registers;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Register {
+
+	//TODO change Integer to Double
+	private Map<String, Integer> registers;
+	
+	public Register(){
+		this.registers = new HashMap();
+		registers.put("r0", 0);
+		registers.put("r1", 0);
+		registers.put("r2", 0);
+		registers.put("r3", 0);
+		registers.put("r4", 0);
+		registers.put("r5", 0);
+		registers.put("r6", 0);
+		registers.put("r7", 0);
+		registers.put("r8", 0);
+		registers.put("r9", 0);
+		registers.put("r10", 0);
+		registers.put("r11", 0);
+		registers.put("r12", 0);
+		registers.put("r13", 0);
+		registers.put("r14", 0);
+	}
+	
+	public setRegister(String register, int value)
+
+	public Map<String, Integer> getRegisters() {
+		return registers;
+	}
+
+	public void setRegisters(Map<String, Integer> registers) {
+		this.registers = registers;
+	}
+	
+	
+	
+}

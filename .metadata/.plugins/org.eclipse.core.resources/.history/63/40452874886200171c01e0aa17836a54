@@ -1,0 +1,16 @@
+package registers;
+
+import java.util.Map;
+
+public class Register {
+
+	private Map<String, Integer> registers;
+	
+	public Register(){
+		new HashMap();
+		
+		
+	}
+	
+	
+}
