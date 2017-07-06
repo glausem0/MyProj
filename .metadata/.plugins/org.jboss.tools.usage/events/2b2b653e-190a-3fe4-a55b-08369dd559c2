@@ -1,0 +1,11 @@
+#Thu Jul 06 09:51:31 CEST 2017
+vl=How many times the 'Finish' button pressed during the day
+l=Wizard class name
+ct=jbt
+d=1499327491373
+c=0
+cmp=usage
+a=finishWizard
+cl=sf.eclipse.javacc.wizards.NewGrammarWizard
+v=2.1.1
+s=2

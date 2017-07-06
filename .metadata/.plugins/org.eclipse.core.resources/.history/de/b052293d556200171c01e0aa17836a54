@@ -1,0 +1,17 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */options{  static = true;
+  common_token_action = true; }PARSER_BEGIN(MyTest)package mytest;
+
+public class MyTest{
+	void CommonTokenAction(Token t) {
+		System.out.println("ok");
+	}
+    public static void main(String args []) throws ParseException  {    MyTest parser = new MyTest(System.in);	parser.start();
+   }}PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* OPERATORS */{  < MOV : "mov" >| < ADD : "add" >
+| < COMA: "," >}TOKEN :{
+   < NUMBER : ("#") ([ "0"-"9" ])+ >
+ | < REGISTER  : ("r") ([ "0"-"9"])+ >}void start() :{}{
+  (  < MOV >  < REGISTER >  < COMA > (< NUMBER > | < REGISTER > )
+| 	 < ADD > < REGISTER > < COMA > (< NUMBER > | < REGISTER > ) < COMA > (< NUMBER > | < REGISTER > ))*
+	< EOF >  }
