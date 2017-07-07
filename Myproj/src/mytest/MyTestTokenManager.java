@@ -4,18 +4,6 @@ package mytest;
 /** Token Manager. */
 public class MyTestTokenManager implements MyTestConstants
 {
-        //TODO changement dans cette classe = enlève les imports
-        public static void CommonTokenAction(Token t) {
-
-                        switch ( t.toString() ) {
-                          case "mov":
-                                Instruction.movInstr();
-                                break;
-                          case "add":
-                                Instruction.addInstr();
-                                break;
-                        }
-                 }
 
   /** Debug output. */
   public static  java.io.PrintStream debugStream = System.out;
@@ -289,7 +277,6 @@ public static Token getNextToken()
    {
       jjmatchedKind = 0;
       matchedToken = jjFillToken();
-      CommonTokenAction(matchedToken);
       return matchedToken;
    }
 
@@ -308,7 +295,6 @@ public static Token getNextToken()
       if ((jjtoToken[jjmatchedKind >> 6] & (1L << (jjmatchedKind & 077))) != 0L)
       {
          matchedToken = jjFillToken();
-         CommonTokenAction(matchedToken);
          return matchedToken;
       }
       else
