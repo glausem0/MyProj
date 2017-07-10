@@ -1,0 +1,35 @@
+package mytest;
+
+public class PrintVisitor implements MyTestVisitor{
+
+	@Override
+	public Object visit(SimpleNode node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTprog node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTdecl node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTregister node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTnumber node, Object data) {
+		System.out.println(node.value);
+		return data;
+	}
+
+}

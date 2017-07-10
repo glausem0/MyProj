@@ -1,0 +1,42 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */options{ multi = true;
+ VISITOR = true;
+}
+PARSER_BEGIN(MyTest)package mytest;
+
+import registers.*;
+
+public class MyTest{    public static void main(String args []) throws Exception  {	Register reg = new Register();
+    MyTest parser = new MyTest(System.in);	SimpleNode expr = parser.prog();
+
+	Visitors v=new Visitors();
+	System.out.println(expr.jjtAccept(v,null));
+	
+	
+   }}PARSER_END(MyTest)
+SKIP :{  " "| "\r"| "\t"//| "\n"}TOKEN : {
+  /* OPERATORS */  < MOV : "mov" >
+  /*VAR*/
+| < NUMBER : ("#") ([ "0"-"9" ])+ >
+| < REGISTER  : ("r") ([ "0"-"9"])+ >}SimpleNode prog():
+{}
+{
+  (instr())* < EOF > { return jjtThis;}}
+
+void instr() #void:
+{}{
+  < MOV > register() "," (number() | register() )  #decl(2)
+}
+
+void register() :
+{Token t;}
+{
+  t= < REGISTER > { jjtThis.value = t.image; }
+}
+
+void number():
+{Token t;}
+{
+  t= < NUMBER > { jjtThis.value = t.image; }
+}
