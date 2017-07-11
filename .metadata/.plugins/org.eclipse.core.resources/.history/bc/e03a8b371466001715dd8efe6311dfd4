@@ -13,7 +13,7 @@ public class Visitors implements MyTestVisitor{
 
 	@Override
 	public Object visit(ASTprog node, Object data) {
-		node.childrenAccept(this, data);
+		node.jjtGetChild(0).jjtAccept(this, data);
 		return "Program";
 	}
 

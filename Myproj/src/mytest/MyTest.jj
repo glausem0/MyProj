@@ -3,21 +3,29 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{              
                 
+                         
 }
 PARSER_BEGIN(MyTest)package mytest;
 
 import java.io.*;
+import registers.Register;
 
 public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@bgen(jjtree)*/
   protected static JJTMyTestState jjtree = new JJTMyTestState();
 
-/*@egen*/    public static void main(String args []) throws Exception  {	
+/*@egen*/
+    public static void main(String args []) throws Exception  {	
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/mytest/test.txt"));	SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");
+    root.dump(" ");
 
-    root.dump(" ");	
-	
+    System.out.println("Prog:");
+    Visitors vi = new Visitors();
+    root.jjtAccept(vi,null);
+
+    vi.print();
+
    }}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /* OPERATORS */  < MOV : "mov" >
@@ -105,7 +113,7 @@ void register() :
                     jjtree.closeNodeScope(jjtn000, true);
                     jjtc000 = false;
                   }
-/*@egen*/ { jjtn000.value = t.image; }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.data.put("reg", t.image.toString()); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -128,7 +136,7 @@ void number():
                   jjtree.closeNodeScope(jjtn000, true);
                   jjtc000 = false;
                 }
-/*@egen*/ { jjtn000.value = t.image; }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.data.put("value", t.image.toString()); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);

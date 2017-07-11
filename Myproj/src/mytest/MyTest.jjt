@@ -2,18 +2,26 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{ multi = true;
  VISITOR = true;
+ NODE_EXTENDS="dataNode";
 }
 PARSER_BEGIN(MyTest)package mytest;
 
 import java.io.*;
+import registers.Register;
 
-public class MyTest{    public static void main(String args []) throws Exception  {	
+public class MyTest{
+    public static void main(String args []) throws Exception  {	
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/mytest/test.txt"));	SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");
+    root.dump(" ");
 
-    root.dump(" ");	
-	
+    System.out.println("Prog:");
+    Visitors vi = new Visitors();
+    root.jjtAccept(vi,null);
+
+    vi.print();
+
    }}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /* OPERATORS */  < MOV : "mov" >
@@ -32,11 +40,11 @@ void instr() #void:
 void register() :
 {Token t;}
 {
-  t= < REGISTER > { jjtThis.value = t.image; }
+  t= < REGISTER > { jjtThis.data.put("reg", t.image.toString()); }
 }
 
 void number():
 {Token t;}
 {
-  t= < NUMBER > { jjtThis.value = t.image; }
+  t= < NUMBER > { jjtThis.data.put("value", t.image.toString()); }
 }

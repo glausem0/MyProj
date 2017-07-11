@@ -16,7 +16,7 @@ public class PrintVisitor implements MyTestVisitor{
 
 	@Override
 	public Object visit(ASTdecl node, Object data) {
-		System.out.println(node.value + " ");
+		System.out.println(node.jjtGetValue() + " ");
 		node.jjtGetChild(0).jjtAccept(this, data);
 		node.jjtGetChild(1).jjtAccept(this, data);
 		return data;
@@ -24,13 +24,13 @@ public class PrintVisitor implements MyTestVisitor{
 
 	@Override
 	public Object visit(ASTregister node, Object data) {
-		System.out.println(node.value);
+		System.out.println(node.data.get("reg"));
 		return data;
 	}
 
 	@Override
 	public Object visit(ASTnumber node, Object data) {
-		System.out.println(node.value);
+		System.out.println(node.data.get("value"));
 		return data;
 	}
 

@@ -2,17 +2,24 @@
 package mytest;
 
 import java.io.*;
+import registers.Register;
 
 public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConstants {/*@bgen(jjtree)*/
-  protected static JJTMyTestState jjtree = new JJTMyTestState();public static void main(String args []) throws Exception
+  protected static JJTMyTestState jjtree = new JJTMyTestState();
+  public static void main(String args []) throws Exception
   {
 
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/mytest/test.txt"));
         SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");
-
     root.dump(" ");
+
+    System.out.println("Prog:");
+    Visitors vi = new Visitors();
+    root.jjtAccept(vi,null);
+
+    vi.print();
 
    }
 
@@ -110,7 +117,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       t = jj_consume_token(REGISTER);
                     jjtree.closeNodeScope(jjtn000, true);
                     jjtc000 = false;
-                    jjtn000.value = t.image;
+                    jjtn000.data.put("reg", t.image.toString());
     } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -127,7 +134,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       t = jj_consume_token(NUMBER);
                   jjtree.closeNodeScope(jjtn000, true);
                   jjtc000 = false;
-                  jjtn000.value = t.image;
+                  jjtn000.data.put("value", t.image.toString());
     } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);

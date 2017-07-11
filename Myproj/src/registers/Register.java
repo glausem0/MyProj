@@ -6,7 +6,7 @@ import java.util.Map;
 public class Register {
 
 	//TODO change Integer to Double
-	private static Map<Object, Object> registers;
+	private HashMap<Object, Object> registers;
 	
 	public Register(){
 		this.registers = new HashMap();
@@ -25,15 +25,22 @@ public class Register {
 		registers.put("r12", 0);
 		registers.put("r13", 0);
 		registers.put("r14", 0);
+	
 	}
 	
-	public static void setRegister(Object arg1, Object arg2){
+	public void print(){
+		for (Object key : registers.keySet()) {
+			System.out.println(key + " " + registers.get(key).toString());
+		}
+	}
+	
+	public void setRegister(Object arg1, Object arg2){
 		if (registers.containsKey(arg1)){
 			registers.put(arg1, arg2);
 		}
 	}
 	
-	public static Integer getRegister(Object arg1){
+	public Integer getRegister(Object arg1){
 		Integer r = null;
 		if(registers.containsKey(arg1)){
 			r = (Integer) registers.get(arg1);
@@ -41,11 +48,11 @@ public class Register {
 		return r;
 	}
 
-	public Map<Object, Object> getRegisters() {
+	public HashMap<Object, Object> getRegisters() {
 		return registers;
 	}
 
-	public void setRegisters(Map<Object, Object> registers) {
+	public void setRegisters(HashMap<Object, Object> registers) {
 		this.registers = registers;
 	}
 
