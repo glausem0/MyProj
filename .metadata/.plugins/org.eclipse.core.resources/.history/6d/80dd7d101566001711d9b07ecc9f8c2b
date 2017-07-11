@@ -1,0 +1,14 @@
+package instructions;
+
+public class Instruction {
+
+	//test: 
+	public static void movInstr(){
+		registerData.setRegister(reg, val);
+	}
+	
+	public static void addInstr(){
+		System.out.println("booom");
+	}
+	
+}

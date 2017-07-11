@@ -1,0 +1,22 @@
+package instructions;
+
+import registers.Register;
+
+public class Instruction {
+	
+	static Register registerData = new Register();
+
+	public void movInstr(Object reg, Object val){
+		registerData.setRegister(reg, val);
+	}
+	
+	public void printRegisters(){
+		registerData.print();
+	}
+
+	public void addInstr(Object reg, Object arg1, Object arg2) {
+		String val1 = arg1.toString();
+		String val2 = arg2.toString();
+		
+	}
+}

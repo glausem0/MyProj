@@ -1,0 +1,3 @@
+mov r0, #3
+mov r1, #7
+add r2, #1, r0

@@ -1,0 +1,46 @@
+package instructions;
+
+import registers.Register;
+
+public class Instruction {
+	
+	static Register regData = new Register();
+
+	public void movInstr(Object reg, Object val){
+		regData.setRegister(reg, val);
+	}
+	
+	public void printRegisters(){
+		regData.print();
+	}
+
+	public void addInstr(Object reg, Object arg1, Object arg2) {
+		String arg1Str = arg1.toString();
+		String arg2Str = arg2.toString();
+		
+		if(arg1Str.startsWith("r") && arg2Str.startsWith("r")){
+			int val1 = (int) regData.getRegister(arg1Str);
+			int val2 = (int) regData.getRegister(arg2Str);
+			
+			regData.setRegister(reg, ( val1 + val2 ));
+		}
+		else if(arg1Str.startsWith("r") && !arg2Str.startsWith("r")){
+			int val1 = (int) regData.getRegister(arg1Str);
+			int val2 = Integer.parseInt(arg2Str);
+			
+			regData.setRegister(reg, ( val1 + val2 ));
+		}
+		else if (!arg1Str.startsWith("r") && arg2Str.startsWith("r")){
+			int val1 = Integer.parseInt(arg1Str);
+			int val2 = (int) regData.getRegister(arg2Str);
+			
+			regData.setRegister(reg, ( val1 + val2 ));
+		}
+		else{
+			int val1 = Integer.parseInt(arg1Str);
+			int val2 = Integer.parseInt(arg2Str);
+			
+			regData.setRegister(reg, ( val1 + val2 ));
+		}	
+	}
+}

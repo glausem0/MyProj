@@ -1,0 +1,35 @@
+package instructions;
+
+import registers.Register;
+
+public class Instruction {
+	
+	static Register registerData = new Register();
+
+	public void movInstr(Object reg, Object val){
+		registerData.setRegister(reg, val);
+	}
+	
+	public void printRegisters(){
+		registerData.print();
+	}
+
+	public void addInstr(Object reg, Object arg1, Object arg2) {
+		String arg1Str = arg1.toString();
+		String arg2Str = arg2.toString();
+		
+		if(arg1Str.startsWith("r") && arg2Str.startsWith("r")){
+			
+		}
+		else if (val1.startsWith("r") && !val1.startsWith("r")){
+			
+		}
+		else if (!val1.startsWith("r") && val1.startsWith("r")){
+			
+		}
+		else{
+			
+		}
+		
+	}
+}
