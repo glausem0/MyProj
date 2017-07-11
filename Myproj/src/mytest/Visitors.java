@@ -1,10 +1,10 @@
 package mytest;
 
-import registers.Register;
+import instructions.Instruction;
 
 public class Visitors implements MyTestVisitor{
 
-	Register registerData = new Register();
+	Instruction inst = new Instruction();
 	
 	@Override
 	public Object visit(SimpleNode node, Object data) {
@@ -22,16 +22,37 @@ public class Visitors implements MyTestVisitor{
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 		
-		registerData.setRegister(reg, val);
+		inst.movInstr(reg, val);
 		
 		return "decl";
 	}
+	
+	@Override
+	public Object visit(ASTadd node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.addInstr(reg, arg1.toString(), arg2.toString());
+		
+		return null;
+	}
 
+	@Override
+	public Object visit(ASTsub node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.subInstr(reg, arg1.toString(), arg2.toString());
+		
+		return null;
+	}
+	
 	@Override
 	public Object visit(ASTregister node, Object data) {
 		String valStr = (String) node.data.get("reg");
 		
-		System.out.println(valStr);
 		return valStr;
 	}
 
@@ -39,16 +60,16 @@ public class Visitors implements MyTestVisitor{
 	public Object visit(ASTnumber node, Object data) {
 		String valStr = (String) node.data.get("value");
 		valStr = valStr.replace("#", "");
-		int valInt = Integer.parseInt(valStr);
-				
-		System.out.println(valInt);
+		int valInt = Integer.parseInt(valStr);	
 		
 		return valStr;
 	}
 	
+	
+	
 	//print la table des registres
 	public void print(){
-		registerData.print();
+		inst.printRegisters();
 	}
 
 }

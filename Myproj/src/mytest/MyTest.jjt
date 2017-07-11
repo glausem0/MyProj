@@ -24,7 +24,9 @@ public class MyTest{
 
    }}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
-  /* OPERATORS */  < MOV : "mov" >
+  /* OPERATORS */  < MOV : "mov" >
+| < ADD : "add" >
+| < SUB : "sub" >
   /*VAR*/
 | < NUMBER : ("#") ([ "0"-"9" ])+ >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >}SimpleNode prog():
@@ -34,7 +36,9 @@ public class MyTest{
 
 void instr() #void:
 {}{
-  < MOV > register() "," (number() | register() ) #decl(2)
+  (<MOV> register() "," (number() | register() )) #decl(2)
+| (<ADD> register() "," (number() | register() ) "," (number() | register() )) #add(3)
+| (<SUB> register() "," (number() | register() ) "," (number() | register() )) #sub(3)
 }
 
 void register() :

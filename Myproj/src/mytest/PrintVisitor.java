@@ -34,4 +34,16 @@ public class PrintVisitor implements MyTestVisitor{
 		return data;
 	}
 
+	@Override
+	public Object visit(ASTadd node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTsub node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

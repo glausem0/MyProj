@@ -13,3 +13,5 @@
 /ASTnumber.java
 /ASTprog.java
 /ASTregister.java
+/ASTadd.java
+/ASTsub.java

@@ -40,10 +40,10 @@ public class Register {
 		}
 	}
 	
-	public Integer getRegister(Object arg1){
-		Integer r = null;
+	public Object getRegister(Object arg1){
+		Object r = null;
 		if(registers.containsKey(arg1)){
-			r = (Integer) registers.get(arg1);
+			r = registers.get(arg1);
 		}
 		return r;
 	}
