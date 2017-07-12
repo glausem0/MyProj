@@ -18,6 +18,34 @@ public class Visitors implements MyTestVisitor{
 	}
 
 	@Override
+	public Object visit(ASTregister node, Object data) {
+		String valStr = (String) node.data.get("reg");
+		
+		return valStr;
+	}
+
+	@Override
+	public Object visit(ASTnumber node, Object data) {
+		String valStr = (String) node.data.get("value");
+		valStr = valStr.replace("#", "");
+		int valInt = Integer.parseInt(valStr);	
+		
+		return valInt;
+	}
+	
+	@Override
+	public Object visit(ASTcond node, Object data) {
+		String cond = node.value.toString();
+		return cond;
+	}
+		
+	//print la table des registres
+	public void print(){
+		inst.printRegisters();
+	}
+
+	
+	@Override
 	public Object visit(ASTdecl node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
@@ -27,6 +55,19 @@ public class Visitors implements MyTestVisitor{
 		return "decl";
 	}
 	
+	@Override
+	public Object visit(ASTdeclC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+
+		if (cond  == cond){
+			inst.movInstr(reg, val);
+		}
+		return "decl";
+	}
+	
+	/*
 	@Override
 	public Object visit(ASTadd node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -48,28 +89,10 @@ public class Visitors implements MyTestVisitor{
 		
 		return null;
 	}
+	*/
 	
-	@Override
-	public Object visit(ASTregister node, Object data) {
-		String valStr = (String) node.data.get("reg");
-		
-		return valStr;
-	}
+	
 
-	@Override
-	public Object visit(ASTnumber node, Object data) {
-		String valStr = (String) node.data.get("value");
-		valStr = valStr.replace("#", "");
-		int valInt = Integer.parseInt(valStr);	
-		
-		return valStr;
-	}
 	
-	
-	
-	//print la table des registres
-	public void print(){
-		inst.printRegisters();
-	}
 
 }

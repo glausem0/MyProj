@@ -24,7 +24,10 @@ public class MyTest{
 
    }}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
-  /* OPERATORS */  < MOV : "mov" >
+  /*CONITIONS*/
+  < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
+    
+  /* OPERATORS */| < MOV : "mov" >
 | < ADD : "add" >
 | < SUB : "sub" >
   /*VAR*/
@@ -36,9 +39,24 @@ public class MyTest{
 
 void instr() #void:
 {}{
-  (<MOV> register() "," (number() | register() )) #decl(2)
-| (<ADD> register() "," (number() | register() ) "," (number() | register() )) #add(3)
-| (<SUB> register() "," (number() | register() ) "," (number() | register() )) #sub(3)
+  mov()
+}
+
+void mov() #void:
+{}
+{
+   <MOV>
+    (
+      (register() "," (number() | register())) #decl(2)
+    | (cond() register() "," (number() | register())) #declC(3)
+  )
+  
+}
+
+void cond():
+{Token t;}
+{
+  t = < COND > { jjtThis.value = t.image; }
 }
 
 void register() :
