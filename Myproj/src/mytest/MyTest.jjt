@@ -29,7 +29,8 @@ public class MyTest{
     
   /* OPERATORS */| < MOV : "mov" >
 | < ADD : "add" >
-| < SUB : "sub" >
+| < SUB : "sub" >
+| < RSB : "rsb" >
   /*VAR*/
 | < NUMBER : ("#") ([ "0"-"9" ])+ >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >}SimpleNode prog():
@@ -40,6 +41,9 @@ public class MyTest{
 void instr() #void:
 {}{
   mov()
+| add()
+| sub()
+| rsb()
 }
 
 void mov() #void:
@@ -51,6 +55,34 @@ void mov() #void:
     | (cond() register() "," (number() | register())) #declC(3)
   )
   
+}
+
+void add()#void:
+{}
+{
+  <ADD>
+  (
+    (register() "," (number() | register()) "," (number() | register())) #add(3)  | (cond() register() "," (number() | register()) "," (number() | register())) #addC(4)  )
+}
+
+void sub()#void:
+{}
+{
+  <SUB>
+  (
+    (register() "," (number() | register()) "," (number() | register())) #sub(3)
+  | (cond() register() "," (number() | register()) "," (number() | register())) #subC(4)
+  )
+}
+
+void rsb()#void:
+{}
+{
+  <RSB>
+  (
+    (register() "," (number() | register()) "," (number() | register())) #rsb(3)
+  | (cond() register() "," (number() | register()) "," (number() | register())) #rsbC(4)
+  )
 }
 
 void cond():

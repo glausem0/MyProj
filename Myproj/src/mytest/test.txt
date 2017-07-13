@@ -1,2 +1,5 @@
 mov r0, #3
 moveq r1, #7
+addne r2, #3, #10
+sub r3, r1, #3
+rsb r4, r1, #3

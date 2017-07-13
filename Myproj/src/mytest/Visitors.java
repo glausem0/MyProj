@@ -44,7 +44,7 @@ public class Visitors implements MyTestVisitor{
 		inst.printRegisters();
 	}
 
-	
+	//Instructions:
 	@Override
 	public Object visit(ASTdecl node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -61,13 +61,13 @@ public class Visitors implements MyTestVisitor{
 		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 
+		//TODO change if
 		if (cond  == cond){
 			inst.movInstr(reg, val);
 		}
 		return "decl";
 	}
 	
-	/*
 	@Override
 	public Object visit(ASTadd node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -80,6 +80,21 @@ public class Visitors implements MyTestVisitor{
 	}
 
 	@Override
+	public Object visit(ASTaddC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		//TODO change if
+		if (cond  == cond){
+			inst.addInstr(reg, arg1.toString(), arg2.toString());
+		}
+		
+		return null;
+	}
+	
+	@Override
 	public Object visit(ASTsub node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
@@ -89,10 +104,47 @@ public class Visitors implements MyTestVisitor{
 		
 		return null;
 	}
-	*/
-	
-	
 
-	
+	@Override
+	public Object visit(ASTsubC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		//TODO change if
+		if (cond  == cond){
+			inst.subInstr(reg, arg1.toString(), arg2.toString());
+		}
+		
+		return null;
+	}
 
+	//same as sub, reverse arguments
+	@Override
+	public Object visit(ASTrsb node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.subInstr(reg, arg2.toString(), arg1.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTrsbC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		//TODO change if
+		if (cond  == cond){
+			inst.subInstr(reg, arg2.toString(), arg1.toString());
+		}
+		
+		return null;
+	}
+	
 }
