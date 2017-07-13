@@ -4,14 +4,17 @@ import java.util.HashMap;
 
 import instructions.Condition;
 import instructions.Instruction;
+import registers.Cpsr;
 import registers.Register;
 
 public class Visitors implements MyTestVisitor{
 
 	Register regData = new Register();
 	private HashMap<Object, Object> reg = regData.init();
+	Cpsr cpsr = new Cpsr();
+	private HashMap<Object, Object> cpsrReg = cpsr.init();
 	Instruction inst = new Instruction(reg);
-	Condition condition = new Condition(reg);
+	Condition condition = new Condition(reg, cpsrReg);
 	
 	
 	@Override
@@ -96,7 +99,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
 		//TODO change if
-		if (condition.eqCond(arg1.toString(), arg2.toString())){
+		if (condition.condAction(cond.toString(), arg1.toString(), arg2.toString())){
 			inst.addInstr(reg, arg1.toString(), arg2.toString());
 		}
 		
@@ -121,8 +124,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
-		//TODO change if
-		if (cond  == cond){
+		if (condition.condAction(cond.toString(), arg1.toString(), arg2.toString())){
 			inst.subInstr(reg, arg1.toString(), arg2.toString());
 		}
 		
@@ -148,8 +150,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
-		//TODO change if
-		if (cond  == cond){
+		if (condition.condAction(cond.toString(), arg1.toString(), arg2.toString())){
 			inst.subInstr(reg, arg2.toString(), arg1.toString());
 		}
 		

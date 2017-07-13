@@ -24,6 +24,7 @@ public class Register {
 		registers.put("r12", 0);
 		registers.put("r13", 0);
 		registers.put("r14", 0);
+		
 		return registers;
 	}
 	
@@ -33,26 +34,4 @@ public class Register {
 		}
 	}
 	
-	public void setRegister(Object arg1, Object arg2){
-		if (registers.containsKey(arg1)){
-			registers.put(arg1, arg2);
-		}
-	}
-	
-	public Object getRegister(Object arg1){
-		Object r = null;
-		if(registers.containsKey(arg1)){
-			r = registers.get(arg1);
-		}
-		return r;
-	}
-
-	public HashMap<Object, Object> getRegisters() {
-		return registers;
-	}
-
-	public void setRegisters(HashMap<Object, Object> registers) {
-		this.registers = registers;
-	}
-
 }
