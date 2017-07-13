@@ -10,7 +10,7 @@ import java.io.*;
 import registers.Register;
 
 public class MyTest{
-    public static void main(String args []) throws Exception  {	
+    public static void main(String args []) throws Exception  {	
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/mytest/test.txt"));	SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");

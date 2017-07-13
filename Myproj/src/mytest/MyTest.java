@@ -8,7 +8,6 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
   protected static JJTMyTestState jjtree = new JJTMyTestState();
   public static void main(String args []) throws Exception
   {
-
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/mytest/test.txt"));
         SimpleNode root = parser.prog();
 

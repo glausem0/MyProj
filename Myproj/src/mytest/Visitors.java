@@ -1,10 +1,18 @@
 package mytest;
 
+import java.util.HashMap;
+
+import instructions.Condition;
 import instructions.Instruction;
+import registers.Register;
 
 public class Visitors implements MyTestVisitor{
 
-	Instruction inst = new Instruction();
+	Register regData = new Register();
+	private HashMap<Object, Object> reg = regData.init();
+	Instruction inst = new Instruction(reg);
+	Condition condition = new Condition(reg);
+	
 	
 	@Override
 	public Object visit(SimpleNode node, Object data) {
@@ -36,12 +44,13 @@ public class Visitors implements MyTestVisitor{
 	@Override
 	public Object visit(ASTcond node, Object data) {
 		String cond = node.value.toString();
+		
 		return cond;
 	}
 		
 	//print la table des registres
 	public void print(){
-		inst.printRegisters();
+		regData.print();
 	}
 
 	//Instructions:
@@ -87,7 +96,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
 		//TODO change if
-		if (cond  == cond){
+		if (condition.eqCond(arg1.toString(), arg2.toString())){
 			inst.addInstr(reg, arg1.toString(), arg2.toString());
 		}
 		

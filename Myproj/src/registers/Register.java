@@ -5,10 +5,9 @@ import java.util.Map;
 
 public class Register {
 
-	//TODO change Integer to Double
 	private HashMap<Object, Object> registers;
 	
-	public Register(){
+	public HashMap<Object, Object> init(){
 		this.registers = new HashMap();
 		registers.put("r0", 0);
 		registers.put("r1", 0);
@@ -25,7 +24,7 @@ public class Register {
 		registers.put("r12", 0);
 		registers.put("r13", 0);
 		registers.put("r14", 0);
-	
+		return registers;
 	}
 	
 	public void print(){
