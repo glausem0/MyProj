@@ -4,14 +4,14 @@
  VISITOR = true;
  NODE_EXTENDS="dataNode";
 }
-PARSER_BEGIN(MyTest)package mytest;
+PARSER_BEGIN(MyTest)package compAndInt;
 
 import java.io.*;
 import registers.Register;
 
 public class MyTest{
     public static void main(String args []) throws Exception  {	
-    MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/mytest/test.txt"));	SimpleNode root = parser.prog();
+    MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));	SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");
     root.dump(" ");

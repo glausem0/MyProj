@@ -1,4 +1,4 @@
-package mytest;
+package compAndInt;
 
 import java.util.HashMap;
 

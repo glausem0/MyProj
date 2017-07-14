@@ -1,4 +1,4 @@
-package mytest;
+package compAndInt;
 
 import java.util.HashMap;
 
@@ -51,11 +51,13 @@ public class Visitors implements MyTestVisitor{
 		return cond;
 	}
 		
-	//print la table des registres
+	//print la table des registres et cpsr
 	public void print(){
 		regData.print();
+		System.out.println("\n");
+		cpsr.print();
 	}
-
+	
 	//Instructions:
 	@Override
 	public Object visit(ASTdecl node, Object data) {
@@ -74,7 +76,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//TODO change if
-		if (cond  == cond){
+		if (condition.condAction(cond.toString())){
 			inst.movInstr(reg, val);
 		}
 		return "decl";
@@ -99,7 +101,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
 		//TODO change if
-		if (condition.condAction(cond.toString(), arg1.toString(), arg2.toString())){
+		if ( condition.condAction(cond.toString()) ){
 			inst.addInstr(reg, arg1.toString(), arg2.toString());
 		}
 		
@@ -124,7 +126,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
-		if (condition.condAction(cond.toString(), arg1.toString(), arg2.toString())){
+		if (condition.condAction(cond.toString())){
 			inst.subInstr(reg, arg1.toString(), arg2.toString());
 		}
 		
@@ -150,7 +152,7 @@ public class Visitors implements MyTestVisitor{
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 		
-		if (condition.condAction(cond.toString(), arg1.toString(), arg2.toString())){
+		if (condition.condAction(cond.toString())){
 			inst.subInstr(reg, arg2.toString(), arg1.toString());
 		}
 		

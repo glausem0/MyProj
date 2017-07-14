@@ -13,157 +13,201 @@ public class Condition {
 		this.cpsr = cpsr;
 	}
 	
-	//if eq == false -> NE=true; if eq == true -> EQ=true.
-	private boolean condEq_Ne(String arg1, String arg2){
-		boolean eq = false;
-		if(arg1.startsWith("r") && arg2.startsWith("r")){
-			int val1 = Integer.parseInt(regData.get(arg1).toString());
-			int val2 = Integer.parseInt(regData.get(arg2).toString());
-			
-			if(val1 == val2){
-				eq = true;
-			}
+	private boolean condEq(){
+		boolean response = false;
+		if (cpsr.get("Z").toString().equals("1")){
+			response = true;
 		}
-		else if(arg1.startsWith("r") && !arg2.startsWith("r")){
-			int val1 = Integer.parseInt(regData.get(arg1).toString());
-			int val2 = Integer.parseInt(arg2);
-			
-			if(val1 == val2){
-				eq = true;
-			}
-		}
-		else if(!arg1.startsWith("r") && arg2.startsWith("r")){
-			int val1 = Integer.parseInt(arg1);
-			int val2 = Integer.parseInt(regData.get(arg2).toString());
-	
-			if(val1 == val2){
-				eq = true;
-			}
-		}
-		else{
-			int val1 = Integer.parseInt(arg1);
-			int val2 = Integer.parseInt(arg2);
-
-			if(val1 == val2){
-				eq = true;
-			}
-		}
-		return eq;
+		return response;
 	}
 	
-	//if mi == false Pl=true; mi == true -> MI=true. 
-	private boolean condMi_Pl(String arg1, String arg2){
-		boolean mi = false;
-		if(arg1.startsWith("r") && arg2.startsWith("r")){
-			int val1 = Integer.parseInt(regData.get(arg1).toString());
-			int val2 = Integer.parseInt(regData.get(arg2).toString());
-			
-			if(val1 < val2){
-				mi = true;
-			}
+	private boolean condNe(){
+		boolean response = false;
+		if (cpsr.get("Z").toString().equals("0")){
+			response = true;
 		}
-		else if(arg1.startsWith("r") && !arg2.startsWith("r")){
-			int val1 = Integer.parseInt(regData.get(arg1).toString());
-			int val2 = Integer.parseInt(arg2);
-			
-			if(val1 <= val2){
-				mi = true;
-			}
-		}
-		else if(!arg1.startsWith("r") && arg2.startsWith("r")){
-			int val1 = Integer.parseInt(arg1);
-			int val2 = Integer.parseInt(regData.get(arg2).toString());
+		return response;
+	}
 	
-			if(val1 < val2){
-				mi = true;
-			}
+	private boolean condCs(){
+		boolean response = false;
+		if (cpsr.get("C").toString().equals("1")){
+			response = true;
 		}
-		else{
-			int val1 = Integer.parseInt(arg1);
-			int val2 = Integer.parseInt(arg2);
-
-			if(val1 < val2){
-				mi = true;
-			}
+		return response;
+	}
+	//same as Cs
+	private boolean condHs(){
+		boolean response = false;
+		if (cpsr.get("C").toString().equals("1")){
+			response = true;
 		}
-		return mi;
+		return response;
+	}
+	
+	private boolean condCc(){
+		boolean response = false;
+		if (cpsr.get("C").toString().equals("0")){
+			response = true;
+		}
+		return response;
+	}
+	//same as CC
+	private boolean condLo(){
+		boolean response = false;
+		if (cpsr.get("C").toString().equals("0")){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condMi(){
+		boolean response = false;
+		if (cpsr.get("N").toString().equals("1")){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condPl(){
+		boolean response = false;
+		if (cpsr.get("N").toString().equals("0")){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condVs(){
+		boolean response = false;
+		if (cpsr.get("V").toString().equals("1")){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condVc(){
+		boolean response = false;
+		if (cpsr.get("V").toString().equals("0")){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condHi(){
+		boolean response = false;
+		if (cpsr.get("C").toString().equals("1") && cpsr.get("Z").toString().equals("0") ){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condLs(){
+		boolean response = false;
+		if (cpsr.get("C").toString().equals("0") || cpsr.get("Z").toString().equals("1") ){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condGe(){
+		boolean response = false;
+		if ( cpsr.get("N").toString().equals(cpsr.get("V").toString()) ){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condLt(){
+		boolean response = false;
+		if ( !cpsr.get("N").toString().equals(cpsr.get("V").toString()) ){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condGt(){
+		boolean response = false;
+		if ( cpsr.get("N").toString().equals(cpsr.get("V").toString()) && cpsr.get("Z").toString().equals("0") ){
+			response = true;
+		}
+		return response;
+	}
+	
+	private boolean condLe(){
+		boolean response = false;
+		if (  !(cpsr.get("N").toString().equals(cpsr.get("V").toString())) || cpsr.get("Z").toString().equals("1") ){
+			response = true;
+		}
+		return response;
 	}
 	
 	
-	public boolean condAction(String cond, String arg1, String arg2){
+	public boolean condAction(String cond){
 		boolean condReturn = false;
-		boolean tmp = false;
 		switch (cond){
 		
-		case "eq": 
-			tmp = condEq_Ne(arg1, arg2);
-			if (tmp){
-				condReturn = true;
-				cpsr.put("Z", 1);
-			}
+		case "eq":
+			condReturn = condEq();
 			break;
 		
 		case "ne":
-			tmp = condEq_Ne(arg1, arg2);
-			if (!tmp){
-				condReturn = true;
-				cpsr.put("Z", 0);
-			}
+			condReturn = condNe();
 			break;
 		
 		case "cs":
+			condReturn = condCs();
 			break;
 			
 		case "hs":
+			condReturn = condHs();
 			break;
 			
 		case "cc":
+			condReturn = condCc();
 			break;
 			
 		case "lo":
+			condReturn = condLo();
 			break;
 			
 		case "mi":
-			tmp = condMi_Pl(arg1, arg2);
-			if (tmp){
-				condReturn = true;
-				cpsr.put("N", 1);
-			}
+			condReturn = condMi();
 			break;
 		
 		case "pl":
-			tmp = condMi_Pl(arg1, arg2);
-			if (!tmp){
-				condReturn = true;
-				cpsr.put("N", 0);
-			}
+			condReturn = condPl();
 			break;
 		
 		case "vs":
+			condReturn = condVs();
 			break;
 			
 		case "vc":
+			condReturn = condVc();
 			break;
 			
 		case "hi":
+			condReturn = condHi();
 			break;
 			
 		case "ls":
+			condReturn = condLs();
 			break;
 			
 		case "ge":
+			condReturn = condGe();
 			break;
 			
 		case "lt":
+			condReturn = condLt();
 			break;
 			
 		case "gt":
+			condReturn = condGt();
 			break;
 			
 		case "le":
-			break;
-			
-		case "nv":
+			condReturn = condLe();
 			break;	
 		}
 		
