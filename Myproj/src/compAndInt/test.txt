@@ -1,5 +1,6 @@
 mov r0, #3
 moveq r1, #7
 add r2, r0, r1
-addeq r3, r0, r1
-addeq r4, #4, #4
+adds r3, r0, r4
+sub r4, #4, #4
+addne r5, #6, #1

@@ -22,8 +22,10 @@ public class Register {
 		registers.put("r10", 0);
 		registers.put("r11", 0);
 		registers.put("r12", 0);
-		registers.put("r13", 0);
-		registers.put("r14", 0);
+		registers.put("r13", 0); //sp
+		registers.put("r14", 0); //lr
+		registers.put("r15", 0); //pc 
+								 //cpsr
 		
 		return registers;
 	}

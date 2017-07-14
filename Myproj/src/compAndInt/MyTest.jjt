@@ -26,6 +26,7 @@ public class MyTest{
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONITIONS*/
   < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
+| < SCND: "s" >
     
   /* OPERATORS */| < MOV : "mov" >
 | < ADD : "add" >
@@ -50,11 +51,17 @@ void mov() #void:
 {}
 {
    <MOV>
+   (
     (
       (register() "," (number() | register())) #decl(2)
-    | (cond() register() "," (number() | register())) #declC(3)
-  )
-  
+    | (scnd() register() "," (number() | register())) #declS(3)
+    )
+   |cond() 
+    (
+      (register() "," (number() | register())) #declC(3)
+    | (scnd() register() "," (number() | register())) #declCS(4)
+    )
+   )
 }
 
 void add()#void:
@@ -62,7 +69,14 @@ void add()#void:
 {
   <ADD>
   (
-    (register() "," (number() | register()) "," (number() | register())) #add(3)  | (cond() register() "," (number() | register()) "," (number() | register())) #addC(4)  )
+    (      (register() "," (number() | register()) "," (number() | register())) #add(3)
+    | (scnd() register() "," (number() | register()) "," (number() | register())) #addS(4)
+    )
+
+  | cond()
+    (     (register() "," (number() | register()) "," (number() | register())) #addC(4)
+   | (scnd() register() "," (number() | register()) "," (number() | register())) #addCS(5)       )
+   )
 }
 
 void sub()#void:
@@ -70,9 +84,17 @@ void sub()#void:
 {
   <SUB>
   (
-    (register() "," (number() | register()) "," (number() | register())) #sub(3)
-  | (cond() register() "," (number() | register()) "," (number() | register())) #subC(4)
-  )
+    (
+      (register() "," (number() | register()) "," (number() | register())) #sub(3)
+    | (scnd() register() "," (number() | register()) "," (number() | register())) #subS(4)
+    )
+
+  | cond()
+    (
+     (register() "," (number() | register()) "," (number() | register())) #subC(4)
+   | (scnd() register() "," (number() | register()) "," (number() | register())) #subCS(5)  
+     )
+   )
 }
 
 void rsb()#void:
@@ -80,15 +102,29 @@ void rsb()#void:
 {
   <RSB>
   (
-    (register() "," (number() | register()) "," (number() | register())) #rsb(3)
-  | (cond() register() "," (number() | register()) "," (number() | register())) #rsbC(4)
-  )
+    (
+      (register() "," (number() | register()) "," (number() | register())) #rsb(3)
+    | (scnd() register() "," (number() | register()) "," (number() | register())) #rsbS(4)
+    )
+
+  | cond()
+    (
+     (register() "," (number() | register()) "," (number() | register())) #rsbC(4)
+   | (scnd() register() "," (number() | register()) "," (number() | register())) #rsbCS(5)  
+     )
+   )
 }
 
 void cond():
 {Token t;}
 {
   t = < COND > { jjtThis.value = t.image; }
+}
+
+void scnd():
+{Token t;}
+{
+  t = < SCND > { jjtThis.value = t.image; }
 }
 
 void register() :

@@ -14,59 +14,75 @@ public class Instruction {
 		regData.put(reg, val);
 	}
 	
-	public void addInstr(Object reg, String arg1, String arg2) {
+	public int addInstr(Object reg, String arg1, String arg2) {
+		
+		int result = 0;
 		
 		if(arg1.startsWith("r") && arg2.startsWith("r")){
 			int val1 = Integer.parseInt(regData.get(arg1).toString());
 			int val2 = Integer.parseInt(regData.get(arg2).toString());
 			
 			regData.put(reg, ( val1 + val2 ));
+			result = ( val1 + val2 );
 		}
 		else if(arg1.startsWith("r") && !(arg2.startsWith("r"))){
 			int val1 = Integer.parseInt(regData.get(arg1).toString());
 			int val2 = Integer.parseInt(arg2);
 			
 			regData.put(reg, ( val1 + val2 ));
+			result = ( val1 + val2 );
 		}
 		else if (!(arg1.startsWith("r")) && arg2.startsWith("r")){
 			int val1 = Integer.parseInt(arg1);
 			int val2 = Integer.parseInt(regData.get(arg2).toString());
 			
 			regData.put(reg, ( val1 + val2 ));
+			result = ( val1 + val2 );
 		}
 		else{
 			int val1 = Integer.parseInt(arg1);
 			int val2 = Integer.parseInt(arg2);
 			
 			regData.put(reg, ( val1 + val2 ));
+			result = ( val1 + val2 );
 		}	
+		
+		return result;
 	}
 
-	public void subInstr(Object reg, String arg1, String arg2) {
+	public int subInstr(Object reg, String arg1, String arg2) {
+		
+		int result = 0;
 		
 		if(arg1.startsWith("r") && arg2.startsWith("r")){
 			int val1 = Integer.parseInt(regData.get(arg1).toString());
 			int val2 = Integer.parseInt(regData.get(arg2).toString());
 			
 			regData.put(reg, ( val1 - val2 ));
+			result = ( val1 - val2 );
 		}
 		else if(arg1.startsWith("r") && !(arg2.startsWith("r"))){
 			int val1 = Integer.parseInt(regData.get(arg1).toString());
 			int val2 = Integer.parseInt(arg2);
 			
 			regData.put(reg, ( val1 - val2 ));
+			result = ( val1 - val2 );
 		}
 		else if (!(arg1.startsWith("r")) && arg2.startsWith("r")){
 			int val1 = Integer.parseInt(arg1);
 			int val2 = Integer.parseInt(regData.get(arg2).toString());
 			
 			regData.put(reg, ( val1 - val2 ));
+			result = ( val1 - val2 );
 		}
 		else{
 			int val1 = Integer.parseInt(arg1);
 			int val2 = Integer.parseInt(arg2);
 			
 			regData.put(reg, ( val1 - val2 ));
+			result = ( val1 - val2 );
 		}	
+		
+		return result;
 	}
 }
