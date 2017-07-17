@@ -28,15 +28,20 @@ public class UpdateCPSR {
 		return zer;
 	}
 
-	//TODO carry
+	//TODO verify carry
 	private boolean carry(int result){
 		boolean car = false;
+		if(result > Integer.MAX_VALUE){
+			car = true;
+		}
 		return car;
 	}	
 
-	//TODO overflow
 	private boolean overflow(int result){
 		boolean ove = false;
+		if(result > Integer.MAX_VALUE){
+			ove = true;
+		}
 		return ove;
 	}
 

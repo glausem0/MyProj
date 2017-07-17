@@ -29,11 +29,19 @@ public class MyTest{
 | < SCND: "s" >
     
   /* OPERATORS */| < MOV : "mov" >
+| < MVN : "mvn" >
 | < ADD : "add" >
+| < ADC : "adc" >
 | < SUB : "sub" >
-| < RSB : "rsb" >
+| < SBC : "sbc" >
+| < RSB : "rsb" >
+| < RSC : "rsc" >
+| < CMP : "cmp" >
+| < CMN : "cmn" >
+| < TST : "tst" >
   /*VAR*/
 | < NUMBER : ("#") ([ "0"-"9" ])+ >
+| < HEXA : ("#ox") ([ "0"-"9", "a"-"f" ])+ >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >}SimpleNode prog():
 {}
 {
@@ -42,9 +50,16 @@ public class MyTest{
 void instr() #void:
 {}{
   mov()
+| mvn()
 | add()
+| adc()
 | sub()
+| sbc()
 | rsb()
+| rsc()
+| cmp()
+| cmn()
+| tst()
 }
 
 void mov() #void:
@@ -64,6 +79,23 @@ void mov() #void:
    )
 }
 
+void mvn() #void:
+{}
+{
+   <MVN>
+   (
+    (
+      (register() "," (number() | register())) #decln(2)
+    | (scnd() register() "," (number() | register())) #declnS(3)
+    )
+   |cond() 
+    (
+      (register() "," (number() | register())) #declnC(3)
+    | (scnd() register() "," (number() | register())) #declnCS(4)
+    )
+   )
+}
+
 void add()#void:
 {}
 {
@@ -76,6 +108,24 @@ void add()#void:
   | cond()
     (     (register() "," (number() | register()) "," (number() | register())) #addC(4)
    | (scnd() register() "," (number() | register()) "," (number() | register())) #addCS(5)       )
+   )
+}
+
+void adc()#void:
+{}
+{
+  <ADC>
+  (
+    (
+      (register() "," (number() | register()) "," (number() | register())) #adc(3)
+    | (scnd() register() "," (number() | register()) "," (number() | register())) #adcS(4)
+    )
+
+  | cond()
+    (
+     (register() "," (number() | register()) "," (number() | register())) #adcC(4)
+   | (scnd() register() "," (number() | register()) "," (number() | register())) #adcCS(5)  
+     )
    )
 }
 
@@ -97,6 +147,24 @@ void sub()#void:
    )
 }
 
+void sbc()#void:
+{}
+{
+  <SBC>
+  (
+    (
+      (register() "," (number() | register()) "," (number() | register())) #sbc(3)
+    | (scnd() register() "," (number() | register()) "," (number() | register())) #sbcS(4)
+    )
+
+  | cond()
+    (
+     (register() "," (number() | register()) "," (number() | register())) #sbcC(4)
+   | (scnd() register() "," (number() | register()) "," (number() | register())) #sbcCS(5)  
+     )
+   )
+}
+
 void rsb()#void:
 {}
 {
@@ -113,6 +181,53 @@ void rsb()#void:
    | (scnd() register() "," (number() | register()) "," (number() | register())) #rsbCS(5)  
      )
    )
+}
+
+void rsc()#void:
+{}
+{
+  <RSC>
+  (
+    (
+      (register() "," (number() | register()) "," (number() | register())) #rsc(3)
+    | (scnd() register() "," (number() | register()) "," (number() | register())) #rscS(4)
+    )
+
+  | cond()
+    (
+     (register() "," (number() | register()) "," (number() | register())) #rscC(4)
+   | (scnd() register() "," (number() | register()) "," (number() | register())) #rscCS(5)  
+     )
+   )
+}
+
+void cmp()#void:
+{}
+{
+  <CMP>
+  (
+    (register() "," (number() | register())) #cmp(2)
+  | (cond() register() "," (number() | register())) #cmpC(3)  )
+}
+
+void cmn()#void:
+{}
+{
+  <CMN>
+  (
+    (register() "," (number() | register())) #cmn(2)
+  | (cond() register() "," (number() | register())) #cmnC(3)
+  )
+}
+
+void tst()#void:
+{}
+{
+  <TST>
+  (
+    (register() "," (number() | register())) #tst(2)
+  | (cond() register() "," (number() | register())) #tstC(3)
+  )
 }
 
 void cond():
@@ -137,4 +252,10 @@ void number():
 {Token t;}
 {
   t= < NUMBER > { jjtThis.data.put("value", t.image.toString()); }
+}
+
+void hexa():
+{Token t;}
+{
+ t = < HEXA > { jjtThis.data.put("hexa", t.image.toString()); }
 }
