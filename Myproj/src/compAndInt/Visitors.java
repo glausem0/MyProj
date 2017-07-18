@@ -20,7 +20,7 @@ public class Visitors implements MyTestVisitor{
 	Condition condition = new Condition(reg, cpsrReg);
 	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
 
-	////Program and simple node:////	
+////Program and simple node:////	
 	@Override
 	public Object visit(SimpleNode node, Object data) {
 		throw new RuntimeException("Visit SimpleNode");
@@ -32,7 +32,7 @@ public class Visitors implements MyTestVisitor{
 		return "Program";
 	}
 
-	////Register, number, hexa, cond and Scond:////
+////Register, number, hexa, shift, cond and Scond:////
 	@Override
 	public Object visit(ASTregister node, Object data) {
 		String valStr = (String) node.data.get("reg");
@@ -50,20 +50,13 @@ public class Visitors implements MyTestVisitor{
 	}
 	
 	@Override
-	public Object[] visit(ASThexa node, Object data) {
+	public Object visit(ASThexa node, Object data) {
 		String valStr = (String) node.data.get("hexa");
 		valStr = valStr.replace("#0x", "");
 		
-		String valHex = valStr;
-		String valInt = String.valueOf(Integer.parseInt(valHex, 16));
-		
-		String[] obj = null;
-		obj[0] = valHex;
-		obj[1] = valInt;
-		
-		return obj;	
+		return valStr;
 	}
-
+    
 	@Override
 	public Object visit(ASTcond node, Object data) {
 		String cond = node.value.toString();
@@ -77,8 +70,22 @@ public class Visitors implements MyTestVisitor{
 
 		return sCond;
 	}
+	
+	@Override
+	public Object visit(ASTlsl node, Object data) {
+		String lsl = node.value.toString();
 
-	////Instructions:////
+		return lsl;
+	}
+
+	@Override
+	public Object visit(ASTlsr node, Object data) {
+		String lsr = node.value.toString();
+
+		return lsr;
+	}
+
+////Instructions:////
 
 	//print la table des registres et cpsr
 	public void print(){
@@ -87,6 +94,18 @@ public class Visitors implements MyTestVisitor{
 		cpsr.print();
 	}
 
+	///shift LSL/LSR ///
+	@Override
+	public Object visit(ASTshiftLS node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object shift = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		int shiftVal = inst.shiftInstr(shift.toString(), reg.toString(), val.toString());
+		
+		return shiftVal;	
+	}
+	
 	///MOV///
 	@Override
 	public Object visit(ASTdecl node, Object data) {
@@ -527,6 +546,9 @@ public class Visitors implements MyTestVisitor{
 		int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
 		String ret = String.valueOf(re);
 		String C = cpsrReg.get("C").toString();
+		
+		if (C.equals("1")) C = "0";
+		else C="1";
 
 		//Then sub the C:
 		inst.subInstr(reg, ret, C);
@@ -546,6 +568,9 @@ public class Visitors implements MyTestVisitor{
 		String ret = String.valueOf(re);
 		String C = cpsrReg.get("C").toString();
 
+		if (C.equals("1")) C = "0";
+		else C="1";
+		
 		//Then sub the C:
 		int result = inst.subInstr(reg, ret, C);
 
@@ -566,6 +591,9 @@ public class Visitors implements MyTestVisitor{
 			String ret = String.valueOf(re);
 			String C = cpsrReg.get("C").toString();
 
+			if (C.equals("1")) C = "0";
+			else C="1";
+			
 			//Then sub the C:
 			inst.subInstr(reg, ret, C);
 		}
@@ -586,6 +614,9 @@ public class Visitors implements MyTestVisitor{
 			String ret = String.valueOf(re);
 			String C = cpsrReg.get("C").toString();
 
+			if (C.equals("1")) C = "0";
+			else C="1";
+			
 			//Then sub the C:
 			int result = inst.subInstr(reg, ret, C);
 
@@ -654,18 +685,11 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-	///TST///
-	@Override
-	public Object visit(ASTtst node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
-	public Object visit(ASTtstC node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
+	
 
 	
 

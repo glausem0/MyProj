@@ -1,8 +1,10 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{ multi = true;
+ //LOOKAHEAD = 3;
  VISITOR = true;
  NODE_EXTENDS="dataNode";
+
 }
 PARSER_BEGIN(MyTest)package compAndInt;
 
@@ -27,7 +29,13 @@ public class MyTest{
   /*CONITIONS*/
   < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
 | < SCND: "s" >
-    
+
+
+  /*SHIFT*/
+| < LSL: "lsl" >
+| < LSR: "lsr" >
+| < SHIFT: "<<" > 
+
   /* OPERATORS */| < MOV : "mov" >
 | < MVN : "mvn" >
 | < ADD : "add" >
@@ -38,11 +46,11 @@ public class MyTest{
 | < RSC : "rsc" >
 | < CMP : "cmp" >
 | < CMN : "cmn" >
-| < TST : "tst" >
+
   /*VAR*/
 | < NUMBER : ("#") ([ "0"-"9" ])+ >
-| < HEXA : ("#ox") ([ "0"-"9", "a"-"f" ])+ >
-| < REGISTER  : ("r") ([ "0"-"9"])+ >}SimpleNode prog():
+| < REGISTER  : ("r") ([ "0"-"9"])+ >
+| < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >}SimpleNode prog():
 {}
 {
   (instr())* < EOF > { return jjtThis;}}
@@ -59,7 +67,6 @@ void instr() #void:
 | rsc()
 | cmp()
 | cmn()
-| tst()
 }
 
 void mov() #void:
@@ -68,8 +75,8 @@ void mov() #void:
    <MOV>
    (
     (
-      (register() "," (number() | register())) #decl(2)
-    | (scnd() register() "," (number() | register())) #declS(3)
+      (register() "," ( number() | reg_shift() )) #decl(2)
+    | (scnd() register() "," (number() | register() | lsl() | lsr())) #declS(3)
     )
    |cond() 
     (
@@ -77,6 +84,13 @@ void mov() #void:
     | (scnd() register() "," (number() | register())) #declCS(4)
     )
    )
+}
+
+void reg_shift() #void:
+{}
+{
+  LOOKAHEAD(2)  (register() "," (lsl() (number() | register()) | lsr() (number() | register())) ) #shiftLS(3)
+| (register())
 }
 
 void mvn() #void:
@@ -220,16 +234,7 @@ void cmn()#void:
   )
 }
 
-void tst()#void:
-{}
-{
-  <TST>
-  (
-    (register() "," (number() | register())) #tst(2)
-  | (cond() register() "," (number() | register())) #tstC(3)
-  )
-}
-
+/*Cond, scond, lsl, lsr, registres, number, hexa*/
 void cond():
 {Token t;}
 {
@@ -240,6 +245,18 @@ void scnd():
 {Token t;}
 {
   t = < SCND > { jjtThis.value = t.image; }
+}
+
+void lsl():
+{Token t;}
+{
+  t= < LSL >  { jjtThis.value = t.image.toString(); }
+}
+
+void lsr():
+{Token t;}
+{
+  t= < LSR >  { jjtThis.value = t.image.toString(); }
 }
 
 void register() :
