@@ -29,23 +29,24 @@ public class UpdateCPSR {
 	}
 
 	//TODO verify carry
+	//unsigned overflow
 	private boolean carry(int result){
 		boolean car = false;
-		if(result > Integer.MAX_VALUE){
+		if(Integer.MIN_VALUE >= result && result >= Integer.MAX_VALUE){
 			car = true;
 		}
 		return car;
 	}	
 
+	//signed overflow
 	private boolean overflow(int result){
 		boolean ove = false;
-		if(result > Integer.MAX_VALUE){
+		if( result >= Integer.MAX_VALUE){
 			ove = true;
 		}
 		return ove;
 	}
 
-	
 	public void update(int result){
 		
 		if(negative(result)){

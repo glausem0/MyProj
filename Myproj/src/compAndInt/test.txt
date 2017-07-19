@@ -1,4 +1,6 @@
-mov r0, #1>>2
+movs r0, #0x80000000
 mov r1, r0, lsl#1
-cmn r0, #3
-adds r5, r3, #2
+mov r2, #3
+tst r3, #2
+orr r4, r0, #-1
+orrs r5, r1, #-1

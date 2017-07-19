@@ -36,7 +36,7 @@ public class MyTest{
 | < LSR: "lsr" >
 | < SHIFT: "<<" | ">>" > 
 
-  /* OPERATORS */| < MOV : "mov" >
+  /* ARITHMETIQUE*/| < MOV : "mov" >
 | < MVN : "mvn" >
 | < ADD : "add" >
 | < ADC : "adc" >
@@ -44,11 +44,21 @@ public class MyTest{
 | < SBC : "sbc" >
 | < RSB : "rsb" >
 | < RSC : "rsc" >
+
+  /*COMPARISON*/
 | < CMP : "cmp" >
 | < CMN : "cmn" >
+| < TEQ : "teq" >
+| < TST : "tst" >
+
+  /*LOGIC*/
+| < AND : "and" >
+| < BIC : "bic" >
+| < EOR : "eor" >
+| < ORR : "orr" >
 
   /*VAR*/
-| < NUMBER : ("#") ([ "0"-"9" ])+ >
+| < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >}SimpleNode prog():
@@ -66,8 +76,16 @@ void instr() #void:
 | sbc()
 | rsb()
 | rsc()
+
 | cmp()
 | cmn()
+| teq()
+| tst()
+
+| and()
+| bic()
+| eor()
+| orr()
 }
 
 void mov() #void:
@@ -226,6 +244,98 @@ void cmn()#void:
     (register() "," (hexa()| num_shift() | reg_shift())) #cmn(2)
   | (cond() register() "," (hexa()| num_shift() | reg_shift())) #cmnC(3)
   )
+}
+
+void teq()#void:
+{}
+{
+  <TEQ>
+  (
+    (register() "," (hexa()| num_shift() | reg_shift())) #teq(2)
+  | (cond() register() "," (hexa()| num_shift() | reg_shift())) #teqC(3)
+  )
+}
+
+void tst()#void:
+{}
+{
+  <TST>
+  (
+    (register() "," (hexa()| num_shift() | reg_shift())) #tst(2)
+  | (cond() register() "," (hexa()| num_shift() | reg_shift())) #tstC(3)
+  )
+}
+
+void and() #void:
+{}
+{
+  <AND>
+  (
+    (
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #and(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #andS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #andC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #andCS(5)  
+     )
+   )
+}
+
+void bic() #void:
+{}
+{
+  <BIC>
+  (
+    (
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #bic(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #bicS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #bicC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #bicCS(5)  
+     )
+   )
+}
+
+void eor() #void:
+{}
+{
+  <EOR>
+  (
+    (
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #eor(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #eorS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #eorC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #eorCS(5)  
+     )
+   )
+}
+
+void orr() #void:
+{}
+{
+  <ORR>
+  (
+    (
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #orr(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #orrS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #orrC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #orrCS(5)  
+     )
+   )
 }
 
 void reg_shift() #void:

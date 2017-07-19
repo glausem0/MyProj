@@ -52,8 +52,12 @@ public class Visitors implements MyTestVisitor{
 	@Override
 	public Object visit(ASThexa node, Object data) {
 		String valStr = (String) node.data.get("hexa");
+		valStr = valStr.replace("#0x", "");
+		//to have signed integer from hex:
+		long valLong = Long.parseLong(valStr, 16);
+		int value = (int) valLong;
 		
-		return valStr;
+		return value;
 	}
 	
 	@Override
@@ -133,6 +137,7 @@ public class Visitors implements MyTestVisitor{
 		return shiftVal;
 	}
 	
+    ////Arithmetique////	
 	///MOV///
 	@Override
 	public Object visit(ASTdecl node, Object data) {
@@ -367,7 +372,6 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-
 
 	///SUB///
 	@Override
@@ -652,7 +656,7 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-/////Instruction that update automatically the cpsr:
+    ////Comparaison////
 	///CMP///
 	@Override
 	public Object visit(ASTcmp node, Object data) {
@@ -711,6 +715,286 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-
 	
+	///TEQ///
+	@Override
+	public Object visit(ASTteq node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		
+		//cpsr set on the result of reg^arg1:
+		int result = inst.teqInstr(reg, arg1.toString());
+		
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTteqC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			//cpsr set on the result of reg^arg1:
+			int result = inst.teqInstr(reg, arg1.toString());
+			
+			upCpsr.update(result);
+		}
+		
+		return null;
+	}
+	
+	///TST
+	@Override
+	public Object visit(ASTtst node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		
+		//cpsr set on the result of reg&arg1:
+		int result = inst.tstInstr(reg, arg1.toString());
+		
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTtstC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			//cpsr set on the result of reg&arg1:
+			int result = inst.tstInstr(reg, arg1.toString());
+			
+			upCpsr.update(result);
+		}
+		
+		return null;
+	}
+
+    ////Logique////
+	///AND///
+	@Override
+	public Object visit(ASTand node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.andInstr(reg, arg1.toString(), arg2.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTandS node, Object data) {
+		Object sCond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTandC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			inst.andInstr(reg, arg1.toString(), arg2.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTandCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object sCond = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
+			upCpsr.update(result);
+		}
+		
+		return null;
+	}
+
+	///BIC///
+	@Override
+	public Object visit(ASTbic node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTbicS node, Object data) {
+		Object sCond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTbicC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTbicCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object sCond = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
+			upCpsr.update(result);
+		}
+		
+		return null;
+	}
+
+	///EOR///
+	@Override
+	public Object visit(ASTeor node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.eorInstr(reg, arg1.toString(), arg2.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTeorS node, Object data) {
+		Object sCond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTeorC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			inst.eorInstr(reg, arg1.toString(), arg2.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTeorCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object sCond = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
+			upCpsr.update(result);
+		}
+		
+		return null;
+	}
+
+	///ORR///
+	@Override
+	public Object visit(ASTorr node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.orrInstr(reg, arg1.toString(), arg2.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTorrS node, Object data) {
+		Object sCond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTorrC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			inst.orrInstr(reg, arg1.toString(), arg2.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTorrCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object sCond = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if ( condition.condAction(cond.toString()) ){
+			int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
+			upCpsr.update(result);
+		}
+		
+		return null;
+	}
+
 }

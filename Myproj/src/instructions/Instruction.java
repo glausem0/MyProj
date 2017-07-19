@@ -15,10 +15,6 @@ public class Instruction {
 		if (obj.startsWith("r")){
 			value = Integer.parseInt(regData.get(obj).toString());
 		}
-		else if (obj.startsWith("#0x")){
-			obj = obj.replace("#0x", "");
-			value = Integer.parseInt(obj, 16);
-		}
 		else{
 			value = Integer.parseInt(obj);
 		}
@@ -84,10 +80,8 @@ public class Instruction {
 		int regVal = toInt(reg.toString());
 		int value = toInt(arg1);
 		
-		int result = 0;
+		int result = regVal - value;
 
-		result = regVal-value;
-		
 		return result;
 	}
 	
@@ -95,9 +89,25 @@ public class Instruction {
 		int regVal = toInt(reg.toString());
 		int value = toInt(arg1);
 		
-		int result = 0;
+		int result = regVal + value;
 
-		result = regVal+value;
+		return result;
+	}
+	
+	public int teqInstr(Object reg, String arg1){
+		int regVal = toInt(reg.toString());
+		int value = toInt(arg1);
+		
+		int result = regVal ^ value;
+		
+		return result;
+	}
+	
+	public int tstInstr(Object reg, String arg1){
+		int regVal = toInt(reg.toString());
+		int value = toInt(arg1);
+		
+		int result = regVal & value;
 		
 		return result;
 	}
@@ -106,11 +116,10 @@ public class Instruction {
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
 		
-		int result = 0;
+		int result = val1+val2;
 		
-		regData.put(reg, ( val1 + val2 ));
-		result = val1+val2;
-
+		regData.put(reg, result);
+		
 		return result;
 	}
 
@@ -118,11 +127,55 @@ public class Instruction {
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
 		
-		int result = 0;
+		int result = ( val1 - val2 );
 		
-		regData.put(reg, ( val1 - val2 ));
-		result = ( val1 - val2 );
+		regData.put(reg, result);
 		
 		return result;
 	}
+	
+	public int andInstr(Object reg, String arg1, String arg2){
+		int val1 = toInt(arg1);
+		int val2 = toInt(arg2);
+		
+		int result = val1 & val2;
+		
+		regData.put(reg, result);
+		
+		return result;
+	}
+	
+	public int bicInstr(Object reg, String arg1, String arg2){
+		int val1 = toInt(arg1);
+		int val2 = toInt(arg2);
+		
+		int result = val1 & ~val2;
+		
+		regData.put(reg, result);
+		
+		return result;
+	}
+	
+	public int eorInstr(Object reg, String arg1, String arg2){
+		int val1 = toInt(arg1);
+		int val2 = toInt(arg2);
+		
+		int result = val1 ^ val2;
+		
+		regData.put(reg, result);
+		
+		return result;
+	}
+	
+	public int orrInstr(Object reg, String arg1, String arg2){
+		int val1 = toInt(arg1);
+		int val2 = toInt(arg2);
+		
+		int result = val1 | val2;
+		
+		regData.put(reg, result);
+		
+		return result;
+	}
+	
 }
