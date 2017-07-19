@@ -32,7 +32,7 @@ public class UpdateCPSR {
 	//unsigned overflow
 	private boolean carry(int result){
 		boolean car = false;
-		if(Integer.MIN_VALUE >= result && result >= Integer.MAX_VALUE){
+		if(Integer.MIN_VALUE >= result ){
 			car = true;
 		}
 		return car;
