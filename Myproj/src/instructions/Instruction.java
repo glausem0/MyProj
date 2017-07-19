@@ -26,18 +26,18 @@ public class Instruction {
 		return value;
 	}
 	
-	public int shiftInstr(String shiftType, String reg, String val){	
-		int regVal = toInt(reg);
-		int value = toInt(val);
+	public int shiftInstr(String shiftType, String val1, String val2){	
+		int regOrVal = toInt(val1);
+		int value = toInt(val2);
 					
 		int retVal = 0;
 		switch(shiftType){
 		case("lsl"):
 			if(1<=value && value <=31){
-				retVal = (int) (Math.pow(2, value) * regVal);
+				retVal = (int) (Math.pow(2, value) * regOrVal);
 			}
 			else if (value == 0) {
-				retVal = regVal;
+				retVal = regOrVal;
 			}
 			else {
 				retVal = 0;
@@ -46,14 +46,22 @@ public class Instruction {
 		
 		case("lsr"):
 			if(1<=value && value <=31){
-				retVal = (int) (Math.pow(2, value) / regVal);
+				retVal = (int) (Math.pow(2, value) / regOrVal);
 			}
 			else if (value == 0) {
-				retVal = regVal;
+				retVal = regOrVal;
 			}
 			else {
 				retVal = 0;
 			}
+			break;
+		
+		case("<<"):
+			retVal = regOrVal << value;
+			break;
+		
+		case(">>"):
+			retVal = regOrVal >> value;
 			break;
 		}
 		

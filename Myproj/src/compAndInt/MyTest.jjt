@@ -34,7 +34,7 @@ public class MyTest{
   /*SHIFT*/
 | < LSL: "lsl" >
 | < LSR: "lsr" >
-| < SHIFT: "<<" > 
+| < SHIFT: "<<" | ">>" > 
 
   /* OPERATORS */| < MOV : "mov" >
 | < MVN : "mvn" >
@@ -50,7 +50,8 @@ public class MyTest{
   /*VAR*/
 | < NUMBER : ("#") ([ "0"-"9" ])+ >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >
-| < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >}SimpleNode prog():
+| < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
+| < NUM : ([ "0"-"9" ])+ >}SimpleNode prog():
 {}
 {
   (instr())* < EOF > { return jjtThis;}}
@@ -75,13 +76,13 @@ void mov() #void:
    <MOV>
    (
     (
-      (register() "," ( hexa()| number() | reg_shift())) #decl(2)
-    | (scnd() register() "," ( hexa()| number() | reg_shift())) #declS(3)
+      (register() "," ( hexa()| num_shift() | reg_shift())) #decl(2)
+    | (scnd() register() "," ( hexa()| num_shift() | reg_shift())) #declS(3)
     )
    |cond() 
     (
-      (register() "," ( hexa()| number() | reg_shift() )) #declC(3)
-    | (scnd() register() "," ( hexa()| number() | reg_shift() )) #declCS(4)
+      (register() "," ( hexa()| num_shift() | reg_shift() )) #declC(3)
+    | (scnd() register() "," ( hexa()| num_shift() | reg_shift() )) #declCS(4)
     )
    )
 }
@@ -92,13 +93,13 @@ void mvn() #void:
    <MVN>
    (
     (
-      (register() "," ( hexa()| number() | reg_shift() )) #decln(2)
-    | (scnd() register() "," ( hexa()| number() | reg_shift() )) #declnS(3)
+      (register() "," ( hexa()| num_shift() | reg_shift() )) #decln(2)
+    | (scnd() register() "," ( hexa()| num_shift() | reg_shift() )) #declnS(3)
     )
    |cond() 
     (
-      (register() "," (hexa()| number() | reg_shift())) #declnC(3)
-    | (scnd() register() "," (hexa()| number() | reg_shift())) #declnCS(4)
+      (register() "," (hexa()| num_shift() | reg_shift())) #declnC(3)
+    | (scnd() register() "," (hexa()| num_shift() | reg_shift())) #declnCS(4)
     )
    )
 }
@@ -108,13 +109,13 @@ void add()#void:
 {
   <ADD>
   (
-    (      (register() "," register() "," (hexa()| number() | reg_shift())) #add(3)
-    | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #addS(4)
+    (      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #add(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #addS(4)
     )
 
   | cond()
-    (     (register() "," register() "," (hexa()| number() | reg_shift())) #addC(4)
-   | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #addCS(5)       )
+    (     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #addC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #addCS(5)       )
    )
 }
 
@@ -124,14 +125,14 @@ void adc()#void:
   <ADC>
   (
     (
-      (register() "," register() "," (hexa()| number() | reg_shift())) #adc(3)
-    | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #adcS(4)
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #adc(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #adcS(4)
     )
 
   | cond()
     (
-     (register() "," register() "," (hexa()| number() | reg_shift())) #adcC(4)
-   | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #adcCS(5)  
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #adcC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #adcCS(5)  
      )
    )
 }
@@ -142,14 +143,14 @@ void sub()#void:
   <SUB>
   (
     (
-      (register() "," register() "," (hexa()| number() | reg_shift())) #sub(3)
-    | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #subS(4)
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #sub(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #subS(4)
     )
 
   | cond()
     (
-     (register() "," register() "," (hexa()| number() | reg_shift())) #subC(4)
-   | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #subCS(5)  
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #subC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #subCS(5)  
      )
    )
 }
@@ -160,14 +161,14 @@ void sbc()#void:
   <SBC>
   (
     (
-      (register() "," register() "," (hexa()| number() | reg_shift())) #sbc(3)
-    | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #sbcS(4)
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #sbc(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #sbcS(4)
     )
 
   | cond()
     (
-     (register() "," register() "," (hexa()| number() | reg_shift())) #sbcC(4)
-   | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #sbcCS(5)  
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #sbcC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #sbcCS(5)  
      )
    )
 }
@@ -178,14 +179,14 @@ void rsb()#void:
   <RSB>
   (
     (
-      (register() "," register() "," (hexa()| number() | reg_shift())) #rsb(3)
-    | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #rsbS(4)
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #rsb(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #rsbS(4)
     )
 
   | cond()
     (
-     (register() "," register() "," (hexa()| number() | reg_shift())) #rsbC(4)
-   | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #rsbCS(5)  
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #rsbC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #rsbCS(5)  
      )
    )
 }
@@ -196,14 +197,14 @@ void rsc()#void:
   <RSC>
   (
     (
-      (register() "," register() "," (hexa()| number() | reg_shift())) #rsc(3)
-    | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #rscS(4)
+      (register() "," register() "," (hexa()| num_shift() | reg_shift())) #rsc(3)
+    | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #rscS(4)
     )
 
   | cond()
     (
-     (register() "," register() "," (hexa()| number() | reg_shift())) #rscC(4)
-   | (scnd() register() "," register() "," (hexa()| number() | reg_shift())) #rscCS(5)  
+     (register() "," register() "," (hexa()| num_shift() | reg_shift())) #rscC(4)
+   | (scnd() register() "," register() "," (hexa()| num_shift() | reg_shift())) #rscCS(5)  
      )
    )
 }
@@ -213,8 +214,8 @@ void cmp()#void:
 {
   <CMP>
   (
-    (register() "," (hexa()| number() | reg_shift())) #cmp(2)
-  | (cond() register() "," (hexa()| number() | reg_shift())) #cmpC(3)  )
+    (register() "," (hexa()| num_shift() | reg_shift())) #cmp(2)
+  | (cond() register() "," (hexa()| num_shift() | reg_shift())) #cmpC(3)  )
 }
 
 void cmn()#void:
@@ -222,8 +223,8 @@ void cmn()#void:
 {
   <CMN>
   (
-    (register() "," (hexa()| number() | reg_shift())) #cmn(2)
-  | (cond() register() "," (hexa()| number() | reg_shift())) #cmnC(3)
+    (register() "," (hexa()| num_shift() | reg_shift())) #cmn(2)
+  | (cond() register() "," (hexa()| num_shift() | reg_shift())) #cmnC(3)
   )
 }
 
@@ -233,6 +234,14 @@ void reg_shift() #void:
   LOOKAHEAD(2)
   (register() "," (lsl() (number() | register()) | lsr() (number() | register())) ) #shiftLS(3)
 | (register())
+}
+
+void num_shift() #void:
+{}
+{
+  LOOKAHEAD(2)
+  (number() shift() num()) #shiftF(3)
+| (number())
 }
 
 /*Cond, scond, lsl, lsr, registres, number, hexa*/
@@ -260,6 +269,12 @@ void lsr():
   t= < LSR >  { jjtThis.value = t.image.toString(); }
 }
 
+void shift():
+{Token t;}
+{
+  t = < SHIFT > { jjtThis.value = t.image.toString(); } 
+}
+
 void register() :
 {Token t;}
 {
@@ -276,4 +291,10 @@ void hexa():
 {Token t;}
 {
  t = < HEXA > { jjtThis.data.put("hexa", t.image.toString()); }
+}
+
+void num():
+{Token t;}
+{
+ t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
 }

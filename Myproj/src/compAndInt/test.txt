@@ -1,4 +1,4 @@
-mov r0, #0x00
+mov r0, #1>>2
 mov r1, r0, lsl#1
 cmn r0, #3
 adds r5, r3, #2

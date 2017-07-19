@@ -55,6 +55,13 @@ public class Visitors implements MyTestVisitor{
 		
 		return valStr;
 	}
+	
+	@Override
+	public Object visit(ASTnum node, Object data) {
+		String val = (String) node.data.get("num");
+		
+		return val;
+	}
     
 	@Override
 	public Object visit(ASTcond node, Object data) {
@@ -83,6 +90,15 @@ public class Visitors implements MyTestVisitor{
 
 		return lsr;
 	}
+	
+	@Override
+	public Object visit(ASTshift node, Object data) {
+		String fle = node.value.toString();
+
+		return fle;		
+	}
+
+	
 
 ////Instructions:////
 
@@ -103,6 +119,18 @@ public class Visitors implements MyTestVisitor{
 		int shiftVal = inst.shiftInstr(shift.toString(), reg.toString(), val.toString());
 		
 		return shiftVal;	
+	}
+	
+	///shift "<<" ///
+	@Override
+	public Object visit(ASTshiftF node, Object data) {
+		Object number = node.jjtGetChild(0).jjtAccept(this, data);
+		Object shift = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		int shiftVal = inst.shiftInstr(shift.toString(), number.toString(), val.toString());
+		
+		return shiftVal;
 	}
 	
 	///MOV///
@@ -685,12 +713,4 @@ public class Visitors implements MyTestVisitor{
 	}
 
 	
-
-
-
-	
-
-	
-
-
 }
