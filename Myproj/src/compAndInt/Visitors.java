@@ -52,7 +52,6 @@ public class Visitors implements MyTestVisitor{
 	@Override
 	public Object visit(ASThexa node, Object data) {
 		String valStr = (String) node.data.get("hexa");
-		valStr = valStr.replace("#0x", "");
 		
 		return valStr;
 	}
