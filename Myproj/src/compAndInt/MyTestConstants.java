@@ -53,13 +53,15 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int ORR = 25;
   /** RegularExpression Id. */
-  int NUMBER = 26;
+  int LDR = 26;
   /** RegularExpression Id. */
-  int REGISTER = 27;
+  int NUMBER = 27;
   /** RegularExpression Id. */
-  int HEXA = 28;
+  int REGISTER = 28;
   /** RegularExpression Id. */
-  int NUM = 29;
+  int HEXA = 29;
+  /** RegularExpression Id. */
+  int NUM = 30;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -92,6 +94,7 @@ public interface MyTestConstants {
     "\"bic\"",
     "\"eor\"",
     "\"orr\"",
+    "\"ldr\"",
     "<NUMBER>",
     "<REGISTER>",
     "<HEXA>",

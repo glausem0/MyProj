@@ -9,7 +9,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
   public static void main(String args []) throws Exception
   {
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
-        SimpleNode root = parser.prog();
+    //MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));        SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");
     root.dump(" ");
@@ -150,16 +150,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[2] = jj_gen;
@@ -193,16 +193,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[3] = jj_gen;
@@ -244,16 +244,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[5] = jj_gen;
@@ -287,16 +287,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[6] = jj_gen;
@@ -348,16 +348,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[9] = jj_gen;
@@ -391,16 +391,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[10] = jj_gen;
@@ -442,16 +442,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[12] = jj_gen;
@@ -485,16 +485,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[13] = jj_gen;
@@ -546,18 +546,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[16] = jj_gen;
@@ -591,18 +591,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[17] = jj_gen;
@@ -644,18 +644,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[19] = jj_gen;
@@ -689,18 +689,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[20] = jj_gen;
@@ -752,18 +752,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[23] = jj_gen;
@@ -797,18 +797,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[24] = jj_gen;
@@ -850,18 +850,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[26] = jj_gen;
@@ -895,18 +895,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[27] = jj_gen;
@@ -958,18 +958,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[30] = jj_gen;
@@ -1003,18 +1003,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[31] = jj_gen;
@@ -1056,18 +1056,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[33] = jj_gen;
@@ -1101,18 +1101,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[34] = jj_gen;
@@ -1164,18 +1164,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[37] = jj_gen;
@@ -1209,18 +1209,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[38] = jj_gen;
@@ -1262,18 +1262,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[40] = jj_gen;
@@ -1307,18 +1307,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[41] = jj_gen;
@@ -1370,18 +1370,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[44] = jj_gen;
@@ -1415,18 +1415,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[45] = jj_gen;
@@ -1468,18 +1468,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[47] = jj_gen;
@@ -1513,18 +1513,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[48] = jj_gen;
@@ -1576,18 +1576,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[51] = jj_gen;
@@ -1621,18 +1621,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[52] = jj_gen;
@@ -1674,18 +1674,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[54] = jj_gen;
@@ -1719,18 +1719,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[55] = jj_gen;
@@ -1779,16 +1779,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       jjtree.openNodeScope(jjtn001);
       try {
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[58] = jj_gen;
@@ -1822,16 +1822,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       try {
         cond();
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[59] = jj_gen;
@@ -1874,16 +1874,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       jjtree.openNodeScope(jjtn001);
       try {
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[61] = jj_gen;
@@ -1917,16 +1917,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       try {
         cond();
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[62] = jj_gen;
@@ -1969,16 +1969,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       jjtree.openNodeScope(jjtn001);
       try {
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[64] = jj_gen;
@@ -2012,16 +2012,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       try {
         cond();
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[65] = jj_gen;
@@ -2064,16 +2064,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       jjtree.openNodeScope(jjtn001);
       try {
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[67] = jj_gen;
@@ -2107,16 +2107,16 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       try {
         cond();
         register();
-        jj_consume_token(30);
+        jj_consume_token(31);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case HEXA:
           hexa();
           break;
         case NUMBER:
-          num_shift();
+          numOrNumShift();
           break;
         case REGISTER:
-          reg_shift();
+          regOrRegShift();
           break;
         default:
           jj_la1[68] = jj_gen;
@@ -2162,18 +2162,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[70] = jj_gen;
@@ -2207,18 +2207,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[71] = jj_gen;
@@ -2260,18 +2260,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[73] = jj_gen;
@@ -2305,18 +2305,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[74] = jj_gen;
@@ -2368,18 +2368,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[77] = jj_gen;
@@ -2413,18 +2413,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[78] = jj_gen;
@@ -2466,18 +2466,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[80] = jj_gen;
@@ -2511,18 +2511,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[81] = jj_gen;
@@ -2574,18 +2574,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[84] = jj_gen;
@@ -2619,18 +2619,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[85] = jj_gen;
@@ -2672,18 +2672,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[87] = jj_gen;
@@ -2717,18 +2717,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[88] = jj_gen;
@@ -2780,18 +2780,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         jjtree.openNodeScope(jjtn001);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[91] = jj_gen;
@@ -2825,18 +2825,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[92] = jj_gen;
@@ -2878,18 +2878,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
        jjtree.openNodeScope(jjtn003);
         try {
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[94] = jj_gen;
@@ -2923,18 +2923,18 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         try {
           scnd();
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           register();
-          jj_consume_token(30);
+          jj_consume_token(31);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HEXA:
             hexa();
             break;
           case NUMBER:
-            num_shift();
+            numOrNumShift();
             break;
           case REGISTER:
-            reg_shift();
+            regOrRegShift();
             break;
           default:
             jj_la1[95] = jj_gen;
@@ -2974,120 +2974,128 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     }
   }
 
-  static final public void reg_shift() throws ParseException {
+  static final public void regOrRegShift() throws ParseException {
     if (jj_2_1(2)) {
-    ASTshiftLS jjtn001 = new ASTshiftLS(JJTSHIFTLS);
-    boolean jjtc001 = true;
-    jjtree.openNodeScope(jjtn001);
-      try {
-        register();
-        jj_consume_token(30);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LSL:
-          lsl();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case NUMBER:
-            number();
-            break;
-          case REGISTER:
-            register();
-            break;
-          default:
-            jj_la1[98] = jj_gen;
-            jj_consume_token(-1);
-            throw new ParseException();
-          }
-          break;
-        case LSR:
-          lsr();
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case NUMBER:
-            number();
-            break;
-          case REGISTER:
-            register();
-            break;
-          default:
-            jj_la1[99] = jj_gen;
-            jj_consume_token(-1);
-            throw new ParseException();
-          }
-          break;
-        default:
-          jj_la1[100] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-      } catch (Throwable jjte001) {
-    if (jjtc001) {
-      jjtree.clearNodeScope(jjtn001);
-      jjtc001 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte001 instanceof RuntimeException) {
-      {if (true) throw (RuntimeException)jjte001;}
-    }
-    if (jjte001 instanceof ParseException) {
-      {if (true) throw (ParseException)jjte001;}
-    }
-    {if (true) throw (Error)jjte001;}
-      } finally {
-    if (jjtc001) {
-      jjtree.closeNodeScope(jjtn001,  3);
-    }
-      }
+      reg_shift();
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case REGISTER:
         register();
         break;
       default:
-        jj_la1[101] = jj_gen;
+        jj_la1[98] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
     }
   }
 
-  static final public void num_shift() throws ParseException {
+  static final public void numOrNumShift() throws ParseException {
     if (jj_2_2(2)) {
-    ASTshiftF jjtn001 = new ASTshiftF(JJTSHIFTF);
-    boolean jjtc001 = true;
-    jjtree.openNodeScope(jjtn001);
-      try {
-        number();
-        shift();
-        num();
-      } catch (Throwable jjte001) {
-    if (jjtc001) {
-      jjtree.clearNodeScope(jjtn001);
-      jjtc001 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte001 instanceof RuntimeException) {
-      {if (true) throw (RuntimeException)jjte001;}
-    }
-    if (jjte001 instanceof ParseException) {
-      {if (true) throw (ParseException)jjte001;}
-    }
-    {if (true) throw (Error)jjte001;}
-      } finally {
-    if (jjtc001) {
-      jjtree.closeNodeScope(jjtn001,  3);
-    }
-      }
+      num_shift();
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NUMBER:
         number();
         break;
       default:
+        jj_la1[99] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+  }
+
+  static final public void reg_shift() throws ParseException {
+   ASTshiftLS jjtn001 = new ASTshiftLS(JJTSHIFTLS);
+   boolean jjtc001 = true;
+   jjtree.openNodeScope(jjtn001);
+    try {
+      register();
+      jj_consume_token(31);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LSL:
+        lsl();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case NUMBER:
+          number();
+          break;
+        case REGISTER:
+          register();
+          break;
+        default:
+          jj_la1[100] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        break;
+      case LSR:
+        lsr();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case NUMBER:
+          number();
+          break;
+        case REGISTER:
+          register();
+          break;
+        default:
+          jj_la1[101] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        break;
+      default:
         jj_la1[102] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
+    } catch (Throwable jjte001) {
+   if (jjtc001) {
+     jjtree.clearNodeScope(jjtn001);
+     jjtc001 = false;
+   } else {
+     jjtree.popNode();
+   }
+   if (jjte001 instanceof RuntimeException) {
+     {if (true) throw (RuntimeException)jjte001;}
+   }
+   if (jjte001 instanceof ParseException) {
+     {if (true) throw (ParseException)jjte001;}
+   }
+   {if (true) throw (Error)jjte001;}
+    } finally {
+   if (jjtc001) {
+     jjtree.closeNodeScope(jjtn001,  3);
+   }
+    }
+  }
+
+  static final public void num_shift() throws ParseException {
+   ASTshiftF jjtn001 = new ASTshiftF(JJTSHIFTF);
+   boolean jjtc001 = true;
+   jjtree.openNodeScope(jjtn001);
+    try {
+      number();
+      shift();
+      num();
+    } catch (Throwable jjte001) {
+   if (jjtc001) {
+     jjtree.clearNodeScope(jjtn001);
+     jjtc001 = false;
+   } else {
+     jjtree.popNode();
+   }
+   if (jjte001 instanceof RuntimeException) {
+     {if (true) throw (RuntimeException)jjte001;}
+   }
+   if (jjte001 instanceof ParseException) {
+     {if (true) throw (ParseException)jjte001;}
+   }
+   {if (true) throw (Error)jjte001;}
+    } finally {
+   if (jjtc001) {
+     jjtree.closeNodeScope(jjtn001,  3);
+   }
     }
   }
 
@@ -3259,30 +3267,40 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     finally { jj_save(1, xla); }
   }
 
-  static private boolean jj_3R_2() {
-    if (jj_scan_token(REGISTER)) return true;
-    return false;
-  }
-
-  static private boolean jj_3_1() {
-    if (jj_3R_2()) return true;
-    if (jj_scan_token(30)) return true;
+  static private boolean jj_3R_6() {
+    if (jj_scan_token(SHIFT)) return true;
     return false;
   }
 
   static private boolean jj_3R_3() {
-    if (jj_scan_token(NUMBER)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_4() {
-    if (jj_scan_token(SHIFT)) return true;
+    if (jj_3R_5()) return true;
+    if (jj_3R_6()) return true;
     return false;
   }
 
   static private boolean jj_3_2() {
     if (jj_3R_3()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_4() {
+    if (jj_scan_token(REGISTER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_2() {
     if (jj_3R_4()) return true;
+    if (jj_scan_token(31)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_5() {
+    if (jj_scan_token(NUMBER)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    if (jj_3R_2()) return true;
     return false;
   }
 
@@ -3304,7 +3322,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x3fffc00,0x3fffc00,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000020,0x1c000000,0x1c000000,0x8000020,0x1c000000,0x1c000000,0x8000020,0x1c000000,0x1c000000,0x8000020,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0x1c000000,0x1c000000,0x8000040,0x1c000000,0x1c000000,0x8000040,0x8000060,0xc000000,0xc000000,0x180,0x8000000,0x4000000,};
+      jj_la1_0 = new int[] {0x3fffc00,0x3fffc00,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x10000000,0x8000000,0x18000000,0x18000000,0x180,};
    }
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -3514,7 +3532,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[31];
+    boolean[] la1tokens = new boolean[32];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -3528,7 +3546,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         }
       }
     }
-    for (int i = 0; i < 31; i++) {
+    for (int i = 0; i < 32; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
