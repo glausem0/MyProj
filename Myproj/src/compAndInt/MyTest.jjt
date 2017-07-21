@@ -13,7 +13,8 @@ import registers.Register;
 
 public class MyTest{
     public static void main(String args []) throws Exception  {	
-    MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));	SimpleNode root = parser.prog();
+    //MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
+    MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));	SimpleNode root = parser.prog();
 
     System.out.println("Abstract Syntax Tree:");
     root.dump(" ");
@@ -29,7 +30,6 @@ public class MyTest{
   /*CONITIONS*/
   < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
 | < SCND: "s" >
-
 
   /*SHIFT*/
 | < LSL: "lsl" >
@@ -56,7 +56,9 @@ public class MyTest{
 | < BIC : "bic" >
 | < EOR : "eor" >
 | < ORR : "orr" >
-
+  /*LDR/STR*/
+| < LDR : "ldr" >
+
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >
@@ -86,6 +88,8 @@ void instr() #void:
 | bic()
 | eor()
 | orr()
+
+
 }
 
 void mov() #void:
@@ -338,21 +342,34 @@ void orr() #void:
    )
 }
 
-void reg_shift() #void:
+void regOrRegShift() #void:
 {}
 {
   LOOKAHEAD(2)
-  (register() "," (lsl() (number() | register()) | lsr() (number() | register())) ) #shiftLS(3)
+  (reg_shift())
 | (register())
 }
 
-void num_shift() #void:
+void numOrNumShift() #void:
 {}
 {
   LOOKAHEAD(2)
-  (number() shift() num()) #shiftF(3)
+  (num_shift())
 | (number())
 }
+
+void reg_shift #void:
+{}
+{
+ (register() "," (lsl() (number() | register()) | lsr() (number() | register())) ) #shiftLS(3)
+}
+
+void num_shift #void:
+{}
+{
+ (number() shift() num()) #shiftF(3)
+}
+
 
 /*Cond, scond, lsl, lsr, registres, number, hexa*/
 void cond():
