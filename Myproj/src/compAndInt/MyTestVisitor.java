@@ -61,6 +61,9 @@ public interface MyTestVisitor
   public Object visit(ASTorrS node, Object data);
   public Object visit(ASTorrC node, Object data);
   public Object visit(ASTorrCS node, Object data);
+  public Object visit(ASTldrSimple node, Object data);
+  public Object visit(ASTcloseAUp node, Object data);
+  public Object visit(ASTclose node, Object data);
   public Object visit(ASTshiftLS node, Object data);
   public Object visit(ASTshiftF node, Object data);
   public Object visit(ASTcond node, Object data);
@@ -73,4 +76,4 @@ public interface MyTestVisitor
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
 }
-/* JavaCC - OriginalChecksum=b014a6ca97b63a3ac63121783faa2edd (do not edit this line) */
+/* JavaCC - OriginalChecksum=405dfcdc7be53625aba510f508a2789e (do not edit this line) */

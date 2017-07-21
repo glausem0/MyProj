@@ -3101,7 +3101,30 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case 34:
-          closeOrCAUp();
+     ASTldrSimple jjtn001 = new ASTldrSimple(JJTLDRSIMPLE);
+     boolean jjtc001 = true;
+     jjtree.openNodeScope(jjtn001);
+          try {
+            closeOrCAUp();
+          } catch (Throwable jjte001) {
+     if (jjtc001) {
+       jjtree.clearNodeScope(jjtn001);
+       jjtc001 = false;
+     } else {
+       jjtree.popNode();
+     }
+     if (jjte001 instanceof RuntimeException) {
+       {if (true) throw (RuntimeException)jjte001;}
+     }
+     if (jjte001 instanceof ParseException) {
+       {if (true) throw (ParseException)jjte001;}
+     }
+     {if (true) throw (Error)jjte001;}
+          } finally {
+     if (jjtc001) {
+       jjtree.closeNodeScope(jjtn001,  2);
+     }
+          }
           break;
         default:
           jj_la1[106] = jj_gen;
@@ -3136,12 +3159,30 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
 
   static final public void closeOrCAUp() throws ParseException {
     if (jj_2_4(2)) {
-      jj_consume_token(34);
-      jj_consume_token(35);
+    ASTcloseAUp jjtn001 = new ASTcloseAUp(JJTCLOSEAUP);
+    boolean jjtc001 = true;
+    jjtree.openNodeScope(jjtn001);
+      try {
+        jj_consume_token(34);
+        jj_consume_token(35);
+      } finally {
+    if (jjtc001) {
+      jjtree.closeNodeScope(jjtn001, true);
+    }
+      }
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 34:
-        jj_consume_token(34);
+    ASTclose jjtn002 = new ASTclose(JJTCLOSE);
+    boolean jjtc002 = true;
+    jjtree.openNodeScope(jjtn002);
+        try {
+          jj_consume_token(34);
+        } finally {
+    if (jjtc002) {
+      jjtree.closeNodeScope(jjtn002, true);
+    }
+        }
         break;
       default:
         jj_la1[109] = jj_gen;

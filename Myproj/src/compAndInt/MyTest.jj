@@ -1908,7 +1908,34 @@ void ldr()      :
   | ( LOOKAHEAD(2) (register() "," (num_shift() | reg_shift()) ) | (register()) )
   | ( number() )
    )
- | closeOrCAUp()
+ |/*@bgen(jjtree) #ldrSimple( 2) */
+   {
+     ASTldrSimple jjtn001 = new ASTldrSimple(JJTLDRSIMPLE);
+     boolean jjtc001 = true;
+     jjtree.openNodeScope(jjtn001);
+   }
+   try {
+/*@egen*/ closeOrCAUp()/*@bgen(jjtree)*/
+   } catch (Throwable jjte001) {
+     if (jjtc001) {
+       jjtree.clearNodeScope(jjtn001);
+       jjtc001 = false;
+     } else {
+       jjtree.popNode();
+     }
+     if (jjte001 instanceof RuntimeException) {
+       throw (RuntimeException)jjte001;
+     }
+     if (jjte001 instanceof ParseException) {
+       throw (ParseException)jjte001;
+     }
+     throw (Error)jjte001;
+   } finally {
+     if (jjtc001) {
+       jjtree.closeNodeScope(jjtn001,  2);
+     }
+   }
+/*@egen*/              
   )  )
 }
 
@@ -1921,9 +1948,35 @@ void shiftCOrShiftCAUp()        :
 void closeOrCAUp()      :
 {}
 {
-  LOOKAHEAD(2)
-  ("]" "!")
-| ("]")
+  LOOKAHEAD(2)/*@bgen(jjtree) #closeAUp(true) */
+  {
+    ASTcloseAUp jjtn001 = new ASTcloseAUp(JJTCLOSEAUP);
+    boolean jjtc001 = true;
+    jjtree.openNodeScope(jjtn001);
+  }
+  try {
+/*@egen*/
+  ("]" "!")/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc001) {
+      jjtree.closeNodeScope(jjtn001, true);
+    }
+  }
+/*@egen*/            
+|/*@bgen(jjtree) #close(true) */
+  {
+    ASTclose jjtn002 = new ASTclose(JJTCLOSE);
+    boolean jjtc002 = true;
+    jjtree.openNodeScope(jjtn002);
+  }
+  try {
+/*@egen*/ ("]")/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc002) {
+      jjtree.closeNodeScope(jjtn002, true);
+    }
+  }
+/*@egen*/         
 }
 
 void regOrRegShift()      :

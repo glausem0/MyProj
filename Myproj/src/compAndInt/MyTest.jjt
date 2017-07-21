@@ -361,7 +361,7 @@ void ldr() #void:
   | ( LOOKAHEAD(2) (register() "," (num_shift() | reg_shift()) ) | (register()) )
   | ( number() )
    )
- | closeOrCAUp()
+ | closeOrCAUp() #ldrSimple(2)
   )  )
 }
 
@@ -375,8 +375,8 @@ void closeOrCAUp() #void:
 {}
 {
   LOOKAHEAD(2)
-  ("]" "!")
-| ("]")
+  ("]" "!") #closeAUp()
+| ("]") #close()
 }
 
 void regOrRegShift() #void:

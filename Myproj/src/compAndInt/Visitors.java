@@ -103,7 +103,6 @@ public class Visitors implements MyTestVisitor{
 	}
 
 	
-
 ////Instructions:////
 
 	//print la table des registres et cpsr
@@ -994,6 +993,28 @@ public class Visitors implements MyTestVisitor{
 			upCpsr.update(result);
 		}
 		
+		return null;
+	}
+
+	
+///LDR/STR///	
+	
+	@Override
+	public Object visit(ASTcloseAUp node, Object data) {
+		String cu = "Close_U"; //close and update
+		return cu;
+	}
+
+	@Override
+	public Object visit(ASTclose node, Object data) {
+		String c = "Close";
+		return c;
+	}
+
+	@Override
+	public Object visit(ASTldrSimple node, Object data) {
+		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object close = node.jjtGetChild(1).jjtAccept(this, data);
 		return null;
 	}
 
