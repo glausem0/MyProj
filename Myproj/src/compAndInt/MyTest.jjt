@@ -89,7 +89,7 @@ void instr() #void:
 | eor()
 | orr()
 
-
+| ldr()
 }
 
 void mov() #void:
@@ -340,6 +340,43 @@ void orr() #void:
    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orrCS(5)  
      )
    )
+}
+
+void ldr() #void:
+{}
+{
+  < LDR > "[" register()
+  (
+   ","
+   ( 
+    ( "-" register() (shiftCOrShiftCAUp()| closeOrCAUp()) )
+  | ( register() (shiftCOrShiftCAUp()| closeOrCAUp()))
+  | ( number() closeOrCAUp())
+   )
+| ( 
+ LOOKAHEAD(2)  
+  "]" ","
+   (
+    ( LOOKAHEAD(3) ("-" register() "," (num_shift() | reg_shift()) ) |("-" register()) )
+  | ( LOOKAHEAD(2) (register() "," (num_shift() | reg_shift()) ) | (register()) )
+  | ( number() )
+   )
+ | closeOrCAUp()
+  )  )
+}
+
+void shiftCOrShiftCAUp() #void():
+{}
+{
+  "," (num_shift() | reg_shift()) closeOrCAUp()    
+}
+
+void closeOrCAUp() #void:
+{}
+{
+  LOOKAHEAD(2)
+  ("]" "!")
+| ("]")
 }
 
 void regOrRegShift() #void:

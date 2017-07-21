@@ -47,6 +47,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         case BIC:
         case EOR:
         case ORR:
+        case LDR:
           ;
           break;
         default:
@@ -130,6 +131,9 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       break;
     case ORR:
       orr();
+      break;
+    case LDR:
+      ldr();
       break;
     default:
       jj_la1[1] = jj_gen;
@@ -2974,8 +2978,181 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     }
   }
 
+  static final public void ldr() throws ParseException {
+    jj_consume_token(LDR);
+    jj_consume_token(32);
+    register();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case 31:
+      jj_consume_token(31);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 33:
+        jj_consume_token(33);
+        register();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 31:
+          shiftCOrShiftCAUp();
+          break;
+        case 34:
+          closeOrCAUp();
+          break;
+        default:
+          jj_la1[98] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        break;
+      case REGISTER:
+        register();
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 31:
+          shiftCOrShiftCAUp();
+          break;
+        case 34:
+          closeOrCAUp();
+          break;
+        default:
+          jj_la1[99] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+        break;
+      case NUMBER:
+        number();
+        closeOrCAUp();
+        break;
+      default:
+        jj_la1[100] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      break;
+    case 34:
+      if (jj_2_3(2)) {
+        jj_consume_token(34);
+        jj_consume_token(31);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 33:
+          if (jj_2_1(3)) {
+            jj_consume_token(33);
+            register();
+            jj_consume_token(31);
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case NUMBER:
+              num_shift();
+              break;
+            case REGISTER:
+              reg_shift();
+              break;
+            default:
+              jj_la1[101] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          } else {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case 33:
+              jj_consume_token(33);
+              register();
+              break;
+            default:
+              jj_la1[102] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          }
+          break;
+        case REGISTER:
+          if (jj_2_2(2)) {
+            register();
+            jj_consume_token(31);
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case NUMBER:
+              num_shift();
+              break;
+            case REGISTER:
+              reg_shift();
+              break;
+            default:
+              jj_la1[103] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          } else {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case REGISTER:
+              register();
+              break;
+            default:
+              jj_la1[104] = jj_gen;
+              jj_consume_token(-1);
+              throw new ParseException();
+            }
+          }
+          break;
+        case NUMBER:
+          number();
+          break;
+        default:
+          jj_la1[105] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      } else {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 34:
+          closeOrCAUp();
+          break;
+        default:
+          jj_la1[106] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+      break;
+    default:
+      jj_la1[107] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void shiftCOrShiftCAUp() throws ParseException {
+    jj_consume_token(31);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case NUMBER:
+      num_shift();
+      break;
+    case REGISTER:
+      reg_shift();
+      break;
+    default:
+      jj_la1[108] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    closeOrCAUp();
+  }
+
+  static final public void closeOrCAUp() throws ParseException {
+    if (jj_2_4(2)) {
+      jj_consume_token(34);
+      jj_consume_token(35);
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 34:
+        jj_consume_token(34);
+        break;
+      default:
+        jj_la1[109] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+  }
+
   static final public void regOrRegShift() throws ParseException {
-    if (jj_2_1(2)) {
+    if (jj_2_5(2)) {
       reg_shift();
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2983,7 +3160,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         register();
         break;
       default:
-        jj_la1[98] = jj_gen;
+        jj_la1[110] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -2991,7 +3168,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
   }
 
   static final public void numOrNumShift() throws ParseException {
-    if (jj_2_2(2)) {
+    if (jj_2_6(2)) {
       num_shift();
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2999,7 +3176,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         number();
         break;
       default:
-        jj_la1[99] = jj_gen;
+        jj_la1[111] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -3024,7 +3201,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
           register();
           break;
         default:
-          jj_la1[100] = jj_gen;
+          jj_la1[112] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -3039,13 +3216,13 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
           register();
           break;
         default:
-          jj_la1[101] = jj_gen;
+          jj_la1[113] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
         break;
       default:
-        jj_la1[102] = jj_gen;
+        jj_la1[114] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -3267,30 +3444,65 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     finally { jj_save(1, xla); }
   }
 
+  static private boolean jj_2_3(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_3(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  static private boolean jj_2_4(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_4(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
+  static private boolean jj_2_5(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_5(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(4, xla); }
+  }
+
+  static private boolean jj_2_6(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_6(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(5, xla); }
+  }
+
   static private boolean jj_3R_6() {
     if (jj_scan_token(SHIFT)) return true;
     return false;
   }
 
-  static private boolean jj_3R_3() {
-    if (jj_3R_5()) return true;
-    if (jj_3R_6()) return true;
+  static private boolean jj_3_6() {
+    if (jj_3R_4()) return true;
     return false;
   }
 
   static private boolean jj_3_2() {
+    if (jj_3R_2()) return true;
+    if (jj_scan_token(31)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    if (jj_scan_token(33)) return true;
+    if (jj_3R_2()) return true;
+    if (jj_scan_token(31)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_5() {
     if (jj_3R_3()) return true;
     return false;
   }
 
   static private boolean jj_3R_4() {
-    if (jj_scan_token(REGISTER)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_2() {
-    if (jj_3R_4()) return true;
-    if (jj_scan_token(31)) return true;
+    if (jj_3R_5()) return true;
+    if (jj_3R_6()) return true;
     return false;
   }
 
@@ -3299,8 +3511,26 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     return false;
   }
 
-  static private boolean jj_3_1() {
+  static private boolean jj_3_3() {
+    if (jj_scan_token(34)) return true;
+    if (jj_scan_token(31)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_4() {
+    if (jj_scan_token(34)) return true;
+    if (jj_scan_token(35)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_3() {
     if (jj_3R_2()) return true;
+    if (jj_scan_token(31)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_2() {
+    if (jj_scan_token(REGISTER)) return true;
     return false;
   }
 
@@ -3316,15 +3546,20 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[103];
+  static final private int[] jj_la1 = new int[115];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
+      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x3fffc00,0x3fffc00,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x10000000,0x8000000,0x18000000,0x18000000,0x180,};
+      jj_la1_0 = new int[] {0x7fffc00,0x7fffc00,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000020,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x38000000,0x38000000,0x10000040,0x38000000,0x38000000,0x10000040,0x10000060,0x80000000,0x80000000,0x18000000,0x18000000,0x0,0x18000000,0x10000000,0x18000000,0x0,0x80000000,0x18000000,0x0,0x10000000,0x8000000,0x18000000,0x18000000,0x180,};
    }
-  static final private JJCalls[] jj_2_rtns = new JJCalls[2];
+   private static void jj_la1_init_1() {
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x4,0x2,0x0,0x2,0x0,0x0,0x2,0x4,0x4,0x0,0x4,0x0,0x0,0x0,0x0,0x0,};
+   }
+  static final private JJCalls[] jj_2_rtns = new JJCalls[6];
   static private boolean jj_rescan = false;
   static private int jj_gc = 0;
 
@@ -3346,7 +3581,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 115; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3362,7 +3597,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 115; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3380,7 +3615,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 115; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3392,7 +3627,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 115; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3409,7 +3644,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 115; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3420,7 +3655,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 115; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3532,21 +3767,24 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[32];
+    boolean[] la1tokens = new boolean[36];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 103; i++) {
+    for (int i = 0; i < 115; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
+          if ((jj_la1_1[i] & (1<<j)) != 0) {
+            la1tokens[32+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 36; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -3573,7 +3811,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
 
   static private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 6; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -3582,6 +3820,10 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
           switch (i) {
             case 0: jj_3_1(); break;
             case 1: jj_3_2(); break;
+            case 2: jj_3_3(); break;
+            case 3: jj_3_4(); break;
+            case 4: jj_3_5(); break;
+            case 5: jj_3_6(); break;
           }
         }
         p = p.next;

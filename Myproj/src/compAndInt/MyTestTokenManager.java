@@ -53,8 +53,16 @@ static private int jjMoveStringLiteralDfa0_0()
 {
    switch(curChar)
    {
+      case 33:
+         return jjStopAtPos(0, 35);
       case 44:
          return jjStopAtPos(0, 31);
+      case 45:
+         return jjStopAtPos(0, 33);
+      case 91:
+         return jjStopAtPos(0, 32);
+      case 93:
+         return jjStopAtPos(0, 34);
       case 97:
          return jjMoveStringLiteralDfa1_0(0x403000L);
       case 98:
@@ -472,14 +480,14 @@ public static final String[] jjstrLiteralImages = {
 "\155\157\166", "\155\166\156", "\141\144\144", "\141\144\143", "\163\165\142", 
 "\163\142\143", "\162\163\142", "\162\163\143", "\143\155\160", "\143\155\156", 
 "\164\145\161", "\164\163\164", "\141\156\144", "\142\151\143", "\145\157\162", 
-"\157\162\162", "\154\144\162", null, null, null, null, "\54", };
+"\157\162\162", "\154\144\162", null, null, null, null, "\54", "\133", "\55", "\135", "\41", };
 
 /** Lexer state names. */
 public static final String[] lexStateNames = {
    "DEFAULT",
 };
 static final long[] jjtoToken = {
-   0xffffffe1L, 
+   0xfffffffe1L, 
 };
 static final long[] jjtoSkip = {
    0x1eL, 

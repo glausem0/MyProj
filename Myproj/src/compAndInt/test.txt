@@ -1,1 +1,2 @@
-movs r0, r1, lsl#3
+movs r0, #3
+ldr [ r0 ] , -r4 

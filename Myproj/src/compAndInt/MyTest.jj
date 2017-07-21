@@ -124,7 +124,7 @@ void instr()      :
 | eor()
 | orr()
 
-
+| ldr()
 }
 
 void mov()      :
@@ -1887,6 +1887,43 @@ void orr()      :
 /*@egen*/            
      )
    )
+}
+
+void ldr()      :
+{}
+{
+  < LDR > "[" register()
+  (
+   ","
+   ( 
+    ( "-" register() (shiftCOrShiftCAUp()| closeOrCAUp()) )
+  | ( register() (shiftCOrShiftCAUp()| closeOrCAUp()))
+  | ( number() closeOrCAUp())
+   )
+| ( 
+ LOOKAHEAD(2)  
+  "]" ","
+   (
+    ( LOOKAHEAD(3) ("-" register() "," (num_shift() | reg_shift()) ) |("-" register()) )
+  | ( LOOKAHEAD(2) (register() "," (num_shift() | reg_shift()) ) | (register()) )
+  | ( number() )
+   )
+ | closeOrCAUp()
+  )  )
+}
+
+void shiftCOrShiftCAUp()        :
+{}
+{
+  "," (num_shift() | reg_shift()) closeOrCAUp()    
+}
+
+void closeOrCAUp()      :
+{}
+{
+  LOOKAHEAD(2)
+  ("]" "!")
+| ("]")
 }
 
 void regOrRegShift()      :
