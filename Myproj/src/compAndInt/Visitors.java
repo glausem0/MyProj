@@ -5,6 +5,7 @@ import java.util.HashMap;
 import instructions.Condition;
 import instructions.Instruction;
 import instructions.UpdateCPSR;
+import memory.Memory;
 import registers.Cpsr;
 import registers.Register;
 
@@ -15,8 +16,11 @@ public class Visitors implements MyTestVisitor{
 
 	Cpsr cpsr = new Cpsr();
 	private HashMap<Object, Object> cpsrReg = cpsr.init();
+	
+	Memory memory = new Memory();
+	private HashMap<Object, Object> mem = memory.init();
 
-	Instruction inst = new Instruction(reg);
+	Instruction inst = new Instruction(reg, mem, memory);
 	Condition condition = new Condition(reg, cpsrReg);
 	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
 
@@ -107,9 +111,12 @@ public class Visitors implements MyTestVisitor{
 
 	//print la table des registres et cpsr
 	public void print(){
+		System.out.println("Register:\n");
 		regData.print();
-		System.out.println("\n");
+		System.out.println("CPSR\n");
 		cpsr.print();
+		System.out.println("Memory\n");
+		memory.print();
 	}
 
 	///shift LSL/LSR ///
@@ -1001,20 +1008,72 @@ public class Visitors implements MyTestVisitor{
 	
 	@Override
 	public Object visit(ASTcloseAUp node, Object data) {
-		String cu = "Close_U"; //close and update
+		String cu = "CU"; //close and update
 		return cu;
 	}
 
 	@Override
 	public Object visit(ASTclose node, Object data) {
-		String c = "Close";
+		String c = "C";
 		return c;
+	}
+	
+	@Override
+	public Object visit(ASTldrSimple node, Object data) {
+		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(2).jjtAccept(this, data);
+		
+		String val="null";
+		
+		inst.preLdrIntr(regLdr.toString(), regV.toString(), val, close, "p");
+		
+		return null;
 	}
 
 	@Override
-	public Object visit(ASTldrSimple node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
-		Object close = node.jjtGetChild(1).jjtAccept(this, data);
+	public Object visit(ASTldrPreNeg node, Object data) {
+		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.preLdrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "n");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrPrePos node, Object data) {
+		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.preLdrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "p");
+		
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTldrPostNeg node, Object data) {
+		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.postLdrIntr(regLdr.toString(), regV.toString(), val.toString(), "n");
+		
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTldrPostPos node, Object data) {
+		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.postLdrIntr(regLdr.toString(), regV.toString(), val.toString(), "p");
+		
 		return null;
 	}
 

@@ -61,20 +61,24 @@ public interface MyTestTreeConstants
   public int JJTORRS = 55;
   public int JJTORRC = 56;
   public int JJTORRCS = 57;
-  public int JJTLDRSIMPLE = 58;
-  public int JJTCLOSEAUP = 59;
-  public int JJTCLOSE = 60;
-  public int JJTSHIFTLS = 61;
-  public int JJTSHIFTF = 62;
-  public int JJTCOND = 63;
-  public int JJTSCND = 64;
-  public int JJTLSL = 65;
-  public int JJTLSR = 66;
-  public int JJTSHIFT = 67;
-  public int JJTREGISTER = 68;
-  public int JJTNUMBER = 69;
-  public int JJTHEXA = 70;
-  public int JJTNUM = 71;
+  public int JJTLDRPRENEG = 58;
+  public int JJTLDRPREPOS = 59;
+  public int JJTLDRPOSTNEG = 60;
+  public int JJTLDRPOSTPOS = 61;
+  public int JJTLDRSIMPLE = 62;
+  public int JJTCLOSEAUP = 63;
+  public int JJTCLOSE = 64;
+  public int JJTSHIFTLS = 65;
+  public int JJTSHIFTF = 66;
+  public int JJTCOND = 67;
+  public int JJTSCND = 68;
+  public int JJTLSL = 69;
+  public int JJTLSR = 70;
+  public int JJTSHIFT = 71;
+  public int JJTREGISTER = 72;
+  public int JJTNUMBER = 73;
+  public int JJTHEXA = 74;
+  public int JJTNUM = 75;
 
 
   public String[] jjtNodeName = {
@@ -136,6 +140,10 @@ public interface MyTestTreeConstants
     "orrS",
     "orrC",
     "orrCS",
+    "ldrPreNeg",
+    "ldrPrePos",
+    "ldrPostNeg",
+    "ldrPostPos",
     "ldrSimple",
     "closeAUp",
     "close",
@@ -152,4 +160,4 @@ public interface MyTestTreeConstants
     "num",
   };
 }
-/* JavaCC - OriginalChecksum=8c6a5ea5871daf85991b5b4dbc57b391 (do not edit this line) */
+/* JavaCC - OriginalChecksum=412e299f45ccae3fb5b97e22a068fa67 (do not edit this line) */

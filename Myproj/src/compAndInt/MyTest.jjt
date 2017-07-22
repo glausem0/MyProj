@@ -345,30 +345,23 @@ void orr() #void:
 void ldr() #void:
 {}
 {
-  < LDR > "[" register()
-  (
-   ","
-   ( 
-    ( "-" register() (shiftCOrShiftCAUp()| closeOrCAUp()) )
-  | ( register() (shiftCOrShiftCAUp()| closeOrCAUp()))
-  | ( number() closeOrCAUp())
-   )
-| ( 
- LOOKAHEAD(2)  
-  "]" ","
-   (
-    ( LOOKAHEAD(3) ("-" register() "," (num_shift() | reg_shift()) ) |("-" register()) )
-  | ( LOOKAHEAD(2) (register() "," (num_shift() | reg_shift()) ) | (register()) )
-  | ( number() )
-   )
- | closeOrCAUp() #ldrSimple(2)
-  )  )
-}
-
-void shiftCOrShiftCAUp() #void():
-{}
-{
-  "," (num_shift() | reg_shift()) closeOrCAUp()    
+  < LDR >
+    register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrPostPos(3)
+        )
+        | closeOrCAUp()#ldrSimple(3) 
+     )    )
 }
 
 void closeOrCAUp() #void:

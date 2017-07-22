@@ -1,2 +1,4 @@
 movs r0, #3
-ldr [ r0 ] , -r4 
+mov r1, #5
+mov r2, #5
+ldr r2, [r0], r1
