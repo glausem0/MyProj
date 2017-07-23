@@ -131,10 +131,12 @@ public interface MyTestVisitor
   public Object visit(ASTscnd node, Object data);
   public Object visit(ASTlsl node, Object data);
   public Object visit(ASTlsr node, Object data);
+  public Object visit(ASTasr node, Object data);
+  public Object visit(ASTror node, Object data);
   public Object visit(ASTshift node, Object data);
   public Object visit(ASTregister node, Object data);
   public Object visit(ASTnumber node, Object data);
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
 }
-/* JavaCC - OriginalChecksum=8029b78922703010eb43d3e4b165cfaf (do not edit this line) */
+/* JavaCC - OriginalChecksum=d2d3bd21adc24cac90c0fdde63051ce1 (do not edit this line) */

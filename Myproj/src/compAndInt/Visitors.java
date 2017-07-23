@@ -114,6 +114,20 @@ public class Visitors implements MyTestVisitor{
 	}
 	
 	@Override
+	public Object visit(ASTasr node, Object data) {
+		String asr = node.value.toString();
+
+		return asr;
+	}
+
+	@Override
+	public Object visit(ASTror node, Object data) {
+		String ror = node.value.toString();
+
+		return ror;
+	}
+	
+	@Override
 	public Object visit(ASTshift node, Object data) {
 		String fle = node.value.toString();
 
@@ -133,7 +147,7 @@ public class Visitors implements MyTestVisitor{
 		memory.print();
 	}
 
-	///shift LSL/LSR ///
+	///shift LSL/LSR/ASR/ROR ///
 	@Override
 	public Object visit(ASTshiftLS node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1459,6 +1473,8 @@ public class Visitors implements MyTestVisitor{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 	
 
 }

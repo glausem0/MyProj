@@ -43,6 +43,8 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
   /*SHIFT*/
 | < LSL: "lsl" >
 | < LSR: "lsr" >
+| < ASR: "asr" >
+| < ROR: "ror" >
 | < SHIFT: "<<" | ">>" > 
 
   /* ARITHMETIQUE*/| < MOV : "mov" >
@@ -3850,7 +3852,7 @@ void reg_shift()      :
  }
  try {
 /*@egen*/
- (register() "," (lsl() (number() | register()) | lsr() (number() | register())) )/*@bgen(jjtree)*/
+ (register() "," (lsl() (number() | register()) | lsr() (number() | register()) | asr() (number() | register()) | ror() (number() | register()) ) )/*@bgen(jjtree)*/
  } catch (Throwable jjte001) {
    if (jjtc001) {
      jjtree.clearNodeScope(jjtn001);
@@ -4033,6 +4035,52 @@ void lsr():
   try {
 /*@egen*/
   t= < LSR >/*@bgen(jjtree)*/
+              {
+                jjtree.closeNodeScope(jjtn000, true);
+                jjtc000 = false;
+              }
+/*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/
+}
+
+void asr():
+{/*@bgen(jjtree) asr */
+ ASTasr jjtn000 = new ASTasr(JJTASR);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t;}
+{/*@bgen(jjtree) asr */
+  try {
+/*@egen*/
+  t= < ASR >/*@bgen(jjtree)*/
+              {
+                jjtree.closeNodeScope(jjtn000, true);
+                jjtc000 = false;
+              }
+/*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc000) {
+      jjtree.closeNodeScope(jjtn000, true);
+    }
+  }
+/*@egen*/
+}
+
+void ror():
+{/*@bgen(jjtree) ror */
+ ASTror jjtn000 = new ASTror(JJTROR);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t;}
+{/*@bgen(jjtree) ror */
+  try {
+/*@egen*/
+  t= < ROR >/*@bgen(jjtree)*/
               {
                 jjtree.closeNodeScope(jjtn000, true);
                 jjtc000 = false;

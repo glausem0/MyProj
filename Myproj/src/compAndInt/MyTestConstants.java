@@ -23,51 +23,55 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int LSR = 10;
   /** RegularExpression Id. */
-  int SHIFT = 11;
+  int ASR = 11;
   /** RegularExpression Id. */
-  int MOV = 12;
+  int ROR = 12;
   /** RegularExpression Id. */
-  int MVN = 13;
+  int SHIFT = 13;
   /** RegularExpression Id. */
-  int ADD = 14;
+  int MOV = 14;
   /** RegularExpression Id. */
-  int ADC = 15;
+  int MVN = 15;
   /** RegularExpression Id. */
-  int SUB = 16;
+  int ADD = 16;
   /** RegularExpression Id. */
-  int SBC = 17;
+  int ADC = 17;
   /** RegularExpression Id. */
-  int RSB = 18;
+  int SUB = 18;
   /** RegularExpression Id. */
-  int RSC = 19;
+  int SBC = 19;
   /** RegularExpression Id. */
-  int CMP = 20;
+  int RSB = 20;
   /** RegularExpression Id. */
-  int CMN = 21;
+  int RSC = 21;
   /** RegularExpression Id. */
-  int TEQ = 22;
+  int CMP = 22;
   /** RegularExpression Id. */
-  int TST = 23;
+  int CMN = 23;
   /** RegularExpression Id. */
-  int AND = 24;
+  int TEQ = 24;
   /** RegularExpression Id. */
-  int BIC = 25;
+  int TST = 25;
   /** RegularExpression Id. */
-  int EOR = 26;
+  int AND = 26;
   /** RegularExpression Id. */
-  int ORR = 27;
+  int BIC = 27;
   /** RegularExpression Id. */
-  int LDR = 28;
+  int EOR = 28;
   /** RegularExpression Id. */
-  int STR = 29;
+  int ORR = 29;
   /** RegularExpression Id. */
-  int NUMBER = 30;
+  int LDR = 30;
   /** RegularExpression Id. */
-  int REGISTER = 31;
+  int STR = 31;
   /** RegularExpression Id. */
-  int HEXA = 32;
+  int NUMBER = 32;
   /** RegularExpression Id. */
-  int NUM = 33;
+  int REGISTER = 33;
+  /** RegularExpression Id. */
+  int HEXA = 34;
+  /** RegularExpression Id. */
+  int NUM = 35;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -85,6 +89,8 @@ public interface MyTestConstants {
     "\"s\"",
     "\"lsl\"",
     "\"lsr\"",
+    "\"asr\"",
+    "\"ror\"",
     "<SHIFT>",
     "\"mov\"",
     "\"mvn\"",

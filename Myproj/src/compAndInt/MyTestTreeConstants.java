@@ -131,11 +131,13 @@ public interface MyTestTreeConstants
   public int JJTSCND = 125;
   public int JJTLSL = 126;
   public int JJTLSR = 127;
-  public int JJTSHIFT = 128;
-  public int JJTREGISTER = 129;
-  public int JJTNUMBER = 130;
-  public int JJTHEXA = 131;
-  public int JJTNUM = 132;
+  public int JJTASR = 128;
+  public int JJTROR = 129;
+  public int JJTSHIFT = 130;
+  public int JJTREGISTER = 131;
+  public int JJTNUMBER = 132;
+  public int JJTHEXA = 133;
+  public int JJTNUM = 134;
 
 
   public String[] jjtNodeName = {
@@ -267,6 +269,8 @@ public interface MyTestTreeConstants
     "scnd",
     "lsl",
     "lsr",
+    "asr",
+    "ror",
     "shift",
     "register",
     "number",
@@ -274,4 +278,4 @@ public interface MyTestTreeConstants
     "num",
   };
 }
-/* JavaCC - OriginalChecksum=7f81c2c7e3ca64c02b02d26a2b77026c (do not edit this line) */
+/* JavaCC - OriginalChecksum=8064253a3e0452269eafb0cf97a38638 (do not edit this line) */

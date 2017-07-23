@@ -39,6 +39,8 @@ public class MyTest{
   /*SHIFT*/
 | < LSL: "lsl" >
 | < LSR: "lsr" >
+| < ASR: "asr" >
+| < ROR: "ror" >
 | < SHIFT: "<<" | ">>" > 
 
   /* ARITHMETIQUE*/| < MOV : "mov" >
@@ -650,7 +652,7 @@ void numOrNumShift() #void:
 void reg_shift() #void:
 {}
 {
- (register() "," (lsl() (number() | register()) | lsr() (number() | register())) ) #shiftLS(3)
+ (register() "," (lsl() (number() | register()) | lsr() (number() | register()) | asr() (number() | register()) | ror() (number() | register()) ) ) #shiftLS(3)
 }
 
 void num_shift() #void:
@@ -695,6 +697,18 @@ void lsr():
 {Token t;}
 {
   t= < LSR >  { jjtThis.value = t.image.toString(); }
+}
+
+void asr():
+{Token t;}
+{
+  t= < ASR >  { jjtThis.value = t.image.toString(); }
+}
+
+void ror():
+{Token t;}
+{
+  t= < ROR >  { jjtThis.value = t.image.toString(); }
 }
 
 void shift():
