@@ -66,10 +66,42 @@ public interface MyTestVisitor
   public Object visit(ASTldrPostNeg node, Object data);
   public Object visit(ASTldrPostPos node, Object data);
   public Object visit(ASTldrSimple node, Object data);
+  public Object visit(ASTldrBPreNeg node, Object data);
+  public Object visit(ASTldrBPrePos node, Object data);
+  public Object visit(ASTldrBPostNeg node, Object data);
+  public Object visit(ASTldrBPostPos node, Object data);
+  public Object visit(ASTldrBSimple node, Object data);
+  public Object visit(ASTldrHPreNeg node, Object data);
+  public Object visit(ASTldrHPrePos node, Object data);
+  public Object visit(ASTldrHPostNeg node, Object data);
+  public Object visit(ASTldrHPostPos node, Object data);
+  public Object visit(ASTldrHSimple node, Object data);
+  public Object visit(ASTldrSPreNeg node, Object data);
+  public Object visit(ASTldrSPrePos node, Object data);
+  public Object visit(ASTldrSPostNeg node, Object data);
+  public Object visit(ASTldrSPostPos node, Object data);
+  public Object visit(ASTldrSSimple node, Object data);
+  public Object visit(ASTldrSHPreNeg node, Object data);
+  public Object visit(ASTldrSHPrePos node, Object data);
+  public Object visit(ASTldrSHPostNeg node, Object data);
+  public Object visit(ASTldrSHPostPos node, Object data);
+  public Object visit(ASTldrSHSimple node, Object data);
+  public Object visit(ASTldrSBPreNeg node, Object data);
+  public Object visit(ASTldrSBPrePos node, Object data);
+  public Object visit(ASTldrSBPostNeg node, Object data);
+  public Object visit(ASTldrSBPostPos node, Object data);
+  public Object visit(ASTldrSBSimple node, Object data);
+  public Object visit(ASTstrPreNeg node, Object data);
+  public Object visit(ASTstrPrePos node, Object data);
+  public Object visit(ASTstrPostNeg node, Object data);
+  public Object visit(ASTstrPostPos node, Object data);
+  public Object visit(ASTstrSimple node, Object data);
   public Object visit(ASTcloseAUp node, Object data);
   public Object visit(ASTclose node, Object data);
   public Object visit(ASTshiftLS node, Object data);
   public Object visit(ASTshiftF node, Object data);
+  public Object visit(ASTbCond node, Object data);
+  public Object visit(ASThCond node, Object data);
   public Object visit(ASTcond node, Object data);
   public Object visit(ASTscnd node, Object data);
   public Object visit(ASTlsl node, Object data);
@@ -80,4 +112,4 @@ public interface MyTestVisitor
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
 }
-/* JavaCC - OriginalChecksum=530442548da73c609e5def14a0cd62f0 (do not edit this line) */
+/* JavaCC - OriginalChecksum=28af039f931e511fdaca79d6f7c7d928 (do not edit this line) */

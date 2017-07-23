@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public class Memory {
 	
+	//TODO change Memory to generate address mod 4, verify if exist, if yes, increment do not erase)
+	
 	private HashMap<Object, Object> memory;
 	
 	public HashMap<Object, Object> init(){
@@ -12,6 +14,7 @@ public class Memory {
 	}
 	
 public Object getMemoryElement(int address){
+		int comp = 0;
 		
 		Object element = null;
 		String hexAdd = Integer.toHexString(address);
@@ -28,13 +31,16 @@ public Object getMemoryElement(int address){
 		return element;
 	}
 	
-	public void setMemoryElement(Object address, int element){
+	public void setMemoryElement(int address, int element){
 		//if address exist, change the value of the address.
 		//if address doesn't exist, create it with the value of element.
 		
-		String hex = Integer.toHexString(element);
+		String hexAdd = Integer.toHexString(address);
+		hexAdd = "0x"+hexAdd;
+		String hexEl = Integer.toHexString(element);
+		hexEl = "0x"+hexEl;
 		
-		memory.put(address, hex);
+		memory.put(hexAdd, hexEl);
 	}
 
 	public void print(){

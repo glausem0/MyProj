@@ -86,6 +86,20 @@ public class Visitors implements MyTestVisitor{
 	}
 	
 	@Override
+	public Object visit(ASTbCond node, Object data) {
+		String bCond = node.value.toString();
+
+		return bCond;
+	}
+
+	@Override
+	public Object visit(ASThCond node, Object data) {
+		String hCond = node.value.toString();
+
+		return hCond;
+	}
+	
+	@Override
 	public Object visit(ASTlsl node, Object data) {
 		String lsl = node.value.toString();
 
@@ -1018,6 +1032,7 @@ public class Visitors implements MyTestVisitor{
 		return c;
 	}
 	
+	///LDR///
 	@Override
 	public Object visit(ASTldrSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1076,5 +1091,221 @@ public class Visitors implements MyTestVisitor{
 		
 		return null;
 	}
+
+	///STR///
+	@Override
+	public Object visit(ASTstrSimple node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(2).jjtAccept(this, data);
+		
+		String val="null";
+		
+		inst.preStrIntr(regStr.toString(), regV.toString(), val, close, "p");
+		
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTstrPreNeg node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "n");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstrPrePos node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "p");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstrPostNeg node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "n");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstrPostPos node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "p");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrBPreNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrBPrePos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrBPostNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrBPostPos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrBSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrHPreNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrHPrePos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrHPostNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrHPostPos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrHSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSPreNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSPrePos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSPostNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSPostPos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSHPreNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSHPrePos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSHPostNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSHPostPos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSHSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSBPreNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSBPrePos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSBPostNeg node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSBPostPos node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldrSBSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	
+	
+	
 
 }

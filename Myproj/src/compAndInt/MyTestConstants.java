@@ -11,57 +11,63 @@ public interface MyTestConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int COND = 5;
+  int B = 5;
   /** RegularExpression Id. */
-  int SCND = 6;
+  int H = 6;
   /** RegularExpression Id. */
-  int LSL = 7;
+  int COND = 7;
   /** RegularExpression Id. */
-  int LSR = 8;
+  int SCND = 8;
   /** RegularExpression Id. */
-  int SHIFT = 9;
+  int LSL = 9;
   /** RegularExpression Id. */
-  int MOV = 10;
+  int LSR = 10;
   /** RegularExpression Id. */
-  int MVN = 11;
+  int SHIFT = 11;
   /** RegularExpression Id. */
-  int ADD = 12;
+  int MOV = 12;
   /** RegularExpression Id. */
-  int ADC = 13;
+  int MVN = 13;
   /** RegularExpression Id. */
-  int SUB = 14;
+  int ADD = 14;
   /** RegularExpression Id. */
-  int SBC = 15;
+  int ADC = 15;
   /** RegularExpression Id. */
-  int RSB = 16;
+  int SUB = 16;
   /** RegularExpression Id. */
-  int RSC = 17;
+  int SBC = 17;
   /** RegularExpression Id. */
-  int CMP = 18;
+  int RSB = 18;
   /** RegularExpression Id. */
-  int CMN = 19;
+  int RSC = 19;
   /** RegularExpression Id. */
-  int TEQ = 20;
+  int CMP = 20;
   /** RegularExpression Id. */
-  int TST = 21;
+  int CMN = 21;
   /** RegularExpression Id. */
-  int AND = 22;
+  int TEQ = 22;
   /** RegularExpression Id. */
-  int BIC = 23;
+  int TST = 23;
   /** RegularExpression Id. */
-  int EOR = 24;
+  int AND = 24;
   /** RegularExpression Id. */
-  int ORR = 25;
+  int BIC = 25;
   /** RegularExpression Id. */
-  int LDR = 26;
+  int EOR = 26;
   /** RegularExpression Id. */
-  int NUMBER = 27;
+  int ORR = 27;
   /** RegularExpression Id. */
-  int REGISTER = 28;
+  int LDR = 28;
   /** RegularExpression Id. */
-  int HEXA = 29;
+  int STR = 29;
   /** RegularExpression Id. */
-  int NUM = 30;
+  int NUMBER = 30;
+  /** RegularExpression Id. */
+  int REGISTER = 31;
+  /** RegularExpression Id. */
+  int HEXA = 32;
+  /** RegularExpression Id. */
+  int NUM = 33;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -73,6 +79,8 @@ public interface MyTestConstants {
     "\"\\r\"",
     "\"\\t\"",
     "\"\\n\"",
+    "\"b\"",
+    "\"h\"",
     "<COND>",
     "\"s\"",
     "\"lsl\"",
@@ -95,6 +103,7 @@ public interface MyTestConstants {
     "\"eor\"",
     "\"orr\"",
     "\"ldr\"",
+    "\"str\"",
     "<NUMBER>",
     "<REGISTER>",
     "<HEXA>",

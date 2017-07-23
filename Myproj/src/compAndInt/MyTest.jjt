@@ -27,8 +27,13 @@ public class MyTest{
 
    }}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+  /*CONDITION FOR LDR/STR*/
+  < B: "b" >
+| < H: "h" >
+  /*| < S: "s" > is already defined with SCND */
+
   /*CONITIONS*/
-  < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
+| < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
 | < SCND: "s" >
 
   /*SHIFT*/
@@ -58,6 +63,7 @@ public class MyTest{
 | < ORR : "orr" >
   /*LDR/STR*/
 | < LDR : "ldr" >
+| < STR : "str" >
 
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
@@ -90,6 +96,7 @@ void instr() #void:
 | orr()
 
 | ldr()
+| str()
 }
 
 void mov() #void:
@@ -346,6 +353,8 @@ void ldr() #void:
 {}
 {
   < LDR >
+(    
+  (
     register() "," "[" register()
     (
      ","
@@ -362,6 +371,140 @@ void ldr() #void:
         )
         | closeOrCAUp()#ldrSimple(3) 
      )    )
+  )
+
+ | bCond()
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrBPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrBPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrBPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrBPostPos(3)
+        )
+        | closeOrCAUp()#ldrBSimple(3) 
+     )
+    )  )
+
+ | hCond()
+   (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrHPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrHPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrHPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrHPostPos(3)
+        )
+        | closeOrCAUp()#ldrHSimple(3) 
+     )
+    )
+  )
+
+ | scnd()
+ (
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrSPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrSPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrSPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrSPostPos(3)
+        )
+        | closeOrCAUp()#ldrSSimple(3) 
+     )
+    )
+  )
+
+ | (
+     hCond()
+   (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrSHPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrSHPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrSHPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrSHPostPos(3)
+        )
+        | closeOrCAUp()#ldrSHSimple(3) 
+     )
+    )
+  )  )
+
+ | (
+    bCond()
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrSBPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrSBPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrSBPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrSBPostPos(3)
+        )
+        | closeOrCAUp()#ldrSBSimple(3) 
+     )
+    )
+  )
+  )
+   )
+)
+}
+
+void str() #void:
+{}
+{
+  < STR >
+    register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strPrePos(4) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strPostPos(3)
+        )
+        | closeOrCAUp()#strSimple(3) 
+     )
+    )
 }
 
 void closeOrCAUp() #void:
@@ -402,6 +545,18 @@ void num_shift() #void:
 
 
 /*Cond, scond, lsl, lsr, registres, number, hexa*/
+void bCond():
+{Token t;}
+{
+  t = < B > { jjtThis.value = t.image; }
+}
+
+void hCond():
+{Token t;}
+{
+  t = < H > { jjtThis.value = t.image; }
+}
+
 void cond():
 {Token t;}
 {

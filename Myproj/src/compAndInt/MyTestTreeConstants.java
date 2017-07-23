@@ -66,19 +66,51 @@ public interface MyTestTreeConstants
   public int JJTLDRPOSTNEG = 60;
   public int JJTLDRPOSTPOS = 61;
   public int JJTLDRSIMPLE = 62;
-  public int JJTCLOSEAUP = 63;
-  public int JJTCLOSE = 64;
-  public int JJTSHIFTLS = 65;
-  public int JJTSHIFTF = 66;
-  public int JJTCOND = 67;
-  public int JJTSCND = 68;
-  public int JJTLSL = 69;
-  public int JJTLSR = 70;
-  public int JJTSHIFT = 71;
-  public int JJTREGISTER = 72;
-  public int JJTNUMBER = 73;
-  public int JJTHEXA = 74;
-  public int JJTNUM = 75;
+  public int JJTLDRBPRENEG = 63;
+  public int JJTLDRBPREPOS = 64;
+  public int JJTLDRBPOSTNEG = 65;
+  public int JJTLDRBPOSTPOS = 66;
+  public int JJTLDRBSIMPLE = 67;
+  public int JJTLDRHPRENEG = 68;
+  public int JJTLDRHPREPOS = 69;
+  public int JJTLDRHPOSTNEG = 70;
+  public int JJTLDRHPOSTPOS = 71;
+  public int JJTLDRHSIMPLE = 72;
+  public int JJTLDRSPRENEG = 73;
+  public int JJTLDRSPREPOS = 74;
+  public int JJTLDRSPOSTNEG = 75;
+  public int JJTLDRSPOSTPOS = 76;
+  public int JJTLDRSSIMPLE = 77;
+  public int JJTLDRSHPRENEG = 78;
+  public int JJTLDRSHPREPOS = 79;
+  public int JJTLDRSHPOSTNEG = 80;
+  public int JJTLDRSHPOSTPOS = 81;
+  public int JJTLDRSHSIMPLE = 82;
+  public int JJTLDRSBPRENEG = 83;
+  public int JJTLDRSBPREPOS = 84;
+  public int JJTLDRSBPOSTNEG = 85;
+  public int JJTLDRSBPOSTPOS = 86;
+  public int JJTLDRSBSIMPLE = 87;
+  public int JJTSTRPRENEG = 88;
+  public int JJTSTRPREPOS = 89;
+  public int JJTSTRPOSTNEG = 90;
+  public int JJTSTRPOSTPOS = 91;
+  public int JJTSTRSIMPLE = 92;
+  public int JJTCLOSEAUP = 93;
+  public int JJTCLOSE = 94;
+  public int JJTSHIFTLS = 95;
+  public int JJTSHIFTF = 96;
+  public int JJTBCOND = 97;
+  public int JJTHCOND = 98;
+  public int JJTCOND = 99;
+  public int JJTSCND = 100;
+  public int JJTLSL = 101;
+  public int JJTLSR = 102;
+  public int JJTSHIFT = 103;
+  public int JJTREGISTER = 104;
+  public int JJTNUMBER = 105;
+  public int JJTHEXA = 106;
+  public int JJTNUM = 107;
 
 
   public String[] jjtNodeName = {
@@ -145,10 +177,42 @@ public interface MyTestTreeConstants
     "ldrPostNeg",
     "ldrPostPos",
     "ldrSimple",
+    "ldrBPreNeg",
+    "ldrBPrePos",
+    "ldrBPostNeg",
+    "ldrBPostPos",
+    "ldrBSimple",
+    "ldrHPreNeg",
+    "ldrHPrePos",
+    "ldrHPostNeg",
+    "ldrHPostPos",
+    "ldrHSimple",
+    "ldrSPreNeg",
+    "ldrSPrePos",
+    "ldrSPostNeg",
+    "ldrSPostPos",
+    "ldrSSimple",
+    "ldrSHPreNeg",
+    "ldrSHPrePos",
+    "ldrSHPostNeg",
+    "ldrSHPostPos",
+    "ldrSHSimple",
+    "ldrSBPreNeg",
+    "ldrSBPrePos",
+    "ldrSBPostNeg",
+    "ldrSBPostPos",
+    "ldrSBSimple",
+    "strPreNeg",
+    "strPrePos",
+    "strPostNeg",
+    "strPostPos",
+    "strSimple",
     "closeAUp",
     "close",
     "shiftLS",
     "shiftF",
+    "bCond",
+    "hCond",
     "cond",
     "scnd",
     "lsl",
@@ -160,4 +224,4 @@ public interface MyTestTreeConstants
     "num",
   };
 }
-/* JavaCC - OriginalChecksum=412e299f45ccae3fb5b97e22a068fa67 (do not edit this line) */
+/* JavaCC - OriginalChecksum=c73d99297fa945380a6941d81795df0d (do not edit this line) */
