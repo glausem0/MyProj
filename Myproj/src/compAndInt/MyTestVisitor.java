@@ -96,6 +96,31 @@ public interface MyTestVisitor
   public Object visit(ASTstrPostNeg node, Object data);
   public Object visit(ASTstrPostPos node, Object data);
   public Object visit(ASTstrSimple node, Object data);
+  public Object visit(ASTstrBPreNeg node, Object data);
+  public Object visit(ASTstrBPrePos node, Object data);
+  public Object visit(ASTstrBPostNeg node, Object data);
+  public Object visit(ASTstrBPostPos node, Object data);
+  public Object visit(ASTstrBSimple node, Object data);
+  public Object visit(ASTstrHPreNeg node, Object data);
+  public Object visit(ASTstrHPrePos node, Object data);
+  public Object visit(ASTstrHPostNeg node, Object data);
+  public Object visit(ASTstrHPostPos node, Object data);
+  public Object visit(ASTstrHSimple node, Object data);
+  public Object visit(ASTstrSPreNeg node, Object data);
+  public Object visit(ASTstrSPrePos node, Object data);
+  public Object visit(ASTstrSPostNeg node, Object data);
+  public Object visit(ASTstrSPostPos node, Object data);
+  public Object visit(ASTstrSSimple node, Object data);
+  public Object visit(ASTstrSHPreNeg node, Object data);
+  public Object visit(ASTstrSHPrePos node, Object data);
+  public Object visit(ASTstrSHPostNeg node, Object data);
+  public Object visit(ASTstrSHPostPos node, Object data);
+  public Object visit(ASTstrSHSimple node, Object data);
+  public Object visit(ASTstrSBPreNeg node, Object data);
+  public Object visit(ASTstrSBPrePos node, Object data);
+  public Object visit(ASTstrSBPostNeg node, Object data);
+  public Object visit(ASTstrSBPostPos node, Object data);
+  public Object visit(ASTstrSBSimple node, Object data);
   public Object visit(ASTcloseAUp node, Object data);
   public Object visit(ASTclose node, Object data);
   public Object visit(ASTshiftLS node, Object data);
@@ -112,4 +137,4 @@ public interface MyTestVisitor
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
 }
-/* JavaCC - OriginalChecksum=28af039f931e511fdaca79d6f7c7d928 (do not edit this line) */
+/* JavaCC - OriginalChecksum=8029b78922703010eb43d3e4b165cfaf (do not edit this line) */

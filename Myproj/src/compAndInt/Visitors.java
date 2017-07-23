@@ -1091,67 +1091,7 @@ public class Visitors implements MyTestVisitor{
 		
 		return null;
 	}
-
-	///STR///
-	@Override
-	public Object visit(ASTstrSimple node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(2).jjtAccept(this, data);
-		
-		String val="null";
-		
-		inst.preStrIntr(regStr.toString(), regV.toString(), val, close, "p");
-		
-		return null;
-	}
 	
-	@Override
-	public Object visit(ASTstrPreNeg node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
-		
-		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "n");
-		
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrPrePos node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
-		
-		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "p");
-		
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrPostNeg node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		
-		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "n");
-		
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrPostPos node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		
-		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "p");
-		
-		return null;
-	}
-
 	@Override
 	public Object visit(ASTldrBPreNeg node, Object data) {
 		// TODO Auto-generated method stub
@@ -1302,10 +1242,65 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-
-
+	///STR///
+	@Override
+	public Object visit(ASTstrSimple node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(2).jjtAccept(this, data);
+		
+		String val="null";
+		
+		inst.preStrIntr(regStr.toString(), regV.toString(), val, close, "p");
+		
+		return null;
+	}
 	
-	
+	@Override
+	public Object visit(ASTstrPreNeg node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "n");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstrPrePos node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "p");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstrPostNeg node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "n");
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstrPostPos node, Object data) {
+		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "p");
+		
+		return null;
+	}
 	
 
 }
