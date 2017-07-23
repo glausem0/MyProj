@@ -26,7 +26,6 @@ public class Register {
 		registers.put("r14", 0); //lr
 		registers.put("r15", 0); //pc 
 								 //cpsr
-		
 		return registers;
 	}
 	

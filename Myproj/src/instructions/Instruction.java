@@ -37,7 +37,7 @@ public class Instruction {
 		switch(shiftType){
 		case("lsl"):
 			if(1<=value && value <=31){
-				retVal = (int) (Math.pow(2, value) * regOrVal);
+				retVal = regOrVal << value;
 			}
 			else if (value == 0) {
 				retVal = regOrVal;
@@ -49,7 +49,7 @@ public class Instruction {
 
 		case("lsr"):
 			if(1<=value && value <=31){
-				retVal = (int) (Math.pow(2, value) / regOrVal);
+				retVal = regOrVal >> value;
 			}
 			else if (value == 0) {
 				retVal = regOrVal;

@@ -13,10 +13,11 @@ public class Cpsr {
 		cpsr.put("Z", 0);
 		cpsr.put("C", 0);
 		cpsr.put("V", 0);
-		cpsr.put("J", 0);
-		cpsr.put("I", 0);
-		cpsr.put("F", 0);
-		cpsr.put("T", 0);
+		
+		cpsr.put("I", 0); //masque d'interruption
+		cpsr.put("F", 0); //masque d'interruption
+		
+		//cpsr.put("T", 0); thumb state
 		
 		return cpsr;
 	}
