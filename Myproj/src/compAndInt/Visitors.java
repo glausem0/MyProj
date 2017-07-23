@@ -1041,7 +1041,7 @@ public class Visitors implements MyTestVisitor{
 		
 		String val="null";
 		
-		inst.preLdrIntr(regLdr.toString(), regV.toString(), val, close, "p");
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val, close,"pre", "p");
 		
 		return null;
 	}
@@ -1053,7 +1053,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 		
-		inst.preLdrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "n");
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(),"pre", "n");
 		
 		return null;
 	}
@@ -1065,7 +1065,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 		
-		inst.preLdrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "p");
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
 		
 		return null;
 	}
@@ -1076,7 +1076,9 @@ public class Visitors implements MyTestVisitor{
 		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		
-		inst.postLdrIntr(regLdr.toString(), regV.toString(), val.toString(), "n");
+		String close = "null";
+		
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
 		
 		return null;
 	}
@@ -1087,7 +1089,9 @@ public class Visitors implements MyTestVisitor{
 		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		
-		inst.postLdrIntr(regLdr.toString(), regV.toString(), val.toString(), "p");
+		String close = "null";
+		
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
 		
 		return null;
 	}
@@ -1251,7 +1255,7 @@ public class Visitors implements MyTestVisitor{
 		
 		String val="null";
 		
-		inst.preStrIntr(regStr.toString(), regV.toString(), val, close, "p");
+		inst.strIntr(regStr.toString(), regV.toString(), val, close, "pre", "p");
 		
 		return null;
 	}
@@ -1263,7 +1267,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
 		
-		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "n");
+		inst.strIntr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "n");
 		
 		return null;
 	}
@@ -1275,7 +1279,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
 		
-		inst.preStrIntr(regStr.toString(), regV.toString(), val.toString(), close, "p");
+		inst.strIntr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "p");
 		
 		return null;
 	}
@@ -1286,7 +1290,9 @@ public class Visitors implements MyTestVisitor{
 		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		
-		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "n");
+		String close = "null";
+		
+		inst.strIntr(regStr.toString(), regV.toString(), val.toString(), close, "post", "n");
 		
 		return null;
 	}
@@ -1297,7 +1303,9 @@ public class Visitors implements MyTestVisitor{
 		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		
-		inst.postStrIntr(regStr.toString(), regV.toString(), val.toString(), "p");
+		String close = "null";
+		
+		inst.strIntr(regStr.toString(), regV.toString(), val.toString(), close, "post", "p");
 		
 		return null;
 	}
