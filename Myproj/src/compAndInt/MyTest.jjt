@@ -72,6 +72,7 @@ public class MyTest{
 
   /*LDM/STM*/
 | < LDM: "ldm" >
+| < STM: "stm" >
 
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
@@ -105,6 +106,9 @@ void instr() #void:
 
 | ldr()
 | str()
+
+| ldm()
+| stm()
 }
 
 void mov() #void:
@@ -904,6 +908,78 @@ void str() #void:
 )
 )
 }
+
+void ldm() #void:
+{}
+{
+  < LDM >
+(
+  amode() register()
+    ("," "{" register()
+     ( 
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmSimple(3)
+    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #ldmEnum(4) 
+    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #ldmList(4)
+     )
+	| "!" "," "{" register()
+	 (
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #MldmSimple(3)
+    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MldmEnum(4)
+    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmList(4)
+      )
+     )
+ | cond()
+ ("," "{" register()
+     ( 
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmCSimple(4)
+    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #ldmCEnum(5)
+    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #ldmCList(5)
+     )
+	| "!" "," "{" register()
+	 (
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #MldmCSimple(4)
+    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MldmCEnum(5) 
+    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmCList(5)
+      )
+     )  )
+}
+
+void stm() #void:
+{}
+{
+  < STM >
+(
+  amode() register()
+    ("," "{" register()
+     ( 
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #stmSimple(3)
+    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #stmEnum(4)
+    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #stmList(4)
+     )
+	| "!" "," "{" register()
+	 (
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmSimple(3)
+    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MstmEnum(4)
+    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmList(4)
+      )
+     )
+ | cond()
+ ("," "{" register()
+     ( 
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #stmCSimple(4)
+    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #stmCEnum(5)
+    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #stmCList(5)
+     )
+	| "!" "," "{" register()
+	 (
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmCSimple(4)
+    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MstmCEnum(5)
+    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmCEnum(5)
+      )
+     )  
+)
+}
+
 
 void closeOrCAUp() #void:
 {}

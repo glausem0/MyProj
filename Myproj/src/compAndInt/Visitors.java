@@ -2,6 +2,7 @@ package compAndInt;
 
 import java.util.HashMap;
 
+import instructions.AccessMemory;
 import instructions.Condition;
 import instructions.Instruction;
 import instructions.UpdateCPSR;
@@ -18,11 +19,12 @@ public class Visitors implements MyTestVisitor{
 	private HashMap<Object, Object> cpsrReg = cpsr.init();
 
 	Memory memory = new Memory();
-	private HashMap<Object, Object> mem = memory.init();
+	private HashMap<Object, Object> memor = memory.init();
 
-	Instruction inst = new Instruction(reg, mem, memory);
 	Condition condition = new Condition(reg, cpsrReg);
 	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
+	AccessMemory AMem = new AccessMemory(memor);
+	Instruction inst = new Instruction(reg, AMem);
 
 	////Program and simple node:////	
 	@Override
@@ -2402,8 +2404,240 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
+///LDM///
+	@Override
+	public Object visit(ASTldmSimple node, Object data) {
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		String regEnd = "null";
+		
+		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+		
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTldmCSimple node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		String regEnd = "null";
+		
+		if(condition.condAction(cond.toString())){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+		}
+		return null;
+	}
+
+	//TODO Verify enum.
+	@Override
+	public Object visit(ASTldmEnum node, Object data) {
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		
+		return null;
+	}
+	
+	//TODO Verify enum
+	@Override
+	public Object visit(ASTldmCEnum node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTldmList node, Object data) {
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		
+		return null;
+	}
 	
 
+	@Override
+	public Object visit(ASTldmCList node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
 
+		if(condition.condAction(cond.toString())){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		}
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMldmSimple node, Object data) {
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		String regEnd = "null";
+		
+		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+		
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTMldmCSimple node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		String regEnd = "null";
+		
+		if(condition.condAction(cond.toString())){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+		}
+		
+		return null;
+	}
+
+	//TODO Verify enum.
+	@Override
+	public Object visit(ASTMldmEnum node, Object data) {
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTMldmCEnum node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMldmList node, Object data) {
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMldmCList node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
+		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
+		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		}
+
+		return null;
+	}
+
+///STM///
+	@Override
+	public Object visit(ASTstmSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstmEnum node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstmList node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMstmSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMstmEnum node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMstmList node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstmCSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstmCEnum node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTstmCList node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMstmCSimple node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTMstmCEnum node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

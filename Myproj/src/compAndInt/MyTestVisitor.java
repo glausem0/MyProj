@@ -161,6 +161,29 @@ public interface MyTestVisitor
   public Object visit(ASTstrCSBPostNeg node, Object data);
   public Object visit(ASTstrCSBPostPos node, Object data);
   public Object visit(ASTstrCSBSimple node, Object data);
+  public Object visit(ASTldmSimple node, Object data);
+  public Object visit(ASTldmEnum node, Object data);
+  public Object visit(ASTldmList node, Object data);
+  public Object visit(ASTMldmSimple node, Object data);
+  public Object visit(ASTMldmEnum node, Object data);
+  public Object visit(ASTMldmList node, Object data);
+  public Object visit(ASTldmCSimple node, Object data);
+  public Object visit(ASTldmCEnum node, Object data);
+  public Object visit(ASTldmCList node, Object data);
+  public Object visit(ASTMldmCSimple node, Object data);
+  public Object visit(ASTMldmCEnum node, Object data);
+  public Object visit(ASTMldmCList node, Object data);
+  public Object visit(ASTstmSimple node, Object data);
+  public Object visit(ASTstmEnum node, Object data);
+  public Object visit(ASTstmList node, Object data);
+  public Object visit(ASTMstmSimple node, Object data);
+  public Object visit(ASTMstmEnum node, Object data);
+  public Object visit(ASTMstmList node, Object data);
+  public Object visit(ASTstmCSimple node, Object data);
+  public Object visit(ASTstmCEnum node, Object data);
+  public Object visit(ASTstmCList node, Object data);
+  public Object visit(ASTMstmCSimple node, Object data);
+  public Object visit(ASTMstmCEnum node, Object data);
   public Object visit(ASTcloseAUp node, Object data);
   public Object visit(ASTclose node, Object data);
   public Object visit(ASTshiftLS node, Object data);
@@ -177,4 +200,4 @@ public interface MyTestVisitor
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
 }
-/* JavaCC - OriginalChecksum=76eb4d055fae8f1d8c6a88b921a3ebb9 (do not edit this line) */
+/* JavaCC - OriginalChecksum=d9464aa2c752bd58d35fd36a4e3347ab (do not edit this line) */

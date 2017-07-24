@@ -161,21 +161,44 @@ public interface MyTestTreeConstants
   public int JJTSTRCSBPOSTNEG = 155;
   public int JJTSTRCSBPOSTPOS = 156;
   public int JJTSTRCSBSIMPLE = 157;
-  public int JJTCLOSEAUP = 158;
-  public int JJTCLOSE = 159;
-  public int JJTSHIFTLS = 160;
-  public int JJTSHIFTF = 161;
-  public int JJTAMODE = 162;
-  public int JJTCOND = 163;
-  public int JJTLSL = 164;
-  public int JJTLSR = 165;
-  public int JJTASR = 166;
-  public int JJTROR = 167;
-  public int JJTSHIFT = 168;
-  public int JJTREGISTER = 169;
-  public int JJTNUMBER = 170;
-  public int JJTHEXA = 171;
-  public int JJTNUM = 172;
+  public int JJTLDMSIMPLE = 158;
+  public int JJTLDMENUM = 159;
+  public int JJTLDMLIST = 160;
+  public int JJTMLDMSIMPLE = 161;
+  public int JJTMLDMENUM = 162;
+  public int JJTMLDMLIST = 163;
+  public int JJTLDMCSIMPLE = 164;
+  public int JJTLDMCENUM = 165;
+  public int JJTLDMCLIST = 166;
+  public int JJTMLDMCSIMPLE = 167;
+  public int JJTMLDMCENUM = 168;
+  public int JJTMLDMCLIST = 169;
+  public int JJTSTMSIMPLE = 170;
+  public int JJTSTMENUM = 171;
+  public int JJTSTMLIST = 172;
+  public int JJTMSTMSIMPLE = 173;
+  public int JJTMSTMENUM = 174;
+  public int JJTMSTMLIST = 175;
+  public int JJTSTMCSIMPLE = 176;
+  public int JJTSTMCENUM = 177;
+  public int JJTSTMCLIST = 178;
+  public int JJTMSTMCSIMPLE = 179;
+  public int JJTMSTMCENUM = 180;
+  public int JJTCLOSEAUP = 181;
+  public int JJTCLOSE = 182;
+  public int JJTSHIFTLS = 183;
+  public int JJTSHIFTF = 184;
+  public int JJTAMODE = 185;
+  public int JJTCOND = 186;
+  public int JJTLSL = 187;
+  public int JJTLSR = 188;
+  public int JJTASR = 189;
+  public int JJTROR = 190;
+  public int JJTSHIFT = 191;
+  public int JJTREGISTER = 192;
+  public int JJTNUMBER = 193;
+  public int JJTHEXA = 194;
+  public int JJTNUM = 195;
 
 
   public String[] jjtNodeName = {
@@ -337,6 +360,29 @@ public interface MyTestTreeConstants
     "strCSBPostNeg",
     "strCSBPostPos",
     "strCSBSimple",
+    "ldmSimple",
+    "ldmEnum",
+    "ldmList",
+    "MldmSimple",
+    "MldmEnum",
+    "MldmList",
+    "ldmCSimple",
+    "ldmCEnum",
+    "ldmCList",
+    "MldmCSimple",
+    "MldmCEnum",
+    "MldmCList",
+    "stmSimple",
+    "stmEnum",
+    "stmList",
+    "MstmSimple",
+    "MstmEnum",
+    "MstmList",
+    "stmCSimple",
+    "stmCEnum",
+    "stmCList",
+    "MstmCSimple",
+    "MstmCEnum",
     "closeAUp",
     "close",
     "shiftLS",
@@ -354,4 +400,4 @@ public interface MyTestTreeConstants
     "num",
   };
 }
-/* JavaCC - OriginalChecksum=5c266eee1baad60f3b9ade79f831f4a7 (do not edit this line) */
+/* JavaCC - OriginalChecksum=10a5b1eefc7ed34414e4a7c1d269ab51 (do not edit this line) */

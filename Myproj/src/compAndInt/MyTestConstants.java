@@ -69,13 +69,15 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int LDM = 33;
   /** RegularExpression Id. */
-  int NUMBER = 34;
+  int STM = 34;
   /** RegularExpression Id. */
-  int REGISTER = 35;
+  int NUMBER = 35;
   /** RegularExpression Id. */
-  int HEXA = 36;
+  int REGISTER = 36;
   /** RegularExpression Id. */
-  int NUM = 37;
+  int HEXA = 37;
+  /** RegularExpression Id. */
+  int NUM = 38;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -116,6 +118,7 @@ public interface MyTestConstants {
     "\"ldr\"",
     "\"str\"",
     "\"ldm\"",
+    "\"stm\"",
     "<NUMBER>",
     "<REGISTER>",
     "<HEXA>",
@@ -124,6 +127,9 @@ public interface MyTestConstants {
     "\"[\"",
     "\"-\"",
     "\"]\"",
+    "\"{\"",
+    "\"}\"",
+    "\"^\"",
     "\"!\"",
   };
 
