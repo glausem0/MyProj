@@ -76,68 +76,106 @@ public interface MyTestTreeConstants
   public int JJTLDRHPOSTNEG = 70;
   public int JJTLDRHPOSTPOS = 71;
   public int JJTLDRHSIMPLE = 72;
-  public int JJTLDRSPRENEG = 73;
-  public int JJTLDRSPREPOS = 74;
-  public int JJTLDRSPOSTNEG = 75;
-  public int JJTLDRSPOSTPOS = 76;
-  public int JJTLDRSSIMPLE = 77;
-  public int JJTLDRSHPRENEG = 78;
-  public int JJTLDRSHPREPOS = 79;
-  public int JJTLDRSHPOSTNEG = 80;
-  public int JJTLDRSHPOSTPOS = 81;
-  public int JJTLDRSHSIMPLE = 82;
-  public int JJTLDRSBPRENEG = 83;
-  public int JJTLDRSBPREPOS = 84;
-  public int JJTLDRSBPOSTNEG = 85;
-  public int JJTLDRSBPOSTPOS = 86;
-  public int JJTLDRSBSIMPLE = 87;
-  public int JJTSTRPRENEG = 88;
-  public int JJTSTRPREPOS = 89;
-  public int JJTSTRPOSTNEG = 90;
-  public int JJTSTRPOSTPOS = 91;
-  public int JJTSTRSIMPLE = 92;
-  public int JJTSTRBPRENEG = 93;
-  public int JJTSTRBPREPOS = 94;
-  public int JJTSTRBPOSTNEG = 95;
-  public int JJTSTRBPOSTPOS = 96;
-  public int JJTSTRBSIMPLE = 97;
-  public int JJTSTRHPRENEG = 98;
-  public int JJTSTRHPREPOS = 99;
-  public int JJTSTRHPOSTNEG = 100;
-  public int JJTSTRHPOSTPOS = 101;
-  public int JJTSTRHSIMPLE = 102;
-  public int JJTSTRSPRENEG = 103;
-  public int JJTSTRSPREPOS = 104;
-  public int JJTSTRSPOSTNEG = 105;
-  public int JJTSTRSPOSTPOS = 106;
-  public int JJTSTRSSIMPLE = 107;
-  public int JJTSTRSHPRENEG = 108;
-  public int JJTSTRSHPREPOS = 109;
-  public int JJTSTRSHPOSTNEG = 110;
-  public int JJTSTRSHPOSTPOS = 111;
-  public int JJTSTRSHSIMPLE = 112;
-  public int JJTSTRSBPRENEG = 113;
-  public int JJTSTRSBPREPOS = 114;
-  public int JJTSTRSBPOSTNEG = 115;
-  public int JJTSTRSBPOSTPOS = 116;
-  public int JJTSTRSBSIMPLE = 117;
-  public int JJTCLOSEAUP = 118;
-  public int JJTCLOSE = 119;
-  public int JJTSHIFTLS = 120;
-  public int JJTSHIFTF = 121;
-  public int JJTBCOND = 122;
-  public int JJTHCOND = 123;
-  public int JJTCOND = 124;
-  public int JJTSCND = 125;
-  public int JJTLSL = 126;
-  public int JJTLSR = 127;
-  public int JJTASR = 128;
-  public int JJTROR = 129;
-  public int JJTSHIFT = 130;
-  public int JJTREGISTER = 131;
-  public int JJTNUMBER = 132;
-  public int JJTHEXA = 133;
-  public int JJTNUM = 134;
+  public int JJTLDRSHPRENEG = 73;
+  public int JJTLDRSHPREPOS = 74;
+  public int JJTLDRSHPOSTNEG = 75;
+  public int JJTLDRSHPOSTPOS = 76;
+  public int JJTLDRSHSIMPLE = 77;
+  public int JJTLDRSBPRENEG = 78;
+  public int JJTLDRSBPREPOS = 79;
+  public int JJTLDRSBPOSTNEG = 80;
+  public int JJTLDRSBPOSTPOS = 81;
+  public int JJTLDRSBSIMPLE = 82;
+  public int JJTLDRCPRENEG = 83;
+  public int JJTLDRCPREPOS = 84;
+  public int JJTLDRCPOSTNEG = 85;
+  public int JJTLDRCPOSTPOS = 86;
+  public int JJTLDRCSIMPLE = 87;
+  public int JJTLDRCBPRENEG = 88;
+  public int JJTLDRCBPREPOS = 89;
+  public int JJTLDRCBPOSTNEG = 90;
+  public int JJTLDRCBPOSTPOS = 91;
+  public int JJTLDRCBSIMPLE = 92;
+  public int JJTLDRCHPRENEG = 93;
+  public int JJTLDRCHPREPOS = 94;
+  public int JJTLDRCHPOSTNEG = 95;
+  public int JJTLDRCHPOSTPOS = 96;
+  public int JJTLDRCHSIMPLE = 97;
+  public int JJTLDRCSHPRENEG = 98;
+  public int JJTLDRCSHPREPOS = 99;
+  public int JJTLDRCSHPOSTNEG = 100;
+  public int JJTLDRCSHPOSTPOS = 101;
+  public int JJTLDRCSHSIMPLE = 102;
+  public int JJTLDRCSBPRENEG = 103;
+  public int JJTLDRCSBPREPOS = 104;
+  public int JJTLDRCSBPOSTNEG = 105;
+  public int JJTLDRCSBPOSTPOS = 106;
+  public int JJTLDRCSBSIMPLE = 107;
+  public int JJTSTRPRENEG = 108;
+  public int JJTSTRPREPOS = 109;
+  public int JJTSTRPOSTNEG = 110;
+  public int JJTSTRPOSTPOS = 111;
+  public int JJTSTRSIMPLE = 112;
+  public int JJTSTRBPRENEG = 113;
+  public int JJTSTRBPREPOS = 114;
+  public int JJTSTRBPOSTNEG = 115;
+  public int JJTSTRBPOSTPOS = 116;
+  public int JJTSTRBSIMPLE = 117;
+  public int JJTSTRHPRENEG = 118;
+  public int JJTSTRHPREPOS = 119;
+  public int JJTSTRHPOSTNEG = 120;
+  public int JJTSTRHPOSTPOS = 121;
+  public int JJTSTRHSIMPLE = 122;
+  public int JJTSTRSHPRENEG = 123;
+  public int JJTSTRSHPREPOS = 124;
+  public int JJTSTRSHPOSTNEG = 125;
+  public int JJTSTRSHPOSTPOS = 126;
+  public int JJTSTRSHSIMPLE = 127;
+  public int JJTSTRSBPRENEG = 128;
+  public int JJTSTRSBPREPOS = 129;
+  public int JJTSTRSBPOSTNEG = 130;
+  public int JJTSTRSBPOSTPOS = 131;
+  public int JJTSTRSBSIMPLE = 132;
+  public int JJTSTRCPRENEG = 133;
+  public int JJTSTRCPREPOS = 134;
+  public int JJTSTRCPOSTNEG = 135;
+  public int JJTSTRCPOSTPOS = 136;
+  public int JJTSTRCSIMPLE = 137;
+  public int JJTSTRCBPRENEG = 138;
+  public int JJTSTRCBPREPOS = 139;
+  public int JJTSTRCBPOSTNEG = 140;
+  public int JJTSTRCBPOSTPOS = 141;
+  public int JJTSTRCBSIMPLE = 142;
+  public int JJTSTRCHPRENEG = 143;
+  public int JJTSTRCHPREPOS = 144;
+  public int JJTSTRCHPOSTNEG = 145;
+  public int JJTSTRCHPOSTPOS = 146;
+  public int JJTSTRCHSIMPLE = 147;
+  public int JJTSTRCSHPRENEG = 148;
+  public int JJTSTRCSHPREPOS = 149;
+  public int JJTSTRCSHPOSTNEG = 150;
+  public int JJTSTRCSHPOSTPOS = 151;
+  public int JJTSTRCSHSIMPLE = 152;
+  public int JJTSTRCSBPRENEG = 153;
+  public int JJTSTRCSBPREPOS = 154;
+  public int JJTSTRCSBPOSTNEG = 155;
+  public int JJTSTRCSBPOSTPOS = 156;
+  public int JJTSTRCSBSIMPLE = 157;
+  public int JJTCLOSEAUP = 158;
+  public int JJTCLOSE = 159;
+  public int JJTSHIFTLS = 160;
+  public int JJTSHIFTF = 161;
+  public int JJTAMODE = 162;
+  public int JJTCOND = 163;
+  public int JJTLSL = 164;
+  public int JJTLSR = 165;
+  public int JJTASR = 166;
+  public int JJTROR = 167;
+  public int JJTSHIFT = 168;
+  public int JJTREGISTER = 169;
+  public int JJTNUMBER = 170;
+  public int JJTHEXA = 171;
+  public int JJTNUM = 172;
 
 
   public String[] jjtNodeName = {
@@ -214,11 +252,6 @@ public interface MyTestTreeConstants
     "ldrHPostNeg",
     "ldrHPostPos",
     "ldrHSimple",
-    "ldrSPreNeg",
-    "ldrSPrePos",
-    "ldrSPostNeg",
-    "ldrSPostPos",
-    "ldrSSimple",
     "ldrSHPreNeg",
     "ldrSHPrePos",
     "ldrSHPostNeg",
@@ -229,6 +262,31 @@ public interface MyTestTreeConstants
     "ldrSBPostNeg",
     "ldrSBPostPos",
     "ldrSBSimple",
+    "ldrCPreNeg",
+    "ldrCPrePos",
+    "ldrCPostNeg",
+    "ldrCPostPos",
+    "ldrCSimple",
+    "ldrCBPreNeg",
+    "ldrCBPrePos",
+    "ldrCBPostNeg",
+    "ldrCBPostPos",
+    "ldrCBSimple",
+    "ldrCHPreNeg",
+    "ldrCHPrePos",
+    "ldrCHPostNeg",
+    "ldrCHPostPos",
+    "ldrCHSimple",
+    "ldrCSHPreNeg",
+    "ldrCSHPrePos",
+    "ldrCSHPostNeg",
+    "ldrCSHPostPos",
+    "ldrCSHSimple",
+    "ldrCSBPreNeg",
+    "ldrCSBPrePos",
+    "ldrCSBPostNeg",
+    "ldrCSBPostPos",
+    "ldrCSBSimple",
     "strPreNeg",
     "strPrePos",
     "strPostNeg",
@@ -244,11 +302,6 @@ public interface MyTestTreeConstants
     "strHPostNeg",
     "strHPostPos",
     "strHSimple",
-    "strSPreNeg",
-    "strSPrePos",
-    "strSPostNeg",
-    "strSPostPos",
-    "strSSimple",
     "strSHPreNeg",
     "strSHPrePos",
     "strSHPostNeg",
@@ -259,14 +312,37 @@ public interface MyTestTreeConstants
     "strSBPostNeg",
     "strSBPostPos",
     "strSBSimple",
+    "strCPreNeg",
+    "strCPrePos",
+    "strCPostNeg",
+    "strCPostPos",
+    "strCSimple",
+    "strCBPreNeg",
+    "strCBPrePos",
+    "strCBPostNeg",
+    "strCBPostPos",
+    "strCBSimple",
+    "strCHPreNeg",
+    "strCHPrePos",
+    "strCHPostNeg",
+    "strCHPostPos",
+    "strCHSimple",
+    "strCSHPreNeg",
+    "strCSHPrePos",
+    "strCSHPostNeg",
+    "strCSHPostPos",
+    "strCSHSimple",
+    "strCSBPreNeg",
+    "strCSBPrePos",
+    "strCSBPostNeg",
+    "strCSBPostPos",
+    "strCSBSimple",
     "closeAUp",
     "close",
     "shiftLS",
     "shiftF",
-    "bCond",
-    "hCond",
+    "amode",
     "cond",
-    "scnd",
     "lsl",
     "lsr",
     "asr",
@@ -278,4 +354,4 @@ public interface MyTestTreeConstants
     "num",
   };
 }
-/* JavaCC - OriginalChecksum=8064253a3e0452269eafb0cf97a38638 (do not edit this line) */
+/* JavaCC - OriginalChecksum=5c266eee1baad60f3b9ade79f831f4a7 (do not edit this line) */

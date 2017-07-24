@@ -15,63 +15,67 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int H = 6;
   /** RegularExpression Id. */
-  int COND = 7;
+  int AMODE = 7;
   /** RegularExpression Id. */
-  int SCND = 8;
+  int COND = 8;
   /** RegularExpression Id. */
-  int LSL = 9;
+  int SCND = 9;
   /** RegularExpression Id. */
-  int LSR = 10;
+  int LSL = 10;
   /** RegularExpression Id. */
-  int ASR = 11;
+  int LSR = 11;
   /** RegularExpression Id. */
-  int ROR = 12;
+  int ASR = 12;
   /** RegularExpression Id. */
-  int SHIFT = 13;
+  int ROR = 13;
   /** RegularExpression Id. */
-  int MOV = 14;
+  int SHIFT = 14;
   /** RegularExpression Id. */
-  int MVN = 15;
+  int MOV = 15;
   /** RegularExpression Id. */
-  int ADD = 16;
+  int MVN = 16;
   /** RegularExpression Id. */
-  int ADC = 17;
+  int ADD = 17;
   /** RegularExpression Id. */
-  int SUB = 18;
+  int ADC = 18;
   /** RegularExpression Id. */
-  int SBC = 19;
+  int SUB = 19;
   /** RegularExpression Id. */
-  int RSB = 20;
+  int SBC = 20;
   /** RegularExpression Id. */
-  int RSC = 21;
+  int RSB = 21;
   /** RegularExpression Id. */
-  int CMP = 22;
+  int RSC = 22;
   /** RegularExpression Id. */
-  int CMN = 23;
+  int CMP = 23;
   /** RegularExpression Id. */
-  int TEQ = 24;
+  int CMN = 24;
   /** RegularExpression Id. */
-  int TST = 25;
+  int TEQ = 25;
   /** RegularExpression Id. */
-  int AND = 26;
+  int TST = 26;
   /** RegularExpression Id. */
-  int BIC = 27;
+  int AND = 27;
   /** RegularExpression Id. */
-  int EOR = 28;
+  int BIC = 28;
   /** RegularExpression Id. */
-  int ORR = 29;
+  int EOR = 29;
   /** RegularExpression Id. */
-  int LDR = 30;
+  int ORR = 30;
   /** RegularExpression Id. */
-  int STR = 31;
+  int LDR = 31;
   /** RegularExpression Id. */
-  int NUMBER = 32;
+  int STR = 32;
   /** RegularExpression Id. */
-  int REGISTER = 33;
+  int LDM = 33;
   /** RegularExpression Id. */
-  int HEXA = 34;
+  int NUMBER = 34;
   /** RegularExpression Id. */
-  int NUM = 35;
+  int REGISTER = 35;
+  /** RegularExpression Id. */
+  int HEXA = 36;
+  /** RegularExpression Id. */
+  int NUM = 37;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -85,6 +89,7 @@ public interface MyTestConstants {
     "\"\\n\"",
     "\"b\"",
     "\"h\"",
+    "<AMODE>",
     "<COND>",
     "\"s\"",
     "\"lsl\"",
@@ -110,6 +115,7 @@ public interface MyTestConstants {
     "\"orr\"",
     "\"ldr\"",
     "\"str\"",
+    "\"ldm\"",
     "<NUMBER>",
     "<REGISTER>",
     "<HEXA>",

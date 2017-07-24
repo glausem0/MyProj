@@ -32,6 +32,9 @@ public class MyTest{
 | < H: "h" >
   /*| < S: "s" > is already defined with SCND */
 
+  /*OPTION STACK*/
+| < AMODE : "ia" | "fd" | "ib" | "ed" | "da" | "fa" | "db" | "ea" >
+
   /*CONITIONS*/
 | < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
 | < SCND: "s" >
@@ -66,6 +69,9 @@ public class MyTest{
   /*LDR/STR*/
 | < LDR : "ldr" >
 | < STR : "str" >
+
+  /*LDM/STM*/
+| < LDM: "ldm" >
 
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
@@ -108,12 +114,12 @@ void mov() #void:
    (
     (
       (register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #decl(2)
-    | (scnd() register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #declS(3)
+    | (<SCND> register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #declS(2)
     )
    |cond() 
     (
       (register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #declC(3)
-    | (scnd() register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #declCS(4)
+    | (<SCND>  register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #declCS(3)
     )
    )
 }
@@ -125,12 +131,12 @@ void mvn() #void:
    (
     (
       (register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #decln(2)
-    | (scnd() register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #declnS(3)
+    | (<SCND> register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #declnS(2)
     )
    |cond() 
     (
       (register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #declnC(3)
-    | (scnd() register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #declnCS(4)
+    | (<SCND> register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #declnCS(3)
     )
    )
 }
@@ -141,12 +147,12 @@ void add()#void:
   <ADD>
   (
     (      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #add(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #addS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #addS(3)
     )
 
   | cond()
     (     (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #addC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #addCS(5)       )
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #addCS(4)       )
    )
 }
 
@@ -157,13 +163,13 @@ void adc()#void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #adc(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #adcS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #adcS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #adcC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #adcCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #adcCS(4)  
      )
    )
 }
@@ -175,13 +181,13 @@ void sub()#void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sub(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #subS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #subS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #subC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #subCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #subCS(4)  
      )
    )
 }
@@ -193,13 +199,13 @@ void sbc()#void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sbc(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sbcS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sbcS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sbcC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sbcCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #sbcCS(4)  
      )
    )
 }
@@ -211,13 +217,13 @@ void rsb()#void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsb(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsbS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsbS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsbC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsbCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsbCS(4)  
      )
    )
 }
@@ -229,13 +235,13 @@ void rsc()#void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rsc(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscCS(4)  
      )
    )
 }
@@ -286,13 +292,13 @@ void and() #void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #and(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #andS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #andS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #andC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #andCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #andCS(4)  
      )
    )
 }
@@ -304,13 +310,13 @@ void bic() #void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #bic(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #bicS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #bicS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #bicC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #bicCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #bicCS(4)  
      )
    )
 }
@@ -322,13 +328,13 @@ void eor() #void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #eor(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #eorS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #eorS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #eorC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #eorCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #eorCS(4)  
      )
    )
 }
@@ -340,13 +346,13 @@ void orr() #void:
   (
     (
       (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orr(3)
-    | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orrS(4)
+    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orrS(3)
     )
 
   | cond()
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orrC(4)
-   | (scnd() register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orrCS(5)  
+   | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #orrCS(4)  
      )
    )
 }
@@ -355,6 +361,7 @@ void ldr() #void:
 {}
 {
   < LDR >
+(
 (    
   (
     register() "," "[" register()
@@ -375,7 +382,7 @@ void ldr() #void:
      )    )
   )
 
- | bCond()
+ | < B >
   (
      register() "," "[" register()
     (
@@ -395,7 +402,7 @@ void ldr() #void:
      )
     )  )
 
- | hCond()
+ | < H >
    (
      register() "," "[" register()
     (
@@ -416,30 +423,30 @@ void ldr() #void:
     )
   )
 
- | scnd()
+ | < SCND >
  (
   (
      register() "," "[" register()
     (
      ","
       ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrSPreNeg(4)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrSPrePos(4) 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrPrePos(4) 
       )
    | ( 
         LOOKAHEAD(2)  
         "]" ","
         (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrSPostNeg(3)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrSPostPos(3)
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrPostPos(3)
         )
-        | closeOrCAUp()#ldrSSimple(3) 
+        | closeOrCAUp()#ldrSimple(3) 
      )
     )
   )
 
  | (
-     hCond()
+     < H >
    (
      register() "," "[" register()
     (
@@ -461,7 +468,7 @@ void ldr() #void:
   )  )
 
  | (
-    bCond()
+    < B >
   (
      register() "," "[" register()
     (
@@ -484,13 +491,150 @@ void ldr() #void:
   )
    )
 )
+
+| cond()
+(    
+  (
+    register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrCPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrCPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrCPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrCPostPos(4)
+        )
+        | closeOrCAUp()#ldrCSimple(4) 
+     )
+    )
+  )
+
+ | < B >
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrCBPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrCBPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrCBPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrCBPostPos(4)
+        )
+        | closeOrCAUp()#ldrCBSimple(4) 
+     )
+    )
+  )
+
+ | < H >
+   (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrCHPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrCHPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrCHPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrCHPostPos(4)
+        )
+        | closeOrCAUp()#ldrCHSimple(4) 
+     )
+    )
+  )
+
+ | < SCND >
+ (
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrCPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrCPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrCPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrCPostPos(4)
+        )
+        | closeOrCAUp()#ldrCSimple(4) 
+     )
+    )
+  )
+
+ | (
+     < H >
+   (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrCSHPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrCSHPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrCSHPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrCSHPostPos(4)
+        )
+        | closeOrCAUp()#ldrCSHSimple(4) 
+     )
+    )
+  )
+  )
+
+ | (
+    < B >
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #ldrCSBPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #ldrCSBPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #ldrCSBPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #ldrCSBPostPos(4)
+        )
+        | closeOrCAUp()#ldrCSBSimple(4) 
+     )
+    )
+  )
+  )
+  
+ )
+)
+)
 }
 
 void str() #void:
 {}
 {
   < STR >
-   (    
+(  
+(    
   (
     register() "," "[" register()
     (
@@ -511,7 +655,7 @@ void str() #void:
     )
   )
 
- | bCond()
+ | < B >
   (
      register() "," "[" register()
     (
@@ -532,7 +676,7 @@ void str() #void:
     )
   )
 
- | hCond()
+ | < H >
    (
      register() "," "[" register()
     (
@@ -553,30 +697,30 @@ void str() #void:
     )
   )
 
- | scnd()
+ | < SCND >
  (
   (
      register() "," "[" register()
     (
      ","
       ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strSPreNeg(4)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strSPrePos(4) 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strPreNeg(4)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strPrePos(4) 
       )
    | ( 
         LOOKAHEAD(2)  
         "]" ","
         (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strSPostNeg(3)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strSPostPos(3)
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strPostNeg(3)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strPostPos(3)
         )
-        | closeOrCAUp()#strSSimple(3) 
+        | closeOrCAUp()#strSimple(3) 
      )
     )
   )
 
  | (
-     hCond()
+     < H >
    (
      register() "," "[" register()
     (
@@ -599,7 +743,7 @@ void str() #void:
   )
 
  | (
-    bCond()
+    < B >
   (
      register() "," "[" register()
     (
@@ -622,6 +766,142 @@ void str() #void:
   )
   
  )
+)
+
+| cond()
+(    
+  (
+    register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCPostPos(4)
+        )
+        | closeOrCAUp()#strCSimple(4) 
+     )
+    )
+  )
+
+ | < B >
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCBPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCBPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCBPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCBPostPos(4)
+        )
+        | closeOrCAUp()#strCBSimple(4) 
+     )
+    )
+  )
+
+ | < H >
+   (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCHPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCHPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCHPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCHPostPos(4)
+        )
+        | closeOrCAUp()#strCHSimple(4) 
+     )
+    )
+  )
+
+ | < SCND >
+ (
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCPostPos(4)
+        )
+        | closeOrCAUp()#strCSimple(4) 
+     )
+    )
+  )
+
+ | (
+     < H >
+   (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCSHPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCSHPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCSHPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCSHPostPos(4)
+        )
+        | closeOrCAUp()#strCSHSimple(4) 
+     )
+    )
+  )
+  )
+
+ | (
+    < B >
+  (
+     register() "," "[" register()
+    (
+     ","
+      ( 
+        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCSBPreNeg(5)
+      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCSBPrePos(5) 
+      )
+   | ( 
+        LOOKAHEAD(2)  
+        "]" ","
+        (
+         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCSBPostNeg(4)
+       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCSBPostPos(4)
+        )
+        | closeOrCAUp()#strCSBSimple(4) 
+     )
+    )
+  )
+  )
+  
+ )
+)
 )
 }
 
@@ -663,7 +943,8 @@ void num_shift() #void:
 
 
 /*Cond, scond, lsl, lsr, registres, number, hexa*/
-void bCond():
+
+/*void bCond():
 {Token t;}
 {
   t = < B > { jjtThis.value = t.image; }
@@ -673,19 +954,27 @@ void hCond():
 {Token t;}
 {
   t = < H > { jjtThis.value = t.image; }
-}
+}*/
 
+void amode():
+{Token t;}
+{
+  t = < AMODE > { jjtThis.value = t.image; }
+}
+  
 void cond():
 {Token t;}
 {
   t = < COND > { jjtThis.value = t.image; }
 }
 
+/*
 void scnd():
 {Token t;}
 {
   t = < SCND > { jjtThis.value = t.image; }
 }
+*/
 
 void lsl():
 {Token t;}

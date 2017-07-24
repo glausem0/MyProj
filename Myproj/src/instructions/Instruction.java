@@ -58,7 +58,7 @@ public class Instruction {
 				retVal = 0;
 			}
 		break;
-		
+
 		case("asr"):
 			if(1<=value && value <=31){
 				retVal = regOrVal >> value;
@@ -69,8 +69,8 @@ public class Instruction {
 			else {
 				retVal = regOrVal;
 			}
-			break;
-		
+		break;
+
 		case("ror"):
 			if(1<=value && value <=31){
 				retVal = regOrVal >>> value | regOrVal<<(32 - value) ;
@@ -82,7 +82,7 @@ public class Instruction {
 				regOrVal = regOrVal & 31;
 				retVal = shiftInstr("ror", String.valueOf(retVal), String.valueOf(regOrVal));
 			}
-			break;
+		break;
 
 		case("<<"):
 			retVal = regOrVal << value;
@@ -210,7 +210,6 @@ public class Instruction {
 		return result;
 	}
 
-	//TODO change ldr for unaligned instr
 	public void ldrIntr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
 		switch(PrePost){
@@ -222,15 +221,15 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement(add);
-						 
+						int valMem = mem.getMemoryElement32(add);
+
 						regData.put(regL, valMem);
 						regData.put(regV, add);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						int valMem = mem.getMemoryElement(add);
+						int valMem = mem.getMemoryElement32(add);
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -239,15 +238,15 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement(add);
-						
+						int valMem = mem.getMemoryElement32(add);
+
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						int valMem = mem.getMemoryElement(add);
-						
+						int valMem = mem.getMemoryElement32(add);
+
 						regData.put(regL, valMem);
 					}
 				}	
@@ -257,15 +256,15 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement(add);
-						 
+						int valMem = mem.getMemoryElement32(add);
+
 						regData.put(regL, valMem);
 						regData.put(regV, add);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						int valMem = mem.getMemoryElement(add);
+						int valMem = mem.getMemoryElement32(add);
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -274,14 +273,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement(add);
+						int valMem = mem.getMemoryElement32(add);
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						int valMem = mem.getMemoryElement(add);
+						int valMem = mem.getMemoryElement32(add);
 
 						regData.put(regL, valMem);
 					}
@@ -302,7 +301,7 @@ public class Instruction {
 			switch(PosNeg){
 			case "n":
 				add = regVInt;
-				valMem = mem.getMemoryElement(add);
+				valMem = mem.getMemoryElement32(add);
 
 				regData.put(regL, valMem);
 
@@ -312,7 +311,7 @@ public class Instruction {
 
 			case "p":
 				add = regVInt;
-				valMem = mem.getMemoryElement(add);
+				valMem = mem.getMemoryElement32(add);
 
 				regData.put(regL, valMem);
 
@@ -326,27 +325,470 @@ public class Instruction {
 		}	
 	}
 
-	public void ldrSInstr(){
-		//TODO
+	public void ldrBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
+
+		val = val.replace("-", "");
+
+		switch(PrePost){
+		case "pre":
+		{	
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case "n":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+				}	
+				break;
+
+			case "p":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+				}
+				break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			//récupère donneés:
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valMem; int tmp;
+
+			switch(PosNeg){
+			case "n":
+				add = regVInt;
+				valMem = mem.getMemoryElement8(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt - valInt;
+				regData.put(regV, tmp);			
+				break;
+
+			case "p":
+				add = regVInt;
+				valMem = mem.getMemoryElement8(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt + valInt;
+				regData.put(regV, tmp);			
+				break;
+			}
+		}
+		break;
+
+		}
 	}
-	
-	public void ldrBInstr(){
-		//TODO
+
+	public void ldrSBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
+		switch(PrePost){
+		case "pre":
+		{	
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case "n":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+				}	
+				break;
+
+			case "p":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement8(add);
+
+						regData.put(regL, valMem);
+					}
+				}
+				break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			//récupère donneés:
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valMem; int tmp;
+
+			switch(PosNeg){
+			case "n":
+				add = regVInt;
+				valMem = mem.getMemoryElement8(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt - valInt;
+				regData.put(regV, tmp);			
+				break;
+
+			case "p":
+				add = regVInt;
+				valMem = mem.getMemoryElement8(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt + valInt;
+				regData.put(regV, tmp);			
+				break;
+			}
+		}
+		break;
+
+		}
 	}
-	
-	public void ldrHInstr(){
-		//TODO
+
+	public void ldrHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
+
+		val = val.replace("-","");
+
+		switch(PrePost){
+		case "pre":
+		{	
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case "n":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+				}	
+				break;
+
+			case "p":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+				}
+				break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			//récupère donneés:
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valMem; int tmp;
+
+			switch(PosNeg){
+			case "n":
+				add = regVInt;
+				valMem = mem.getMemoryElement16(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt - valInt;
+				regData.put(regV, tmp);			
+				break;
+
+			case "p":
+				add = regVInt;
+				valMem = mem.getMemoryElement16(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt + valInt;
+				regData.put(regV, tmp);			
+				break;
+			}
+		}
+		break;
+
+		}
 	}
-	
-	public void ldrSBInstr(){
-		//TODO
+
+	public void ldrSHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
+		switch(PrePost){
+		case "pre":
+		{	
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case "n":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt - valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+				}	
+				break;
+
+			case "p":
+				if(close.equals("CU")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+						regData.put(regV, add);	
+					}
+				}
+				else if(close.equals("C")){
+					if (val.equals("null")){
+						int add = regVInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+					else{
+						int valInt = toInt(val);
+						int add = regVInt + valInt;
+						int valMem = mem.getMemoryElement16(add);
+
+						regData.put(regL, valMem);
+					}
+				}
+				break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			//récupère donneés:
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valMem; int tmp;
+
+			switch(PosNeg){
+			case "n":
+				add = regVInt;
+				valMem = mem.getMemoryElement16(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt - valInt;
+				regData.put(regV, tmp);			
+				break;
+
+			case "p":
+				add = regVInt;
+				valMem = mem.getMemoryElement16(add);
+
+				regData.put(regL, valMem);
+
+				tmp = regVInt + valInt;
+				regData.put(regV, tmp);			
+				break;
+			}
+		}
+		break;
+
+		}
+
 	}
-	
-	public void ldrSHInstr(){
-		//TODO
-	}
-	
-	public void strIntr(String regL, String regV, String val1, String close, String PrePost, String PosNeg ){
+
+	public void strIntr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
 		switch(PrePost){
 		case "pre":
@@ -355,82 +797,82 @@ public class Instruction {
 			switch(PosNeg){
 			case("n"):
 				if(close.equals("CU")){
-					if(val1.equals("null")){
+					if(val.equals("null")){
 
 						int add = regVInt;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 
 						regData.put(regV, add);
 					}
 					else{
-						int valInt = toInt(val1);
+						int valInt = toInt(val);
 
 						int add = regVInt - valInt ;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 
 						regData.put(regV, add);
 					}
 				}
 				else if (close.equals("C")){
-					if(val1.equals("null")){
+					if(val.equals("null")){
 
 						int add = regVInt;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 					}
 					else{
-						int valInt = toInt(val1);
+						int valInt = toInt(val);
 
 						int add = regVInt - valInt ;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 					}
 				}
 			break;
 
 			case("p"):
 				if(close.equals("CU")){
-					if(val1.equals("null")){
+					if(val.equals("null")){
 
 						int add = regVInt;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 
 						regData.put(regV, add);
 					}
 					else{
-						int valInt = toInt(val1);
+						int valInt = toInt(val);
 
 						int add = regVInt + valInt ;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 
 						regData.put(regV, add);
 					}
 				}
 				else if (close.equals("C")){
-					if(val1.equals("null")){
+					if(val.equals("null")){
 
 						int add = regVInt;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 					}
 					else{
-						int valInt = toInt(val1);
+						int valInt = toInt(val);
 
 						int add = regVInt + valInt ;
 						int valueStr = toInt(regL);
 
-						mem.setMemoryElement(add, valueStr);
+						mem.setMemoryElement32(add, valueStr);
 					}
 				}
 			break;
@@ -441,56 +883,542 @@ public class Instruction {
 		case "post":
 		{
 			int regVInt = toInt(regV);
-			int valInt = toInt(val1);
+			int valInt = toInt(val);
 
 			int add; int valueStr; int tmp;
 
 			switch(PosNeg){
 			case("n"):
 				add = regVInt;
-				valueStr = toInt(regL);
+			valueStr = toInt(regL);
 
-				mem.setMemoryElement(add, valueStr);
+			mem.setMemoryElement32(add, valueStr);
 
-				tmp = regVInt - valInt;
-				regData.put(regV, tmp);
-				break;
+			tmp = regVInt - valInt;
+			regData.put(regV, tmp);
+			break;
 
 			case("p"):
 				add = regVInt;
-				valueStr = toInt(regL);
+			valueStr = toInt(regL);
 
-				mem.setMemoryElement(add, valueStr);
+			mem.setMemoryElement32(add, valueStr);
 
-				tmp = regVInt + valInt;
-				regData.put(regV, tmp);
-				break;
+			tmp = regVInt + valInt;
+			regData.put(regV, tmp);
+			break;
 			}
 		}
 		break;
 
 		}
 	}
-	
-	public void strSInstr(){
-		//TODO
-	}
-	
-	public void strBInstr(){
-		//TODO
-	}
-	
-	public void strHInstr(){
-		//TODO
-	}
-	
-	public void strSBInstr(){
-		//TODO
-	}
-	
-	public void strSHInstr(){
-		//TODO
+
+	public void strBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
+
+		val = val.replace("-", "");
+
+		switch(PrePost){
+		case "pre":
+		{
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case("n"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+				}
+			break;
+
+			case("p"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+				}
+			break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valueStr; int tmp;
+
+			switch(PosNeg){
+			case("n"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement8(add, valueStr);
+
+			tmp = regVInt - valInt;
+			regData.put(regV, tmp);
+			break;
+
+			case("p"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement8(add, valueStr);
+
+			tmp = regVInt + valInt;
+			regData.put(regV, tmp);
+			break;
+			}
+		}
+		break;
+
+		}
 	}
 
-	
+	public void strSBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
+		switch(PrePost){
+		case "pre":
+		{
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case("n"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+				}
+			break;
+
+			case("p"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement8(add, valueStr);
+					}
+				}
+			break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valueStr; int tmp;
+
+			switch(PosNeg){
+			case("n"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement8(add, valueStr);
+
+			tmp = regVInt - valInt;
+			regData.put(regV, tmp);
+			break;
+
+			case("p"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement8(add, valueStr);
+
+			tmp = regVInt + valInt;
+			regData.put(regV, tmp);
+			break;
+			}
+		}
+		break;
+
+		}
+	}
+
+	public void strHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
+
+		val = val.replace("-", "");
+
+		switch(PrePost){
+		case "pre":
+		{
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case("n"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+				}
+			break;
+
+			case("p"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+				}
+			break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valueStr; int tmp;
+
+			switch(PosNeg){
+			case("n"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement16(add, valueStr);
+
+			tmp = regVInt - valInt;
+			regData.put(regV, tmp);
+			break;
+
+			case("p"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement16(add, valueStr);
+
+			tmp = regVInt + valInt;
+			regData.put(regV, tmp);
+			break;
+			}
+		}
+		break;
+
+		}
+	}
+
+	public void strSHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
+		switch(PrePost){
+		case "pre":
+		{
+			int regVInt = toInt(regV);
+			switch(PosNeg){
+			case("n"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt - valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+				}
+			break;
+
+			case("p"):
+				if(close.equals("CU")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+
+						regData.put(regV, add);
+					}
+				}
+				else if (close.equals("C")){
+					if(val.equals("null")){
+
+						int add = regVInt;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+					else{
+						int valInt = toInt(val);
+
+						int add = regVInt + valInt ;
+						int valueStr = toInt(regL);
+
+						mem.setMemoryElement16(add, valueStr);
+					}
+				}
+			break;
+			}
+		}
+		break;
+
+		case "post":
+		{
+			int regVInt = toInt(regV);
+			int valInt = toInt(val);
+
+			int add; int valueStr; int tmp;
+
+			switch(PosNeg){
+			case("n"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement16(add, valueStr);
+
+			tmp = regVInt - valInt;
+			regData.put(regV, tmp);
+			break;
+
+			case("p"):
+				add = regVInt;
+			valueStr = toInt(regL);
+
+			mem.setMemoryElement16(add, valueStr);
+
+			tmp = regVInt + valInt;
+			regData.put(regV, tmp);
+			break;
+			}
+		}
+		break;
+
+		}
+	}
+
+
 }
