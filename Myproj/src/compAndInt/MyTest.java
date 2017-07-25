@@ -2,12 +2,30 @@
 package compAndInt;
 
 import java.io.*;
-import registers.Register;
+import java.util.HashMap;
+
+import instructions.*;
+import memory.Memory;
+import registers.*;
 
 public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConstants {/*@bgen(jjtree)*/
   protected static JJTMyTestState jjtree = new JJTMyTestState();
   public static void main(String args []) throws Exception
   {
+        Register regData = new Register();
+        HashMap<Object, Object> reg = regData.init();
+
+        Cpsr cpsr = new Cpsr();
+        HashMap<Object, Object> cpsrReg = cpsr.init();
+
+        Memory memory = new Memory();
+        HashMap<Object, Object> memor = memory.init();
+
+        Condition condition = new Condition(reg, cpsrReg);
+        UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
+        AccessMemory AMem = new AccessMemory(memor);
+        Instruction inst = new Instruction(reg, AMem);
+
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
     //MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));        SimpleNode root = parser.prog();
 
@@ -15,7 +33,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     root.dump(" ");
 
     System.out.println("Prog:");
-    Visitors vi = new Visitors();
+    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
     root.jjtAccept(vi,null);
 
     vi.print();
@@ -12362,77 +12380,6 @@ void scnd():
     finally { jj_save(146, xla); }
   }
 
-  static private boolean jj_3R_118() {
-    if (jj_3R_196()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_76() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_122()) {
-    jj_scanpos = xsp;
-    if (jj_3R_123()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3_77() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_124()) {
-    jj_scanpos = xsp;
-    if (jj_3R_125()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_120() {
-    if (jj_3R_196()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_80() {
-    if (jj_scan_token(42)) return true;
-    if (jj_scan_token(39)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_111() {
-    if (jj_3R_195()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_114() {
-    if (jj_3R_196()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_113() {
-    if (jj_3R_195()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_116() {
-    if (jj_3R_196()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_73() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_118()) {
-    jj_scanpos = xsp;
-    if (jj_3R_119()) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_107() {
-    if (jj_3R_195()) return true;
-    return false;
-  }
-
   static private boolean jj_3R_109() {
     if (jj_3R_195()) return true;
     return false;
@@ -14675,6 +14622,77 @@ void scnd():
   }
 
   static private boolean jj_3R_117() {
+    if (jj_3R_195()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_118() {
+    if (jj_3R_196()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_76() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_122()) {
+    jj_scanpos = xsp;
+    if (jj_3R_123()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3_77() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_124()) {
+    jj_scanpos = xsp;
+    if (jj_3R_125()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_120() {
+    if (jj_3R_196()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_80() {
+    if (jj_scan_token(42)) return true;
+    if (jj_scan_token(39)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_111() {
+    if (jj_3R_195()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_114() {
+    if (jj_3R_196()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_113() {
+    if (jj_3R_195()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_116() {
+    if (jj_3R_196()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_73() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_118()) {
+    jj_scanpos = xsp;
+    if (jj_3R_119()) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_107() {
     if (jj_3R_195()) return true;
     return false;
   }

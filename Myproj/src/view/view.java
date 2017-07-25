@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashMap;
 
 import javax.swing.JLabel;
 import javax.swing.JInternalFrame;
@@ -20,12 +21,34 @@ import javax.swing.JCheckBox;
 import javax.swing.JToolBar;
 
 import compAndInt.*;
+import instructions.AccessMemory;
+import instructions.Condition;
+import instructions.Instruction;
+import instructions.UpdateCPSR;
+import memory.Memory;
+import registers.Cpsr;
+import registers.Register;
 
 import javax.swing.JTextPane;
 import javax.swing.JMenuItem;
 import javax.swing.*;
 
 public class view {
+	
+	Register regData = new Register();
+	private HashMap<Object, Object> reg = regData.init();
+
+	Cpsr cpsr = new Cpsr();
+	private HashMap<Object, Object> cpsrReg = cpsr.init();
+
+	Memory memory = new Memory();
+	private HashMap<Object, Object> memor = memory.init();
+
+	Condition condition = new Condition(reg, cpsrReg);
+	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
+	AccessMemory AMem = new AccessMemory(memor);
+	Instruction inst = new Instruction(reg, AMem);
+	
 
 	private JFrame frame;
 	private JTextField textFieldR0;
@@ -144,25 +167,40 @@ public class view {
 				    root.dump(" ");
 
 				    System.out.println("Prog:");
-				    Visitors vi = new Visitors();
+				    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 				    root.jjtAccept(vi,null);
 
 				    vi.print();
+				    
+				    
+				    //Set fields register:
+				    textFieldR0.setText(reg.get("r0").toString());
+				    textFieldR1.setText(reg.get("r1").toString());
+				    textFieldR2.setText(reg.get("r2").toString());
+				    textFieldR3.setText(reg.get("r3").toString());
+				    textFieldR4.setText(reg.get("r4").toString());
+				    textFieldR5.setText(reg.get("r5").toString());
+				    textFieldR6.setText(reg.get("r6").toString());
+				    textFieldR7.setText(reg.get("r7").toString());
+				    textFieldR8.setText(reg.get("r8").toString());
+				    textFieldR9.setText(reg.get("r9").toString());
+				    textFieldR10.setText(reg.get("r10").toString());
+				    textFieldR11.setText(reg.get("r11").toString());
+				    textFieldR12.setText(reg.get("r12").toString());
+				    textFieldR13.setText(reg.get("r13").toString());
+				    textFieldR14.setText(reg.get("r14").toString());
+				    textFieldR15.setText(reg.get("r15").toString());
+				    
+				    //set fields cpsr:
+				    textField_N.setText(cpsrReg.get("N").toString());
+				    textField_Z.setText(cpsrReg.get("Z").toString());
+				    textField_C.setText(cpsrReg.get("C").toString());
+				    textField_V.setText(cpsrReg.get("V").toString());
+				    textField_I.setText(cpsrReg.get("I").toString());
+				    textField_F.setText(cpsrReg.get("F").toString());   
 			}
 		});
 		mnRun.add(mntmRun);
-		
-		JMenu mnWindow = new JMenu("Window");
-		menuBar.add(mnWindow);
-		
-		JCheckBox chckbxLl = new JCheckBox("registers");
-		mnWindow.add(chckbxLl);
-		
-		JCheckBox chckbxMemory = new JCheckBox("memory");
-		mnWindow.add(chckbxMemory);
-		
-		JCheckBox chckbxCpsr = new JCheckBox("cpsr");
-		mnWindow.add(chckbxCpsr);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -171,7 +209,7 @@ public class view {
 		
 		
 		JPanel forTxtFile = new JPanel();
-		forTxtFile.setBounds(10, 11, 432, 523);
+		forTxtFile.setBounds(21, 11, 432, 523);
 		frame.getContentPane().add(forTxtFile);
 		forTxtFile.setLayout(null);
 		

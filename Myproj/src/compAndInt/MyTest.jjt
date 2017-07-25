@@ -9,10 +9,28 @@
 PARSER_BEGIN(MyTest)package compAndInt;
 
 import java.io.*;
-import registers.Register;
+import java.util.HashMap;
+
+import instructions.*;
+import memory.Memory;
+import registers.*;
 
 public class MyTest{
-    public static void main(String args []) throws Exception  {	
+    public static void main(String args []) throws Exception  {
+	Register regData = new Register();
+	HashMap<Object, Object> reg = regData.init();
+
+	Cpsr cpsr = new Cpsr();
+	HashMap<Object, Object> cpsrReg = cpsr.init();
+
+	Memory memory = new Memory();
+	HashMap<Object, Object> memor = memory.init();
+
+	Condition condition = new Condition(reg, cpsrReg);
+	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
+	AccessMemory AMem = new AccessMemory(memor);
+	Instruction inst = new Instruction(reg, AMem);
+	
     MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
     //MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));	SimpleNode root = parser.prog();
 
@@ -20,7 +38,7 @@ public class MyTest{
     root.dump(" ");
 
     System.out.println("Prog:");
-    Visitors vi = new Visitors();
+    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
     root.jjtAccept(vi,null);
 
     vi.print();

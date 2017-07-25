@@ -12,20 +12,40 @@ import registers.Register;
 
 public class Visitors implements MyTestVisitor{
 
-	Register regData = new Register();
-	private HashMap<Object, Object> reg = regData.init();
+	private Register regData;
+	private HashMap<Object, Object> reg; 
+	private Cpsr cpsr; 
+	private HashMap<Object, Object> cpsrReg; 
+	private Memory memory; 
+	private HashMap<Object, Object> memor; 
+	private Condition condition;
+	private UpdateCPSR upCpsr;
+	private AccessMemory AMem;
+	private Instruction inst;
 
-	Cpsr cpsr = new Cpsr();
-	private HashMap<Object, Object> cpsrReg = cpsr.init();
-
-	Memory memory = new Memory();
-	private HashMap<Object, Object> memor = memory.init();
-
-	Condition condition = new Condition(reg, cpsrReg);
-	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
-	AccessMemory AMem = new AccessMemory(memor);
-	Instruction inst = new Instruction(reg, AMem);
-
+	public Visitors(Register regData, 
+			HashMap<Object, Object> reg, 
+			Cpsr cpsr, 
+			HashMap<Object, Object> cpsrReg, 
+			Memory memory, 
+			HashMap<Object, Object> memor, 
+			Condition condition,
+			UpdateCPSR upCpsr,
+			AccessMemory AMem,
+			Instruction inst){
+		this.regData = regData;
+		this.reg = reg;
+		this.cpsr = cpsr;
+		this.cpsrReg = cpsrReg;
+		this.memory = memory;
+		this.memor = memor;
+		this.condition = condition;
+		this.upCpsr = upCpsr;
+		this.AMem = AMem;
+		this.inst = inst;
+	}
+	
+	
 	////Program and simple node:////	
 	@Override
 	public Object visit(SimpleNode node, Object data) {
