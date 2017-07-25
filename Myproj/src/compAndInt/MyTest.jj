@@ -5849,7 +5849,7 @@ void ldm()      :
 /*@egen*/             
       )
      )
- | cond()
+ | cond() amode() register()
  ("," "{" register()
      (/*@bgen(jjtree) #ldmCSimple( 4) */
       {
@@ -6152,7 +6152,7 @@ void stm()      :
 /*@egen*/             
       )
      )
- | cond()
+ | cond() amode() register()
  ("," "{" register()
      (/*@bgen(jjtree) #stmCSimple( 4) */
       {
@@ -6270,9 +6270,9 @@ void stm()      :
         }
       }
 /*@egen*/              
-    |/*@bgen(jjtree) #MstmCEnum( 5) */
+    |/*@bgen(jjtree) #MstmCList( 5) */
       {
-        ASTMstmCEnum jjtn012 = new ASTMstmCEnum(JJTMSTMCENUM);
+        ASTMstmCList jjtn012 = new ASTMstmCList(JJTMSTMCLIST);
         boolean jjtc012 = true;
         jjtree.openNodeScope(jjtn012);
       }

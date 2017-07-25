@@ -10154,6 +10154,8 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       break;
     case COND:
       cond();
+      amode();
+      register();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 39:
         jj_consume_token(39);
@@ -10673,6 +10675,8 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
       break;
     case COND:
       cond();
+      amode();
+      register();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 39:
         jj_consume_token(39);
@@ -10871,7 +10875,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
           }
           break;
         case 41:
-        ASTMstmCEnum jjtn012 = new ASTMstmCEnum(JJTMSTMCENUM);
+        ASTMstmCList jjtn012 = new ASTMstmCList(JJTMSTMCLIST);
         boolean jjtc012 = true;
         jjtree.openNodeScope(jjtn012);
           try {

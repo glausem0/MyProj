@@ -376,8 +376,25 @@ public class AccessMemory {
 		return elements;	
 	}
 
-	public void setMultipleMemoryElement(){
+	public void setMultipleMemoryElement(int n, int address, int[] elements, String incrDecr){
 
+		switch(incrDecr){
+		case "incr":
+		{
+			for(int i=0; i<n; i++){
+				setMemoryElement32(address + i*4, elements[i]);
+			}
+		}	
+		break;
+
+		case "decr":
+		{
+			for(int i=0; i<n; i++){
+				setMemoryElement32(address - i*4, elements[i]);
+			}
+		}	
+		break;	
+		}
 	}
 
 

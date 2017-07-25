@@ -928,7 +928,7 @@ void ldm() #void:
     | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmList(4)
       )
      )
- | cond()
+ | cond() amode() register()
  ("," "{" register()
      ( 
       (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmCSimple(4)
@@ -963,7 +963,7 @@ void stm() #void:
     | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmList(4)
       )
      )
- | cond()
+ | cond() amode() register()
  ("," "{" register()
      ( 
       (LOOKAHEAD(2) ("}") | ("}" "^")) #stmCSimple(4)
@@ -974,7 +974,7 @@ void stm() #void:
 	 (
       (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmCSimple(4)
     | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MstmCEnum(5)
-    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmCEnum(5)
+    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmCList(5)
       )
      )  
 )
