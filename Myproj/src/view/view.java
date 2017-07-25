@@ -32,6 +32,9 @@ import registers.Register;
 import javax.swing.JTextPane;
 import javax.swing.JMenuItem;
 import javax.swing.*;
+import java.awt.List;
+import java.awt.TextArea;
+import javax.swing.border.BevelBorder;
 
 public class view {
 	
@@ -102,7 +105,7 @@ public class view {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1119, 669);
+		frame.setBounds(100, 100, 1108, 620);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Menu bar:
@@ -206,13 +209,6 @@ public class view {
 		menuBar.add(mnHelp);
 		frame.getContentPane().setLayout(null);
 		
-		
-		
-		JPanel forTxtFile = new JPanel();
-		forTxtFile.setBounds(21, 11, 432, 523);
-		frame.getContentPane().add(forTxtFile);
-		forTxtFile.setLayout(null);
-		
 		JPanel viewElements = new JPanel();
 		viewElements.setBounds(493, 11, 587, 538);
 		frame.getContentPane().add(viewElements);
@@ -220,6 +216,7 @@ public class view {
 		viewElements.setLayout(null);
 		
 		JPanel registersPanel = new JPanel();
+		registersPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		registersPanel.setBackground(Color.GRAY);
 		registersPanel.setBounds(0, 0, 333, 283);
 		viewElements.add(registersPanel);
@@ -375,6 +372,7 @@ public class view {
 		registersPanel.add(textFieldR15);
 		
 		JPanel cpsrPanel = new JPanel();
+		cpsrPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		cpsrPanel.setBackground(Color.GRAY);
 		cpsrPanel.setBounds(332, 0, 255, 283);
 		viewElements.add(cpsrPanel);
@@ -440,14 +438,30 @@ public class view {
 		cpsrPanel.add(textField_F);
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBackground(Color.GRAY);
 		panel.setBounds(0, 282, 587, 256);
 		viewElements.add(panel);
 		panel.setLayout(null);
 		
 		JTextPane txtpnMemory = new JTextPane();
-		txtpnMemory.setBounds(0, 0, 91, 32);
+		txtpnMemory.setBounds(0, 0, 51, 20);
 		txtpnMemory.setText("Memory");
 		panel.add(txtpnMemory);
+		
+		List list = new List();
+		list.setBounds(10, 44, 567, 202);
+		panel.add(list);
+		
+		
+		
+		JPanel forTxtFile = new JPanel();
+		forTxtFile.setBounds(10, 11, 462, 538);
+		frame.getContentPane().add(forTxtFile);
+		forTxtFile.setLayout(null);
+		
+		TextArea textArea = new TextArea();
+		textArea.setBounds(10, 11, 462, 538);
+		frame.getContentPane().add(textArea);
 	}
 }
