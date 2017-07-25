@@ -438,5 +438,16 @@ public class view {
 		textField_F.setColumns(10);
 		textField_F.setBounds(106, 198, 86, 20);
 		cpsrPanel.add(textField_F);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.GRAY);
+		panel.setBounds(0, 282, 587, 256);
+		viewElements.add(panel);
+		panel.setLayout(null);
+		
+		JTextPane txtpnMemory = new JTextPane();
+		txtpnMemory.setBounds(0, 0, 91, 32);
+		txtpnMemory.setText("Memory");
+		panel.add(txtpnMemory);
 	}
 }
