@@ -79,7 +79,7 @@ public class view {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1027, 669);
+		frame.setBounds(100, 100, 1119, 669);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Menu bar:
@@ -89,8 +89,35 @@ public class view {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenu mnEdit = new JMenu("Edit");
-		menuBar.add(mnEdit);
+		JMenu mnNew = new JMenu("New");
+		mnFile.add(mnNew);
+		
+		JMenuItem mntmNewtxt = new JMenuItem("New text file");
+		mnNew.add(mntmNewtxt);
+		
+		JMenuItem mntmOpenFile = new JMenuItem("Open File...");
+		mnFile.add(mntmOpenFile);
+		
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
+		
+		JMenuItem mntmClose = new JMenuItem("Close");
+		mnFile.add(mntmClose);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnFile.add(separator_1);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mnFile.add(mntmSave);
+		
+		JMenuItem mntmSaveAs = new JMenuItem("Save as...");
+		mnFile.add(mntmSaveAs);
+		
+		JSeparator separator_2 = new JSeparator();
+		mnFile.add(separator_2);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnFile.add(mntmExit);
 		
 		JMenu mnRun = new JMenu("Run");
 		menuBar.add(mnRun);
@@ -149,7 +176,7 @@ public class view {
 		forTxtFile.setLayout(null);
 		
 		JPanel viewElements = new JPanel();
-		viewElements.setBounds(531, 11, 432, 538);
+		viewElements.setBounds(493, 11, 587, 538);
 		frame.getContentPane().add(viewElements);
 		viewElements.setBackground(Color.WHITE);
 		viewElements.setLayout(null);
