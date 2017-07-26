@@ -12,6 +12,7 @@ import registers.*;
 
 public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConstants {/*@bgen(jjtree)*/
   protected static JJTMyTestState jjtree = new JJTMyTestState();
+ /*
   public static void main(String args []) throws Exception
   {
         Register regData = new Register();
@@ -39,10 +40,8 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     root.jjtAccept(vi,null);
 
     vi.print();
-    
-   
-
    }
+   */
 
   static final public SimpleNode prog() throws ParseException {
  /*@bgen(jjtree) prog */

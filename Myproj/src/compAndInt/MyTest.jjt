@@ -15,7 +15,7 @@ import memory.Memory;
 import registers.*;
 
 public class MyTest{
-    public static void main(String args []) throws Exception  {
+  /*  public static void main(String args []) throws Exception  {
 	Register regData = new Register();
 	HashMap<Object, Object> reg = regData.init();
 
@@ -42,7 +42,8 @@ public class MyTest{
 
     vi.print();
 
-   }}PARSER_END(MyTest)
+   }
+   */}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITION FOR LDR/STR*/
   < B: "b" >
