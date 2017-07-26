@@ -37,6 +37,8 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
     root.jjtAccept(vi,null);
 
     vi.print();
+    
+   
 
    }
 
