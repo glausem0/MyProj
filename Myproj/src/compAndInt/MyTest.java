@@ -3,6 +3,8 @@ package compAndInt;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import instructions.*;
 import memory.Memory;
@@ -19,7 +21,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants, MyTestConsta
         HashMap<Object, Object> cpsrReg = cpsr.init();
 
         Memory memory = new Memory();
-        HashMap<Object, Object> memor = memory.init();
+        LinkedHashMap<Object, Object> memor = memory.init();
 
         Condition condition = new Condition(reg, cpsrReg);
         UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);

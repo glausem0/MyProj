@@ -1,6 +1,8 @@
 package compAndInt;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import instructions.AccessMemory;
 import instructions.Condition;
@@ -17,7 +19,7 @@ public class Visitors implements MyTestVisitor{
 	private Cpsr cpsr; 
 	private HashMap<Object, Object> cpsrReg; 
 	private Memory memory; 
-	private HashMap<Object, Object> memor; 
+	private LinkedHashMap<Object, Object> memor; 
 	private Condition condition;
 	private UpdateCPSR upCpsr;
 	private AccessMemory AMem;
@@ -28,7 +30,7 @@ public class Visitors implements MyTestVisitor{
 			Cpsr cpsr, 
 			HashMap<Object, Object> cpsrReg, 
 			Memory memory, 
-			HashMap<Object, Object> memor, 
+			LinkedHashMap<Object, Object> memor, 
 			Condition condition,
 			UpdateCPSR upCpsr,
 			AccessMemory AMem,

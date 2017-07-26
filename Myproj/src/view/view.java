@@ -6,16 +6,18 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.table.AbstractTableModel;
 
 import java.io.*;
 import compAndInt.*;
 import instructions.*;
 import registers.*;
 import java.awt.*;
-
-import java.util.HashMap;
+import java.awt.List;
+import java.util.*;
 
 import memory.Memory;
+import javax.swing.table.DefaultTableModel;
 
 
 public class view {
@@ -27,8 +29,8 @@ public class view {
 	private HashMap<Object, Object> cpsrReg = cpsr.init();
 
 	Memory memory = new Memory();
-	private HashMap<Object, Object> memor = memory.init();
-
+	private LinkedHashMap<Object, Object> memor = memory.init();
+	
 	Condition condition = new Condition(reg, cpsrReg);
 	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
 	AccessMemory AMem = new AccessMemory(memor);
@@ -61,7 +63,6 @@ public class view {
 	private JTextField textField_V;
 	private JTextField textField_I;
 	private JTextField textField_F;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -101,174 +102,6 @@ public class view {
 		JScrollPane scrollBar = new JScrollPane(textArea);
 		scrollBar.setBounds(10, 11, 473, 538);
 		frame.getContentPane().add(scrollBar);
-		
-		//Menu bar:
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
-		
-		JMenuItem mntmOpenFile = new JMenuItem(new AbstractAction("Open File..."){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			
-			public void actionPerformed(ActionEvent ae){
-				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-				jfc.setDialogTitle("Select a text file");
-				
-				//select only text files, hide others format.
-				jfc.setAcceptAllFileFilterUsed(false);
-				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
-				jfc.addChoosableFileFilter(filter);
-				
-				int returnValue = jfc.showOpenDialog(null);
-				// int returnValue = jfc.showSaveDialog(null);
-
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					selectedFile = jfc.getSelectedFile();
-					//System.out.println(selectedFile.getAbsolutePath());
-				}
-				
-				//when selected text file, open it in textArea (clean before):
-				textArea.setText("");
-				BufferedReader in;
-				try {
-					in = new BufferedReader(new FileReader(selectedFile));
-
-					String line = in.readLine();
-					while(line != null){
-						textArea.append(line + "\n");
-						line = in.readLine();
-					}
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		});
-		mnFile.add(mntmOpenFile);
-		
-		JSeparator separator_1 = new JSeparator();
-		mnFile.add(separator_1);
-		
-		JMenuItem mntmSave = new JMenuItem(new AbstractAction("Save"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-				jfc.setDialogTitle("Save text file");
-				
-				//select only text files, hide others format.
-				jfc.setAcceptAllFileFilterUsed(false);
-				FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
-				jfc.addChoosableFileFilter(filter);
-				
-				int returnValue = jfc.showDialog(null, "Save");
-				// int returnValue = jfc.showSaveDialog(null);
-
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					selectedFile = jfc.getSelectedFile();
-					if(! selectedFile.getName().endsWith(".txt")){
-						selectedFile = new File(selectedFile.getAbsolutePath() + ".txt");
-					}
-					try{
-						textArea.write(new OutputStreamWriter(new FileOutputStream(selectedFile), "utf-8"));
-					}catch	(IOException e) {
-	                    e.printStackTrace();
-	                }
-				}
-					
-			}
-		});
-		mnFile.add(mntmSave);
-		
-		JMenu mnRun = new JMenu("Run");
-		menuBar.add(mnRun);
-		
-		JMenuItem mntmRun = new JMenuItem(new AbstractAction("Run"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-				
-				try {
-					if(parser == null){
-						parser = new MyTest(new FileReader(selectedFile));
-					}
-					else{
-						parser.ReInit(new FileReader(selectedFile));
-					}
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				    //MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
-					SimpleNode root = null;
-					try {
-						root = parser.prog();
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				    System.out.println("Abstract Syntax Tree:");
-				    root.dump(" ");
-
-				    System.out.println("Prog:");
-				    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
-				    root.jjtAccept(vi,null);
-
-				    vi.print();
-				    
-				    //Set fields register:
-				    textFieldR0.setText(reg.get("r0").toString());
-				    textFieldR1.setText(reg.get("r1").toString());
-				    textFieldR2.setText(reg.get("r2").toString());
-				    textFieldR3.setText(reg.get("r3").toString());
-				    textFieldR4.setText(reg.get("r4").toString());
-				    textFieldR5.setText(reg.get("r5").toString());
-				    textFieldR6.setText(reg.get("r6").toString());
-				    textFieldR7.setText(reg.get("r7").toString());
-				    textFieldR8.setText(reg.get("r8").toString());
-				    textFieldR9.setText(reg.get("r9").toString());
-				    textFieldR10.setText(reg.get("r10").toString());
-				    textFieldR11.setText(reg.get("r11").toString());
-				    textFieldR12.setText(reg.get("r12").toString());
-				    textFieldR13.setText(reg.get("r13").toString());
-				    textFieldR14.setText(reg.get("r14").toString());
-				    textFieldR15.setText(reg.get("r15").toString());
-				    
-				    //set fields cpsr:
-				    textField_N.setText(cpsrReg.get("N").toString());
-				    textField_Z.setText(cpsrReg.get("Z").toString());
-				    textField_C.setText(cpsrReg.get("C").toString());
-				    textField_V.setText(cpsrReg.get("V").toString());
-				    textField_I.setText(cpsrReg.get("I").toString());
-				    textField_F.setText(cpsrReg.get("F").toString());   
-				    
-				    //set fields memory:
-				    
-			}
-		});
-		mnRun.add(mntmRun);
-		
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
-		frame.getContentPane().setLayout(null);
-		
-	
 		
 		JPanel viewElements = new JPanel();
 		viewElements.setBounds(493, 11, 587, 538);
@@ -510,10 +343,181 @@ public class view {
 		txtpnMemory.setText("Memory");
 		panel.add(txtpnMemory);
 		
-		table = new JTable();
-		table.setBounds(10, 31, 567, 214);
-		panel.add(table);
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(10, 27, 308, 218);
+		panel.add(textPane);
 		
+		JScrollPane scrollBar_1 = new JScrollPane(textPane);
+		scrollBar_1.setBounds(10, 27, 308, 218);
+		panel.add(scrollBar_1);
+	
+		
+	
+		//Menu bar:
+				JMenuBar menuBar = new JMenuBar();
+				frame.setJMenuBar(menuBar);
+				
+				JMenu mnFile = new JMenu("File");
+				menuBar.add(mnFile);
+				
+				JMenuItem mntmOpenFile = new JMenuItem(new AbstractAction("Open File..."){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+					
+					public void actionPerformed(ActionEvent ae){
+						JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+						jfc.setDialogTitle("Select a text file");
+						
+						//select only text files, hide others format.
+						jfc.setAcceptAllFileFilterUsed(false);
+						FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
+						jfc.addChoosableFileFilter(filter);
+						
+						int returnValue = jfc.showOpenDialog(null);
+						// int returnValue = jfc.showSaveDialog(null);
+
+						if (returnValue == JFileChooser.APPROVE_OPTION) {
+							selectedFile = jfc.getSelectedFile();
+							//System.out.println(selectedFile.getAbsolutePath());
+						}
+						
+						//when selected text file, open it in textArea (clean before):
+						textArea.setText("");
+						BufferedReader in;
+						try {
+							in = new BufferedReader(new FileReader(selectedFile));
+
+							String line = in.readLine();
+							while(line != null){
+								textArea.append(line + "\n");
+								line = in.readLine();
+							}
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				});
+				mnFile.add(mntmOpenFile);
+				
+				JSeparator separator_1 = new JSeparator();
+				mnFile.add(separator_1);
+				
+				JMenuItem mntmSave = new JMenuItem(new AbstractAction("Save"){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent ae){
+						JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+						jfc.setDialogTitle("Save text file");
+						
+						//select only text files, hide others format.
+						jfc.setAcceptAllFileFilterUsed(false);
+						FileNameExtensionFilter filter = new FileNameExtensionFilter(".txt", "txt");
+						jfc.addChoosableFileFilter(filter);
+						
+						int returnValue = jfc.showDialog(null, "Save");
+						// int returnValue = jfc.showSaveDialog(null);
+
+						if (returnValue == JFileChooser.APPROVE_OPTION) {
+							selectedFile = jfc.getSelectedFile();
+							if(! selectedFile.getName().endsWith(".txt")){
+								selectedFile = new File(selectedFile.getAbsolutePath() + ".txt");
+							}
+							try{
+								textArea.write(new OutputStreamWriter(new FileOutputStream(selectedFile), "utf-8"));
+							}catch	(IOException e) {
+			                    e.printStackTrace();
+			                }
+						}
+							
+					}
+				});
+				mnFile.add(mntmSave);
+				
+				JMenu mnRun = new JMenu("Run");
+				menuBar.add(mnRun);
+				
+				JMenuItem mntmRun = new JMenuItem(new AbstractAction("Run"){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					public void actionPerformed(ActionEvent ae){
+						
+						try {
+							if(parser == null){
+								parser = new MyTest(new FileReader(selectedFile));
+							}
+							else{
+								parser.ReInit(new FileReader(selectedFile));
+							}
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						    //MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
+							SimpleNode root = null;
+							try {
+								root = parser.prog();
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
+						    System.out.println("Abstract Syntax Tree:");
+						    root.dump(" ");
+
+						    System.out.println("Prog:");
+						    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
+						    root.jjtAccept(vi,null);
+
+						    vi.print();
+						    
+						    //Set fields register:
+						    textFieldR0.setText(reg.get("r0").toString());
+						    textFieldR1.setText(reg.get("r1").toString());
+						    textFieldR2.setText(reg.get("r2").toString());
+						    textFieldR3.setText(reg.get("r3").toString());
+						    textFieldR4.setText(reg.get("r4").toString());
+						    textFieldR5.setText(reg.get("r5").toString());
+						    textFieldR6.setText(reg.get("r6").toString());
+						    textFieldR7.setText(reg.get("r7").toString());
+						    textFieldR8.setText(reg.get("r8").toString());
+						    textFieldR9.setText(reg.get("r9").toString());
+						    textFieldR10.setText(reg.get("r10").toString());
+						    textFieldR11.setText(reg.get("r11").toString());
+						    textFieldR12.setText(reg.get("r12").toString());
+						    textFieldR13.setText(reg.get("r13").toString());
+						    textFieldR14.setText(reg.get("r14").toString());
+						    textFieldR15.setText(reg.get("r15").toString());
+						    
+						    //set fields cpsr:
+						    textField_N.setText(cpsrReg.get("N").toString());
+						    textField_Z.setText(cpsrReg.get("Z").toString());
+						    textField_C.setText(cpsrReg.get("C").toString());
+						    textField_V.setText(cpsrReg.get("V").toString());
+						    textField_I.setText(cpsrReg.get("I").toString());
+						    textField_F.setText(cpsrReg.get("F").toString());   
+						    
+						    //set fields memory:
+						    textPane.setText(memory.printView());
+					}
+				});
+				mnRun.add(mntmRun);
+				
+				JMenu mnHelp = new JMenu("Help");
+				menuBar.add(mnHelp);
+				frame.getContentPane().setLayout(null);
 		
 		
 	

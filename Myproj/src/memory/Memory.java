@@ -1,15 +1,16 @@
 package memory;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 
 public class Memory {
 
 	//TODO change Memory to generate address mod 4, verify if exist, if yes, increment do not erase)
 
-	private HashMap<Object, Object> memory;
-
-	public HashMap<Object, Object> init(){
-		this.memory = new HashMap();
+	private LinkedHashMap<Object, Object> memory;
+	
+	public LinkedHashMap<Object, Object> init(){
+		this.memory = new LinkedHashMap();
 		return memory;
 	}
 
@@ -17,6 +18,19 @@ public class Memory {
 		for (Object key : memory.keySet()) {
 			System.out.println(key + " " + memory.get(key).toString());
 		}
+	}
+	
+	public String printView(){
+		String ent = "Address              Value\n \n";
+		String ret = "";
+		String line;
+		
+		for (Object key : memory.keySet()) {
+			line = key + "       " + memory.get(key).toString();
+			ret = ret+line+"\n";
+		}
+		
+		return ent+ret;
 	}
 	
 }

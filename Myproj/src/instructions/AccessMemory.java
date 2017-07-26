@@ -1,12 +1,12 @@
 package instructions;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class AccessMemory {
 
-	private HashMap<Object, Object> memory;
+	private LinkedHashMap<Object, Object> memory;
 
-	public AccessMemory(HashMap<Object, Object> memory){
+	public AccessMemory(LinkedHashMap<Object, Object> memory){
 		this.memory = memory;
 	}
 
