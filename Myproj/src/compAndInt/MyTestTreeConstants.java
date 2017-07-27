@@ -185,21 +185,25 @@ public interface MyTestTreeConstants
   public int JJTMSTMCSIMPLE = 179;
   public int JJTMSTMCENUM = 180;
   public int JJTMSTMCLIST = 181;
-  public int JJTCLOSEAUP = 182;
-  public int JJTCLOSE = 183;
-  public int JJTSHIFTLS = 184;
-  public int JJTSHIFTF = 185;
-  public int JJTAMODE = 186;
-  public int JJTCOND = 187;
-  public int JJTLSL = 188;
-  public int JJTLSR = 189;
-  public int JJTASR = 190;
-  public int JJTROR = 191;
-  public int JJTSHIFT = 192;
-  public int JJTREGISTER = 193;
-  public int JJTNUMBER = 194;
-  public int JJTHEXA = 195;
-  public int JJTNUM = 196;
+  public int JJTBLBLOCK = 182;
+  public int JJTBCLBLOCK = 183;
+  public int JJTCLOSEAUP = 184;
+  public int JJTCLOSE = 185;
+  public int JJTSHIFTLS = 186;
+  public int JJTSHIFTF = 187;
+  public int JJTAMODE = 188;
+  public int JJTCOND = 189;
+  public int JJTLSL = 190;
+  public int JJTLSR = 191;
+  public int JJTASR = 192;
+  public int JJTROR = 193;
+  public int JJTSHIFT = 194;
+  public int JJTREGISTER = 195;
+  public int JJTNUMBER = 196;
+  public int JJTHEXA = 197;
+  public int JJTNUM = 198;
+  public int JJTB_LABEL = 199;
+  public int JJTLABEL_B = 200;
 
 
   public String[] jjtNodeName = {
@@ -385,6 +389,8 @@ public interface MyTestTreeConstants
     "MstmCSimple",
     "MstmCEnum",
     "MstmCList",
+    "BLBlock",
+    "BCLBlock",
     "closeAUp",
     "close",
     "shiftLS",
@@ -400,6 +406,8 @@ public interface MyTestTreeConstants
     "number",
     "hexa",
     "num",
+    "b_label",
+    "label_b",
   };
 }
-/* JavaCC - OriginalChecksum=0316c97499dae9f1be0d5fea04bdb9f0 (do not edit this line) */
+/* JavaCC - OriginalChecksum=063f9e371923ad11af2ca044570eafa9 (do not edit this line) */

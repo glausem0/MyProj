@@ -96,6 +96,21 @@ public class Visitors implements MyTestVisitor{
 	}
 	
 	@Override
+	public Object visit(ASTb_label node, Object data) {
+		String b_label = node.value.toString();
+		
+		return b_label;
+	}
+
+
+	@Override
+	public Object visit(ASTlabel_b node, Object data) {
+		String label_b = node.value.toString();
+		
+		return label_b;
+	}
+	
+	@Override
 	public Object visit(ASTamode node, Object data) {
 		String amode = node.value.toString();
 		
@@ -2758,5 +2773,26 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
+
+
+	
+
+
+	@Override
+	public Object visit(ASTBLBlock node, Object data) {
+		Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);
+		//Do not accept other nodes, otherwise they will be executed
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTBCLBlock node, Object data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

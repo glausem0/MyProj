@@ -3,7 +3,7 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="dataNode";
-
+ DEBUG_PARSER = true;
 }
 PARSER_BEGIN(MyTest)package compAndInt;
 
@@ -97,15 +97,16 @@ public class MyTest{
 | < REGISTER  : ("r") ([ "0"-"9"])+ >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
-| < LABEL : ("." | "_") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
+| < B_LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >
+| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {}
 {
-  (block()) < EOF > { return jjtThis;}}
+  block() < EOF > { return jjtThis;}}
 
 void block() #void:
 {}
 {
-  (instr())*
+  ( LOOKAHEAD(2) instr() )*
 } 
 
 void instr() #void:
@@ -135,7 +136,9 @@ void instr() #void:
 | ldm()
 | stm()
 
-| branchBlock()
+| branchLabelBlock()
+| labelBranchBlock()
+
 }
 
 void mov() #void:
@@ -1007,10 +1010,18 @@ void stm() #void:
 )
 }
 
-void branchBlock() #void:
+void branchLabelBlock() #void:
 {}
 {
-  (branch() block() label() | label() block() branch())
+  < B >	
+  ( b_label() block() b_label()) #BLBlock(3)
+| (cond() b_label() block() b_label()) #BCLBlock(4)
+}
+
+void labelBranchBlock() #void:
+{}
+{
+   (label_b() block() < B > label_b())
 }
 
 void closeOrCAUp() #void:
@@ -1047,12 +1058,6 @@ void num_shift() #void:
 {}
 {
  (number() shift() num()) #shiftF(3)
-}
-
-void branch() #void:
-{}
-{
-  (< B > label()) #branch(1)
 }
 
 
@@ -1144,8 +1149,14 @@ void num():
  t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
 }
 
-void label():
+String b_label():
 {Token t;}
 {
- t = < LABEL >  { jjtThis.value = t.image.toString(); }
+ t = < B_LABEL >  { jjtThis.value = t.image.toString(); return (String) jjtThis.value; }
+}
+
+String label_b():
+{Token t;}
+{
+ t = < LABEL_B >  { jjtThis.value = t.image.toString();  return (String) jjtThis.value; }
 }
