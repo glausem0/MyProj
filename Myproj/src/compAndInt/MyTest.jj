@@ -4,7 +4,7 @@
  */options{              
                 
                          
- DEBUG_PARSER = true;
+ /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyTest)package compAndInt;
 
@@ -172,7 +172,6 @@ void instr()      :
 | stm()
 
 | branchLabelBlock()
-| labelBranchBlock()
 
 }
 
@@ -6336,14 +6335,15 @@ void stm()      :
 void branchLabelBlock()      :
 {}
 {
-  < B >/*@bgen(jjtree) #BLBlock( 3) */
+  < B >
+(/*@bgen(jjtree) #BLBlock( 3) */
   {
     ASTBLBlock jjtn001 = new ASTBLBlock(JJTBLBLOCK);
     boolean jjtc001 = true;
     jjtree.openNodeScope(jjtn001);
   }
   try {
-/*@egen*/	
+/*@egen*/
   ( b_label() block() b_label())/*@bgen(jjtree)*/
   } catch (Throwable jjte001) {
     if (jjtc001) {
@@ -6393,12 +6393,7 @@ void branchLabelBlock()      :
     }
   }
 /*@egen*/             
-}
-
-void labelBranchBlock()      :
-{}
-{
-   (label_b() block() < B > label_b())
+)
 }
 
 void closeOrCAUp()      :

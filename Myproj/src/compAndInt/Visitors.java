@@ -2775,9 +2775,6 @@ public class Visitors implements MyTestVisitor{
 	}
 
 
-	
-
-
 	@Override
 	public Object visit(ASTBLBlock node, Object data) {
 		Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);

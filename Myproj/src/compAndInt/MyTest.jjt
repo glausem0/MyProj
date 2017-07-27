@@ -3,7 +3,7 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="dataNode";
- DEBUG_PARSER = true;
+ /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyTest)package compAndInt;
 
@@ -137,7 +137,6 @@ void instr() #void:
 | stm()
 
 | branchLabelBlock()
-| labelBranchBlock()
 
 }
 
@@ -1013,15 +1012,11 @@ void stm() #void:
 void branchLabelBlock() #void:
 {}
 {
-  < B >	
+  < B >
+(
   ( b_label() block() b_label()) #BLBlock(3)
 | (cond() b_label() block() b_label()) #BCLBlock(4)
-}
-
-void labelBranchBlock() #void:
-{}
-{
-   (label_b() block() < B > label_b())
+)
 }
 
 void closeOrCAUp() #void:
