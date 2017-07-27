@@ -1012,10 +1012,10 @@ void stm() #void:
 void branchLabelBlock() #void:
 {}
 {
-  < B >
+  bc()
 (
-  ( b_label() block() b_label()) #BLBlock(3)
-| (cond() b_label() block() b_label()) #BCLBlock(4)
+  ( b_label() block() b_label()) #BLBlock(4)
+| (cond() b_label() block() b_label()) #BCLBlock(5)
 )
 }
 
@@ -1079,7 +1079,7 @@ void amode():
 void cond():
 {Token t;}
 {
-  t = < COND > { jjtThis.value = t.image; }
+  t = < COND > { jjtThis.value = t.image; jjtThis.data.put("reg", t.image.toString()); }
 }
 
 /*
@@ -1144,14 +1144,20 @@ void num():
  t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
 }
 
-String b_label():
+void b_label():
 {Token t;}
 {
- t = < B_LABEL >  { jjtThis.value = t.image.toString(); return (String) jjtThis.value; }
+ t = < B_LABEL >  { jjtThis.value = t.image.toString(); }
 }
 
-String label_b():
+void label_b():
 {Token t;}
 {
- t = < LABEL_B >  { jjtThis.value = t.image.toString();  return (String) jjtThis.value; }
+ t = < LABEL_B >  { jjtThis.value = t.image.toString(); }
+}
+
+void bc():
+{Token t;}
+{
+ t = < B > { jjtThis.value = t.image.toString(); }
 }

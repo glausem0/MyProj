@@ -204,5 +204,6 @@ public interface MyTestVisitor
   public Object visit(ASTnum node, Object data);
   public Object visit(ASTb_label node, Object data);
   public Object visit(ASTlabel_b node, Object data);
+  public Object visit(ASTbc node, Object data);
 }
-/* JavaCC - OriginalChecksum=d6c0eb43b180b7674da34d77b7721167 (do not edit this line) */
+/* JavaCC - OriginalChecksum=1eb23346c222c3252d3886d426cd138e (do not edit this line) */

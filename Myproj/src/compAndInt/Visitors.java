@@ -2774,21 +2774,42 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-
+	@Override
+	public Object visit(ASTbc node, Object data) {
+		String bc = node.value.toString();
+		
+		return bc;
+	}
+	
 	@Override
 	public Object visit(ASTBLBlock node, Object data) {
-		Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);
-		//Do not accept other nodes, otherwise they will be executed
-		
 		return null;
 	}
 
 
 	@Override
 	public Object visit(ASTBCLBlock node, Object data) {
-		// TODO Auto-generated method stub
+		//Object bc = node.jjtGetChild(0).jjtAccept(this, data);
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Node labelStart = node.jjtGetChild(1);
+		Node instr = node.jjtGetChild(2);
+		Node labelEnd = node.jjtGetChild(3);
+		
+		System.out.println(condition.condAction(cond.toString()));
+		
+		if(!condition.condAction(cond.toString())){
+			labelStart.jjtAccept(this, data);
+			instr.jjtAccept(this, data);
+			labelEnd.jjtAccept(this, data);
+		}
+		
 		return null;
 	}
+	
+
+
+
+	
 
 
 

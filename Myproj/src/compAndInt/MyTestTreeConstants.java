@@ -204,6 +204,7 @@ public interface MyTestTreeConstants
   public int JJTNUM = 198;
   public int JJTB_LABEL = 199;
   public int JJTLABEL_B = 200;
+  public int JJTBC = 201;
 
 
   public String[] jjtNodeName = {
@@ -408,6 +409,7 @@ public interface MyTestTreeConstants
     "num",
     "b_label",
     "label_b",
+    "bc",
   };
 }
-/* JavaCC - OriginalChecksum=063f9e371923ad11af2ca044570eafa9 (do not edit this line) */
+/* JavaCC - OriginalChecksum=a6a5fd342873cd96af47ca88d50a8c8c (do not edit this line) */

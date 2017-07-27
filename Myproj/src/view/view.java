@@ -452,6 +452,10 @@ public class view {
 
 					public void actionPerformed(ActionEvent ae){
 						
+						//init fields for rerun:
+						initfieldsVal();
+						textPane.setText("");
+						
 						try {
 							if(parser == null){
 								parser = new MyTest(new FileReader(selectedFile));
@@ -479,36 +483,11 @@ public class view {
 						    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 						    root.jjtAccept(vi,null);
 
-						    vi.print();
 						    
-						    //Set fields register:
-						    textFieldR0.setText(reg.get("r0").toString());
-						    textFieldR1.setText(reg.get("r1").toString());
-						    textFieldR2.setText(reg.get("r2").toString());
-						    textFieldR3.setText(reg.get("r3").toString());
-						    textFieldR4.setText(reg.get("r4").toString());
-						    textFieldR5.setText(reg.get("r5").toString());
-						    textFieldR6.setText(reg.get("r6").toString());
-						    textFieldR7.setText(reg.get("r7").toString());
-						    textFieldR8.setText(reg.get("r8").toString());
-						    textFieldR9.setText(reg.get("r9").toString());
-						    textFieldR10.setText(reg.get("r10").toString());
-						    textFieldR11.setText(reg.get("r11").toString());
-						    textFieldR12.setText(reg.get("r12").toString());
-						    textFieldR13.setText(reg.get("r13").toString());
-						    textFieldR14.setText(reg.get("r14").toString());
-						    textFieldR15.setText(reg.get("r15").toString());
-						    
-						    //set fields cpsr:
-						    textField_N.setText(cpsrReg.get("N").toString());
-						    textField_Z.setText(cpsrReg.get("Z").toString());
-						    textField_C.setText(cpsrReg.get("C").toString());
-						    textField_V.setText(cpsrReg.get("V").toString());
-						    textField_I.setText(cpsrReg.get("I").toString());
-						    textField_F.setText(cpsrReg.get("F").toString());   
-						    
-						    //set field memory:
+						  //set fields memory:
+						    fillVal();
 						    textPane.setText(memory.printView());
+						    
 					}
 				});
 				mnRun.add(mntmRun);
@@ -517,5 +496,65 @@ public class view {
 				menuBar.add(mnHelp);
 				frame.getContentPane().setLayout(null);
 		
+				
 	}
+	
+	private void fillVal(){
+		//Set fields register:
+	    textFieldR0.setText(reg.get("r0").toString());
+	    textFieldR1.setText(reg.get("r1").toString());
+	    textFieldR2.setText(reg.get("r2").toString());
+	    textFieldR3.setText(reg.get("r3").toString());
+	    textFieldR4.setText(reg.get("r4").toString());
+	    textFieldR5.setText(reg.get("r5").toString());
+	    textFieldR6.setText(reg.get("r6").toString());
+	    textFieldR7.setText(reg.get("r7").toString());
+	    textFieldR8.setText(reg.get("r8").toString());
+	    textFieldR9.setText(reg.get("r9").toString());
+	    textFieldR10.setText(reg.get("r10").toString());
+	    textFieldR11.setText(reg.get("r11").toString());
+	    textFieldR12.setText(reg.get("r12").toString());
+	    textFieldR13.setText(reg.get("r13").toString());
+	    textFieldR14.setText(reg.get("r14").toString());
+	    textFieldR15.setText(reg.get("r15").toString());
+	    
+	    //set fields cpsr:
+	    textField_N.setText(cpsrReg.get("N").toString());
+	    textField_Z.setText(cpsrReg.get("Z").toString());
+	    textField_C.setText(cpsrReg.get("C").toString());
+	    textField_V.setText(cpsrReg.get("V").toString());
+	    textField_I.setText(cpsrReg.get("I").toString());
+	    textField_F.setText(cpsrReg.get("F").toString());   
+	}
+	
+	private void initfieldsVal(){
+		//Set fields register:
+	    textFieldR0.setText("0");
+	    textFieldR1.setText("0");
+	    textFieldR2.setText("0");
+	    textFieldR3.setText("0");
+	    textFieldR4.setText("0");
+	    textFieldR5.setText("0");
+	    textFieldR6.setText("0");
+	    textFieldR7.setText("0");
+	    textFieldR8.setText("0");
+	    textFieldR9.setText("0");
+	    textFieldR10.setText("0");
+	    textFieldR11.setText("0");
+	    textFieldR12.setText("0");
+	    textFieldR13.setText("0");
+	    textFieldR14.setText("0");
+	    textFieldR15.setText("0");
+	    
+	    //set fields cpsr:
+	    textField_N.setText("0");
+	    textField_Z.setText("0");
+	    textField_C.setText("0");
+	    textField_V.setText("0");
+	    textField_I.setText("0");
+	    textField_F.setText("0");   
+	   
+	}
+	
+	
 }

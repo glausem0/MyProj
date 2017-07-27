@@ -6335,8 +6335,8 @@ void stm()      :
 void branchLabelBlock()      :
 {}
 {
-  < B >
-(/*@bgen(jjtree) #BLBlock( 3) */
+  bc()
+(/*@bgen(jjtree) #BLBlock( 4) */
   {
     ASTBLBlock jjtn001 = new ASTBLBlock(JJTBLBLOCK);
     boolean jjtc001 = true;
@@ -6361,11 +6361,11 @@ void branchLabelBlock()      :
     throw (Error)jjte001;
   } finally {
     if (jjtc001) {
-      jjtree.closeNodeScope(jjtn001,  3);
+      jjtree.closeNodeScope(jjtn001,  4);
     }
   }
 /*@egen*/            
-|/*@bgen(jjtree) #BCLBlock( 4) */
+|/*@bgen(jjtree) #BCLBlock( 5) */
   {
     ASTBCLBlock jjtn002 = new ASTBCLBlock(JJTBCLBLOCK);
     boolean jjtc002 = true;
@@ -6389,7 +6389,7 @@ void branchLabelBlock()      :
     throw (Error)jjte002;
   } finally {
     if (jjtc002) {
-      jjtree.closeNodeScope(jjtn002,  4);
+      jjtree.closeNodeScope(jjtn002,  5);
     }
   }
 /*@egen*/             
@@ -6564,7 +6564,7 @@ void cond():
                  jjtree.closeNodeScope(jjtn000, true);
                  jjtc000 = false;
                }
-/*@egen*/ { jjtn000.value = t.image; }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image; jjtn000.data.put("reg", t.image.toString()); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -6788,7 +6788,7 @@ void num():
 /*@egen*/
 }
 
-String b_label():
+void b_label():
 {/*@bgen(jjtree) b_label */
  ASTb_label jjtn000 = new ASTb_label(JJTB_LABEL);
  boolean jjtc000 = true;
@@ -6802,7 +6802,7 @@ String b_label():
                     jjtree.closeNodeScope(jjtn000, true);
                     jjtc000 = false;
                   }
-/*@egen*/  { jjtn000.value = t.image.toString(); return (String) jjtn000.value; }/*@bgen(jjtree)*/
+/*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
      jjtree.closeNodeScope(jjtn000, true);
@@ -6811,7 +6811,7 @@ String b_label():
 /*@egen*/
 }
 
-String label_b():
+void label_b():
 {/*@bgen(jjtree) label_b */
  ASTlabel_b jjtn000 = new ASTlabel_b(JJTLABEL_B);
  boolean jjtc000 = true;
@@ -6825,7 +6825,30 @@ String label_b():
                     jjtree.closeNodeScope(jjtn000, true);
                     jjtc000 = false;
                   }
-/*@egen*/  { jjtn000.value = t.image.toString();  return (String) jjtn000.value; }/*@bgen(jjtree)*/
+/*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
+ } finally {
+   if (jjtc000) {
+     jjtree.closeNodeScope(jjtn000, true);
+   }
+ }
+/*@egen*/
+}
+
+void bc():
+{/*@bgen(jjtree) bc */
+ ASTbc jjtn000 = new ASTbc(JJTBC);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t;}
+{/*@bgen(jjtree) bc */
+ try {
+/*@egen*/
+ t = < B >/*@bgen(jjtree)*/
+           {
+             jjtree.closeNodeScope(jjtn000, true);
+             jjtc000 = false;
+           }
+/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
      jjtree.closeNodeScope(jjtn000, true);
