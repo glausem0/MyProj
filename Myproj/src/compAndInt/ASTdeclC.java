@@ -18,4 +18,4 @@ class ASTdeclC extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=f7f5bb70cd8d81626f03bb5337b80183 (do not edit this line) */
+/* JavaCC - OriginalChecksum=e1b7e7ddaf37d3f38ab19d8cf2a0144f (do not edit this line) */

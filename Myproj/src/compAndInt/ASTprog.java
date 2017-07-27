@@ -18,4 +18,4 @@ class ASTprog extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=9a46df204ae508ecb9c6a6f909227744 (do not edit this line) */
+/* JavaCC - OriginalChecksum=0551c46c60d2a31b20eafea462686917 (do not edit this line) */

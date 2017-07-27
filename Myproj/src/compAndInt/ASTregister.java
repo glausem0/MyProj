@@ -18,4 +18,4 @@ class ASTregister extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=8be92ac4d488a68ce99fdb8e3b09fe0f (do not edit this line) */
+/* JavaCC - OriginalChecksum=2da7a3cbae460c2bc4708c774d565503 (do not edit this line) */

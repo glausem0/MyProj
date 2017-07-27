@@ -18,4 +18,4 @@ class ASTadd extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=009b4e012ab88a0fb24582c005fc42ff (do not edit this line) */
+/* JavaCC - OriginalChecksum=28da7d814d57f76f7eb95002ab731f87 (do not edit this line) */

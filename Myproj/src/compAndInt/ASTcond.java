@@ -18,4 +18,4 @@ class ASTcond extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=133d59827cd67e77b3f0bc098623022f (do not edit this line) */
+/* JavaCC - OriginalChecksum=2a3ef7e08c9a6878c48202dddb33cb11 (do not edit this line) */

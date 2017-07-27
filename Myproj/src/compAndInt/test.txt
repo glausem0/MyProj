@@ -1,6 +1,0 @@
-movs r0, #4
-mov r1, #2
-mov r2, #3
-mov r3, #4
-mov r4, #5
-stmia r0!, {r1-r4}

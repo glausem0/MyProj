@@ -18,4 +18,4 @@ class ASTnumber extends SimpleNode {
     return visitor.visit(this, data);
   }
 }
-/* JavaCC - OriginalChecksum=a8aa43c4150b3c9681bd099f3c0949f3 (do not edit this line) */
+/* JavaCC - OriginalChecksum=3802be92f266c3c33c1fccc884852b4e (do not edit this line) */
