@@ -130,14 +130,14 @@ public class view {
 		registersPanel.add(textFieldR0);
 		textFieldR0.setColumns(10);
 		
+		JLabel lblR_r1 = new JLabel("r1");
+		lblR_r1.setBounds(10, 61, 41, 14);
+		registersPanel.add(lblR_r1);
+		
 		textFieldR1 = new JTextField();
 		textFieldR1.setColumns(10);
 		textFieldR1.setBounds(62, 58, 86, 20);
 		registersPanel.add(textFieldR1);
-		
-		JLabel lblR_r1 = new JLabel("r1");
-		lblR_r1.setBounds(10, 61, 41, 14);
-		registersPanel.add(lblR_r1);
 		
 		JLabel lblR_r2 = new JLabel("r2");
 		lblR_r2.setBounds(10, 89, 41, 14);
@@ -175,6 +175,15 @@ public class view {
 		textFieldR5.setBounds(62, 170, 86, 20);
 		registersPanel.add(textFieldR5);
 		
+		JLabel lblR_r6 = new JLabel("r6");
+		lblR_r6.setBounds(10, 201, 41, 14);
+		registersPanel.add(lblR_r6);
+		
+		textFieldR6 = new JTextField();
+		textFieldR6.setColumns(10);
+		textFieldR6.setBounds(62, 198, 86, 20);
+		registersPanel.add(textFieldR6);
+		
 		JLabel lblR_r7 = new JLabel("r7");
 		lblR_r7.setBounds(10, 229, 41, 14);
 		registersPanel.add(lblR_r7);
@@ -183,15 +192,6 @@ public class view {
 		textFieldR7.setColumns(10);
 		textFieldR7.setBounds(62, 226, 86, 20);
 		registersPanel.add(textFieldR7);
-		
-		textFieldR6 = new JTextField();
-		textFieldR6.setColumns(10);
-		textFieldR6.setBounds(62, 198, 86, 20);
-		registersPanel.add(textFieldR6);
-		
-		JLabel lblR_r6 = new JLabel("r6");
-		lblR_r6.setBounds(10, 201, 41, 14);
-		registersPanel.add(lblR_r6);
 		
 		JLabel lblR_r8 = new JLabel("r8");
 		lblR_r8.setBounds(181, 33, 41, 14);
@@ -351,8 +351,6 @@ public class view {
 		scrollBar_1.setBounds(10, 27, 308, 218);
 		panel.add(scrollBar_1);
 	
-		
-	
 		//Menu bar:
 				JMenuBar menuBar = new JMenuBar();
 				frame.setJMenuBar(menuBar);
@@ -509,7 +507,7 @@ public class view {
 						    textField_I.setText(cpsrReg.get("I").toString());
 						    textField_F.setText(cpsrReg.get("F").toString());   
 						    
-						    //set fields memory:
+						    //set field memory:
 						    textPane.setText(memory.printView());
 					}
 				});
@@ -519,7 +517,5 @@ public class view {
 				menuBar.add(mnHelp);
 				frame.getContentPane().setLayout(null);
 		
-		
-	
 	}
 }

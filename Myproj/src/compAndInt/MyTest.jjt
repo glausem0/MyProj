@@ -96,10 +96,17 @@ public class MyTest{
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
 | < REGISTER  : ("r") ([ "0"-"9"])+ >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
-| < NUM : ([ "0"-"9" ])+ >}SimpleNode prog():
+| < NUM : ([ "0"-"9" ])+ >
+| < LABEL : ("." | "_") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {}
 {
-  (instr())* < EOF > { return jjtThis;}}
+  (block()) < EOF > { return jjtThis;}}
+
+void block() #void:
+{}
+{
+  (instr())*
+} 
 
 void instr() #void:
 {}{
@@ -127,6 +134,8 @@ void instr() #void:
 
 | ldm()
 | stm()
+
+| branchBlock()
 }
 
 void mov() #void:
@@ -998,6 +1007,11 @@ void stm() #void:
 )
 }
 
+void branchBlock() #void:
+{}
+{
+  (branch() block() label() | label() block() branch())
+}
 
 void closeOrCAUp() #void:
 {}
@@ -1033,6 +1047,12 @@ void num_shift() #void:
 {}
 {
  (number() shift() num()) #shiftF(3)
+}
+
+void branch() #void:
+{}
+{
+  (< B > label()) #branch(1)
 }
 
 
@@ -1122,4 +1142,10 @@ void num():
 {Token t;}
 {
  t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
+}
+
+void label():
+{Token t;}
+{
+ t = < LABEL >  { jjtThis.value = t.image.toString(); }
 }
