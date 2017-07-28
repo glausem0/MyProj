@@ -96,8 +96,11 @@ public class MyTest{
 | < STR : "str" >
 
   /*LDM/STM*/
-| < LDM: "ldm" >
-| < STM: "stm" >
+| < LDM : "ldm" >
+| < STM : "stm" >
+
+  /*SWP*/
+| < SWP : "swp" >
 
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
@@ -149,6 +152,8 @@ void instr() #void:
 
 | ldm()
 | stm()
+
+| swp()
 
 
 | branchLabelBlock() 
@@ -1132,6 +1137,20 @@ void stm() #void:
      )  
 )
 }
+
+void swp() #void:
+{}
+{
+  <SWP>
+(
+  (register() "," register() "," "[" register() "]") #swp(3)
+| (<B> register() "," register() "," "[" register() "]") #swpb(3)
+| cond()
+  (
+    (register() "," register() "," "[" register() "]") #swpC(4)
+| (<B> register() "," register() "," "[" register() "]") #swpCB(4)  )  )
+}
+
 
 /*
 void labelBranchBlock() #void:

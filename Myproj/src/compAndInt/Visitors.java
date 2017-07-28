@@ -3103,6 +3103,59 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 	
+	///SWP///
+	@Override
+	public Object visit(ASTswp node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.swapInstr(reg1, reg2.toString(), reg3.toString(), false);
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTswpb node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.swapInstr(reg1, reg2.toString(), reg3.toString(), true);
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTswpC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.swapInstr(reg1, reg2.toString(), reg3.toString(), false);
+		}
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTswpCB node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.swapInstr(reg1, reg2.toString(), reg3.toString(), true);
+		}
+		return null;
+	}
+	
+	
 ///Branch///
 	
 	@Override

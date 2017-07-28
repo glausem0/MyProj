@@ -83,17 +83,19 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int STM = 40;
   /** RegularExpression Id. */
-  int NUMBER = 41;
+  int SWP = 41;
   /** RegularExpression Id. */
-  int REGISTER = 42;
+  int NUMBER = 42;
   /** RegularExpression Id. */
-  int HEXA = 43;
+  int REGISTER = 43;
   /** RegularExpression Id. */
-  int NUM = 44;
+  int HEXA = 44;
   /** RegularExpression Id. */
-  int LABEL_B = 45;
+  int NUM = 45;
   /** RegularExpression Id. */
-  int B_LABEL = 46;
+  int LABEL_B = 46;
+  /** RegularExpression Id. */
+  int B_LABEL = 47;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -141,6 +143,7 @@ public interface MyTestConstants {
     "\"str\"",
     "\"ldm\"",
     "\"stm\"",
+    "\"swp\"",
     "<NUMBER>",
     "<REGISTER>",
     "<HEXA>",

@@ -1756,6 +1756,26 @@ public class Instruction {
 		}
 	}
 
+	public void swapInstr(Object reg1, String reg2, String reg3, boolean b){
+		int address = (int) regData.get(reg3);
+		int tmpValToStore = (int) regData.get(reg2);
+		int tmpValToLoad;
+
+		if(b){
+			tmpValToLoad = (int) mem.getMemoryElement8(address);
+
+			//set memory:
+			mem.setMemoryElement8(address, tmpValToStore);
+			regData.put(reg1, tmpValToLoad);
+		}
+		else{
+			tmpValToLoad = (int) mem.getMemoryElement32(address);
+
+			//set memory:
+			mem.setMemoryElement32(address, tmpValToStore);
+			regData.put(reg1, tmpValToLoad);
+		}
+	}
 	
 	
 }

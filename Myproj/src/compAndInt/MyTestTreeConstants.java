@@ -209,25 +209,29 @@ public interface MyTestTreeConstants
   public int JJTMSTMCSIMPLE = 203;
   public int JJTMSTMCENUM = 204;
   public int JJTMSTMCLIST = 205;
-  public int JJTBLBLOCK = 206;
-  public int JJTBCLBLOCK = 207;
-  public int JJTCLOSEAUP = 208;
-  public int JJTCLOSE = 209;
-  public int JJTSHIFTLS = 210;
-  public int JJTSHIFTF = 211;
-  public int JJTAMODE = 212;
-  public int JJTCOND = 213;
-  public int JJTLSL = 214;
-  public int JJTLSR = 215;
-  public int JJTASR = 216;
-  public int JJTROR = 217;
-  public int JJTSHIFT = 218;
-  public int JJTREGISTER = 219;
-  public int JJTNUMBER = 220;
-  public int JJTHEXA = 221;
-  public int JJTNUM = 222;
-  public int JJTLABEL_B = 223;
-  public int JJTB_LABEL = 224;
+  public int JJTSWP = 206;
+  public int JJTSWPB = 207;
+  public int JJTSWPC = 208;
+  public int JJTSWPCB = 209;
+  public int JJTBLBLOCK = 210;
+  public int JJTBCLBLOCK = 211;
+  public int JJTCLOSEAUP = 212;
+  public int JJTCLOSE = 213;
+  public int JJTSHIFTLS = 214;
+  public int JJTSHIFTF = 215;
+  public int JJTAMODE = 216;
+  public int JJTCOND = 217;
+  public int JJTLSL = 218;
+  public int JJTLSR = 219;
+  public int JJTASR = 220;
+  public int JJTROR = 221;
+  public int JJTSHIFT = 222;
+  public int JJTREGISTER = 223;
+  public int JJTNUMBER = 224;
+  public int JJTHEXA = 225;
+  public int JJTNUM = 226;
+  public int JJTLABEL_B = 227;
+  public int JJTB_LABEL = 228;
 
 
   public String[] jjtNodeName = {
@@ -437,6 +441,10 @@ public interface MyTestTreeConstants
     "MstmCSimple",
     "MstmCEnum",
     "MstmCList",
+    "swp",
+    "swpb",
+    "swpC",
+    "swpCB",
     "BLBlock",
     "BCLBlock",
     "closeAUp",
@@ -458,4 +466,4 @@ public interface MyTestTreeConstants
     "b_label",
   };
 }
-/* JavaCC - OriginalChecksum=8f8984717b4e325f6de6d7d802a0b70d (do not edit this line) */
+/* JavaCC - OriginalChecksum=b84092979412e20ff6db5be3a8cd0d90 (do not edit this line) */
