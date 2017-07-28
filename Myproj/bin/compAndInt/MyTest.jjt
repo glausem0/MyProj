@@ -77,6 +77,8 @@ public class MyTest{
 | < MUL : "mul" >
 | < SMLAL : "smlal" >
 | < SMULL : "smull" >
+| < UMLAL : "umlal" >
+| < UMULL : "umull" >
 
   /*COMPARISON*/
 | < CMP : "cmp" >
@@ -129,6 +131,8 @@ void instr() #void:
 | mul()
 | smlal()
 | smull()
+| umlal()
+| umull()
 
 | cmp()
 | cmn()
@@ -359,6 +363,24 @@ void smull()#void:
     (
      (register() "," register() "," register() "," register()) #smullC(5)
    | (<SCND> register() "," register() "," register() "," register()) #smullCS(5)  
+     )
+   )
+}
+
+void umlal()#void:
+{}
+{
+  <UMLAL>
+  (
+    (
+      (register() "," register() "," register() "," register()) #umlal(4)
+    | (<SCND> register() "," register() "," register() "," register()) #umlalS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," register() "," register()) #umlalC(5)
+   | (<SCND> register() "," register() "," register() "," register()) #umlalCS(5)  
      )
    )
 }
