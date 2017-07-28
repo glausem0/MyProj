@@ -2,7 +2,6 @@ package compAndInt;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import instructions.AccessMemory;
 import instructions.Condition;
@@ -228,7 +227,7 @@ public class Visitors implements MyTestVisitor{
 
 		inst.movInstr(reg, val);
 
-		return null;
+		return "decl";
 	}
 
 	@Override
@@ -240,7 +239,7 @@ public class Visitors implements MyTestVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			inst.movInstr(reg, val);
 		}
-		return null;
+		return "declC";
 	}
 
 	@Override
@@ -251,7 +250,7 @@ public class Visitors implements MyTestVisitor{
 		inst.movInstr(reg, val);
 		upCpsr.update( Integer.parseInt(val.toString()) );
 
-		return null;
+		return "declS";
 	}
 
 	@Override
@@ -265,7 +264,7 @@ public class Visitors implements MyTestVisitor{
 			upCpsr.update( Integer.parseInt(val.toString()) );
 		}
 
-		return null;
+		return "declCS";
 	}
 
 	///MVN///
@@ -275,7 +274,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
 		inst.mvnInstr(reg, val.toString());
-		return null;
+		return "decln";
 	}
 
 	@Override
@@ -286,7 +285,7 @@ public class Visitors implements MyTestVisitor{
 		inst.mvnInstr(reg, val.toString());
 		upCpsr.update( Integer.parseInt(val.toString()) );
 
-		return null;
+		return "declnS";
 	}
 
 	@Override
@@ -298,7 +297,7 @@ public class Visitors implements MyTestVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			inst.mvnInstr(reg, val.toString());
 		}
-		return null;
+		return "declnC";
 	}
 
 	@Override
@@ -312,7 +311,7 @@ public class Visitors implements MyTestVisitor{
 			upCpsr.update( Integer.parseInt(val.toString()) );
 		}
 
-		return null;
+		return "declnCS";
 	}
 
 	///ADD///
@@ -324,7 +323,7 @@ public class Visitors implements MyTestVisitor{
 
 		inst.addInstr(reg, arg1.toString(), arg2.toString());
 
-		return null;
+		return "add";
 	}
 
 	@Override
@@ -338,7 +337,7 @@ public class Visitors implements MyTestVisitor{
 			inst.addInstr(reg, arg1.toString(), arg2.toString());
 		}
 
-		return null;
+		return "addC";
 	}
 
 	@Override
@@ -350,7 +349,7 @@ public class Visitors implements MyTestVisitor{
 		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
 		upCpsr.update(result);
 
-		return null;
+		return "addS";
 	}
 
 	@Override
@@ -365,7 +364,7 @@ public class Visitors implements MyTestVisitor{
 			upCpsr.update(result);
 		}
 
-		return null;
+		return "addCS";
 	}
 
 	///ADC///
@@ -383,7 +382,7 @@ public class Visitors implements MyTestVisitor{
 		//Then add the C (carry):
 		inst.addInstr(reg, ret, C);
 
-		return null;
+		return "adc";
 	}
 
 	@Override
@@ -402,7 +401,7 @@ public class Visitors implements MyTestVisitor{
 
 		upCpsr.update(result);
 
-		return null;
+		return "adcS";
 	}
 
 	@Override
@@ -422,7 +421,7 @@ public class Visitors implements MyTestVisitor{
 			inst.addInstr(reg, ret, C);
 		}
 
-		return null;
+		return "adcC";
 	}
 
 	@Override
@@ -444,7 +443,7 @@ public class Visitors implements MyTestVisitor{
 			upCpsr.update(result);
 		}
 
-		return null;
+		return "adcCS";
 	}
 
 	///SUB///
@@ -456,7 +455,7 @@ public class Visitors implements MyTestVisitor{
 
 		inst.subInstr(reg, arg1.toString(), arg2.toString());
 
-		return null;
+		return "sub";
 	}
 
 	@Override
@@ -470,7 +469,7 @@ public class Visitors implements MyTestVisitor{
 			inst.subInstr(reg, arg1.toString(), arg2.toString());
 		}
 
-		return null;
+		return "subC";
 	}
 
 	@Override
@@ -482,7 +481,7 @@ public class Visitors implements MyTestVisitor{
 		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
 		upCpsr.update(result);
 
-		return null;
+		return "subS";
 	}
 
 	@Override
@@ -497,7 +496,7 @@ public class Visitors implements MyTestVisitor{
 			upCpsr.update(result);
 		}
 
-		return null;
+		return "subCS";
 	}
 
 	///SBC///
@@ -721,7 +720,232 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
+	
+	///MLA///
+	@Override
+	public Object visit(ASTmla node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
+		
+		return null;
+	}
 
+	@Override
+	public Object visit(ASTmlaS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		int result = inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
+		
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTmlaC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
+		}
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTmlaCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			int result = inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
+			upCpsr.update(result);
+		}
+		return null;
+	}
+	
+	///MUL///
+	@Override
+	public Object visit(ASTmul node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		inst.mulInstr(reg1, reg2.toString(), reg3.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTmulS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		
+		int result = inst.mulInstr(reg1, reg2.toString(), reg3.toString());
+		
+		upCpsr.update(result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTmulC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.mulInstr(reg1, reg2.toString(), reg3.toString());
+		}
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTmulCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			int result = inst.mulInstr(reg1, reg2.toString(), reg3.toString());
+			upCpsr.update(result);
+		}
+		return null;
+	}
+
+	///SMLAL///
+	@Override
+	public Object visit(ASTsmlal node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTsmlalS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		long result = inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		upCpsr.update((int) result);
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTsmlalC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTsmlalCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			long result = inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+			upCpsr.update((int) result);
+		}
+		return null;
+	}
+	
+	///SMULL///
+	@Override
+	public Object visit(ASTsmull node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTsmullS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		long result = inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		upCpsr.update((int) result);
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTsmullC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		}
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTsmullCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			long result = inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+			upCpsr.update((int) result);
+			
+		}
+		return null;
+	}
+	
 	////Comparaison////
 	///CMP///
 	@Override
@@ -2773,23 +2997,16 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-
-	@Override
-	public Object visit(ASTbc node, Object data) {
-		String bc = node.value.toString();
-		
-		return bc;
-	}
+	
+///Branch///
 	
 	@Override
 	public Object visit(ASTBLBlock node, Object data) {
 		return null;
 	}
 
-
 	@Override
 	public Object visit(ASTBCLBlock node, Object data) {
-		//Object bc = node.jjtGetChild(0).jjtAccept(this, data);
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Node labelStart = node.jjtGetChild(1);
 		Node instr = node.jjtGetChild(2);
@@ -2801,16 +3018,40 @@ public class Visitors implements MyTestVisitor{
 			labelStart.jjtAccept(this, data);
 			instr.jjtAccept(this, data);
 			labelEnd.jjtAccept(this, data);
+		}		
+		return null;
+	}
+    
+	/*
+	@Override
+	public Object visit(ASTlabBCBolck node, Object data) {
+		Object labelStart = node.jjtGetChild(0).jjtAccept(this, data);
+		Object instr = node.jjtGetChild(1).jjtAccept(this, data);
+		Object cond = node.jjtGetChild(2).jjtAccept(this, data);
+		Node labelEnd = node.jjtGetChild(3);
+		
+		while(condition.condAction(cond.toString())){
+			node.jjtGetChild(0).jjtAccept(this, data);
+			node.jjtGetChild(1).jjtAccept(this, data);
+			cond = node.jjtGetChild(2).jjtAccept(this, data);
+			labelEnd.jjtAccept(this, data);
+			System.out.println(condition.condAction(cond.toString()));
+			System.out.println(cpsrReg.get(instr));
 		}
+			
+		labelEnd.jjtAccept(this, data);
 		
 		return null;
 	}
-	
 
-
-
-	
-
-
-
+	//better avoide doing this instruction because while loop
+	@Override
+	public Object visit(ASTlabBBlock node, Object data) {
+		while(true){
+			Object labelStart = node.jjtGetChild(0).jjtAccept(this, data);
+			Object block = node.jjtGetChild(1).jjtAccept(this, data);
+			Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);
+		}
+	}
+*/
 }

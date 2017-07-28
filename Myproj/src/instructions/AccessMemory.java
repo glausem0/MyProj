@@ -11,7 +11,7 @@ public class AccessMemory {
 	}
 
 
-	private String toHex32(int el){
+	public String toHex32(int el){
 		String hex = Integer.toHexString(el);
 
 		if(hex.length() < 8){

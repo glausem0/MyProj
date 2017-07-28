@@ -47,41 +47,49 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int RSC = 22;
   /** RegularExpression Id. */
-  int CMP = 23;
+  int MLA = 23;
   /** RegularExpression Id. */
-  int CMN = 24;
+  int MUL = 24;
   /** RegularExpression Id. */
-  int TEQ = 25;
+  int SMLAL = 25;
   /** RegularExpression Id. */
-  int TST = 26;
+  int SMULL = 26;
   /** RegularExpression Id. */
-  int AND = 27;
+  int CMP = 27;
   /** RegularExpression Id. */
-  int BIC = 28;
+  int CMN = 28;
   /** RegularExpression Id. */
-  int EOR = 29;
+  int TEQ = 29;
   /** RegularExpression Id. */
-  int ORR = 30;
+  int TST = 30;
   /** RegularExpression Id. */
-  int LDR = 31;
+  int AND = 31;
   /** RegularExpression Id. */
-  int STR = 32;
+  int BIC = 32;
   /** RegularExpression Id. */
-  int LDM = 33;
+  int EOR = 33;
   /** RegularExpression Id. */
-  int STM = 34;
+  int ORR = 34;
   /** RegularExpression Id. */
-  int NUMBER = 35;
+  int LDR = 35;
   /** RegularExpression Id. */
-  int REGISTER = 36;
+  int STR = 36;
   /** RegularExpression Id. */
-  int HEXA = 37;
+  int LDM = 37;
   /** RegularExpression Id. */
-  int NUM = 38;
+  int STM = 38;
   /** RegularExpression Id. */
-  int B_LABEL = 39;
+  int NUMBER = 39;
   /** RegularExpression Id. */
-  int LABEL_B = 40;
+  int REGISTER = 40;
+  /** RegularExpression Id. */
+  int HEXA = 41;
+  /** RegularExpression Id. */
+  int NUM = 42;
+  /** RegularExpression Id. */
+  int LABEL_B = 43;
+  /** RegularExpression Id. */
+  int B_LABEL = 44;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -111,6 +119,10 @@ public interface MyTestConstants {
     "\"sbc\"",
     "\"rsb\"",
     "\"rsc\"",
+    "\"mla\"",
+    "\"mul\"",
+    "\"smlal\"",
+    "\"smull\"",
     "\"cmp\"",
     "\"cmn\"",
     "\"teq\"",
@@ -127,8 +139,8 @@ public interface MyTestConstants {
     "<REGISTER>",
     "<HEXA>",
     "<NUM>",
-    "<B_LABEL>",
     "<LABEL_B>",
+    "<B_LABEL>",
     "\",\"",
     "\"[\"",
     "\"-\"",

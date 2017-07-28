@@ -3,7 +3,7 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="dataNode";
- /*DEBUG_PARSER = true;*/
+ DEBUG_PARSER = true;
 }
 PARSER_BEGIN(MyTest)package compAndInt;
 
@@ -73,6 +73,11 @@ public class MyTest{
 | < RSB : "rsb" >
 | < RSC : "rsc" >
 
+| < MLA : "mla" >
+| < MUL : "mul" >
+| < SMLAL : "smlal" >
+| < SMULL : "smull" >
+
   /*COMPARISON*/
 | < CMP : "cmp" >
 | < CMN : "cmn" >
@@ -97,8 +102,8 @@ public class MyTest{
 | < REGISTER  : ("r") ([ "0"-"9"])+ >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
-| < B_LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >
-| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
+| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >
+| < B_LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {}
 {
   block() < EOF > { return jjtThis;}}
@@ -120,6 +125,11 @@ void instr() #void:
 | rsb()
 | rsc()
 
+| mla()
+| mul()
+| smlal()
+| smull()
+
 | cmp()
 | cmn()
 | teq()
@@ -136,7 +146,8 @@ void instr() #void:
 | ldm()
 | stm()
 
-| branchLabelBlock()
+
+| branchLabelBlock() 
 
 }
 
@@ -275,6 +286,79 @@ void rsc()#void:
     (
      (register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscC(4)
    | (<SCND> register() "," register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #rscCS(4)  
+     )
+   )
+}
+
+void mla()#void:
+{}
+{
+  <MLA>
+  (
+    (
+      (register() "," register() "," register() "," register()) #mla(4)
+    | (<SCND> register() "," register() "," register() "," register()) #mlaS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," register() "," register()) #mlaC(5)
+   | (<SCND> register() "," register() "," register() "," register()) #mlaCS(5)  
+     )
+   )
+}
+
+void mul()#void:
+{}
+{
+  <MUL>
+  (
+    (
+      (register() "," register() "," register()) #mul(3)
+    | (<SCND> register() "," register() "," register() ) #mulS(3)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," register()) #mulC(4)
+   | (<SCND> register() "," register() "," register()) #mulCS(4)  
+     )
+   )
+}
+
+
+void smlal()#void:
+{}
+{
+  <SMLAL>
+  (
+    (
+      (register() "," register() "," register() "," register()) #smlal(4)
+    | (<SCND> register() "," register() "," register() "," register()) #smlalS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," register() "," register()) #smlalC(5)
+   | (<SCND> register() "," register() "," register() "," register()) #smlalCS(5)  
+     )
+   )
+}
+
+void smull()#void:
+{}
+{
+  <SMULL>
+  (
+    (
+      (register() "," register() "," register() "," register()) #smull(4)
+    | (<SCND> register() "," register() "," register() "," register()) #smullS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," register() "," register()) #smullC(5)
+   | (<SCND> register() "," register() "," register() "," register()) #smullCS(5)  
      )
    )
 }
@@ -1009,14 +1093,22 @@ void stm() #void:
 )
 }
 
-void branchLabelBlock() #void:
+/*
+void labelBranchBlock() #void:
 {}
 {
-  bc()
-(
-  ( b_label() block() b_label()) #BLBlock(4)
-| (cond() b_label() block() b_label()) #BCLBlock(5)
-)
+  LOOKAHEAD(5)
+  (label_b() block() < B > cond() label_b()) #labBCBolck(4)
+| (label_b() block() < B > label_b()) #labBBlock(3)
+}
+*/
+
+void branchLabelBlock() #void:
+{}
+{ 
+  LOOKAHEAD(5)
+  (< B > b_label() block() b_label()) #BLBlock(3)
+| (< B > cond() b_label() block() b_label()) #BCLBlock(4)
 }
 
 void closeOrCAUp() #void:
@@ -1144,20 +1236,15 @@ void num():
  t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
 }
 
-void b_label():
-{Token t;}
-{
- t = < B_LABEL >  { jjtThis.value = t.image.toString(); }
-}
-
 void label_b():
 {Token t;}
 {
  t = < LABEL_B >  { jjtThis.value = t.image.toString(); }
 }
 
-void bc():
+void b_label():
 {Token t;}
 {
- t = < B > { jjtThis.value = t.image.toString(); }
+ t = < B_LABEL >  { jjtThis.value = t.image.toString(); }
 }
+

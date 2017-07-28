@@ -37,6 +37,22 @@ public interface MyTestVisitor
   public Object visit(ASTrscS node, Object data);
   public Object visit(ASTrscC node, Object data);
   public Object visit(ASTrscCS node, Object data);
+  public Object visit(ASTmla node, Object data);
+  public Object visit(ASTmlaS node, Object data);
+  public Object visit(ASTmlaC node, Object data);
+  public Object visit(ASTmlaCS node, Object data);
+  public Object visit(ASTmul node, Object data);
+  public Object visit(ASTmulS node, Object data);
+  public Object visit(ASTmulC node, Object data);
+  public Object visit(ASTmulCS node, Object data);
+  public Object visit(ASTsmlal node, Object data);
+  public Object visit(ASTsmlalS node, Object data);
+  public Object visit(ASTsmlalC node, Object data);
+  public Object visit(ASTsmlalCS node, Object data);
+  public Object visit(ASTsmull node, Object data);
+  public Object visit(ASTsmullS node, Object data);
+  public Object visit(ASTsmullC node, Object data);
+  public Object visit(ASTsmullCS node, Object data);
   public Object visit(ASTcmp node, Object data);
   public Object visit(ASTcmpC node, Object data);
   public Object visit(ASTcmn node, Object data);
@@ -202,8 +218,7 @@ public interface MyTestVisitor
   public Object visit(ASTnumber node, Object data);
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
-  public Object visit(ASTb_label node, Object data);
   public Object visit(ASTlabel_b node, Object data);
-  public Object visit(ASTbc node, Object data);
+  public Object visit(ASTb_label node, Object data);
 }
-/* JavaCC - OriginalChecksum=1eb23346c222c3252d3886d426cd138e (do not edit this line) */
+/* JavaCC - OriginalChecksum=8602cd30a79c1cb2de1db13bc42f75b5 (do not edit this line) */
