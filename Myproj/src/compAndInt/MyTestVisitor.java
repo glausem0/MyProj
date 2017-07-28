@@ -53,6 +53,14 @@ public interface MyTestVisitor
   public Object visit(ASTsmullS node, Object data);
   public Object visit(ASTsmullC node, Object data);
   public Object visit(ASTsmullCS node, Object data);
+  public Object visit(ASTumlal node, Object data);
+  public Object visit(ASTumlalS node, Object data);
+  public Object visit(ASTumlalC node, Object data);
+  public Object visit(ASTumlalCS node, Object data);
+  public Object visit(ASTumull node, Object data);
+  public Object visit(ASTumullS node, Object data);
+  public Object visit(ASTumullC node, Object data);
+  public Object visit(ASTumullCS node, Object data);
   public Object visit(ASTcmp node, Object data);
   public Object visit(ASTcmpC node, Object data);
   public Object visit(ASTcmn node, Object data);
@@ -221,4 +229,4 @@ public interface MyTestVisitor
   public Object visit(ASTlabel_b node, Object data);
   public Object visit(ASTb_label node, Object data);
 }
-/* JavaCC - OriginalChecksum=8602cd30a79c1cb2de1db13bc42f75b5 (do not edit this line) */
+/* JavaCC - OriginalChecksum=57b0355374507f0093bce44170a88dea (do not edit this line) */

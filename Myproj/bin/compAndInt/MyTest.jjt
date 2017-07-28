@@ -385,6 +385,24 @@ void umlal()#void:
    )
 }
 
+void umull()#void:
+{}
+{
+  <UMULL>
+  (
+    (
+      (register() "," register() "," register() "," register()) #umull(4)
+    | (<SCND> register() "," register() "," register() "," register()) #umullS(4)
+    )
+
+  | cond()
+    (
+     (register() "," register() "," register() "," register()) #umullC(5)
+   | (<SCND> register() "," register() "," register() "," register()) #umullCS(5)  
+     )
+   )
+}
+
 void cmp()#void:
 {}
 {

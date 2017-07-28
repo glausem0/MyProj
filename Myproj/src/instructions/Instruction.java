@@ -241,8 +241,62 @@ public class Instruction {
 			
 			return result;
 		}
+		
+		public long umlalInstr (Object reg1, Object reg2, String reg3, String reg4){
+			int reg1Int = toInt(reg1.toString());
+			int reg2Int = toInt(reg2.toString());
+			String reg1Hex = mem.toHex32(reg1Int);
+			String reg2Hex = mem.toHex32(reg2Int);
+			reg1Hex = reg1Hex.replace("0x", "");
+			reg2Hex = reg2Hex.replace("0x", "");
+			String valCompStr = reg1Hex+reg2Hex;
+			long valHiLo = Long.parseUnsignedLong(valCompStr, 16); 
+			
+			int val1 = toInt(reg3);
+			int val2 = toInt(reg4);
+			
+			long result = valHiLo + (val1 * val2);
+			
+			String resultToHex = Long.toUnsignedString(result, 16);
+			
+			if(resultToHex.length() < 17){
+				regData.put(reg1, 0);
+				regData.put(reg2, Long.parseUnsignedLong(resultToHex,16));
+			}
+			else{
+				String hi = resultToHex.substring(0, 15);
+				String lo = resultToHex.substring(0, resultToHex.length());
+				
+				regData.put(reg1, Long.parseUnsignedLong(hi,16));
+				regData.put(reg2, Long.parseUnsignedLong(lo,16));
+			}
+			
+			return result;
+		}
 	
-	
+		public long umullInstr (Object reg1, Object reg2, String reg3, String reg4){
+			int val1 = toInt(reg3);
+			int val2 = toInt(reg4);
+			
+			long result = (val1 * val2);
+			
+			String resultToHex = Long.toUnsignedString(result, 16);
+			
+			if(resultToHex.length() < 17){
+				regData.put(reg1, 0);
+				regData.put(reg2, Long.parseUnsignedLong(resultToHex,16));
+			}
+			else{
+				String hi = resultToHex.substring(0, 15);
+				String lo = resultToHex.substring(0, resultToHex.length());
+				
+				regData.put(reg1, Long.parseUnsignedLong(hi,16));
+				regData.put(reg2, Long.parseUnsignedLong(lo,16));
+			}
+			
+			return result;
+		}
+		
 	public int andInstr(Object reg, String arg1, String arg2){
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);

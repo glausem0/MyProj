@@ -932,6 +932,125 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 	
+	///UMLAL
+	@Override
+	public Object visit(ASTumlal node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTumlalS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+		
+		long result = inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		upCpsr.update((int) result);
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTumlalC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		}
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTumlalCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			long result = inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+			upCpsr.update((int) result);
+		}
+		return null;
+	}
+
+
+	///UMULL
+	@Override
+	public Object visit(ASTumull node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTumullS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		long result = inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		upCpsr.update((int) result);
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTumullC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		}
+		
+		return null;
+	}
+
+
+	@Override
+	public Object visit(ASTumullCS node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(condition.condAction(cond.toString())){
+			long result = inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+			upCpsr.update((int) result);
+		}
+		return null;
+	}
+
+	
 	////Comparaison////
 	///CMP///
 	@Override
@@ -3011,17 +3130,18 @@ public class Visitors implements MyTestVisitor{
 
 	@Override
 	public Object visit(ASTlabel_b node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
+		String label_b = node.value.toString();
+		return label_b;
 	}
 
 
 	@Override
 	public Object visit(ASTb_label node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
+		String b_label = node.value.toString();
+		return b_label;
 	}
-    
+
+	    
 	/*
 	@Override
 	public Object visit(ASTlabBCBolck node, Object data) {
@@ -3054,4 +3174,6 @@ public class Visitors implements MyTestVisitor{
 		}
 	}
 */
+	
+	
 }
