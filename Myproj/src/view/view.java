@@ -31,7 +31,7 @@ public class view {
 	Memory memory = new Memory();
 	private LinkedHashMap<Object, Object> memor = memory.init();
 	
-	Condition condition = new Condition(reg, cpsrReg);
+	Condition condition = new Condition(cpsrReg);
 	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
 	AccessMemory AMem = new AccessMemory(memor);
 	Instruction inst = new Instruction(reg, AMem);

@@ -46,6 +46,28 @@ public class Visitors implements MyTestVisitor{
 		this.inst = inst;
 	}
 	
+	private String mapRegisters(Object register){
+		String returnStr;
+
+		switch(register.toString()){
+		case "sp":
+			returnStr = "r13";
+			break;
+
+		case "lr":
+			returnStr = "r14";
+			break;
+
+		case "pc":
+			returnStr = "r15";
+			break;
+
+		default:
+			returnStr = register.toString();
+		}
+
+		return returnStr;
+	}
 	
 	////Program and simple node:////	
 	@Override
@@ -63,8 +85,8 @@ public class Visitors implements MyTestVisitor{
 	@Override
 	public Object visit(ASTregister node, Object data) {
 		String valStr = (String) node.data.get("reg");
-
-		return valStr;
+		
+		return mapRegisters(valStr);
 	}
 
 	@Override

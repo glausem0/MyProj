@@ -6,10 +6,9 @@ import registers.Register;
 
 public class Condition {
 	
-	HashMap<Object, Object> regData, cpsr;
+	HashMap<Object, Object> cpsr;
 	
-	public Condition(HashMap<Object, Object> regData, HashMap<Object, Object> cpsr){
-		this.regData = regData;
+	public Condition(HashMap<Object, Object> cpsr){
 		this.cpsr = cpsr;
 	}
 	
