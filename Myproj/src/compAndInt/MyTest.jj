@@ -49,15 +49,15 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
    }
    */}PARSER_END(MyTest)
 SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
-  /*CONDITION FOR LDR/STR*/
+  /*CONDITIONS FOR LDR/STR*/
   < B: "b" >
 | < H: "h" >
   /*| < S: "s" > is already defined with SCND */
 
-  /*OPTION STACK*/
+  /*OPTIONS FOR STACK*/
 | < AMODE : "ia" | "fd" | "ib" | "ed" | "da" | "fa" | "db" | "ea" >
 
-  /*CONITIONS*/
+  /*CONDITIONS*/
 | < COND: "eq" | "ne" | "cs" | "hs" | "cc" | "lo" | "mi" | "pl" | "vs" | "vc" | "hi" | "ls" | "ge" | "lt" | "gt" | "le" >
 | < SCND: "s" >
 
@@ -68,7 +68,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
 | < ROR: "ror" >
 | < SHIFT: "<<" | ">>" > 
 
-  /* ARITHMETIQUE*/| < MOV : "mov" >
+  /*ARITHMETIQUE*/| < MOV : "mov" >
 | < MVN : "mvn" >
 | < ADD : "add" >
 | < ADC : "adc" >

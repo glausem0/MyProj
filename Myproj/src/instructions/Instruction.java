@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Instruction {
 
+	private final static Long LONG_MASK = 0xffffffffL;
 	private HashMap<Object, Object> regData;
 	private AccessMemory mem;
 
@@ -12,6 +13,7 @@ public class Instruction {
 		this.mem = mem;
 	}
 
+	//to signed int:
 	private int toInt(String obj){
 		int value = 0;
 		if (obj.startsWith("r")){
@@ -22,6 +24,15 @@ public class Instruction {
 		}
 
 		return value;
+	}
+
+	//to unsigned int:
+	private long toUint(String obj){
+		int tmpval = toInt(obj);
+
+		Long val = (long) tmpval;
+
+		return val & LONG_MASK;
 	}
 
 
@@ -243,56 +254,17 @@ public class Instruction {
 		}
 		
 		public long umlalInstr (Object reg1, Object reg2, String reg3, String reg4){
-			int reg1Int = toInt(reg1.toString());
-			int reg2Int = toInt(reg2.toString());
-			String reg1Hex = mem.toHex32(reg1Int);
-			String reg2Hex = mem.toHex32(reg2Int);
-			reg1Hex = reg1Hex.replace("0x", "");
-			reg2Hex = reg2Hex.replace("0x", "");
-			String valCompStr = reg1Hex+reg2Hex;
-			long valHiLo = Long.parseUnsignedLong(valCompStr, 16); 
+			Long tmpResult = smlalInstr(reg1, reg2, reg3, reg4);
 			
-			int val1 = toInt(reg3);
-			int val2 = toInt(reg4);
-			
-			long result = valHiLo + (val1 * val2);
-			
-			String resultToHex = Long.toUnsignedString(result, 16);
-			
-			if(resultToHex.length() < 17){
-				regData.put(reg1, 0);
-				regData.put(reg2, Long.parseUnsignedLong(resultToHex,16));
-			}
-			else{
-				String hi = resultToHex.substring(0, 15);
-				String lo = resultToHex.substring(0, resultToHex.length());
-				
-				regData.put(reg1, Long.parseUnsignedLong(hi,16));
-				regData.put(reg2, Long.parseUnsignedLong(lo,16));
-			}
+			Long result = tmpResult & LONG_MASK;
 			
 			return result;
 		}
 	
 		public long umullInstr (Object reg1, Object reg2, String reg3, String reg4){
-			int val1 = toInt(reg3);
-			int val2 = toInt(reg4);
+			Long tmpResult = smullInstr (reg1, reg2, reg3, reg4);
 			
-			long result = (val1 * val2);
-			
-			String resultToHex = Long.toUnsignedString(result, 16);
-			
-			if(resultToHex.length() < 17){
-				regData.put(reg1, 0);
-				regData.put(reg2, Long.parseUnsignedLong(resultToHex,16));
-			}
-			else{
-				String hi = resultToHex.substring(0, 15);
-				String lo = resultToHex.substring(0, resultToHex.length());
-				
-				regData.put(reg1, Long.parseUnsignedLong(hi,16));
-				regData.put(reg2, Long.parseUnsignedLong(lo,16));
-			}
+			Long result = tmpResult & LONG_MASK;
 			
 			return result;
 		}
@@ -458,8 +430,6 @@ public class Instruction {
 
 	public void ldrBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
-		val = val.replace("-", "");
-
 		switch(PrePost){
 		case "pre":
 		{	
@@ -469,7 +439,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -477,7 +447,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -486,14 +456,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
@@ -504,7 +474,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -512,7 +482,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -521,14 +491,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						int valMem = mem.getMemoryElement8(add);
+						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
@@ -544,12 +514,12 @@ public class Instruction {
 			int regVInt = toInt(regV);
 			int valInt = toInt(val);
 
-			int add; int valMem; int tmp;
+			int add; long valMem; int tmp;
 
 			switch(PosNeg){
 			case "n":
 				add = regVInt;
-				valMem = mem.getMemoryElement8(add);
+				valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 				regData.put(regL, valMem);
 
@@ -559,7 +529,7 @@ public class Instruction {
 
 			case "p":
 				add = regVInt;
-				valMem = mem.getMemoryElement8(add);
+				valMem = mem.getMemoryElement8(add) & LONG_MASK;
 
 				regData.put(regL, valMem);
 
@@ -689,8 +659,6 @@ public class Instruction {
 
 	public void ldrHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
-		val = val.replace("-","");
-
 		switch(PrePost){
 		case "pre":
 		{	
@@ -700,7 +668,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -708,7 +676,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -717,14 +685,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
@@ -735,7 +703,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -743,7 +711,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -752,14 +720,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						int valMem = mem.getMemoryElement16(add);
+						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 						regData.put(regL, valMem);
 					}
@@ -775,12 +743,12 @@ public class Instruction {
 			int regVInt = toInt(regV);
 			int valInt = toInt(val);
 
-			int add; int valMem; int tmp;
+			int add; long valMem; int tmp;
 
 			switch(PosNeg){
 			case "n":
 				add = regVInt;
-				valMem = mem.getMemoryElement16(add);
+				valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 				regData.put(regL, valMem);
 
@@ -790,7 +758,7 @@ public class Instruction {
 
 			case "p":
 				add = regVInt;
-				valMem = mem.getMemoryElement16(add);
+				valMem = mem.getMemoryElement16(add) & LONG_MASK;
 
 				regData.put(regL, valMem);
 
