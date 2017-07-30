@@ -238,7 +238,7 @@ public class view {
 		textFieldR12.setBounds(233, 142, 86, 20);
 		registersPanel.add(textFieldR12);
 		
-		JLabel lblR_r13 = new JLabel("r13");
+		JLabel lblR_r13 = new JLabel("r13/sp");
 		lblR_r13.setBounds(181, 173, 41, 14);
 		registersPanel.add(lblR_r13);
 		
@@ -247,7 +247,7 @@ public class view {
 		textFieldR13.setBounds(233, 170, 86, 20);
 		registersPanel.add(textFieldR13);
 		
-		JLabel lblR_r14 = new JLabel("r14");
+		JLabel lblR_r14 = new JLabel("r14/lr");
 		lblR_r14.setBounds(181, 201, 41, 14);
 		registersPanel.add(lblR_r14);
 		
@@ -256,7 +256,7 @@ public class view {
 		textFieldR14.setBounds(233, 198, 86, 20);
 		registersPanel.add(textFieldR14);
 		
-		JLabel lblR_r15 = new JLabel("r15");
+		JLabel lblR_r15 = new JLabel("r15/pc");
 		lblR_r15.setBounds(181, 229, 41, 14);
 		registersPanel.add(lblR_r15);
 		

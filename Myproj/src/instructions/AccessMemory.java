@@ -10,7 +10,6 @@ public class AccessMemory {
 		this.memory = memory;
 	}
 
-
 	public String toHex32(int el){
 		String hex = Integer.toHexString(el);
 
