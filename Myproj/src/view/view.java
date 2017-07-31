@@ -92,19 +92,19 @@ public class view {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1108, 620);
+		frame.setBounds(100, 100, 1106, 760);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 11, 473, 538);
+		textArea.setBounds(1, 1, 473, 589);
 		frame.getContentPane().add(textArea);
 		
 		JScrollPane scrollBar = new JScrollPane(textArea);
-		scrollBar.setBounds(10, 11, 473, 538);
+		scrollBar.setBounds(10, 11, 478, 457);
 		frame.getContentPane().add(scrollBar);
 		
 		JPanel viewElements = new JPanel();
-		viewElements.setBounds(493, 11, 587, 538);
+		viewElements.setBounds(493, 11, 583, 455);
 		frame.getContentPane().add(viewElements);
 		viewElements.setBackground(Color.WHITE);
 		viewElements.setLayout(null);
@@ -331,25 +331,25 @@ public class view {
 		textField_F.setBounds(106, 198, 86, 20);
 		cpsrPanel.add(textField_F);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBackground(Color.GRAY);
-		panel.setBounds(0, 282, 587, 256);
-		viewElements.add(panel);
-		panel.setLayout(null);
+		JPanel memoryPanel = new JPanel();
+		memoryPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		memoryPanel.setBackground(Color.GRAY);
+		memoryPanel.setBounds(0, 282, 587, 175);
+		viewElements.add(memoryPanel);
+		memoryPanel.setLayout(null);
 		
 		JTextPane txtpnMemory = new JTextPane();
 		txtpnMemory.setBounds(0, 0, 51, 20);
 		txtpnMemory.setText("Memory");
-		panel.add(txtpnMemory);
+		memoryPanel.add(txtpnMemory);
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setBounds(10, 27, 308, 218);
-		panel.add(textPane);
+		memoryPanel.add(textPane);
 		
 		JScrollPane scrollBar_1 = new JScrollPane(textPane);
-		scrollBar_1.setBounds(10, 27, 308, 218);
-		panel.add(scrollBar_1);
+		scrollBar_1.setBounds(10, 27, 556, 125);
+		memoryPanel.add(scrollBar_1);
 	
 		//Menu bar:
 				JMenuBar menuBar = new JMenuBar();
@@ -495,6 +495,10 @@ public class view {
 				JMenu mnHelp = new JMenu("Help");
 				menuBar.add(mnHelp);
 				frame.getContentPane().setLayout(null);
+				
+				JTextArea putputTextArea = new JTextArea();
+				putputTextArea.setBounds(10, 477, 478, 158);
+				frame.getContentPane().add(putputTextArea);
 		
 				
 	}
@@ -555,6 +559,4 @@ public class view {
 	    textField_F.setText("0");   
 	   
 	}
-	
-	
 }
