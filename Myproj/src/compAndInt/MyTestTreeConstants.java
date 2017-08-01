@@ -186,29 +186,29 @@ public interface MyTestTreeConstants
   public int JJTSTRCSBPOSTPOS = 180;
   public int JJTSTRCSBSIMPLE = 181;
   public int JJTLDMSIMPLE = 182;
-  public int JJTLDMENUM = 183;
-  public int JJTLDMLIST = 184;
-  public int JJTMLDMSIMPLE = 185;
-  public int JJTMLDMENUM = 186;
-  public int JJTMLDMLIST = 187;
-  public int JJTLDMCSIMPLE = 188;
-  public int JJTLDMCENUM = 189;
-  public int JJTLDMCLIST = 190;
-  public int JJTMLDMCSIMPLE = 191;
-  public int JJTMLDMCENUM = 192;
-  public int JJTMLDMCLIST = 193;
+  public int JJTLDMLIST = 183;
+  public int JJTMLDMSIMPLE = 184;
+  public int JJTMLDMLIST = 185;
+  public int JJTLDMCSIMPLE = 186;
+  public int JJTLDMCLIST = 187;
+  public int JJTMLDMCSIMPLE = 188;
+  public int JJTMLDMCLIST = 189;
+  public int JJTMLDMENUM = 190;
+  public int JJTLDMENUM = 191;
+  public int JJTLDMCENUM = 192;
+  public int JJTMLDMCENUM = 193;
   public int JJTSTMSIMPLE = 194;
-  public int JJTSTMENUM = 195;
-  public int JJTSTMLIST = 196;
-  public int JJTMSTMSIMPLE = 197;
-  public int JJTMSTMENUM = 198;
-  public int JJTMSTMLIST = 199;
-  public int JJTSTMCSIMPLE = 200;
-  public int JJTSTMCENUM = 201;
-  public int JJTSTMCLIST = 202;
-  public int JJTMSTMCSIMPLE = 203;
-  public int JJTMSTMCENUM = 204;
-  public int JJTMSTMCLIST = 205;
+  public int JJTSTMLIST = 195;
+  public int JJTMSTMSIMPLE = 196;
+  public int JJTMSTMLIST = 197;
+  public int JJTSTMCSIMPLE = 198;
+  public int JJTSTMCLIST = 199;
+  public int JJTMSTMCSIMPLE = 200;
+  public int JJTMSTMCLIST = 201;
+  public int JJTMSTMENUM = 202;
+  public int JJTSTMENUM = 203;
+  public int JJTSTMCENUM = 204;
+  public int JJTMSTMCENUM = 205;
   public int JJTSWP = 206;
   public int JJTSWPB = 207;
   public int JJTSWPC = 208;
@@ -418,29 +418,29 @@ public interface MyTestTreeConstants
     "strCSBPostPos",
     "strCSBSimple",
     "ldmSimple",
-    "ldmEnum",
     "ldmList",
     "MldmSimple",
-    "MldmEnum",
     "MldmList",
     "ldmCSimple",
-    "ldmCEnum",
     "ldmCList",
     "MldmCSimple",
-    "MldmCEnum",
     "MldmCList",
+    "MldmEnum",
+    "ldmEnum",
+    "ldmCEnum",
+    "MldmCEnum",
     "stmSimple",
-    "stmEnum",
     "stmList",
     "MstmSimple",
-    "MstmEnum",
     "MstmList",
     "stmCSimple",
-    "stmCEnum",
     "stmCList",
     "MstmCSimple",
-    "MstmCEnum",
     "MstmCList",
+    "MstmEnum",
+    "stmEnum",
+    "stmCEnum",
+    "MstmCEnum",
     "swp",
     "swpb",
     "swpC",
@@ -466,4 +466,4 @@ public interface MyTestTreeConstants
     "b_label",
   };
 }
-/* JavaCC - OriginalChecksum=b84092979412e20ff6db5be3a8cd0d90 (do not edit this line) */
+/* JavaCC - OriginalChecksum=ed6d346c20a8cae849ff3b6d544440a9 (do not edit this line) */

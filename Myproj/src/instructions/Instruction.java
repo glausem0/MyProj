@@ -1,6 +1,7 @@
 package instructions;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Instruction {
 
@@ -1619,6 +1620,80 @@ public class Instruction {
 		break;
 		}
 	}
+	
+	public void ldmInst(String regL, String[] regs, boolean update, String amode){
+		int[] elements;
+		int length= regs.length;
+		int address = (int) regData.get(regL);
+
+		switch(amode){
+		case "fd":
+		case "ia":
+		{
+			elements = mem.getMultipleMemoryElement(length, address, "incr");
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				
+				regData.put(tmpReg, elements[i]);
+			}
+			if(update){
+				regData.put(regL, address + length*4 );
+			}
+		}	
+		break;
+		case "ed":
+		case "ib":
+		{
+			elements = mem.getMultipleMemoryElement(length, address+4, "incr");
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				
+				regData.put(tmpReg, elements[i]);
+			}
+			if(update){
+				regData.put(regL, address + length*4 );
+			}
+		}
+		break;
+
+		case "fa":
+		case "da":
+		{
+			elements = mem.getMultipleMemoryElement(length, address, "decr");
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				regData.put(tmpReg, elements[i]);
+			}
+			if(update){
+				regData.put(regL, address - length*4 );
+			}
+		}	
+		break;
+
+		case "ea":
+		case "db":
+		{
+			elements = mem.getMultipleMemoryElement(length, address - 4, "decr");
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				regData.put(tmpReg, elements[i]);
+			}
+
+			if(update){
+				regData.put(regL, address - length*4 );
+			}
+		}
+		break;
+		}
+	}
 
 	public void stmInst(String regS, String regStart, String regEnd, boolean update, String amode){
 		int length=0;
@@ -1712,6 +1787,86 @@ public class Instruction {
 				tmpReg = "r"+reg;
 				elements[i] = (int) regData.get(tmpReg);
 				reg += 1;
+			}
+
+			mem.setMultipleMemoryElement(length, address - 4, elements, "decr");
+
+			if(update){
+				regData.put(regS, address - length*4);
+			}
+		}	
+		break;
+		}
+	}
+	
+	public void stmInst(String regS, String[] regs, boolean update, String amode){
+		int length = regs.length;
+		int address = (int) regData.get(regS);
+		int[] elements = new int[length];
+
+		switch(amode){
+		case "ea":
+		case "ia":
+		{
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				elements[i] = (int) regData.get(tmpReg);
+			}
+
+			mem.setMultipleMemoryElement(length, address, elements, "incr");
+
+			if(update){
+				regData.put(regS, address + length*4);
+			}
+		}	
+		break;
+
+		case "fa":
+		case "ib":
+		{
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				elements[i] = (int) regData.get(tmpReg);
+			}
+
+			mem.setMultipleMemoryElement(length, address+4, elements, "incr");
+
+			if(update){
+				regData.put(regS, address + length*4);
+			}
+		}	
+		break;
+
+		case "ed":
+		case "da":
+		{
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				elements[i] = (int) regData.get(tmpReg);
+			}
+
+			mem.setMultipleMemoryElement(length, address, elements, "decr");
+
+			if(update){
+				regData.put(regS, address - length*4);
+			}
+		}	
+		break;
+
+		case "fd":
+		case "db":
+		{
+			String tmpReg;
+
+			for(int i=0; i<length; i++){
+				tmpReg = regs[i];
+				elements[i] = (int) regData.get(tmpReg);
 			}
 
 			mem.setMultipleMemoryElement(length, address - 4, elements, "decr");

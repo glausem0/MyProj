@@ -1,8 +1,8 @@
 package compAndInt;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class dataNode {
 
-	HashMap data = new HashMap();
+	LinkedHashMap data = new LinkedHashMap();
 }

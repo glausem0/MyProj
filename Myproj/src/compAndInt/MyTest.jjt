@@ -3,7 +3,7 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="dataNode";
- DEBUG_PARSER = true;
+ /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyTest)package compAndInt;
 
@@ -14,7 +14,7 @@ import instructions.*;
 import memory.Memory;
 import registers.*;
 
-public class MyTest{
+public class MyTest{  
   /*  public static void main(String args []) throws Exception  {
 	Register regData = new Register();
 	HashMap<Object, Object> reg = regData.init();
@@ -1072,34 +1072,52 @@ void ldm() #void:
 {
   < LDM >
 (
-  amode() register()
+  (LOOKAHEAD(6)
+   ldmEnums()
+ | amode() register() 
     ("," "{" register()
      ( 
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmSimple(3)
-    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #ldmEnum(4) 
+      (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmSimple(3) 
     | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #ldmList(4)
      )
 	| "!" "," "{" register()
 	 (
       (LOOKAHEAD(2) ("}") | ("}" "^")) #MldmSimple(3)
-    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MldmEnum(4)
     | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmList(4)
       )
      )
- | cond() amode() register()
+   )
+|(LOOKAHEAD(7)
+  ldmCEnums()
+| cond() amode() register()
  ("," "{" register()
      ( 
       (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmCSimple(4)
-    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #ldmCEnum(5)
     | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #ldmCList(5)
      )
 	| "!" "," "{" register()
 	 (
       (LOOKAHEAD(2) ("}") | ("}" "^")) #MldmCSimple(4)
-    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MldmCEnum(5) 
     | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmCList(5)
       )
-     )  )
+     )
+   )   )
+}
+
+void ldmEnums() #void:
+{}
+{
+ LOOKAHEAD(4) 
+  (amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #MldmEnum
+| (amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #ldmEnum
+}
+
+void ldmCEnums() #void:
+{}
+{
+ LOOKAHEAD(4)
+ (cond() amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #ldmCEnum
+|(cond() amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #MldmCEnum
 }
 
 void stm() #void:
@@ -1107,35 +1125,53 @@ void stm() #void:
 {
   < STM >
 (
-  amode() register()
+  ( LOOKAHEAD(6)
+    stmEnums()  | amode() register()
     ("," "{" register()
      ( 
       (LOOKAHEAD(2) ("}") | ("}" "^")) #stmSimple(3)
-    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #stmEnum(4)
     | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #stmList(4)
      )
 	| "!" "," "{" register()
 	 (
       (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmSimple(3)
-    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MstmEnum(4)
     | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmList(4)
       )
      )
+   )
+   
+ | (LOOKAHEAD(7)
+   stmCEnums()
  | cond() amode() register()
  ("," "{" register()
      ( 
       (LOOKAHEAD(2) ("}") | ("}" "^")) #stmCSimple(4)
-    | (LOOKAHEAD(4) ("," register() "}") | ( "," register() "}" "^")) #stmCEnum(5)
     | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #stmCList(5)
      )
 	| "!" "," "{" register()
 	 (
       (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmCSimple(4)
-    | (LOOKAHEAD(4) ("," register() "}") | ("," register() "}" "^")) #MstmCEnum(5)
     | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmCList(5)
       )
-     )  
+     )
+   )  
 )
+}
+
+void stmEnums() #void:
+{}
+{
+ LOOKAHEAD(4) 
+  (amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register() )+ "}") | ( ("," register())+ "}" "^")) ) #MstmEnum
+| (amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #stmEnum
+}
+
+void stmCEnums() #void:
+{}
+{
+ LOOKAHEAD(4)
+ (cond() amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #stmCEnum
+|(cond() amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #MstmCEnum
 }
 
 void swp() #void:
@@ -1221,10 +1257,10 @@ void hCond():
   t = < H > { jjtThis.value = t.image; }
 }*/
 
-void amode():
+Token amode():
 {Token t;}
 {
-  t = < AMODE > { jjtThis.value = t.image; }
+  t = < AMODE > { jjtThis.value = t.image; return t; }
 }
   
 void cond():
@@ -1271,10 +1307,10 @@ void shift():
   t = < SHIFT > { jjtThis.value = t.image.toString(); } 
 }
 
-void register() :
+String register() :
 {Token t;}
 {
-  t= < REGISTER > { jjtThis.data.put("reg", t.image.toString()); }
+  t= < REGISTER > { jjtThis.data.put("reg", t.image.toString()); return t.image; }
 }
 
 void number():

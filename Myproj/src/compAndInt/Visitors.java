@@ -2,6 +2,8 @@ package compAndInt;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Set;
 
 import instructions.AccessMemory;
 import instructions.Condition;
@@ -45,7 +47,7 @@ public class Visitors implements MyTestVisitor{
 		this.AMem = AMem;
 		this.inst = inst;
 	}
-	
+
 	private String mapRegisters(Object register){
 		String returnStr;
 
@@ -68,7 +70,7 @@ public class Visitors implements MyTestVisitor{
 
 		return returnStr;
 	}
-	
+
 	////Program and simple node:////	
 	@Override
 	public Object visit(SimpleNode node, Object data) {
@@ -85,7 +87,7 @@ public class Visitors implements MyTestVisitor{
 	@Override
 	public Object visit(ASTregister node, Object data) {
 		String valStr = (String) node.data.get("reg");
-		
+
 		return mapRegisters(valStr);
 	}
 
@@ -115,12 +117,12 @@ public class Visitors implements MyTestVisitor{
 
 		return val;
 	}
-	
-	
+
+
 	@Override
 	public Object visit(ASTamode node, Object data) {
 		String amode = node.value.toString();
-		
+
 		return amode;
 	}
 
@@ -728,7 +730,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	///MLA///
 	@Override
 	public Object visit(ASTmla node, Object data) {
@@ -736,9 +738,9 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
-		
+
 		return null;
 	}
 
@@ -748,11 +750,11 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		int result = inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
-		
+
 		upCpsr.update(result);
-		
+
 		return null;
 	}
 
@@ -785,16 +787,16 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	///MUL///
 	@Override
 	public Object visit(ASTmul node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		inst.mulInstr(reg1, reg2.toString(), reg3.toString());
-		
+
 		return null;
 	}
 
@@ -803,11 +805,11 @@ public class Visitors implements MyTestVisitor{
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		int result = inst.mulInstr(reg1, reg2.toString(), reg3.toString());
-		
+
 		upCpsr.update(result);
-		
+
 		return null;
 	}
 
@@ -817,7 +819,7 @@ public class Visitors implements MyTestVisitor{
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.mulInstr(reg1, reg2.toString(), reg3.toString());
 		}
@@ -830,7 +832,7 @@ public class Visitors implements MyTestVisitor{
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			int result = inst.mulInstr(reg1, reg2.toString(), reg3.toString());
 			upCpsr.update(result);
@@ -845,9 +847,9 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		
+
 		return null;
 	}
 
@@ -857,10 +859,10 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		long result = inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		upCpsr.update((int) result);
-		
+
 		return null;
 	}
 
@@ -875,7 +877,7 @@ public class Visitors implements MyTestVisitor{
 		if(condition.condAction(cond.toString())){
 			inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		}
-		
+
 		return null;
 	}
 
@@ -893,7 +895,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	///SMULL///
 	@Override
 	public Object visit(ASTsmull node, Object data) {
@@ -901,9 +903,9 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		
+
 		return null;
 	}
 
@@ -914,10 +916,10 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		long result = inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		upCpsr.update((int) result);
-		
+
 		return null;
 	}
 
@@ -929,11 +931,11 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		}
-		
+
 		return null;
 	}
 
@@ -945,15 +947,15 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			long result = inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
 			upCpsr.update((int) result);
-			
+
 		}
 		return null;
 	}
-	
+
 	///UMLAL
 	@Override
 	public Object visit(ASTumlal node, Object data) {
@@ -961,9 +963,9 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		
+
 		return null;
 	}
 
@@ -974,10 +976,10 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		long result = inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		upCpsr.update((int) result);
-		
+
 		return null;
 	}
 
@@ -1022,7 +1024,7 @@ public class Visitors implements MyTestVisitor{
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		
+
 		return null;
 	}
 
@@ -1036,7 +1038,7 @@ public class Visitors implements MyTestVisitor{
 
 		long result = inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		upCpsr.update((int) result);
-		
+
 		return null;
 	}
 
@@ -1048,11 +1050,11 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
 		}
-		
+
 		return null;
 	}
 
@@ -1064,7 +1066,7 @@ public class Visitors implements MyTestVisitor{
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
 		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			long result = inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
 			upCpsr.update((int) result);
@@ -1072,7 +1074,7 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-	
+
 	////Comparaison////
 	///CMP///
 	@Override
@@ -1434,7 +1436,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1488,7 +1490,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1515,7 +1517,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1544,7 +1546,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1571,7 +1573,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1612,7 +1614,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrBPostNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1640,7 +1642,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrBPostPos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1668,7 +1670,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrBSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1681,7 +1683,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCBSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1709,7 +1711,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1735,7 +1737,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1762,7 +1764,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCHPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1790,7 +1792,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1818,7 +1820,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCHSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1845,7 +1847,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1871,7 +1873,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1898,7 +1900,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 
 	@Override
 	public Object visit(ASTldrCSHPostNeg node, Object data) {
@@ -1927,8 +1929,8 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
-	
+
+
 	@Override
 	public Object visit(ASTldrCSHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1956,7 +1958,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSHSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1971,7 +1973,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrSBPreNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1983,7 +1985,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2009,7 +2011,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSBPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2037,7 +2039,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSBPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2046,9 +2048,9 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String close = "null";
-		
+
 		if(condition.condAction(cond.toString())){
-		inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+			inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
 		}
 		return null;
 	}
@@ -2065,7 +2067,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSBPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2093,7 +2095,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldrCSBSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2123,7 +2125,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2132,7 +2134,7 @@ public class Visitors implements MyTestVisitor{
 		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
 
 		String val="null";
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.strIntr(regStr.toString(), regV.toString(), val, close, "pre", "p");
 		}
@@ -2150,7 +2152,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2176,7 +2178,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2203,7 +2205,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2231,7 +2233,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2258,7 +2260,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2298,7 +2300,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrBPostNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2311,7 +2313,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCBPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2348,13 +2350,13 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String close = "null";
-	
+
 		if(condition.condAction(cond.toString())){
 			inst.strBInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "p");
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrBSimple node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2367,7 +2369,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCBSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2393,7 +2395,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2419,7 +2421,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2446,7 +2448,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCHPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2455,7 +2457,7 @@ public class Visitors implements MyTestVisitor{
 		Object val = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String close = "null";
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.strHInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "n");
 		}
@@ -2475,7 +2477,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2504,7 +2506,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCHSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2531,7 +2533,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCSHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2557,7 +2559,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCSHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2584,7 +2586,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCSHPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2612,7 +2614,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCSHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2655,7 +2657,7 @@ public class Visitors implements MyTestVisitor{
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrSBPreNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2667,7 +2669,7 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstrCSBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2792,61 +2794,67 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-///LDM///
+	///LDM///
 	@Override
 	public Object visit(ASTldmSimple node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTldmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
 		}
 		return null;
 	}
 
-	//TODO Verify enum.
 	@Override
 	public Object visit(ASTldmEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
 		
-		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		String[] list = new String[children-2];
 		
+		for(int i=2; i<children; i++){
+			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+		}		
+		inst.ldmInst(regL.toString(), list, false, amode.toString());
+        
 		return null;
 	}
 	
-	//TODO Verify enum
+
 	@Override
 	public Object visit(ASTldmCEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
 		
 		if(condition.condAction(cond.toString())){
-			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+			String[] list = new String[children-3];
+
+			for(int i=3; i<children; i++){
+				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+			}		
+			inst.ldmInst(regL.toString(), list, false, amode.toString());
 		}
-		
 		return null;
 	}
 
@@ -2856,12 +2864,12 @@ public class Visitors implements MyTestVisitor{
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
-		
+
 		return null;
 	}
-	
+
 
 	@Override
 	public Object visit(ASTldmCList node, Object data) {
@@ -2882,55 +2890,62 @@ public class Visitors implements MyTestVisitor{
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTMldmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
 		}
-		
+
 		return null;
 	}
 
-	//TODO Verify enum.
 	@Override
 	public Object visit(ASTMldmEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
 		
-		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		String[] list = new String[children-2];
 		
+		for(int i=2; i<children; i++){
+			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+		}		
+		inst.ldmInst(regL.toString(), list, true, amode.toString());
+        
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTMldmCEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
 		
 		if(condition.condAction(cond.toString())){
-			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			String[] list = new String[children-3];
+
+			for(int i=3; i<children; i++){
+				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+			}		
+			inst.ldmInst(regL.toString(), list, true, amode.toString());
 		}
-		
+
 		return null;
 	}
 
@@ -2940,9 +2955,9 @@ public class Visitors implements MyTestVisitor{
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
-		
+
 		return null;
 	}
 
@@ -2953,7 +2968,7 @@ public class Visitors implements MyTestVisitor{
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
 		}
@@ -2961,58 +2976,65 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-///STM///
+	///STM///
 	@Override
 	public Object visit(ASTstmSimple node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
 		}
 		return null;
 	}
 
-	//TODO verify enum.
 	@Override
 	public Object visit(ASTstmEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
 		
-		inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		String[] list = new String[children-2];
 		
+		for(int i=2; i<children; i++){
+			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+		}		
+		inst.stmInst(regL.toString(), list, false, amode.toString());
+        
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstmCEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
 		
 		if(condition.condAction(cond.toString())){
-			inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+			String[] list = new String[children-3];
+
+			for(int i=3; i<children; i++){
+				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+			}		
+			inst.stmInst(regL.toString(), list, false, amode.toString());
 		}
 		
 		return null;
@@ -3024,12 +3046,12 @@ public class Visitors implements MyTestVisitor{
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTstmCList node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3049,21 +3071,21 @@ public class Visitors implements MyTestVisitor{
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
-		
+
 		inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public Object visit(ASTMstmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		String regEnd = "null";
 
 		if(condition.condAction(cond.toString())){
@@ -3072,29 +3094,36 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
-	//TODO verify enum
-	@Override
-	public Object visit(ASTMstmEnum node, Object data) {
-		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
-		
-		inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
-		
-		return null;
-	}
 	
 	@Override
+	public Object visit(ASTMstmEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
+		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
+		
+		String[] list = new String[children-2];
+		
+		for(int i=2; i<children; i++){
+			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+		}		
+		inst.stmInst(regL.toString(), list, true, amode.toString());
+		return null;
+	}
+
+	@Override
 	public Object visit(ASTMstmCEnum node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
-		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
-		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
 		
 		if(condition.condAction(cond.toString())){
-			inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			String[] list = new String[children-2];
+
+			for(int i=2; i<children; i++){
+				list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+			}		
+			inst.stmInst(regL.toString(), list, true, amode.toString());
 		}
 		return null;
 	}
@@ -3105,9 +3134,9 @@ public class Visitors implements MyTestVisitor{
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
-		
+
 		return null;
 	}
 
@@ -3118,22 +3147,22 @@ public class Visitors implements MyTestVisitor{
 		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
 		}
 		return null;
 	}
-	
+
 	///SWP///
 	@Override
 	public Object visit(ASTswp node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		inst.swapInstr(reg1, reg2.toString(), reg3.toString(), false);
-		
+
 		return null;
 	}
 
@@ -3143,9 +3172,9 @@ public class Visitors implements MyTestVisitor{
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		
+
 		inst.swapInstr(reg1, reg2.toString(), reg3.toString(), true);
-		
+
 		return null;
 	}
 
@@ -3156,7 +3185,7 @@ public class Visitors implements MyTestVisitor{
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.swapInstr(reg1, reg2.toString(), reg3.toString(), false);
 		}
@@ -3170,16 +3199,16 @@ public class Visitors implements MyTestVisitor{
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-		
+
 		if(condition.condAction(cond.toString())){
 			inst.swapInstr(reg1, reg2.toString(), reg3.toString(), true);
 		}
 		return null;
 	}
-	
-	
-///Branch///
-	
+
+
+	///Branch///
+
 	@Override
 	public Object visit(ASTBLBlock node, Object data) {
 		return null;
@@ -3191,9 +3220,9 @@ public class Visitors implements MyTestVisitor{
 		Node labelStart = node.jjtGetChild(1);
 		Node instr = node.jjtGetChild(2);
 		Node labelEnd = node.jjtGetChild(3);
-		
+
 		System.out.println(condition.condAction(cond.toString()));
-		
+
 		if(!condition.condAction(cond.toString())){
 			labelStart.jjtAccept(this, data);
 			instr.jjtAccept(this, data);
@@ -3216,7 +3245,8 @@ public class Visitors implements MyTestVisitor{
 		return b_label;
 	}
 
-	    
+	
+	
 	/*
 	@Override
 	public Object visit(ASTlabBCBolck node, Object data) {
@@ -3224,7 +3254,7 @@ public class Visitors implements MyTestVisitor{
 		Object instr = node.jjtGetChild(1).jjtAccept(this, data);
 		Object cond = node.jjtGetChild(2).jjtAccept(this, data);
 		Node labelEnd = node.jjtGetChild(3);
-		
+
 		while(condition.condAction(cond.toString())){
 			node.jjtGetChild(0).jjtAccept(this, data);
 			node.jjtGetChild(1).jjtAccept(this, data);
@@ -3233,9 +3263,9 @@ public class Visitors implements MyTestVisitor{
 			System.out.println(condition.condAction(cond.toString()));
 			System.out.println(cpsrReg.get(instr));
 		}
-			
+
 		labelEnd.jjtAccept(this, data);
-		
+
 		return null;
 	}
 
@@ -3248,7 +3278,7 @@ public class Visitors implements MyTestVisitor{
 			Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);
 		}
 	}
-*/
-	
-	
+	 */
+
+
 }

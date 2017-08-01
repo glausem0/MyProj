@@ -186,29 +186,29 @@ public interface MyTestVisitor
   public Object visit(ASTstrCSBPostPos node, Object data);
   public Object visit(ASTstrCSBSimple node, Object data);
   public Object visit(ASTldmSimple node, Object data);
-  public Object visit(ASTldmEnum node, Object data);
   public Object visit(ASTldmList node, Object data);
   public Object visit(ASTMldmSimple node, Object data);
-  public Object visit(ASTMldmEnum node, Object data);
   public Object visit(ASTMldmList node, Object data);
   public Object visit(ASTldmCSimple node, Object data);
-  public Object visit(ASTldmCEnum node, Object data);
   public Object visit(ASTldmCList node, Object data);
   public Object visit(ASTMldmCSimple node, Object data);
-  public Object visit(ASTMldmCEnum node, Object data);
   public Object visit(ASTMldmCList node, Object data);
+  public Object visit(ASTMldmEnum node, Object data);
+  public Object visit(ASTldmEnum node, Object data);
+  public Object visit(ASTldmCEnum node, Object data);
+  public Object visit(ASTMldmCEnum node, Object data);
   public Object visit(ASTstmSimple node, Object data);
-  public Object visit(ASTstmEnum node, Object data);
   public Object visit(ASTstmList node, Object data);
   public Object visit(ASTMstmSimple node, Object data);
-  public Object visit(ASTMstmEnum node, Object data);
   public Object visit(ASTMstmList node, Object data);
   public Object visit(ASTstmCSimple node, Object data);
-  public Object visit(ASTstmCEnum node, Object data);
   public Object visit(ASTstmCList node, Object data);
   public Object visit(ASTMstmCSimple node, Object data);
-  public Object visit(ASTMstmCEnum node, Object data);
   public Object visit(ASTMstmCList node, Object data);
+  public Object visit(ASTMstmEnum node, Object data);
+  public Object visit(ASTstmEnum node, Object data);
+  public Object visit(ASTstmCEnum node, Object data);
+  public Object visit(ASTMstmCEnum node, Object data);
   public Object visit(ASTswp node, Object data);
   public Object visit(ASTswpb node, Object data);
   public Object visit(ASTswpC node, Object data);
@@ -233,4 +233,4 @@ public interface MyTestVisitor
   public Object visit(ASTlabel_b node, Object data);
   public Object visit(ASTb_label node, Object data);
 }
-/* JavaCC - OriginalChecksum=ea3530deffae400a6dec7599dbeb2890 (do not edit this line) */
+/* JavaCC - OriginalChecksum=5651570ae53892a3f728f9e0e25fe97d (do not edit this line) */

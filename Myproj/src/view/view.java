@@ -6,21 +6,18 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.AbstractTableModel;
 
 import java.io.*;
 import compAndInt.*;
 import instructions.*;
 import registers.*;
 import java.awt.*;
-import java.awt.List;
 import java.util.*;
-
 import memory.Memory;
-import javax.swing.table.DefaultTableModel;
-
 
 public class view {
+	
+	private HashMap<Object, Object> othersDatas = new HashMap<>();
 
 	Register regData = new Register();
 	private HashMap<Object, Object> reg = regData.init();
