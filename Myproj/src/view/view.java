@@ -17,8 +17,6 @@ import memory.Memory;
 
 public class view {
 	
-	private HashMap<Object, Object> othersDatas = new HashMap<>();
-
 	Register regData = new Register();
 	private HashMap<Object, Object> reg = regData.init();
 
@@ -89,7 +87,7 @@ public class view {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1106, 707);
+		frame.setBounds(100, 100, 1109, 751);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTextArea textArea = new JTextArea();
@@ -109,7 +107,7 @@ public class view {
 		frame.getContentPane().add(scrollBarOutPut);
 
 		JPanel viewElements = new JPanel();
-		viewElements.setBounds(493, 11, 587, 572);
+		viewElements.setBounds(493, 11, 587, 517);
 		frame.getContentPane().add(viewElements);
 		viewElements.setBackground(Color.WHITE);
 		viewElements.setLayout(null);
