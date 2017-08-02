@@ -3118,10 +3118,10 @@ public class Visitors implements MyTestVisitor{
 		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
 		
 		if(condition.condAction(cond.toString())){
-			String[] list = new String[children-2];
+			String[] list = new String[children-3];
 
-			for(int i=2; i<children; i++){
-				list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
+			for(int i=3; i<children; i++){
+				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
 			}		
 			inst.stmInst(regL.toString(), list, true, amode.toString());
 		}

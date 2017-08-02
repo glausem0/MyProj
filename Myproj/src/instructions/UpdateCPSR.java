@@ -28,11 +28,10 @@ public class UpdateCPSR {
 		return zer;
 	}
 
-	//TODO verify carry
 	//unsigned overflow
 	private boolean carry(int result){
 		boolean car = false;
-		if(Integer.MIN_VALUE >= result ){
+		if( ((2*Integer.MAX_VALUE)<result) || (result<0) ){
 			car = true;
 		}
 		return car;
@@ -41,7 +40,7 @@ public class UpdateCPSR {
 	//signed overflow
 	private boolean overflow(int result){
 		boolean ove = false;
-		if( result >= Integer.MAX_VALUE){
+		if( (result<Integer.MIN_VALUE) || (result>Integer.MAX_VALUE)){
 			ove = true;
 		}
 		return ove;
