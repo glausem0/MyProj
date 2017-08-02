@@ -31,7 +31,8 @@ public class UpdateCPSR {
 	//unsigned overflow
 	private boolean carry(int result){
 		boolean car = false;
-		if( ((2*Integer.MAX_VALUE)<result) || (result<0) ){
+		long tmpInt = Integer.MAX_VALUE;
+		if( ((2*tmpInt)<result) || (result<0) ){
 			car = true;
 		}
 		return car;
