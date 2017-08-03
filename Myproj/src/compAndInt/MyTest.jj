@@ -4,6 +4,7 @@
  */options{              
                 
                          
+ /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyTest)package compAndInt;
@@ -47,8 +48,7 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
     vi.print();
 
    }
-   */}PARSER_END(MyTest)
-SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+   */}PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" >
 | < H: "h" >
@@ -111,8 +111,8 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
 | < REGISTER  : "r0" | "r1" | "r2" | "r3" | "r4" | "r5" | "r6" | "r7" | "r8" | "r9" | "r10" | "r11" | "r12" | ("r13" | "sp") | ( "r14"| "lr") | ("r15"|"pc") >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
-| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >
-| < B_LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
+/*| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >*/
+| < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {/*@bgen(jjtree) prog */
   ASTprog jjtn000 = new ASTprog(JJTPROG);
   boolean jjtc000 = true;
@@ -121,11 +121,11 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
 {/*@bgen(jjtree) prog */
   try {
 /*@egen*/
-  block() < EOF >/*@bgen(jjtree)*/
-                  {
-                    jjtree.closeNodeScope(jjtn000, true);
-                    jjtc000 = false;
-                  }
+  (instr())* < EOF >/*@bgen(jjtree)*/
+                     {
+                       jjtree.closeNodeScope(jjtn000, true);
+                       jjtc000 = false;
+                     }
 /*@egen*/ { return jjtn000;}/*@bgen(jjtree)*/
   } catch (Throwable jjte000) {
     if (jjtc000) {
@@ -147,12 +147,6 @@ public class MyTest/*@bgen(jjtree)*/implements MyTestTreeConstants/*@egen*/{/*@
     }
   }
 /*@egen*/}
-
-void block()      :
-{}
-{
-  ( LOOKAHEAD(2) instr() )*
-} 
 
 void instr()      :
 {}{
@@ -190,8 +184,8 @@ void instr()      :
 
 | swp()
 
-
-| branchLabelBlock() 
+| branch()
+| label()
 
 }
 
@@ -7266,29 +7260,18 @@ void swp()      :
 /*@egen*/            )  )
 }
 
-
-/*
-void labelBranchBlock() #void:
+void branch()      :
 {}
-{
-  LOOKAHEAD(5)
-  (label_b() block() < B > cond() label_b()) #labBCBolck(4)
-| (label_b() block() < B > label_b()) #labBBlock(3)
-}
-*/
-
-void branchLabelBlock()      :
-{}
-{ 
-  LOOKAHEAD(5)/*@bgen(jjtree) #BLBlock( 3) */
+{ < B >
+(/*@bgen(jjtree) #Cbranch( 2) */
   {
-    ASTBLBlock jjtn001 = new ASTBLBlock(JJTBLBLOCK);
+    ASTCbranch jjtn001 = new ASTCbranch(JJTCBRANCH);
     boolean jjtc001 = true;
     jjtree.openNodeScope(jjtn001);
   }
   try {
 /*@egen*/
-  (< B > b_label() block() b_label())/*@bgen(jjtree)*/
+  ( cond() label())/*@bgen(jjtree)*/
   } catch (Throwable jjte001) {
     if (jjtc001) {
       jjtree.clearNodeScope(jjtn001);
@@ -7305,18 +7288,18 @@ void branchLabelBlock()      :
     throw (Error)jjte001;
   } finally {
     if (jjtc001) {
-      jjtree.closeNodeScope(jjtn001,  3);
+      jjtree.closeNodeScope(jjtn001,  2);
     }
   }
 /*@egen*/            
-|/*@bgen(jjtree) #BCLBlock( 4) */
+|/*@bgen(jjtree) #branch( 1) */
   {
-    ASTBCLBlock jjtn002 = new ASTBCLBlock(JJTBCLBLOCK);
+    ASTbranch jjtn002 = new ASTbranch(JJTBRANCH);
     boolean jjtc002 = true;
     jjtree.openNodeScope(jjtn002);
   }
   try {
-/*@egen*/ (< B > cond() b_label() block() b_label())/*@bgen(jjtree)*/
+/*@egen*/ ( label())/*@bgen(jjtree)*/
   } catch (Throwable jjte002) {
     if (jjtc002) {
       jjtree.clearNodeScope(jjtn002);
@@ -7333,11 +7316,32 @@ void branchLabelBlock()      :
     throw (Error)jjte002;
   } finally {
     if (jjtc002) {
-      jjtree.closeNodeScope(jjtn002,  4);
+      jjtree.closeNodeScope(jjtn002,  1);
     }
   }
-/*@egen*/             
+/*@egen*/           
+)
 }
+
+/*
+void labelBranchBlock() #void:
+{}
+{
+  LOOKAHEAD(5)
+  (label_b() (instr())+ < B > cond() label_b()) #labBCBolck()
+| (label_b() (instr())+ < B > label_b()) #labBBlock()
+}
+*/
+
+/*
+void branchLabelBlock() #void:
+{}
+{ 
+  LOOKAHEAD(5)
+  (< B > b_label() (instr())+ b_label()) #BLBlock()
+| (< B > cond() b_label() (instr())+ b_label()) #BCLBlock()
+}
+*/
 
 void closeOrCAUp()      :
 {}
@@ -7639,7 +7643,7 @@ void shift():
 /*@egen*/ 
 }
 
-String register() :
+void register() :
 {/*@bgen(jjtree) register */
  ASTregister jjtn000 = new ASTregister(JJTREGISTER);
  boolean jjtc000 = true;
@@ -7653,7 +7657,7 @@ String register() :
                     jjtree.closeNodeScope(jjtn000, true);
                     jjtc000 = false;
                   }
-/*@egen*/ { jjtn000.data.put("reg", t.image.toString()); return t.image; }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.data.put("reg", t.image.toString()); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -7731,20 +7735,20 @@ void num():
 /*@egen*/
 }
 
-void label_b():
-{/*@bgen(jjtree) label_b */
- ASTlabel_b jjtn000 = new ASTlabel_b(JJTLABEL_B);
+void label():
+{/*@bgen(jjtree) label */
+ ASTlabel jjtn000 = new ASTlabel(JJTLABEL);
  boolean jjtc000 = true;
  jjtree.openNodeScope(jjtn000);
 /*@egen*/Token t;}
-{/*@bgen(jjtree) label_b */
+{/*@bgen(jjtree) label */
  try {
 /*@egen*/
- t = < LABEL_B >/*@bgen(jjtree)*/
-                  {
-                    jjtree.closeNodeScope(jjtn000, true);
-                    jjtc000 = false;
-                  }
+ t = < LABEL >/*@bgen(jjtree)*/
+                {
+                  jjtree.closeNodeScope(jjtn000, true);
+                  jjtc000 = false;
+                }
 /*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
@@ -7753,27 +7757,3 @@ void label_b():
  }
 /*@egen*/
 }
-
-void b_label():
-{/*@bgen(jjtree) b_label */
- ASTb_label jjtn000 = new ASTb_label(JJTB_LABEL);
- boolean jjtc000 = true;
- jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t;}
-{/*@bgen(jjtree) b_label */
- try {
-/*@egen*/
- t = < B_LABEL >/*@bgen(jjtree)*/
-                  {
-                    jjtree.closeNodeScope(jjtn000, true);
-                    jjtc000 = false;
-                  }
-/*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
- } finally {
-   if (jjtc000) {
-     jjtree.closeNodeScope(jjtn000, true);
-   }
- }
-/*@egen*/
-}
-

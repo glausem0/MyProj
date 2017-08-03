@@ -93,9 +93,7 @@ public interface MyTestConstants {
   /** RegularExpression Id. */
   int NUM = 45;
   /** RegularExpression Id. */
-  int LABEL_B = 46;
-  /** RegularExpression Id. */
-  int B_LABEL = 47;
+  int LABEL = 46;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -148,8 +146,7 @@ public interface MyTestConstants {
     "<REGISTER>",
     "<HEXA>",
     "<NUM>",
-    "<LABEL_B>",
-    "<B_LABEL>",
+    "<LABEL>",
     "\",\"",
     "\"[\"",
     "\"-\"",

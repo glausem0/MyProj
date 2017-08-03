@@ -213,8 +213,8 @@ public interface MyTestTreeConstants
   public int JJTSWPB = 207;
   public int JJTSWPC = 208;
   public int JJTSWPCB = 209;
-  public int JJTBLBLOCK = 210;
-  public int JJTBCLBLOCK = 211;
+  public int JJTCBRANCH = 210;
+  public int JJTBRANCH = 211;
   public int JJTCLOSEAUP = 212;
   public int JJTCLOSE = 213;
   public int JJTSHIFTLS = 214;
@@ -230,8 +230,7 @@ public interface MyTestTreeConstants
   public int JJTNUMBER = 224;
   public int JJTHEXA = 225;
   public int JJTNUM = 226;
-  public int JJTLABEL_B = 227;
-  public int JJTB_LABEL = 228;
+  public int JJTLABEL = 227;
 
 
   public String[] jjtNodeName = {
@@ -445,8 +444,8 @@ public interface MyTestTreeConstants
     "swpb",
     "swpC",
     "swpCB",
-    "BLBlock",
-    "BCLBlock",
+    "Cbranch",
+    "branch",
     "closeAUp",
     "close",
     "shiftLS",
@@ -462,8 +461,7 @@ public interface MyTestTreeConstants
     "number",
     "hexa",
     "num",
-    "label_b",
-    "b_label",
+    "label",
   };
 }
-/* JavaCC - OriginalChecksum=ed6d346c20a8cae849ff3b6d544440a9 (do not edit this line) */
+/* JavaCC - OriginalChecksum=398f28b56837c771a5492a584f86de14 (do not edit this line) */

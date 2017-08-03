@@ -503,10 +503,10 @@ public class view {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				/*
 				System.out.println("Abstract Syntax Tree:");
 				root.dump(" ");
-
+				*/
 				System.out.println("Prog:");
 				Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 				root.jjtAccept(vi,null);

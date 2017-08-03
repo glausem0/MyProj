@@ -3,6 +3,7 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="dataNode";
+ /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyTest)package compAndInt;
@@ -43,8 +44,7 @@ public class MyTest{
     vi.print();
 
    }
-   */}PARSER_END(MyTest)
-SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+   */}PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" >
 | < H: "h" >
@@ -107,17 +107,11 @@ public class MyTest{
 | < REGISTER  : "r0" | "r1" | "r2" | "r3" | "r4" | "r5" | "r6" | "r7" | "r8" | "r9" | "r10" | "r11" | "r12" | ("r13" | "sp") | ( "r14"| "lr") | ("r15"|"pc") >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
-| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >
-| < B_LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
+/*| < LABEL_B : ("_") (["0"-"9","a"-"z","A"-"Z"])+ >*/
+| < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {}
 {
-  block() < EOF > { return jjtThis;}}
-
-void block() #void:
-{}
-{
-  ( LOOKAHEAD(2) instr() )*
-} 
+  (instr())* < EOF > { return jjtThis;}}
 
 void instr() #void:
 {}{
@@ -155,8 +149,8 @@ void instr() #void:
 
 | swp()
 
-
-| branchLabelBlock() 
+| branch()
+| label()
 
 }
 
@@ -1187,24 +1181,34 @@ void swp() #void:
 | (<B> register() "," register() "," "[" register() "]") #swpCB(4)  )  )
 }
 
+void branch() #void:
+{}
+{ < B >
+(
+  ( cond() label()) #Cbranch(2)
+| ( label()) #branch(1)
+)
+}
 
 /*
 void labelBranchBlock() #void:
 {}
 {
   LOOKAHEAD(5)
-  (label_b() block() < B > cond() label_b()) #labBCBolck(4)
-| (label_b() block() < B > label_b()) #labBBlock(3)
+  (label_b() (instr())+ < B > cond() label_b()) #labBCBolck()
+| (label_b() (instr())+ < B > label_b()) #labBBlock()
 }
 */
 
+/*
 void branchLabelBlock() #void:
 {}
 { 
   LOOKAHEAD(5)
-  (< B > b_label() block() b_label()) #BLBlock(3)
-| (< B > cond() b_label() block() b_label()) #BCLBlock(4)
+  (< B > b_label() (instr())+ b_label()) #BLBlock()
+| (< B > cond() b_label() (instr())+ b_label()) #BCLBlock()
 }
+*/
 
 void closeOrCAUp() #void:
 {}
@@ -1307,10 +1311,10 @@ void shift():
   t = < SHIFT > { jjtThis.value = t.image.toString(); } 
 }
 
-String register() :
+void register() :
 {Token t;}
 {
-  t= < REGISTER > { jjtThis.data.put("reg", t.image.toString()); return t.image; }
+  t= < REGISTER > { jjtThis.data.put("reg", t.image.toString()); }
 }
 
 void number():
@@ -1331,15 +1335,8 @@ void num():
  t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
 }
 
-void label_b():
+void label():
 {Token t;}
 {
- t = < LABEL_B >  { jjtThis.value = t.image.toString(); }
+ t = < LABEL >  { jjtThis.value = t.image.toString(); }
 }
-
-void b_label():
-{Token t;}
-{
- t = < B_LABEL >  { jjtThis.value = t.image.toString(); }
-}
-

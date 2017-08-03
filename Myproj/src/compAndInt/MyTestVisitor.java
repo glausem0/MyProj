@@ -213,8 +213,8 @@ public interface MyTestVisitor
   public Object visit(ASTswpb node, Object data);
   public Object visit(ASTswpC node, Object data);
   public Object visit(ASTswpCB node, Object data);
-  public Object visit(ASTBLBlock node, Object data);
-  public Object visit(ASTBCLBlock node, Object data);
+  public Object visit(ASTCbranch node, Object data);
+  public Object visit(ASTbranch node, Object data);
   public Object visit(ASTcloseAUp node, Object data);
   public Object visit(ASTclose node, Object data);
   public Object visit(ASTshiftLS node, Object data);
@@ -230,7 +230,6 @@ public interface MyTestVisitor
   public Object visit(ASTnumber node, Object data);
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
-  public Object visit(ASTlabel_b node, Object data);
-  public Object visit(ASTb_label node, Object data);
+  public Object visit(ASTlabel node, Object data);
 }
-/* JavaCC - OriginalChecksum=5651570ae53892a3f728f9e0e25fe97d (do not edit this line) */
+/* JavaCC - OriginalChecksum=aa11bf62b5a19fd4ba49fa211dd5ccdf (do not edit this line) */

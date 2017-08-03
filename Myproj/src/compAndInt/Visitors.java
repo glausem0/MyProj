@@ -79,7 +79,96 @@ public class Visitors implements MyTestVisitor{
 
 	@Override
 	public Object visit(ASTprog node, Object data) {
-		node.childrenAccept(this, data);
+		int children = node.jjtGetNumChildren();
+		System.out.println(children);
+		HashMap<String, Integer> branches = new HashMap<String, Integer>();
+
+		int i=0;
+		while(i<children){
+			switch(node.jjtGetChild(i).toString()){
+			case("label"):{
+				branches.put("label"+node.jjtGetChild(i).jjtAccept(this, data).toString(), i);
+				i+=1;
+			}
+			break;
+			case("branch"):{
+				String labelBranch = node.jjtGetChild(i).jjtAccept(this, data).toString();
+				if(branches.containsKey("label"+labelBranch)){
+					int newi = branches.get("label"+labelBranch);
+					i = newi;
+				}
+				else{
+					if(branches.containsKey("label"+labelBranch)){
+						int newi = branches.get("label"+labelBranch);
+						i = newi;
+					}
+					else{
+						boolean in = true;
+						while(in){
+							if(!node.jjtGetChild(i).toString().equals("label")){
+								i +=1;
+							}
+							else if(    (node.jjtGetChild(i).toString().equals("label")) 
+									&& (!node.jjtGetChild(i).jjtAccept(this, data).equals(labelBranch)) ){
+								i +=1;
+							}
+							else if(    (node.jjtGetChild(i).toString().equals("label")) 
+									&& (node.jjtGetChild(i).jjtAccept(this, data).equals(labelBranch)) ){
+								int newi = i;
+								i= newi;
+								in = false;
+							}
+						}
+					}
+				}
+			}
+			break;
+
+			case("Cbranch"):{
+				String labelBranchC = node.jjtGetChild(i).jjtAccept(this, data).toString();
+				String[] condAndLab = labelBranchC.split(",");
+				String cond = condAndLab[0];
+				String labelBranch = condAndLab[1];
+
+				boolean c = condition.condAction(cond); 
+
+				if(c){
+					if(branches.containsKey("label"+labelBranch)){
+						int newi = branches.get("label"+labelBranch);
+						i = newi;
+					}
+					else{
+						boolean in = true;
+						while(in){
+							if(!node.jjtGetChild(i).toString().equals("label")){
+								i +=1;
+							}
+							else if(    (node.jjtGetChild(i).toString().equals("label")) 
+									&& (!node.jjtGetChild(i).jjtAccept(this, data).equals(labelBranch)) ){
+								i +=1;
+							}
+							else if(   (node.jjtGetChild(i).toString().equals("label")) 
+									&& (node.jjtGetChild(i).jjtAccept(this, data).equals(labelBranch)) ){
+								int newi = i;
+								i= newi;
+								in = false;
+							}
+						}
+					}
+				}
+				else i +=1;
+			}
+		
+			break;
+			
+			default:
+				node.jjtGetChild(i).jjtAccept(this, data);
+				i+=1;
+			}	
+			
+		}
+		
+		//node.childrenAccept(this, data);
 		return "Program";
 	}
 
@@ -3206,9 +3295,31 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
+	@Override
+	public Object visit(ASTbranch node, Object data) {
+		String labelBranch = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		return labelBranch;
+	}
+
+	@Override
+	public Object visit(ASTlabel node, Object data) {
+		Object label = node.value.toString();
+		return label;
+	}
+
+	@Override
+	public Object visit(ASTCbranch node, Object data) {
+		String cond = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		String label = node.jjtGetChild(1).jjtAccept(this, data).toString();
+		
+		String ret = cond+","+label;
+		
+		return ret;
+	}
+
 
 	///Branch///
-
+/*
 	@Override
 	public Object visit(ASTBLBlock node, Object data) {
 		return null;
@@ -3216,20 +3327,23 @@ public class Visitors implements MyTestVisitor{
 
 	@Override
 	public Object visit(ASTBCLBlock node, Object data) {
+		int children = node.jjtGetNumChildren();
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Node labelStart = node.jjtGetChild(1);
-		Node instr = node.jjtGetChild(2);
-		Node labelEnd = node.jjtGetChild(3);
-
-		System.out.println(condition.condAction(cond.toString()));
-
-		if(!condition.condAction(cond.toString())){
-			labelStart.jjtAccept(this, data);
-			instr.jjtAccept(this, data);
-			labelEnd.jjtAccept(this, data);
-		}		
-		return null;
+		//Object branchLabel = node.jjtGetChild(1).jjtAccept(this, data);
+		Node label = node.jjtGetChild(children-1);
+		
+		if(condition.condAction(cond.toString())){
+			label.jjtAccept(this, data);
+		}
+		else{
+			for(int i=1; i<children; i++){
+				node.jjtGetChild(i).jjtAccept(this, data);
+			}
+		}
+		
+		return null;	
 	}
+
 
 
 	@Override
@@ -3247,25 +3361,32 @@ public class Visitors implements MyTestVisitor{
 
 	
 	
-	/*
+	
 	@Override
 	public Object visit(ASTlabBCBolck node, Object data) {
-		Object labelStart = node.jjtGetChild(0).jjtAccept(this, data);
-		Object instr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object cond = node.jjtGetChild(2).jjtAccept(this, data);
-		Node labelEnd = node.jjtGetChild(3);
-
-		while(condition.condAction(cond.toString())){
-			node.jjtGetChild(0).jjtAccept(this, data);
-			node.jjtGetChild(1).jjtAccept(this, data);
-			cond = node.jjtGetChild(2).jjtAccept(this, data);
-			labelEnd.jjtAccept(this, data);
-			System.out.println(condition.condAction(cond.toString()));
-			System.out.println(cpsrReg.get(instr));
+		int children = node.jjtGetNumChildren();
+		//Object label = node.jjtGetChild(0).jjtAccept(this, data);
+		Object cond = node.jjtGetChild(children-2).jjtAccept(this, data);
+		//Node branchLabel = node.jjtGetChild(children-1);
+		
+		boolean condRespect = condition.condAction(cond.toString());
+		
+		for(int i=0; i<children; i++){
+			node.jjtGetChild(i).jjtAccept(this, data);
 		}
-
-		labelEnd.jjtAccept(this, data);
-
+		
+		int comp =0;
+		while(condRespect){
+			for(int i=0; i<children; i++){
+				if(i == children-2){
+					condRespect = condition.condAction(cond.toString());
+				}
+				node.jjtGetChild(i).jjtAccept(this, data);
+			}
+			System.out.println(comp);
+			comp+=1;
+		}
+		
 		return null;
 	}
 
@@ -3278,7 +3399,7 @@ public class Visitors implements MyTestVisitor{
 			Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);
 		}
 	}
-	 */
+		*/ 
 
 
 }
