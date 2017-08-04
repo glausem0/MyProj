@@ -285,7 +285,7 @@ public class view {
 				IntegerFields();
 			}
 		});
-		btnInteger.setBounds(90, 270, 105, 23);
+		btnInteger.setBounds(61, 270, 139, 23);
 		registersPanel.add(btnInteger);
 		
 		JButton btnHexadecimal = new JButton(new AbstractAction("Hexadecimal"){
@@ -298,7 +298,7 @@ public class view {
 				hexFields();
 			}
 		});
-		btnHexadecimal.setBounds(228, 270, 105, 23);
+		btnHexadecimal.setBounds(224, 270, 139, 23);
 		registersPanel.add(btnHexadecimal);
 
 		JPanel cpsrPanel = new JPanel();
@@ -432,10 +432,12 @@ public class view {
 					}
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					System.err.println(e);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					System.err.println(e);
 				}
 
 			}
@@ -471,7 +473,8 @@ public class view {
 					try{
 						textArea.write(new OutputStreamWriter(new FileOutputStream(selectedFile), "utf-8"));
 					}catch	(IOException e) {
-						e.printStackTrace();
+						//e.printStackTrace();
+						System.err.println(e);
 					}
 				}
 
@@ -490,6 +493,7 @@ public class view {
 
 			public void actionPerformed(ActionEvent ae){
 
+				try{
 				//init fields for rerun:
 				initfieldsVal();
 				textPane.setText("");
@@ -503,20 +507,22 @@ public class view {
 					}
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					System.err.println(e);
 				}
 				SimpleNode root = null;
 				try {
 					root = parser.prog();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
+					System.err.println(e);
 				}
 				/*
 				System.out.println("Abstract Syntax Tree:");
 				root.dump(" ");
 				*/
-				System.out.println("Prog:");
+				//System.out.println("Prog:");
 				Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 				root.jjtAccept(vi,null);
 
@@ -524,6 +530,9 @@ public class view {
 				//set fields memory:
 				fillVal();
 				textPane.setText(memory.printView());
+				}catch (RuntimeException e){
+					System.err.println(e);
+				}
 
 			}
 		});

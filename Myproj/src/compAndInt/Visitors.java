@@ -80,7 +80,6 @@ public class Visitors implements MyTestVisitor{
 	@Override
 	public Object visit(ASTprog node, Object data) {
 		int children = node.jjtGetNumChildren();
-		System.out.println(children);
 		HashMap<String, Integer> branches = new HashMap<String, Integer>();
 
 		int i=0;
