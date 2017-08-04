@@ -87,7 +87,8 @@ public class view {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1109, 751);
+		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
+		frame.setBounds(100, 100, 1215, 751);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTextArea textArea = new JTextArea();
@@ -95,177 +96,183 @@ public class view {
 		frame.getContentPane().add(textArea);
 
 		JScrollPane scrollBar = new JScrollPane(textArea);
-		scrollBar.setBounds(10, 11, 478, 457);
+		scrollBar.setBounds(10, 11, 582, 493);
 		frame.getContentPane().add(scrollBar);
 
 		JTextArea outputTextArea = new JTextArea();
 		outputTextArea.setBounds(10, 477, 478, 158);
 		frame.getContentPane().add(outputTextArea);
-
+		
+		MessageConsole mc = new MessageConsole(outputTextArea);
+		mc.redirectOut();
+		mc.redirectErr(Color.RED, null);
+		mc.setMessageLines(100);
+		
 		JScrollPane scrollBarOutPut = new JScrollPane(outputTextArea);
-		scrollBarOutPut.setBounds(10, 477, 478, 158);
+		scrollBarOutPut.setBounds(10, 517, 582, 165);
 		frame.getContentPane().add(scrollBarOutPut);
 
 		JPanel viewElements = new JPanel();
-		viewElements.setBounds(493, 11, 587, 517);
+		viewElements.setBounds(602, 11, 592, 671);
 		frame.getContentPane().add(viewElements);
 		viewElements.setBackground(Color.WHITE);
 		viewElements.setLayout(null);
 
 		JPanel registersPanel = new JPanel();
 		registersPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		registersPanel.setBackground(Color.GRAY);
-		registersPanel.setBounds(0, 0, 333, 310);
+		registersPanel.setBackground(new Color(248, 248, 255));
+		registersPanel.setBounds(0, 0, 395, 304);
 		viewElements.add(registersPanel);
 		registersPanel.setLayout(null);
 
 		JTextPane txtpnRegisters = new JTextPane();
-		txtpnRegisters.setBounds(0, 0, 51, 20);
+		txtpnRegisters.setBackground(new Color(248, 248, 255));
+		txtpnRegisters.setBounds(3, 3, 51, 20);
 		registersPanel.add(txtpnRegisters);
 		txtpnRegisters.setText("Registers");
 
 		JLabel lblR_r0 = new JLabel("r0");
-		lblR_r0.setBounds(10, 33, 41, 14);
+		lblR_r0.setBounds(28, 30, 41, 14);
 		registersPanel.add(lblR_r0);
 
 		textFieldR0 = new JTextField();
-		textFieldR0.setBounds(62, 30, 86, 20);
+		textFieldR0.setBounds(80, 27, 100, 20);
 		registersPanel.add(textFieldR0);
 		textFieldR0.setColumns(10);
 
 		JLabel lblR_r1 = new JLabel("r1");
-		lblR_r1.setBounds(10, 61, 41, 14);
+		lblR_r1.setBounds(28, 58, 41, 14);
 		registersPanel.add(lblR_r1);
 
 		textFieldR1 = new JTextField();
 		textFieldR1.setColumns(10);
-		textFieldR1.setBounds(62, 58, 86, 20);
+		textFieldR1.setBounds(80, 55, 100, 20);
 		registersPanel.add(textFieldR1);
 
 		JLabel lblR_r2 = new JLabel("r2");
-		lblR_r2.setBounds(10, 89, 41, 14);
+		lblR_r2.setBounds(28, 86, 41, 14);
 		registersPanel.add(lblR_r2);
 
 		textFieldR2 = new JTextField();
 		textFieldR2.setColumns(10);
-		textFieldR2.setBounds(62, 86, 86, 20);
+		textFieldR2.setBounds(80, 83, 100, 20);
 		registersPanel.add(textFieldR2);
 
 		JLabel lblR_r3 = new JLabel("r3");
-		lblR_r3.setBounds(10, 117, 41, 14);
+		lblR_r3.setBounds(28, 114, 41, 14);
 		registersPanel.add(lblR_r3);
 
 		textFieldR3 = new JTextField();
 		textFieldR3.setColumns(10);
-		textFieldR3.setBounds(62, 114, 86, 20);
+		textFieldR3.setBounds(80, 111, 100, 20);
 		registersPanel.add(textFieldR3);
 
 		JLabel lblR_r4 = new JLabel("r4");
-		lblR_r4.setBounds(10, 145, 41, 14);
+		lblR_r4.setBounds(28, 142, 41, 14);
 		registersPanel.add(lblR_r4);
 
 		textFieldR4 = new JTextField();
 		textFieldR4.setColumns(10);
-		textFieldR4.setBounds(62, 142, 86, 20);
+		textFieldR4.setBounds(80, 139, 100, 20);
 		registersPanel.add(textFieldR4);
 
 		JLabel lblR_r5 = new JLabel("r5");
-		lblR_r5.setBounds(10, 173, 41, 14);
+		lblR_r5.setBounds(28, 170, 41, 14);
 		registersPanel.add(lblR_r5);
 
 		textFieldR5 = new JTextField();
 		textFieldR5.setColumns(10);
-		textFieldR5.setBounds(62, 170, 86, 20);
+		textFieldR5.setBounds(80, 167, 100, 20);
 		registersPanel.add(textFieldR5);
 
 		JLabel lblR_r6 = new JLabel("r6");
-		lblR_r6.setBounds(10, 201, 41, 14);
+		lblR_r6.setBounds(28, 198, 41, 14);
 		registersPanel.add(lblR_r6);
 
 		textFieldR6 = new JTextField();
 		textFieldR6.setColumns(10);
-		textFieldR6.setBounds(62, 198, 86, 20);
+		textFieldR6.setBounds(80, 195, 100, 20);
 		registersPanel.add(textFieldR6);
 
 		JLabel lblR_r7 = new JLabel("r7");
-		lblR_r7.setBounds(10, 229, 41, 14);
+		lblR_r7.setBounds(28, 226, 41, 14);
 		registersPanel.add(lblR_r7);
 
 		textFieldR7 = new JTextField();
 		textFieldR7.setColumns(10);
-		textFieldR7.setBounds(62, 226, 86, 20);
+		textFieldR7.setBounds(80, 223, 100, 20);
 		registersPanel.add(textFieldR7);
 
 		JLabel lblR_r8 = new JLabel("r8");
-		lblR_r8.setBounds(181, 33, 41, 14);
+		lblR_r8.setBounds(228, 33, 41, 14);
 		registersPanel.add(lblR_r8);
 
 		textFieldR8 = new JTextField();
 		textFieldR8.setColumns(10);
-		textFieldR8.setBounds(233, 30, 86, 20);
+		textFieldR8.setBounds(280, 30, 100, 20);
 		registersPanel.add(textFieldR8);
 
 		JLabel lblR_r9 = new JLabel("r9");
-		lblR_r9.setBounds(181, 61, 41, 14);
+		lblR_r9.setBounds(228, 61, 41, 14);
 		registersPanel.add(lblR_r9);
 
 		textFieldR9 = new JTextField();
 		textFieldR9.setColumns(10);
-		textFieldR9.setBounds(233, 58, 86, 20);
+		textFieldR9.setBounds(280, 55, 100, 20);
 		registersPanel.add(textFieldR9);
 
 		JLabel lblR_r10 = new JLabel("r10");
-		lblR_r10.setBounds(181, 89, 41, 14);
+		lblR_r10.setBounds(228, 89, 41, 14);
 		registersPanel.add(lblR_r10);
 
 		textFieldR10 = new JTextField();
 		textFieldR10.setColumns(10);
-		textFieldR10.setBounds(233, 86, 86, 20);
+		textFieldR10.setBounds(280, 86, 100, 20);
 		registersPanel.add(textFieldR10);
 
 		JLabel lblR_r11 = new JLabel("r11");
-		lblR_r11.setBounds(181, 117, 41, 14);
+		lblR_r11.setBounds(228, 117, 41, 14);
 		registersPanel.add(lblR_r11);
 
 		textFieldR11 = new JTextField();
 		textFieldR11.setColumns(10);
-		textFieldR11.setBounds(233, 114, 86, 20);
+		textFieldR11.setBounds(280, 114, 100, 20);
 		registersPanel.add(textFieldR11);
 
 		JLabel lblR_r12 = new JLabel("r12");
-		lblR_r12.setBounds(181, 145, 41, 14);
+		lblR_r12.setBounds(228, 145, 41, 14);
 		registersPanel.add(lblR_r12);
 
 		textFieldR12 = new JTextField();
 		textFieldR12.setColumns(10);
-		textFieldR12.setBounds(233, 142, 86, 20);
+		textFieldR12.setBounds(280, 142, 100, 20);
 		registersPanel.add(textFieldR12);
 
 		JLabel lblR_r13 = new JLabel("r13/sp");
-		lblR_r13.setBounds(181, 173, 41, 14);
+		lblR_r13.setBounds(228, 173, 41, 14);
 		registersPanel.add(lblR_r13);
 
 		textFieldR13 = new JTextField();
 		textFieldR13.setColumns(10);
-		textFieldR13.setBounds(233, 170, 86, 20);
+		textFieldR13.setBounds(280, 170, 100, 20);
 		registersPanel.add(textFieldR13);
 
 		JLabel lblR_r14 = new JLabel("r14/lr");
-		lblR_r14.setBounds(181, 201, 41, 14);
+		lblR_r14.setBounds(228, 201, 41, 14);
 		registersPanel.add(lblR_r14);
 
 		textFieldR14 = new JTextField();
 		textFieldR14.setColumns(10);
-		textFieldR14.setBounds(233, 198, 86, 20);
+		textFieldR14.setBounds(280, 198, 100, 20);
 		registersPanel.add(textFieldR14);
 
 		JLabel lblR_r15 = new JLabel("r15/pc");
-		lblR_r15.setBounds(181, 229, 41, 14);
+		lblR_r15.setBounds(228, 229, 41, 14);
 		registersPanel.add(lblR_r15);
 
 		textFieldR15 = new JTextField();
 		textFieldR15.setColumns(10);
-		textFieldR15.setBounds(233, 226, 86, 20);
+		textFieldR15.setBounds(280, 226, 100, 20);
 		registersPanel.add(textFieldR15);
 
 		JButton btnInteger = new JButton(new AbstractAction("Integer"){
@@ -278,7 +285,7 @@ public class view {
 				IntegerFields();
 			}
 		});
-		btnInteger.setBounds(43, 276, 105, 23);
+		btnInteger.setBounds(90, 270, 105, 23);
 		registersPanel.add(btnInteger);
 		
 		JButton btnHexadecimal = new JButton(new AbstractAction("Hexadecimal"){
@@ -291,84 +298,86 @@ public class view {
 				hexFields();
 			}
 		});
-		btnHexadecimal.setBounds(181, 276, 105, 23);
+		btnHexadecimal.setBounds(228, 270, 105, 23);
 		registersPanel.add(btnHexadecimal);
 
 		JPanel cpsrPanel = new JPanel();
 		cpsrPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		cpsrPanel.setBackground(Color.GRAY);
-		cpsrPanel.setBounds(332, 0, 255, 310);
+		cpsrPanel.setBackground(new Color(248, 248, 255));
+		cpsrPanel.setBounds(394, 0, 193, 304);
 		viewElements.add(cpsrPanel);
 		cpsrPanel.setLayout(null);
 
 		JTextPane txtpnCpsr = new JTextPane();
+		txtpnCpsr.setBackground(new Color(248, 248, 255));
 		txtpnCpsr.setText("CPSR");
-		txtpnCpsr.setBounds(0, 0, 51, 20);
+		txtpnCpsr.setBounds(3, 3, 51, 20);
 		cpsrPanel.add(txtpnCpsr);
 
 		JLabel lbl_N = new JLabel("N");
-		lbl_N.setBounds(54, 36, 41, 14);
+		lbl_N.setBounds(30, 37, 41, 14);
 		cpsrPanel.add(lbl_N);
 
 		textField_N = new JTextField();
 		textField_N.setColumns(10);
-		textField_N.setBounds(106, 33, 86, 20);
+		textField_N.setBounds(82, 34, 86, 20);
 		cpsrPanel.add(textField_N);
 
 		JLabel lbl_Z = new JLabel("Z");
-		lbl_Z.setBounds(54, 64, 41, 14);
+		lbl_Z.setBounds(30, 65, 41, 14);
 		cpsrPanel.add(lbl_Z);
 
 		textField_Z = new JTextField();
 		textField_Z.setColumns(10);
-		textField_Z.setBounds(106, 61, 86, 20);
+		textField_Z.setBounds(82, 62, 86, 20);
 		cpsrPanel.add(textField_Z);
 
 		JLabel lbl_C = new JLabel("C");
-		lbl_C.setBounds(54, 92, 41, 14);
+		lbl_C.setBounds(30, 93, 41, 14);
 		cpsrPanel.add(lbl_C);
 
 		textField_C = new JTextField();
 		textField_C.setColumns(10);
-		textField_C.setBounds(106, 89, 86, 20);
+		textField_C.setBounds(82, 90, 86, 20);
 		cpsrPanel.add(textField_C);
 
 		JLabel lbl_V = new JLabel("V");
-		lbl_V.setBounds(54, 120, 41, 14);
+		lbl_V.setBounds(30, 121, 41, 14);
 		cpsrPanel.add(lbl_V);
 
 		textField_V = new JTextField();
 		textField_V.setColumns(10);
-		textField_V.setBounds(106, 117, 86, 20);
+		textField_V.setBounds(82, 118, 86, 20);
 		cpsrPanel.add(textField_V);
 
 		JLabel lbl_I = new JLabel("I");
-		lbl_I.setBounds(54, 173, 41, 14);
+		lbl_I.setBounds(30, 174, 41, 14);
 		cpsrPanel.add(lbl_I);
 
 		textField_I = new JTextField();
 		textField_I.setColumns(10);
-		textField_I.setBounds(106, 170, 86, 20);
+		textField_I.setBounds(82, 171, 86, 20);
 		cpsrPanel.add(textField_I);
 
 		JLabel lbl_F = new JLabel("F");
-		lbl_F.setBounds(54, 201, 41, 14);
+		lbl_F.setBounds(30, 202, 41, 14);
 		cpsrPanel.add(lbl_F);
 
 		textField_F = new JTextField();
 		textField_F.setColumns(10);
-		textField_F.setBounds(106, 198, 86, 20);
+		textField_F.setBounds(82, 199, 86, 20);
 		cpsrPanel.add(textField_F);
 
 		JPanel memoryPanel = new JPanel();
 		memoryPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		memoryPanel.setBackground(Color.GRAY);
-		memoryPanel.setBounds(0, 310, 587, 208);
+		memoryPanel.setBackground(new Color(248, 248, 255));
+		memoryPanel.setBounds(0, 303, 587, 208);
 		viewElements.add(memoryPanel);
 		memoryPanel.setLayout(null);
 
 		JTextPane txtpnMemory = new JTextPane();
-		txtpnMemory.setBounds(0, 0, 51, 20);
+		txtpnMemory.setBackground(new Color(248, 248, 255));
+		txtpnMemory.setBounds(3, 3, 51, 20);
 		txtpnMemory.setText("Memory");
 		memoryPanel.add(txtpnMemory);
 
@@ -377,7 +386,7 @@ public class view {
 		memoryPanel.add(textPane);
 
 		JScrollPane scrollBar_1 = new JScrollPane(textPane);
-		scrollBar_1.setBounds(10, 27, 556, 125);
+		scrollBar_1.setBounds(10, 27, 554, 159);
 		memoryPanel.add(scrollBar_1);
 
 		//Menu bar:
