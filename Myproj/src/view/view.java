@@ -88,7 +88,7 @@ public class view {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
-		frame.setBounds(100, 100, 1215, 751);
+		frame.setBounds(100, 100, 1215, 809);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTextArea textArea = new JTextArea();
@@ -371,7 +371,7 @@ public class view {
 		JPanel memoryPanel = new JPanel();
 		memoryPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		memoryPanel.setBackground(new Color(248, 248, 255));
-		memoryPanel.setBounds(0, 303, 587, 208);
+		memoryPanel.setBounds(0, 303, 587, 239);
 		viewElements.add(memoryPanel);
 		memoryPanel.setLayout(null);
 
@@ -540,15 +540,21 @@ public class view {
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
+		
+		JMenuItem mntmAcceptedInstructions = new JMenuItem(new AbstractAction("Accepted instructions"){
+			public void actionPerformed(ActionEvent ae){
+				helpAcceptedInstructions hd = new helpAcceptedInstructions();
+				hd.helpFrame();
+			}
+		});
+		mnHelp.add(mntmAcceptedInstructions);
 		frame.getContentPane().setLayout(null);
-
-
-
+	
 	}
 
 	private void fillVal(){
 		//Set fields register:
-		IntegerFields();
+		hexFields();
 
 		//set fields cpsr:
 		textField_N.setText(cpsrReg.get("N").toString());

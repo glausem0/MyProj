@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 
 public class Memory {
 
-	//TODO change Memory to generate address mod 4, verify if exist, if yes, increment do not erase)
-
 	private LinkedHashMap<Object, Object> memory;
 	
 	public LinkedHashMap<Object, Object> init(){

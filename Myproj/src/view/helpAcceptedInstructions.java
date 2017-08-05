@@ -1,0 +1,98 @@
+package view;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.JTabbedPane;
+
+public class helpAcceptedInstructions {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void helpFrame() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					helpAcceptedInstructions window = new helpAcceptedInstructions();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public helpAcceptedInstructions() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 1297, 713);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(21, 21, 1229, 600);
+		frame.getContentPane().add(textArea);
+		
+		JScrollPane scrollBar = new JScrollPane(textArea);
+		scrollBar.setBounds(10, 11, 1240, 610);
+		frame.getContentPane().add(scrollBar);
+		
+		textArea.setText("Accepted instructions\n \n"
+						+"Arithmetique: \n"
+						+"MOV<cond>{S} \n"
+						+"MON<cond>{S} \n"
+						+"ADD<cond>{S} \n"
+						+"ADC<cond>{S} \n"
+						+"SUB<cond>{S} \n"
+						+"SBC<cond>{S} \n"
+						+"RSB<cond>{S} \n"
+						+"RSC<cond>{S} \n"
+						+"MLA<cond>{S} \n"
+						+"MUL<cond>{S} \n"
+						+"SMLAL<cond>{S} \n"
+						+"SMULL<cond>{S} \n"
+						+"UMLAL<cond>{S} \n"
+						+"UMULL<cond>{S} \n"
+						+"\n"
+						+"Comparison: \n"
+						+"CMP<cond> \n"
+						+"CMN<cond> \n"
+						+"TEQ<cond> \n"
+						+"TST<cond> \n"
+						+"\n"
+						+"Logic: \n"
+						+"AND<cond>{S} \n"
+						+"BIC<cond>{S} \n"
+						+"EOR<cond>{S} \n"
+						+"ORR<cond>{S} \n"
+						+"\n"
+						+"Load and store: \n"
+						+"LDR<cond>{S}{B|H} \n"
+						+"STR<cond>{S}{B|H} \n"
+						+"Load multiple words and store multiple words: \n"
+						+"LDM<cond><amode> \n"
+						+"STM<cond><amode> \n"
+						+"\n"
+						+"Swap a word: \n"
+						+"SWP<cond> \n"
+						+"\n"
+						+"Branch: \n"
+						+"B<cond> .label"
+						);
+		
+	}
+}
