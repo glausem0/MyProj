@@ -2582,6 +2582,7 @@ public class Visitors implements MyTestVisitor{
 		return null;
 	}
 
+	/*
 	@Override
 	public Object visit(ASTstrSHPreNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2853,7 +2854,8 @@ public class Visitors implements MyTestVisitor{
 
 		return null;
 	}
-
+*/
+	
 	///LDM///
 	@Override
 	public Object visit(ASTldmSimple node, Object data) {

@@ -150,16 +150,6 @@ public interface MyTestVisitor
   public Object visit(ASTstrHPostNeg node, Object data);
   public Object visit(ASTstrHPostPos node, Object data);
   public Object visit(ASTstrHSimple node, Object data);
-  public Object visit(ASTstrSHPreNeg node, Object data);
-  public Object visit(ASTstrSHPrePos node, Object data);
-  public Object visit(ASTstrSHPostNeg node, Object data);
-  public Object visit(ASTstrSHPostPos node, Object data);
-  public Object visit(ASTstrSHSimple node, Object data);
-  public Object visit(ASTstrSBPreNeg node, Object data);
-  public Object visit(ASTstrSBPrePos node, Object data);
-  public Object visit(ASTstrSBPostNeg node, Object data);
-  public Object visit(ASTstrSBPostPos node, Object data);
-  public Object visit(ASTstrSBSimple node, Object data);
   public Object visit(ASTstrCPreNeg node, Object data);
   public Object visit(ASTstrCPrePos node, Object data);
   public Object visit(ASTstrCPostNeg node, Object data);
@@ -175,16 +165,6 @@ public interface MyTestVisitor
   public Object visit(ASTstrCHPostNeg node, Object data);
   public Object visit(ASTstrCHPostPos node, Object data);
   public Object visit(ASTstrCHSimple node, Object data);
-  public Object visit(ASTstrCSHPreNeg node, Object data);
-  public Object visit(ASTstrCSHPrePos node, Object data);
-  public Object visit(ASTstrCSHPostNeg node, Object data);
-  public Object visit(ASTstrCSHPostPos node, Object data);
-  public Object visit(ASTstrCSHSimple node, Object data);
-  public Object visit(ASTstrCSBPreNeg node, Object data);
-  public Object visit(ASTstrCSBPrePos node, Object data);
-  public Object visit(ASTstrCSBPostNeg node, Object data);
-  public Object visit(ASTstrCSBPostPos node, Object data);
-  public Object visit(ASTstrCSBSimple node, Object data);
   public Object visit(ASTldmSimple node, Object data);
   public Object visit(ASTldmList node, Object data);
   public Object visit(ASTMldmSimple node, Object data);
@@ -232,4 +212,4 @@ public interface MyTestVisitor
   public Object visit(ASTnum node, Object data);
   public Object visit(ASTlabel node, Object data);
 }
-/* JavaCC - OriginalChecksum=aa11bf62b5a19fd4ba49fa211dd5ccdf (do not edit this line) */
+/* JavaCC - OriginalChecksum=4bfe9221e63d6f9eee93975b06c453aa (do not edit this line) */

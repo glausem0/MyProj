@@ -6,7 +6,17 @@
  /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
-PARSER_BEGIN(MyTest)PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+PARSER_BEGIN(MyTest)package compAndInt;
+
+import java.io.*;
+import java.util.HashMap;
+
+import instructions.*;
+import memory.Memory;
+import registers.*;
+
+public class MyTest {
+}PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" >
 | < H: "h" >
@@ -814,77 +824,8 @@ void str() #void:
      )
     )
   )
-
- | < SCND >
- (
-  (
-     register() "," "[" register()
-    (
-     ","
-      ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strPreNeg(4)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strPrePos(4) 
-      )
-   | ( 
-        LOOKAHEAD(2)  
-        "]" ","
-        (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strPostNeg(3)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strPostPos(3)
-        )
-        | closeOrCAUp()#strSimple(3) 
-     )
-    )
-  )
-
- | (
-     < H >
-   (
-     register() "," "[" register()
-    (
-     ","
-      ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strSHPreNeg(4)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strSHPrePos(4) 
-      )
-   | ( 
-        LOOKAHEAD(2)  
-        "]" ","
-        (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strSHPostNeg(3)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strSHPostPos(3)
-        )
-        | closeOrCAUp()#strSHSimple(3) 
-     )
-    )
-  )
-  )
-
- | (
-    < B >
-  (
-     register() "," "[" register()
-    (
-     ","
-      ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strSBPreNeg(4)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strSBPrePos(4) 
-      )
-   | ( 
-        LOOKAHEAD(2)  
-        "]" ","
-        (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strSBPostNeg(3)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strSBPostPos(3)
-        )
-        | closeOrCAUp()#strSBSimple(3) 
-     )
-    )
-  )
-  )
-  
- )
 )
+ 
 
 | cond()
 (    
@@ -948,78 +889,8 @@ void str() #void:
         | closeOrCAUp()#strCHSimple(4) 
      )
     )
-  )
-
- | < SCND >
- (
-  (
-     register() "," "[" register()
-    (
-     ","
-      ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCPreNeg(5)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCPrePos(5) 
-      )
-   | ( 
-        LOOKAHEAD(2)  
-        "]" ","
-        (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCPostNeg(4)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCPostPos(4)
-        )
-        | closeOrCAUp()#strCSimple(4) 
-     )
-    )
-  )
-
- | (
-     < H >
-   (
-     register() "," "[" register()
-    (
-     ","
-      ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCSHPreNeg(5)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCSHPrePos(5) 
-      )
-   | ( 
-        LOOKAHEAD(2)  
-        "]" ","
-        (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCSHPostNeg(4)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCSHPostPos(4)
-        )
-        | closeOrCAUp()#strCSHSimple(4) 
-     )
-    )
-  )
-  )
-
- | (
-    < B >
-  (
-     register() "," "[" register()
-    (
-     ","
-      ( 
-        ("-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) closeOrCAUp())  #strCSBPreNeg(5)
-      | ( ( LOOKAHEAD(3) (num_shift() | reg_shift()) | (register() | (number())) ) closeOrCAUp() ) #strCSBPrePos(5) 
-      )
-   | ( 
-        LOOKAHEAD(2)  
-        "]" ","
-        (
-         ( "-" ( LOOKAHEAD(2) (num_shift() | reg_shift()) | (register()) ) ) #strCSBPostNeg(4)
-       | ( LOOKAHEAD(3)   (num_shift() | reg_shift()) | (register()) | (number()) ) #strCSBPostPos(4)
-        )
-        | closeOrCAUp()#strCSBSimple(4) 
-     )
-    )
-  )
-  )
-  
+  ) 
  )
-)
 )
 }
 
