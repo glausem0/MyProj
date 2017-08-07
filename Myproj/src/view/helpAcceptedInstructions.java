@@ -53,9 +53,10 @@ public class helpAcceptedInstructions {
 		frame.getContentPane().add(scrollBar);
 		
 		textArea.setText("Accepted instructions\n \n"
-						+"Arithmetique: \n"
+						+"Movement: \n"
 						+"MOV<cond>{S} \n"
-						+"MON<cond>{S} \n"
+						+"MVN<cond>{S} \n \n"
+						+"Arithmetique: \n"
 						+"ADD<cond>{S} \n"
 						+"ADC<cond>{S} \n"
 						+"SUB<cond>{S} \n"
@@ -83,7 +84,7 @@ public class helpAcceptedInstructions {
 						+"\n"
 						+"Load and store: \n"
 						+"LDR<cond>{S}{B|H} \n"
-						+"STR<cond>{S}{B|H} \n"
+						+"STR<cond>{S}{B|H} \n \n"
 						+"Load multiple words and store multiple words: \n"
 						+"LDM<cond><amode> \n"
 						+"STM<cond><amode> \n"
