@@ -6,45 +6,7 @@
  /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
-PARSER_BEGIN(MyTest)package compAndInt;
-
-import java.io.*;
-import java.util.HashMap;
-
-import instructions.*;
-import memory.Memory;
-import registers.*;
-
-public class MyTest{  
-  /*  public static void main(String args []) throws Exception  {
-	Register regData = new Register();
-	HashMap<Object, Object> reg = regData.init();
-
-	Cpsr cpsr = new Cpsr();
-	HashMap<Object, Object> cpsrReg = cpsr.init();
-
-	Memory memory = new Memory();
-	LinkedHashMap<Object, Object> memor = memory.init();
-
-	Condition condition = new Condition(reg, cpsrReg);
-	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
-	AccessMemory AMem = new AccessMemory(memor);
-	Instruction inst = new Instruction(reg, AMem);
-	
-    MyTest parser = new MyTest(new FileReader("c:/Users/moi/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));
-    //MyTest parser = new MyTest(new FileReader("c:/Users/Mélanie/Documents/GitHub/MyProj/Myproj/src/compAndInt/test.txt"));	SimpleNode root = parser.prog();
-
-    System.out.println("Abstract Syntax Tree:");
-    root.dump(" ");
-
-    System.out.println("Prog:");
-    Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
-    root.jjtAccept(vi,null);
-
-    vi.print();
-
-   }
-   */}PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+PARSER_BEGIN(MyTest)PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" >
 | < H: "h" >
