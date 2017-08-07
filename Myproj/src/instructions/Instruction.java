@@ -14,7 +14,10 @@ public class Instruction {
 		this.mem = mem;
 	}
 
-	//to signed int:
+	/**
+	 * @param obj: register, integer, hexadecimal in String format
+	 * @return the signed integer of the corresponding parameter.
+	 */
 	private int toInt(String obj){
 		int value = 0;
 		if (obj.startsWith("r")){
@@ -27,16 +30,26 @@ public class Instruction {
 		return value;
 	}
 
-	//to unsigned int:
-	private long toUint(String obj){
-		int tmpval = toInt(obj);
+	/**
+	 * convert a signed integer into an unsigned integer.
+	 * @param sInt in int
+	 * @return long uint
+	 */
+	private long toUint(int sInt){
 
-		Long val = (long) tmpval;
+		Long uInt = Long.parseLong(Integer.toHexString(sInt), 16);
 
-		return val & LONG_MASK;
+		return uInt;
 	}
 
-
+	/**
+	 * do a shift corresponding to shifType.
+	 * 
+	 * @param shiftType
+	 * @param val1
+	 * @param val2
+	 * @return
+	 */
 	public int shiftInstr(String shiftType, String val1, String val2){	
 		int regOrVal = toInt(val1);
 		int value = toInt(val2);
@@ -102,20 +115,34 @@ public class Instruction {
 		}
 
 		return retVal;
-
 	}
 
-
+	/**
+	 * set value of corresponding register.
+	 * @param reg
+	 * @param val
+	 */
 	public void movInstr(Object reg, Object val){
 		int value = toInt(val.toString());
 		regData.put(reg, value);
 	}
 
+	/**
+	 * set not value of corresponding register
+	 * @param reg
+	 * @param val
+	 */
 	public void mvnInstr(Object reg, String val){
 		int value = toInt(val);
 		regData.put(reg, ~value);
 	}
 
+	/**
+	 * compare two values base on operation "-"
+	 * @param reg
+	 * @param arg1
+	 * @return
+	 */
 	public int cmpInstr(Object reg, String arg1){
 		int regVal = toInt(reg.toString());
 		int value = toInt(arg1);
@@ -125,6 +152,12 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * compare two values base on operation "+"
+	 * @param reg
+	 * @param arg1
+	 * @return
+	 */
 	public int cmnInstr(Object reg, String arg1){
 		int regVal = toInt(reg.toString());
 		int value = toInt(arg1);
@@ -134,6 +167,12 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * compare two values base on operation "^" 
+	 * @param reg
+	 * @param arg1
+	 * @return
+	 */
 	public int teqInstr(Object reg, String arg1){
 		int regVal = toInt(reg.toString());
 		int value = toInt(arg1);
@@ -143,6 +182,12 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * compare two values base on operation "&"
+	 * @param reg
+	 * @param arg1
+	 * @return
+	 */
 	public int tstInstr(Object reg, String arg1){
 		int regVal = toInt(reg.toString());
 		int value = toInt(arg1);
@@ -152,6 +197,13 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * add operation
+	 * @param reg
+	 * @param arg1
+	 * @param arg2
+	 * @return
+	 */
 	public int addInstr(Object reg, String arg1, String arg2) {
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
@@ -163,6 +215,13 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * sub operation
+	 * @param reg
+	 * @param arg1
+	 * @param arg2
+	 * @return
+	 */
 	public int subInstr(Object reg, String arg1, String arg2) {
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
@@ -173,31 +232,56 @@ public class Instruction {
 
 		return result;
 	}
-	
+
+	/**
+	 * multiplication and addition
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @param reg4
+	 * @return
+	 */
 	public int mlaInstr(Object reg1, String reg2, String reg3, String reg4){
 		int val1 = toInt(reg2);
 		int val2 = toInt(reg3);
 		int val3 = toInt(reg4);
-		
+
 		int result = val3 + (val1 * val2);
-		
+
 		regData.put(reg1, result);
-		
+
 		return result;
 	}
-	
+
+	/**
+	 * multiplication
+	 * 
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @return
+	 */
 	public int mulInstr(Object reg1, String reg2, String reg3){
 		int val1 = toInt(reg2);
 		int val2 = toInt(reg3);
-		
+
 		int result = val1 * val2;
-		
+
 		regData.put(reg1, result);
-		
+
 		return result;
 	}
-	
-	// equals to mla instruction, but result is in 64bit, higher 32 bit in reg1, lower in reg2
+
+	/**
+	 * equals to mla (addition and multiplication) instruction, 
+	 * but result is in 64bit, higher 32 bit in reg1, lower 32 bits in reg2
+	 * 
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @param reg4
+	 * @return
+	 */
 	public long smlalInstr (Object reg1, Object reg2, String reg3, String reg4){
 		int reg1Int = toInt(reg1.toString());
 		int reg2Int = toInt(reg2.toString());
@@ -207,69 +291,140 @@ public class Instruction {
 		reg2Hex = reg2Hex.replace("0x", "");
 		String valCompStr = reg1Hex+reg2Hex;
 		long valHiLo = Long.parseLong(valCompStr, 16); 
-		
+
 		int val1 = toInt(reg3);
 		int val2 = toInt(reg4);
-		
+
 		long result = valHiLo + (val1 * val2);
-		
+
 		String resultToHex = Long.toHexString(result);
-		
-		if(resultToHex.length() < 17){
+
+		if(resultToHex.length() <= 8){
 			regData.put(reg1, 0);
 			regData.put(reg2, result);
 		}
 		else{
-			String hi = resultToHex.substring(0, 15);
-			String lo = resultToHex.substring(0, resultToHex.length());
-			
-			regData.put(reg1, Long.parseLong(hi));
-			regData.put(reg2, Long.parseLong(lo));
+			String hi = resultToHex.substring(0, 7);
+			String lo = resultToHex.substring(8, resultToHex.length()-1);
+
+			regData.put(reg1, (int) Long.parseLong(hi));
+			regData.put(reg2, (int) Long.parseLong(lo));
 		}
-		
+
 		return result;
 	}
 
-	// equals to mul instruction, but result is in 64bit, higher 32 bit in reg1, lower in reg2
-		public long smullInstr (Object reg1, Object reg2, String reg3, String reg4){
-			int val1 = toInt(reg3);
-			int val2 = toInt(reg4);
-			
-			long result = (val1 * val2);
-			
-			String resultToHex = Long.toHexString(result);
-			
-			if(resultToHex.length() < 17){
-				regData.put(reg1, 0);
-				regData.put(reg2, result);
-			}
-			else{
-				String hi = resultToHex.substring(0, 15);
-				String lo = resultToHex.substring(0, resultToHex.length());
-				
-				regData.put(reg1, Long.parseLong(hi));
-				regData.put(reg2, Long.parseLong(lo));
-			}
-			
-			return result;
+	/**
+	 * equals to mul instruction, 
+	 * but result is in 64bit, higher 32 bit in reg1, lower in reg2
+	 * 
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @param reg4
+	 * @return
+	 */
+	public long smullInstr (Object reg1, Object reg2, String reg3, String reg4){
+		int val1 = toInt(reg3);
+		int val2 = toInt(reg4);
+
+		long result = (val1 * val2);
+
+		String resultToHex = Long.toHexString(result);
+
+		if(resultToHex.length() <= 8){
+			regData.put(reg1, 0);
+			regData.put(reg2, result);
 		}
-		
-		public long umlalInstr (Object reg1, Object reg2, String reg3, String reg4){
-			Long tmpResult = smlalInstr(reg1, reg2, reg3, reg4);
-			
-			Long result = tmpResult & LONG_MASK;
-			
-			return result;
+		else{
+			String hi = resultToHex.substring(0, 7);
+			String lo = resultToHex.substring(8, resultToHex.length()-1);
+
+			regData.put(reg1, (int) Long.parseLong(hi));
+			regData.put(reg2, (int) Long.parseLong(lo));
 		}
-	
-		public long umullInstr (Object reg1, Object reg2, String reg3, String reg4){
-			Long tmpResult = smullInstr (reg1, reg2, reg3, reg4);
-			
-			Long result = tmpResult & LONG_MASK;
-			
-			return result;
+
+		return result;
+	}
+
+	/**
+	 * same as smlal but with unsigned integer.
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @param reg4
+	 * @return
+	 */
+	public long umlalInstr (Object reg1, Object reg2, String reg3, String reg4){
+		int reg1Int = toInt(reg1.toString());
+		int reg2Int = toInt(reg2.toString());
+		String reg1Hex = mem.toHex32(reg1Int);
+		String reg2Hex = mem.toHex32(reg2Int);
+		reg1Hex = reg1Hex.replace("0x", "");
+		reg2Hex = reg2Hex.replace("0x", "");
+		String valCompStr = reg1Hex+reg2Hex;
+		long valHiLo = Long.parseLong(valCompStr, 16); 
+
+		int val1 = toInt(reg3);
+		int val2 = toInt(reg4);
+
+		long result = valHiLo + (val1 * val2);
+
+		String resultToHex = Long.toHexString(result);
+
+		if(resultToHex.length() <= 8){
+			regData.put(reg1, 0);
+			regData.put(reg2, result);
 		}
-		
+		else{
+			String hi = resultToHex.substring(0, 7);
+			String lo = resultToHex.substring(8, resultToHex.length()-1);
+
+			regData.put(reg1, Long.parseLong(hi));
+			regData.put(reg2, Long.parseLong(lo));
+		}
+
+		return result;
+	}
+
+	/**
+	 * same as smull but with unsignes integer.
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @param reg4
+	 * @return
+	 */
+	public long umullInstr (Object reg1, Object reg2, String reg3, String reg4){
+		int val1 = toInt(reg3);
+		int val2 = toInt(reg4);
+
+		long result = (val1 * val2);
+
+		String resultToHex = Long.toHexString(result);
+
+		if(resultToHex.length() <= 8){
+			regData.put(reg1, 0);
+			regData.put(reg2, result);
+		}
+		else{
+			String hi = resultToHex.substring(0, 7);
+			String lo = resultToHex.substring(8, resultToHex.length()-1);
+
+			regData.put(reg1, Long.parseLong(hi));
+			regData.put(reg2, Long.parseLong(lo));
+		}
+
+		return result;
+	}
+
+	/**
+	 * and instruction 
+	 * @param reg
+	 * @param arg1
+	 * @param arg2
+	 * @return
+	 */
 	public int andInstr(Object reg, String arg1, String arg2){
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
@@ -281,6 +436,13 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * and not instruction
+	 * @param reg
+	 * @param arg1
+	 * @param arg2
+	 * @return
+	 */
 	public int bicInstr(Object reg, String arg1, String arg2){
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
@@ -292,6 +454,13 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * Exclusive or instruction 
+	 * @param reg
+	 * @param arg1
+	 * @param arg2
+	 * @return
+	 */
 	public int eorInstr(Object reg, String arg1, String arg2){
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
@@ -303,6 +472,13 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * or instruction 
+	 * @param reg
+	 * @param arg1
+	 * @param arg2
+	 * @return
+	 */
 	public int orrInstr(Object reg, String arg1, String arg2){
 		int val1 = toInt(arg1);
 		int val2 = toInt(arg2);
@@ -314,6 +490,15 @@ public class Instruction {
 		return result;
 	}
 
+	/**
+	 * load instruction word (32bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void ldrIntr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
 		switch(PrePost){
@@ -429,6 +614,15 @@ public class Instruction {
 		}	
 	}
 
+	/**
+	 * load instruction unsigned byte (8 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void ldrBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
 		switch(PrePost){
@@ -440,7 +634,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add)); 
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -448,7 +642,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -457,14 +651,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 					}
@@ -475,7 +669,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -483,7 +677,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -492,14 +686,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						long valMem = mem.getMemoryElement8(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement8(add));
 
 						regData.put(regL, valMem);
 					}
@@ -520,7 +714,7 @@ public class Instruction {
 			switch(PosNeg){
 			case "n":
 				add = regVInt;
-				valMem = mem.getMemoryElement8(add) & LONG_MASK;
+				valMem = toUint(mem.getMemoryElement8(add));
 
 				regData.put(regL, valMem);
 
@@ -530,7 +724,7 @@ public class Instruction {
 
 			case "p":
 				add = regVInt;
-				valMem = mem.getMemoryElement8(add) & LONG_MASK;
+				valMem = toUint(mem.getMemoryElement8(add));
 
 				regData.put(regL, valMem);
 
@@ -544,6 +738,15 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * load instruction signes byte (8 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void ldrSBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 		switch(PrePost){
 		case "pre":
@@ -658,6 +861,15 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * load instruction unsigned half-word (16 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void ldrHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
 		switch(PrePost){
@@ -669,7 +881,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -677,7 +889,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -686,14 +898,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt - valInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 					}
@@ -704,7 +916,7 @@ public class Instruction {
 				if(close.equals("CU")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);
@@ -712,7 +924,7 @@ public class Instruction {
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 						regData.put(regV, add);	
@@ -721,14 +933,14 @@ public class Instruction {
 				else if(close.equals("C")){
 					if (val.equals("null")){
 						int add = regVInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 					}
 					else{
 						int valInt = toInt(val);
 						int add = regVInt + valInt;
-						long valMem = mem.getMemoryElement16(add) & LONG_MASK;
+						long valMem = toUint(mem.getMemoryElement16(add));
 
 						regData.put(regL, valMem);
 					}
@@ -749,7 +961,7 @@ public class Instruction {
 			switch(PosNeg){
 			case "n":
 				add = regVInt;
-				valMem = mem.getMemoryElement16(add) & LONG_MASK;
+				valMem = toUint(mem.getMemoryElement16(add));
 
 				regData.put(regL, valMem);
 
@@ -759,7 +971,7 @@ public class Instruction {
 
 			case "p":
 				add = regVInt;
-				valMem = mem.getMemoryElement16(add) & LONG_MASK;
+				valMem = toUint(mem.getMemoryElement16(add));
 
 				regData.put(regL, valMem);
 
@@ -773,6 +985,15 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * load instruction signed half-word (16 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void ldrSHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
 		switch(PrePost){
 		case "pre":
@@ -888,6 +1109,15 @@ public class Instruction {
 
 	}
 
+	/**
+	 * store instruction word (32 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void strIntr(String regL, String regV, String val, String close, String PrePost, String PosNeg ){
 
 		switch(PrePost){
@@ -1014,9 +1244,17 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * store instruction unsigned byte (8bits)
+	 * 
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void strBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
-
-		val = val.replace("-", "");
 
 		switch(PrePost){
 		case "pre":
@@ -1142,6 +1380,15 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * store instruction signed byte (8 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void strSBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
 		switch(PrePost){
 		case "pre":
@@ -1267,9 +1514,16 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * store instruction unsigned half-word (16 bits)
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void strHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
-
-		val = val.replace("-", "");
 
 		switch(PrePost){
 		case "pre":
@@ -1395,6 +1649,16 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * store instruction signed half-word (16 bits)
+	 * 
+	 * @param regL
+	 * @param regV
+	 * @param val
+	 * @param close
+	 * @param PrePost
+	 * @param PosNeg
+	 */
 	public void strSHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
 		switch(PrePost){
 		case "pre":
@@ -1520,6 +1784,15 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * load multiple 32 bits values.
+	 * 
+	 * @param regL
+	 * @param regStart
+	 * @param regEnd
+	 * @param update
+	 * @param amode
+	 */
 	public void ldmInst(String regL, String regStart, String regEnd, boolean update, String amode){
 		int[] elements;
 		int length;
@@ -1620,7 +1893,14 @@ public class Instruction {
 		break;
 		}
 	}
-	
+
+	/**
+	 * load multiple 32 bits values.
+	 * @param regL
+	 * @param regs
+	 * @param update
+	 * @param amode
+	 */
 	public void ldmInst(String regL, String[] regs, boolean update, String amode){
 		int[] elements;
 		int length= regs.length;
@@ -1635,7 +1915,7 @@ public class Instruction {
 
 			for(int i=0; i<length; i++){
 				tmpReg = regs[i];
-				
+
 				regData.put(tmpReg, elements[i]);
 			}
 			if(update){
@@ -1651,7 +1931,7 @@ public class Instruction {
 
 			for(int i=0; i<length; i++){
 				tmpReg = regs[i];
-				
+
 				regData.put(tmpReg, elements[i]);
 			}
 			if(update){
@@ -1695,6 +1975,14 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * store multiple 32 bits values
+	 * @param regS
+	 * @param regStart
+	 * @param regEnd
+	 * @param update
+	 * @param amode
+	 */
 	public void stmInst(String regS, String regStart, String regEnd, boolean update, String amode){
 		int length=0;
 		int address = (int) regData.get(regS);
@@ -1798,7 +2086,14 @@ public class Instruction {
 		break;
 		}
 	}
-	
+
+	/**
+	 * store multiple 32 bits values 
+	 * @param regS
+	 * @param regs
+	 * @param update
+	 * @param amode
+	 */
 	public void stmInst(String regS, String[] regs, boolean update, String amode){
 		int length = regs.length;
 		int address = (int) regData.get(regS);
@@ -1879,6 +2174,13 @@ public class Instruction {
 		}
 	}
 
+	/**
+	 * swap instruction
+	 * @param reg1
+	 * @param reg2
+	 * @param reg3
+	 * @param b
+	 */
 	public void swapInstr(Object reg1, String reg2, String reg3, boolean b){
 		int address = (int) regData.get(reg3);
 		int tmpValToStore = (int) regData.get(reg2);
@@ -1899,6 +2201,6 @@ public class Instruction {
 			regData.put(reg1, tmpValToLoad);
 		}
 	}
-	
-	
+
+
 }

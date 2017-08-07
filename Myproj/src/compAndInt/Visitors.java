@@ -48,6 +48,11 @@ public class Visitors implements MyTestVisitor{
 		this.inst = inst;
 	}
 
+	/**
+	 * map register sp to r13, lr, to r14, pc to r15
+	 * @param register
+	 * @return
+	 */
 	private String mapRegisters(Object register){
 		String returnStr;
 
@@ -71,7 +76,9 @@ public class Visitors implements MyTestVisitor{
 		return returnStr;
 	}
 
-	////Program and simple node:////	
+////Program and simple node:////	
+
+	
 	@Override
 	public Object visit(SimpleNode node, Object data) {
 		throw new RuntimeException("Visit SimpleNode");
@@ -170,7 +177,7 @@ public class Visitors implements MyTestVisitor{
 		return "Program";
 	}
 
-	////Register, number, hexa, shift, cond and Scond:////
+////Register, number, hexa, shift, cond and Scond:////
 	@Override
 	public Object visit(ASTregister node, Object data) {
 		String valStr = (String) node.data.get("reg");
@@ -220,29 +227,6 @@ public class Visitors implements MyTestVisitor{
 		return cond;
 	}
 
-	/*
-	@Override
-	public Object visit(ASTscnd node, Object data) {
-		String sCond = node.value.toString();
-
-		return sCond;
-	}
-
-	@Override
-	public Object visit(ASTbCond node, Object data) {
-		String bCond = node.value.toString();
-
-		return bCond;
-	}
-
-	@Override
-	public Object visit(ASThCond node, Object data) {
-		String hCond = node.value.toString();
-
-		return hCond;
-	}
-	 */
-
 	@Override
 	public Object visit(ASTlsl node, Object data) {
 		String lsl = node.value.toString();
@@ -278,18 +262,7 @@ public class Visitors implements MyTestVisitor{
 		return fle;		
 	}
 
-
 	////Instructions:////
-
-	//print la table des registres et cpsr
-	public void print(){
-		System.out.println("Register:\n");
-		regData.print();
-		System.out.println("CPSR\n");
-		cpsr.print();
-		System.out.println("Memory\n");
-		memory.print();
-	}
 
 	///shift LSL/LSR/ASR/ROR ///
 	@Override
@@ -3314,90 +3287,5 @@ public class Visitors implements MyTestVisitor{
 		
 		return ret;
 	}
-
-
-	///Branch///
-/*
-	@Override
-	public Object visit(ASTBLBlock node, Object data) {
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTBCLBlock node, Object data) {
-		int children = node.jjtGetNumChildren();
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		//Object branchLabel = node.jjtGetChild(1).jjtAccept(this, data);
-		Node label = node.jjtGetChild(children-1);
-		
-		if(condition.condAction(cond.toString())){
-			label.jjtAccept(this, data);
-		}
-		else{
-			for(int i=1; i<children; i++){
-				node.jjtGetChild(i).jjtAccept(this, data);
-			}
-		}
-		
-		return null;	
-	}
-
-
-
-	@Override
-	public Object visit(ASTlabel_b node, Object data) {
-		String label_b = node.value.toString();
-		return label_b;
-	}
-
-
-	@Override
-	public Object visit(ASTb_label node, Object data) {
-		String b_label = node.value.toString();
-		return b_label;
-	}
-
-	
-	
-	
-	@Override
-	public Object visit(ASTlabBCBolck node, Object data) {
-		int children = node.jjtGetNumChildren();
-		//Object label = node.jjtGetChild(0).jjtAccept(this, data);
-		Object cond = node.jjtGetChild(children-2).jjtAccept(this, data);
-		//Node branchLabel = node.jjtGetChild(children-1);
-		
-		boolean condRespect = condition.condAction(cond.toString());
-		
-		for(int i=0; i<children; i++){
-			node.jjtGetChild(i).jjtAccept(this, data);
-		}
-		
-		int comp =0;
-		while(condRespect){
-			for(int i=0; i<children; i++){
-				if(i == children-2){
-					condRespect = condition.condAction(cond.toString());
-				}
-				node.jjtGetChild(i).jjtAccept(this, data);
-			}
-			System.out.println(comp);
-			comp+=1;
-		}
-		
-		return null;
-	}
-
-	//better avoide doing this instruction because while loop
-	@Override
-	public Object visit(ASTlabBBlock node, Object data) {
-		while(true){
-			Object labelStart = node.jjtGetChild(0).jjtAccept(this, data);
-			Object block = node.jjtGetChild(1).jjtAccept(this, data);
-			Object labelEnd = node.jjtGetChild(2).jjtAccept(this, data);
-		}
-	}
-		*/ 
-
 
 }

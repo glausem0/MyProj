@@ -40,15 +40,16 @@ public class helpAcceptedInstructions {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1297, 713);
+		frame.setBounds(100, 100, 788, 723);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(21, 21, 1229, 600);
+		textArea.setBounds(10, 21, 740, 619);
 		frame.getContentPane().add(textArea);
 		
 		JScrollPane scrollBar = new JScrollPane(textArea);
-		scrollBar.setBounds(10, 11, 1240, 610);
+		scrollBar.setBounds(10, 21, 740, 619);
 		frame.getContentPane().add(scrollBar);
 		
 		textArea.setText("Accepted instructions\n \n"

@@ -542,12 +542,28 @@ public class view {
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmAcceptedInstructions = new JMenuItem(new AbstractAction("Accepted instructions"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public void actionPerformed(ActionEvent ae){
-				helpAcceptedInstructions hd = new helpAcceptedInstructions();
-				hd.helpFrame();
+				helpAcceptedInstructions.helpFrame();
 			}
 		});
 		mnHelp.add(mntmAcceptedInstructions);
+		
+		JMenuItem mntmHowToUse = new JMenuItem(new AbstractAction("How to use"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				helpUse.helpFrame();
+			}
+		});
+		mnHelp.add(mntmHowToUse);
 		frame.getContentPane().setLayout(null);
 	
 	}
@@ -642,6 +658,5 @@ public class view {
 		textField_V.setText("0");
 		textField_I.setText("0");
 		textField_F.setText("0");   
-
 	}
 }

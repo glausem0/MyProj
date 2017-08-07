@@ -10,6 +10,11 @@ public class AccessMemory {
 		this.memory = memory;
 	}
 
+	/**
+	 * convert int to hexadecimal with exactly 8 bytes 
+	 * @param el
+	 * @return
+	 */
 	public String toHex32(int el){
 		String hex = Integer.toHexString(el);
 
@@ -23,6 +28,11 @@ public class AccessMemory {
 		return hex;
 	}
 
+	/**
+	 * convert String to signed int
+	 * @param el
+	 * @return
+	 */
 	private int toInt32(String el){
 		el = el.replace("0x", "");
 
@@ -33,6 +43,11 @@ public class AccessMemory {
 		return t;
 	}
 
+	/**
+	 * convert int to half-word. bit 16 to 31 set at 0
+	 * @param el
+	 * @return
+	 */
 	private String toHalfWord(int el){
 		el = el & ~(1 << 31);
 		el = el & ~(1 << 30);
@@ -56,6 +71,11 @@ public class AccessMemory {
 		return hw;
 	}
 
+	/**
+	 * convert int to byte. bit 8 to 31 set to 0
+	 * @param el
+	 * @return
+	 */
 	private String toByte(int el){
 		el = el & ~(1 << 31);
 		el = el & ~(1 << 30);
@@ -87,6 +107,12 @@ public class AccessMemory {
 		return b;
 	}
 
+	/**
+	 * get the value of the corresponding address in memory.
+	 * 
+	 * @param address
+	 * @return 32 bits value.
+	 */
 	public int getMemoryElement32(int address){
 		Object element = null;
 		int elInt;
@@ -142,6 +168,11 @@ public class AccessMemory {
 		return elInt;
 	}
 
+	/**
+	 * set value of the corresponding address in 32 bits
+	 * @param address
+	 * @param element
+	 */
 	public void setMemoryElement32(int address, int element){
 		//if address exist, change the value of the address.
 		//if address doesn't exist, create it with the value of element.
@@ -175,6 +206,11 @@ public class AccessMemory {
 		}
 	}
 
+	/**
+	 * get the value of the corresponding address in memory 
+	 * @param address
+	 * @return 16 bits value
+	 */
 	public int getMemoryElement16(int address){
 		Object element = null;
 		int elInt;
@@ -230,6 +266,11 @@ public class AccessMemory {
 		return elInt;
 	}
 
+	/**
+	 * set value of the corresponding address in 16 bits 
+	 * @param address
+	 * @param element
+	 */
 	public void setMemoryElement16(int address, int element){
 		//if address exist, change the value of the address.
 		//if address doesn't exist, create it with the value of element.
@@ -263,6 +304,11 @@ public class AccessMemory {
 		}
 	}
 
+	/**
+	 * get the value of the corresponding address in memory 8 bits 
+	 * @param address
+	 * @return
+	 */
 	public int getMemoryElement8(int address){
 		Object element = null;
 		int elInt;
@@ -318,6 +364,11 @@ public class AccessMemory {
 		return elInt;
 	}
 
+	/**
+	 * set value of the corresponding address in 8 bits
+	 * @param address
+	 * @param element
+	 */
 	public void setMemoryElement8(int address, int element){
 		//if address exist, change the value of the address.
 		//if address doesn't exist, create it with the value of element.
@@ -351,6 +402,13 @@ public class AccessMemory {
 		}
 	}
 
+	/**
+	 * get multiple value of the corresponding addresses
+	 * @param n
+	 * @param address
+	 * @param incrDecr
+	 * @return
+	 */
 	public int[] getMultipleMemoryElement(int n, int address, String incrDecr){		
 		int [] elements = new int[n];
 
@@ -375,6 +433,13 @@ public class AccessMemory {
 		return elements;	
 	}
 
+	/**
+	 * set multiple values of the corresponding addresses
+	 * @param n
+	 * @param address
+	 * @param elements
+	 * @param incrDecr
+	 */
 	public void setMultipleMemoryElement(int n, int address, int[] elements, String incrDecr){
 
 		switch(incrDecr){
