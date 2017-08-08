@@ -1,4 +1,4 @@
-package view;
+package controlView;
 
 import java.io.*;
 import java.awt.*;

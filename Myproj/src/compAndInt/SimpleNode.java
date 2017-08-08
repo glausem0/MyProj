@@ -3,7 +3,7 @@
 package compAndInt;
 
 public
-class SimpleNode extends dataNode implements Node {
+class SimpleNode extends DataNode implements Node {
 
   protected Node parent;
   protected Node[] children;

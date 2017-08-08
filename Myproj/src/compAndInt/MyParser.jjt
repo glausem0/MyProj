@@ -6,7 +6,7 @@
  /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
-PARSER_BEGIN(MyTest)package compAndInt;
+PARSER_BEGIN(MyParser)package compAndInt;
 
 import java.io.*;
 import java.util.HashMap;
@@ -15,8 +15,8 @@ import instructions.*;
 import memory.Memory;
 import registers.*;
 
-public class MyTest {
-}PARSER_END(MyTest)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+public class MyParser {
+}PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" >
 | < H: "h" >

@@ -2,7 +2,7 @@ package compAndInt;
 
 import java.util.HashMap;
 
-public class dataNode {
+public class DataNode {
 
 	HashMap data = new HashMap();
 }

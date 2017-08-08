@@ -9,13 +9,15 @@ import javax.swing.filechooser.FileSystemView;
 
 import java.io.*;
 import compAndInt.*;
+import controlView.MessageConsole;
+import controlView.TextLineNumber;
 import instructions.*;
 import registers.*;
 import java.awt.*;
 import java.util.*;
 import memory.Memory;
 
-public class view {
+public class View {
 	
 	Register regData = new Register();
 	private HashMap<Object, Object> reg = regData.init();
@@ -35,7 +37,7 @@ public class view {
 
 	File selectedFile;
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField textFieldR0;
 	private JTextField textFieldR1;
 	private JTextField textFieldR2;
@@ -60,25 +62,9 @@ public class view {
 	private JTextField textField_F;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					view window = new view();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public view() {
+	public View() {
 		initialize();
 	}
 
@@ -551,7 +537,7 @@ public class view {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent ae){
-				helpAcceptedInstructions.helpFrame();
+				HelpAcceptedInstructions.helpFrame();
 			}
 		});
 		mnHelp.add(mntmAcceptedInstructions);
@@ -563,7 +549,7 @@ public class view {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent ae){
-				helpUse.helpFrame();
+				HelpUse.helpFrame();
 			}
 		});
 		mnHelp.add(mntmHowToUse);

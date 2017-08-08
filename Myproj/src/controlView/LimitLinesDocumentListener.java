@@ -1,4 +1,4 @@
-package view;
+package controlView;
 
 import javax.swing.*;
 import javax.swing.event.*;

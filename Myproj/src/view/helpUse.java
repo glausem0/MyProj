@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class helpUse {
+public class HelpUse {
 
 	private JFrame frame;
 
@@ -17,7 +17,7 @@ public class helpUse {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					helpUse window = new helpUse();
+					HelpUse window = new HelpUse();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -29,7 +29,7 @@ public class helpUse {
 	/**
 	 * Create the application.
 	 */
-	public helpUse() {
+	public HelpUse() {
 		initialize();
 	}
 

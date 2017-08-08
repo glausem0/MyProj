@@ -8,7 +8,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.JTabbedPane;
 
-public class helpAcceptedInstructions {
+public class HelpAcceptedInstructions {
 
 	private JFrame frame;
 
@@ -19,7 +19,7 @@ public class helpAcceptedInstructions {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					helpAcceptedInstructions window = new helpAcceptedInstructions();
+					HelpAcceptedInstructions window = new HelpAcceptedInstructions();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +31,7 @@ public class helpAcceptedInstructions {
 	/**
 	 * Create the application.
 	 */
-	public helpAcceptedInstructions() {
+	public HelpAcceptedInstructions() {
 		initialize();
 	}
 
