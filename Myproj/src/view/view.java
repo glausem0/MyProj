@@ -113,7 +113,7 @@ public class view {
 		frame.getContentPane().add(scrollBarOutPut);
 
 		JPanel viewElements = new JPanel();
-		viewElements.setBounds(602, 11, 592, 671);
+		viewElements.setBounds(602, 11, 592, 504);
 		frame.getContentPane().add(viewElements);
 		viewElements.setBackground(Color.WHITE);
 		viewElements.setLayout(null);
@@ -371,22 +371,22 @@ public class view {
 		JPanel memoryPanel = new JPanel();
 		memoryPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		memoryPanel.setBackground(new Color(248, 248, 255));
-		memoryPanel.setBounds(0, 303, 587, 239);
+		memoryPanel.setBounds(0, 303, 587, 201);
 		viewElements.add(memoryPanel);
 		memoryPanel.setLayout(null);
 
 		JTextPane txtpnMemory = new JTextPane();
-		txtpnMemory.setBackground(new Color(248, 248, 255));
 		txtpnMemory.setBounds(3, 3, 51, 20);
+		txtpnMemory.setBackground(new Color(248, 248, 255));
 		txtpnMemory.setText("Memory");
 		memoryPanel.add(txtpnMemory);
 
 		JTextPane textPane = new JTextPane();
-		textPane.setBounds(10, 27, 308, 218);
+		textPane.setBounds(1, 1, 552, 157);
 		memoryPanel.add(textPane);
 
 		JScrollPane scrollBar_1 = new JScrollPane(textPane);
-		scrollBar_1.setBounds(10, 27, 554, 159);
+		scrollBar_1.setBounds(13, 31, 564, 159);
 		memoryPanel.add(scrollBar_1);
 
 		//Menu bar:
