@@ -98,6 +98,9 @@ public class view {
 		JScrollPane scrollBar = new JScrollPane(textArea);
 		scrollBar.setBounds(10, 11, 582, 493);
 		frame.getContentPane().add(scrollBar);
+		
+		TextLineNumber tln = new TextLineNumber(textArea);
+		scrollBar.setRowHeaderView(tln);
 
 		JTextArea outputTextArea = new JTextArea();
 		outputTextArea.setBounds(10, 477, 478, 158);
