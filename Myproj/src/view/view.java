@@ -33,7 +33,7 @@ public class View {
 	AccessMemory AMem = new AccessMemory(memor);
 	Instruction inst = new Instruction(reg, AMem);
 
-	MyTest parser = null;
+	MyParser parser = null;
 
 	File selectedFile;
 
@@ -489,7 +489,7 @@ public class View {
 
 				try {
 					if(parser == null){
-						parser = new MyTest(new FileReader(selectedFile));
+						parser = new MyParser(new FileReader(selectedFile));
 					}
 					else{
 						parser.ReInit(new FileReader(selectedFile));
