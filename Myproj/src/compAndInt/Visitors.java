@@ -13,7 +13,7 @@ import memory.Memory;
 import registers.Cpsr;
 import registers.Register;
 
-public class Visitors implements MyTestVisitor{
+public class Visitors implements MyParserVisitor{
 
 	private Register regData;
 	private HashMap<Object, Object> reg; 

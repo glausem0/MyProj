@@ -9,13 +9,13 @@ class SimpleNode extends DataNode implements Node {
   protected Node[] children;
   protected int id;
   protected Object value;
-  protected MyTest parser;
+  protected MyParser parser;
 
   public SimpleNode(int i) {
     id = i;
   }
 
-  public SimpleNode(MyTest p, int i) {
+  public SimpleNode(MyParser p, int i) {
     this(i);
     parser = p;
   }
@@ -52,13 +52,13 @@ class SimpleNode extends DataNode implements Node {
   public Object jjtGetValue() { return value; }
 
   /** Accept the visitor. **/
-  public Object jjtAccept(MyTestVisitor visitor, Object data)
+  public Object jjtAccept(MyParserVisitor visitor, Object data)
 {
     return visitor.visit(this, data);
   }
 
   /** Accept the visitor. **/
-  public Object childrenAccept(MyTestVisitor visitor, Object data)
+  public Object childrenAccept(MyParserVisitor visitor, Object data)
 {
     if (children != null) {
       for (int i = 0; i < children.length; ++i) {
@@ -74,7 +74,7 @@ class SimpleNode extends DataNode implements Node {
      toString(String), otherwise overriding toString() is probably all
      you need to do. */
 
-  public String toString() { return MyTestTreeConstants.jjtNodeName[id]; }
+  public String toString() { return MyParserTreeConstants.jjtNodeName[id]; }
   public String toString(String prefix) { return prefix + toString(); }
 
   /* Override this method if you want to customize how the node dumps
@@ -93,4 +93,4 @@ class SimpleNode extends DataNode implements Node {
   }
 }
 
-/* JavaCC - OriginalChecksum=294aaf6d388f948ed0dacd14c3c7731f (do not edit this line) */
+/* JavaCC - OriginalChecksum=43c40d9dc717915d61c52fbd6e83ff19 (do not edit this line) */

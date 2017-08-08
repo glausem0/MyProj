@@ -2,7 +2,7 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{ multi = true;
  VISITOR = true;
- NODE_EXTENDS="dataNode";
+ NODE_EXTENDS="DataNode";
  /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
@@ -1022,26 +1022,6 @@ void branch() #void:
 )
 }
 
-/*
-void labelBranchBlock() #void:
-{}
-{
-  LOOKAHEAD(5)
-  (label_b() (instr())+ < B > cond() label_b()) #labBCBolck()
-| (label_b() (instr())+ < B > label_b()) #labBBlock()
-}
-*/
-
-/*
-void branchLabelBlock() #void:
-{}
-{ 
-  LOOKAHEAD(5)
-  (< B > b_label() (instr())+ b_label()) #BLBlock()
-| (< B > cond() b_label() (instr())+ b_label()) #BCLBlock()
-}
-*/
-
 void closeOrCAUp() #void:
 {}
 {
@@ -1078,25 +1058,10 @@ void num_shift() #void:
  (number() shift() num()) #shiftF(3)
 }
 
-
-/*Cond, scond, lsl, lsr, registres, number, hexa*/
-
-/*void bCond():
+void amode():
 {Token t;}
 {
-  t = < B > { jjtThis.value = t.image; }
-}
-
-void hCond():
-{Token t;}
-{
-  t = < H > { jjtThis.value = t.image; }
-}*/
-
-Token amode():
-{Token t;}
-{
-  t = < AMODE > { jjtThis.value = t.image; return t; }
+  t = < AMODE > { jjtThis.value = t.image;  }
 }
   
 void cond():
@@ -1104,14 +1069,6 @@ void cond():
 {
   t = < COND > { jjtThis.value = t.image; jjtThis.data.put("reg", t.image.toString()); }
 }
-
-/*
-void scnd():
-{Token t;}
-{
-  t = < SCND > { jjtThis.value = t.image; }
-}
-*/
 
 void lsl():
 {Token t;}
