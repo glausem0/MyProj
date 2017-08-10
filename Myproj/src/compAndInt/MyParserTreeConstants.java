@@ -211,6 +211,7 @@ public interface MyParserTreeConstants
   public int JJTHEXA = 205;
   public int JJTNUM = 206;
   public int JJTLABEL = 207;
+  public int JJTWAITD = 208;
 
 
   public String[] jjtNodeName = {
@@ -422,6 +423,7 @@ public interface MyParserTreeConstants
     "hexa",
     "num",
     "label",
+    "waitD",
   };
 }
-/* JavaCC - OriginalChecksum=eeb4d05f79488ea6c7dcf4dec0ba762f (do not edit this line) */
+/* JavaCC - OriginalChecksum=7d404347cac0de8e075f8a52f6dab74f (do not edit this line) */

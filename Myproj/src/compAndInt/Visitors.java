@@ -3,6 +3,7 @@ package compAndInt;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Scanner;
 import java.util.Set;
 
 import instructions.AccessMemory;
@@ -48,6 +49,17 @@ public class Visitors implements MyParserVisitor{
 		this.inst = inst;
 	}
 
+	boolean waitbool;
+	
+	public boolean getWaitbool(){
+		return waitbool;
+	}
+	
+	public void setWaitbool(boolean newbool){
+		waitbool = newbool;
+	}
+	
+	
 	/**
 	 * map register sp to r13, lr, to r14, pc to r15
 	 * @param register
@@ -84,14 +96,21 @@ public class Visitors implements MyParserVisitor{
 		throw new RuntimeException("Visit SimpleNode");
 	}
 
+	//Try puting 2 modes changing hashtable of datanode? or parameter in visitors
 	@Override
 	public Object visit(ASTprog node, Object data) {
 		int children = node.jjtGetNumChildren();
 		HashMap<String, Integer> branches = new HashMap<String, Integer>();
 		int pc = 0; //TODO set value of pc in programme 
-
+		
+		setWaitbool(true);
+		boolean waitB = getWaitbool();
+		
 		int i=0;
 		while(i<children){
+			
+			setWaitbool(true);
+			
 			switch(node.jjtGetChild(i).toString()){
 			case("label"):{
 				branches.put("label"+node.jjtGetChild(i).jjtAccept(this, data).toString(), i);
@@ -165,20 +184,42 @@ public class Visitors implements MyParserVisitor{
 				}
 				else i +=1;
 			}
-		
+
 			break;
-			
+
+			case("waitD"):{
+				//TODO change wait
+				System.out.println("Presse nextStep");
+				
+				waitB = getWaitbool();
+				
+				if(!waitB){
+					node.jjtGetChild(i).jjtAccept(this, data);
+					i+=1;
+				}
+				
+			}
+			break;
+
 			default:
 				node.jjtGetChild(i).jjtAccept(this, data);
 				i+=1;
 			}	
-			
+
 		}
 		
 		return "Program";
 	}
 
 ////Register, number, hexa, shift, cond and Scond:////
+	
+	//Wait for debug
+	@Override
+	public Object visit(ASTwaitD node, Object data) {
+		String waitUntil = node.value.toString();
+		return waitUntil;
+	}
+	
 	@Override
 	public Object visit(ASTregister node, Object data) {
 		String valStr = (String) node.data.get("reg");

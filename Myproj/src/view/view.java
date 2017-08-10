@@ -38,6 +38,7 @@ public class View {
 	Instruction inst = new Instruction(reg, AMem);
 
 	MyParser parser = null;
+	Visitors vi;
 
 	File selectedFile;
 
@@ -78,7 +79,7 @@ public class View {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
-		frame.setBounds(100, 100, 1215, 809);
+		frame.setBounds(100, 100, 1220, 872);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTextArea textArea = new JTextArea();
@@ -293,6 +294,19 @@ public class View {
 		});
 		btnHexadecimal.setBounds(224, 270, 139, 23);
 		registersPanel.add(btnHexadecimal);
+		
+		JButton btnNextStep = new JButton(new AbstractAction("Next step"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				vi.setWaitbool(false);
+			}
+		});
+		btnNextStep.setBounds(20, 703, 141, 35);
+		frame.getContentPane().add(btnNextStep);
 
 		JPanel cpsrPanel = new JPanel();
 		cpsrPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -516,7 +530,7 @@ public class View {
 				root.dump(" ");
 					 */
 					//System.out.println("Prog:");
-					Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
+					vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 					root.jjtAccept(vi,null);
 
 
@@ -646,7 +660,7 @@ public class View {
 		});
 		mnHelp.add(mntmHowToUse);
 		frame.getContentPane().setLayout(null);
-
+		
 	}
 
 	private void fillVal(){

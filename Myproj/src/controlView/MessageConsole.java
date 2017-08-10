@@ -43,7 +43,7 @@ public class MessageConsole
 		this.textComponent = textComponent;
 		this.document = textComponent.getDocument();
 		this.isAppend = isAppend;
-		textComponent.setEditable( false );
+		textComponent.setEditable( true ); //edit, init is false
 	}
 
 	/*
