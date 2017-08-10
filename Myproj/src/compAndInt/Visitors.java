@@ -88,6 +88,7 @@ public class Visitors implements MyParserVisitor{
 	public Object visit(ASTprog node, Object data) {
 		int children = node.jjtGetNumChildren();
 		HashMap<String, Integer> branches = new HashMap<String, Integer>();
+		int pc = 0; //TODO set value of pc in programme 
 
 		int i=0;
 		while(i<children){
@@ -297,7 +298,7 @@ public class Visitors implements MyParserVisitor{
 
 		inst.movInstr(reg, val);
 
-		return "decl";
+		return null;
 	}
 
 	@Override
@@ -309,7 +310,7 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			inst.movInstr(reg, val);
 		}
-		return "declC";
+		return null;
 	}
 
 	@Override
@@ -320,7 +321,7 @@ public class Visitors implements MyParserVisitor{
 		inst.movInstr(reg, val);
 		upCpsr.update( Integer.parseInt(val.toString()) );
 
-		return "declS";
+		return null;
 	}
 
 	@Override
@@ -334,7 +335,7 @@ public class Visitors implements MyParserVisitor{
 			upCpsr.update( Integer.parseInt(val.toString()) );
 		}
 
-		return "declCS";
+		return null;
 	}
 
 	///MVN///
@@ -344,7 +345,8 @@ public class Visitors implements MyParserVisitor{
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
 		inst.mvnInstr(reg, val.toString());
-		return "decln";
+		
+		return null;
 	}
 
 	@Override
@@ -355,7 +357,7 @@ public class Visitors implements MyParserVisitor{
 		inst.mvnInstr(reg, val.toString());
 		upCpsr.update( Integer.parseInt(val.toString()) );
 
-		return "declnS";
+		return null;
 	}
 
 	@Override
@@ -367,7 +369,7 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			inst.mvnInstr(reg, val.toString());
 		}
-		return "declnC";
+		return null;
 	}
 
 	@Override
@@ -381,7 +383,7 @@ public class Visitors implements MyParserVisitor{
 			upCpsr.update( Integer.parseInt(val.toString()) );
 		}
 
-		return "declnCS";
+		return null;
 	}
 
 	///ADD///
@@ -393,7 +395,7 @@ public class Visitors implements MyParserVisitor{
 
 		inst.addInstr(reg, arg1.toString(), arg2.toString());
 
-		return "add";
+		return null;
 	}
 
 	@Override
@@ -407,7 +409,7 @@ public class Visitors implements MyParserVisitor{
 			inst.addInstr(reg, arg1.toString(), arg2.toString());
 		}
 
-		return "addC";
+		return null;
 	}
 
 	@Override
@@ -419,7 +421,7 @@ public class Visitors implements MyParserVisitor{
 		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
 		upCpsr.update(result);
 
-		return "addS";
+		return null;
 	}
 
 	@Override
@@ -434,7 +436,7 @@ public class Visitors implements MyParserVisitor{
 			upCpsr.update(result);
 		}
 
-		return "addCS";
+		return null;
 	}
 
 	///ADC///
@@ -452,7 +454,7 @@ public class Visitors implements MyParserVisitor{
 		//Then add the C (carry):
 		inst.addInstr(reg, ret, C);
 
-		return "adc";
+		return null;
 	}
 
 	@Override
@@ -471,7 +473,7 @@ public class Visitors implements MyParserVisitor{
 
 		upCpsr.update(result);
 
-		return "adcS";
+		return null;
 	}
 
 	@Override
@@ -491,7 +493,7 @@ public class Visitors implements MyParserVisitor{
 			inst.addInstr(reg, ret, C);
 		}
 
-		return "adcC";
+		return null;
 	}
 
 	@Override
@@ -513,7 +515,7 @@ public class Visitors implements MyParserVisitor{
 			upCpsr.update(result);
 		}
 
-		return "adcCS";
+		return null;
 	}
 
 	///SUB///
@@ -525,7 +527,7 @@ public class Visitors implements MyParserVisitor{
 
 		inst.subInstr(reg, arg1.toString(), arg2.toString());
 
-		return "sub";
+		return null;
 	}
 
 	@Override
@@ -539,7 +541,7 @@ public class Visitors implements MyParserVisitor{
 			inst.subInstr(reg, arg1.toString(), arg2.toString());
 		}
 
-		return "subC";
+		return null;
 	}
 
 	@Override
@@ -551,7 +553,7 @@ public class Visitors implements MyParserVisitor{
 		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
 		upCpsr.update(result);
 
-		return "subS";
+		return null;
 	}
 
 	@Override
@@ -566,7 +568,7 @@ public class Visitors implements MyParserVisitor{
 			upCpsr.update(result);
 		}
 
-		return "subCS";
+		return null;
 	}
 
 	///SBC///

@@ -8,6 +8,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
+
 import compAndInt.*;
 import controlView.MessageConsole;
 import controlView.TextLineNumber;
@@ -18,7 +22,7 @@ import java.util.*;
 import memory.Memory;
 
 public class View {
-	
+
 	Register regData = new Register();
 	private HashMap<Object, Object> reg = regData.init();
 
@@ -84,19 +88,19 @@ public class View {
 		JScrollPane scrollBar = new JScrollPane(textArea);
 		scrollBar.setBounds(10, 11, 582, 493);
 		frame.getContentPane().add(scrollBar);
-		
+		/*
 		TextLineNumber tln = new TextLineNumber(textArea);
 		scrollBar.setRowHeaderView(tln);
-
+		 */
 		JTextArea outputTextArea = new JTextArea();
 		outputTextArea.setBounds(10, 477, 478, 158);
 		frame.getContentPane().add(outputTextArea);
-		
+
 		MessageConsole mc = new MessageConsole(outputTextArea);
 		mc.redirectOut();
 		mc.redirectErr(Color.RED, null);
 		mc.setMessageLines(100);
-		
+
 		JScrollPane scrollBarOutPut = new JScrollPane(outputTextArea);
 		scrollBarOutPut.setBounds(10, 517, 582, 165);
 		frame.getContentPane().add(scrollBarOutPut);
@@ -276,7 +280,7 @@ public class View {
 		});
 		btnInteger.setBounds(61, 270, 139, 23);
 		registersPanel.add(btnInteger);
-		
+
 		JButton btnHexadecimal = new JButton(new AbstractAction("Hexadecimal"){
 			/**
 			 * 
@@ -483,42 +487,42 @@ public class View {
 			public void actionPerformed(ActionEvent ae){
 
 				try{
-				//init fields for rerun:
-				initfieldsVal();
-				textPane.setText("");
+					//init fields for rerun:
+					initfieldsVal();
+					textPane.setText("");
 
-				try {
-					if(parser == null){
-						parser = new MyParser(new FileReader(selectedFile));
+					try {
+						if(parser == null){
+							parser = new MyParser(new FileReader(selectedFile));
+						}
+						else{
+							parser.ReInit(new FileReader(selectedFile));
+						}
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						System.err.println(e);
 					}
-					else{
-						parser.ReInit(new FileReader(selectedFile));
+					SimpleNode root = null;
+					try {
+						root = parser.prog();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						System.err.println(e);
 					}
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					System.err.println(e);
-				}
-				SimpleNode root = null;
-				try {
-					root = parser.prog();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-					System.err.println(e);
-				}
-				/*
+					/*
 				System.out.println("Abstract Syntax Tree:");
 				root.dump(" ");
-				*/
-				//System.out.println("Prog:");
-				Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
-				root.jjtAccept(vi,null);
+					 */
+					//System.out.println("Prog:");
+					Visitors vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
+					root.jjtAccept(vi,null);
 
 
-				//set fields memory:
-				fillVal();
-				textPane.setText(memory.printView());
+					//set fields memory:
+					fillVal();
+					textPane.setText(memory.printView());
 				}catch (RuntimeException e){
 					System.err.println(e);
 				}
@@ -527,9 +531,97 @@ public class View {
 		});
 		mnRun.add(mntmRun);
 
+		JMenuItem mntmDebug = new JMenuItem(new AbstractAction("Debug"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				//TODO action for debug:copy/modify/execute/when finish delete tmp file.
+
+				//copy current text file:
+				String tmp = selectedFile.toString();
+				tmp = tmp.replace(".txt", "tmpDebug.txt");
+
+				File tmpFile = new File(tmp);
+
+			
+				FileReader fr = null;
+				FileWriter fw = null;
+
+				try {
+					fr = new FileReader(selectedFile.toString());
+					fw = new FileWriter(tmpFile.toString());
+					int line = 0;
+					while((line = fr.read()) != -1){
+						fw.write(line);
+					}
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally{
+					try {
+						if( (fr != null) || (fw != null) ){	
+							fr.close();
+							fw.close();
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				
+				
+				//modify the copy file:
+				BufferedReader br = null;
+				BufferedWriter bw = null;
+
+				try {
+					br = new BufferedReader(new FileReader(selectedFile.toString()));
+					bw = new BufferedWriter(new FileWriter(tmpFile.toString()));
+					String line;
+					while ( (line = br.readLine()) != null ){
+						bw.write(line+" \n ");
+						bw.write(" WAIT \n ");
+					}
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} finally{
+					try {
+						if(br != null){
+							br.close();
+							bw.close();}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
+				
+				//TODO erase System.out
+				if(tmpFile.delete()){
+					System.out.println("deleted ok");
+				}
+				else{
+					System.out.println("not deleted");
+				}
+				
+			}	
+
+		});
+		mnRun.add(mntmDebug);
+
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
-		
+
 		JMenuItem mntmAcceptedInstructions = new JMenuItem(new AbstractAction("Accepted instructions"){
 			/**
 			 * 
@@ -541,7 +633,7 @@ public class View {
 			}
 		});
 		mnHelp.add(mntmAcceptedInstructions);
-		
+
 		JMenuItem mntmHowToUse = new JMenuItem(new AbstractAction("How to use"){
 			/**
 			 * 
@@ -554,7 +646,7 @@ public class View {
 		});
 		mnHelp.add(mntmHowToUse);
 		frame.getContentPane().setLayout(null);
-	
+
 	}
 
 	private void fillVal(){
@@ -588,7 +680,7 @@ public class View {
 		textFieldR14.setText(reg.get("r14").toString());
 		textFieldR15.setText(reg.get("r15").toString());
 	}
-	
+
 	public String toHex(String el){
 		String hex = Integer.toHexString(Integer.parseInt(el));
 
@@ -601,7 +693,7 @@ public class View {
 		hex = "0x"+hex;
 		return hex;
 	}
-	
+
 	private void hexFields(){
 		textFieldR0.setText(toHex(reg.get("r0").toString()));
 		textFieldR1.setText(toHex(reg.get("r1").toString()));
