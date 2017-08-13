@@ -49,17 +49,6 @@ public class Visitors implements MyParserVisitor{
 		this.inst = inst;
 	}
 
-	boolean waitbool;
-	
-	public boolean getWaitbool(){
-		return waitbool;
-	}
-	
-	public void setWaitbool(boolean newbool){
-		waitbool = newbool;
-	}
-	
-	
 	/**
 	 * map register sp to r13, lr, to r14, pc to r15
 	 * @param register
@@ -105,8 +94,6 @@ public class Visitors implements MyParserVisitor{
 		
 		int i=0;
 		while(i<children){
-			
-			setWaitbool(true);
 			
 			switch(node.jjtGetChild(i).toString()){
 			case("label"):{

@@ -574,7 +574,7 @@ public class View {
 
 			public void actionPerformed(ActionEvent ae){
 				//Debug initial all variable needed:
-
+				
 				//init filds:
 				initfieldsVal();
 				textPane.setText("");
@@ -582,7 +582,17 @@ public class View {
 				//Create tmp file:
 				String tmp = selectedFile.toString() ;
 				tmp = tmp.replace(".txt", "tmpDebug.txt");
-				tmpFile = new File(tmp);
+				if(tmpFile == null){
+					tmpFile = new File(tmp);
+				}
+				else{
+					try {
+						Files.delete(tmpFile.toPath());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				
 				//init counter:
 				line = 0;
@@ -602,7 +612,7 @@ public class View {
 				/*Each time button hit -> increment count:
 				  and execute programm with unique line*/
 				
-				//create bufferes:
+				//create bufferers:
 				try {
 					br = new BufferedReader(new FileReader(selectedFile.toString()));
 					bw = new BufferedWriter(new FileWriter(tmpFile.toString()));
@@ -627,11 +637,6 @@ public class View {
 					if ( linestr != null ){
 						try {
 							bw.write(linestr);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						try {
 							br.close();
 							bw.close();
 						} catch (IOException e) {
@@ -675,10 +680,10 @@ public class View {
 				}
 				else{//else end of debug and delete file
 					System.err.println("end of debug");
-					tmpFile.delete();
 					try {
 						br.close();
 						bw.close();
+						Files.delete(tmpFile.toPath());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -783,6 +788,10 @@ public class View {
 		textField_V.setText("0");
 		textField_I.setText("0");
 		textField_F.setText("0");   
+	}
+	
+	public File getSelectedFile(){
+		return selectedFile;
 	}
 
 }
