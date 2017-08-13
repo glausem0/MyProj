@@ -41,6 +41,12 @@ public class View {
 	Visitors vi;
 
 	File selectedFile;
+	File tmpFile;
+
+	//for debug mode:
+	int line;
+	BufferedReader br = null;
+	BufferedWriter bw = null;
 
 	public JFrame frame;
 	private JTextField textFieldR0;
@@ -87,7 +93,7 @@ public class View {
 		frame.getContentPane().add(textArea);
 
 		JScrollPane scrollBar = new JScrollPane(textArea);
-		scrollBar.setBounds(10, 11, 582, 493);
+		scrollBar.setBounds(10, 61, 582, 493);
 		frame.getContentPane().add(scrollBar);
 		/*
 		TextLineNumber tln = new TextLineNumber(textArea);
@@ -103,11 +109,11 @@ public class View {
 		mc.setMessageLines(100);
 
 		JScrollPane scrollBarOutPut = new JScrollPane(outputTextArea);
-		scrollBarOutPut.setBounds(10, 517, 582, 165);
+		scrollBarOutPut.setBounds(10, 575, 582, 165);
 		frame.getContentPane().add(scrollBarOutPut);
 
 		JPanel viewElements = new JPanel();
-		viewElements.setBounds(602, 11, 592, 504);
+		viewElements.setBounds(602, 236, 592, 504);
 		frame.getContentPane().add(viewElements);
 		viewElements.setBackground(Color.WHITE);
 		viewElements.setLayout(null);
@@ -268,45 +274,6 @@ public class View {
 		textFieldR15.setColumns(10);
 		textFieldR15.setBounds(280, 226, 100, 20);
 		registersPanel.add(textFieldR15);
-
-		JButton btnInteger = new JButton(new AbstractAction("Integer"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-				IntegerFields();
-			}
-		});
-		btnInteger.setBounds(61, 270, 139, 23);
-		registersPanel.add(btnInteger);
-
-		JButton btnHexadecimal = new JButton(new AbstractAction("Hexadecimal"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-				hexFields();
-			}
-		});
-		btnHexadecimal.setBounds(224, 270, 139, 23);
-		registersPanel.add(btnHexadecimal);
-		
-		JButton btnNextStep = new JButton(new AbstractAction("Next step"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-				vi.setWaitbool(false);
-			}
-		});
-		btnNextStep.setBounds(20, 703, 141, 35);
-		frame.getContentPane().add(btnNextStep);
 
 		JPanel cpsrPanel = new JPanel();
 		cpsrPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -545,94 +512,6 @@ public class View {
 		});
 		mnRun.add(mntmRun);
 
-		JMenuItem mntmDebug = new JMenuItem(new AbstractAction("Debug"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-				//TODO action for debug:copy/modify/execute/when finish delete tmp file.
-
-				//copy current text file:
-				String tmp = selectedFile.toString();
-				tmp = tmp.replace(".txt", "tmpDebug.txt");
-
-				File tmpFile = new File(tmp);
-
-			
-				FileReader fr = null;
-				FileWriter fw = null;
-
-				try {
-					fr = new FileReader(selectedFile.toString());
-					fw = new FileWriter(tmpFile.toString());
-					int line = 0;
-					while((line = fr.read()) != -1){
-						fw.write(line);
-					}
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} finally{
-					try {
-						if( (fr != null) || (fw != null) ){	
-							fr.close();
-							fw.close();
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-				
-				
-				//modify the copy file:
-				BufferedReader br = null;
-				BufferedWriter bw = null;
-
-				try {
-					br = new BufferedReader(new FileReader(selectedFile.toString()));
-					bw = new BufferedWriter(new FileWriter(tmpFile.toString()));
-					String line;
-					while ( (line = br.readLine()) != null ){
-						bw.write(line+" \n ");
-						bw.write(" WAIT \n ");
-					}
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally{
-					try {
-						if(br != null){
-							br.close();
-							bw.close();}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				
-				
-				
-				//TODO erase System.out
-				if(tmpFile.delete()){
-					System.out.println("deleted ok");
-				}
-				else{
-					System.out.println("not deleted");
-				}
-				
-			}	
-
-		});
-		mnRun.add(mntmDebug);
-
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
@@ -660,8 +539,159 @@ public class View {
 		});
 		mnHelp.add(mntmHowToUse);
 		frame.getContentPane().setLayout(null);
+
+		JButton btnInteger = new JButton(new AbstractAction("Integer"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				IntegerFields();
+			}
+		});
+		btnInteger.setBounds(61, 270, 139, 23);
+		registersPanel.add(btnInteger);
+
+		JButton btnHexadecimal = new JButton(new AbstractAction("Hexadecimal"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				hexFields();
+			}
+		});
+		btnHexadecimal.setBounds(224, 270, 139, 23);
+		registersPanel.add(btnHexadecimal);
+
+		JButton btnDebug = new JButton(new AbstractAction("Debug"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				//Debug initial all variable needed:
+
+				//init filds:
+				initfieldsVal();
+				textPane.setText("");
+
+				//Create tmp file:
+				String tmp = selectedFile.toString() ;
+				tmp = tmp.replace(".txt", "tmpDebug.txt");
+				tmpFile = new File(tmp);
+				
+				//init counter:
+				line = 0;
+
+			}
+		});
+		btnDebug.setBounds(0, 0, 93, 35);
+		frame.getContentPane().add(btnDebug);
 		
-	}
+		JButton btnNextStep = new JButton(new AbstractAction("Next step"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+				/*Each time button hit -> increment count:
+				  and execute programm with unique line*/
+				
+				//create bufferes:
+				try {
+					br = new BufferedReader(new FileReader(selectedFile.toString()));
+					bw = new BufferedWriter(new FileWriter(tmpFile.toString()));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//convert content file into Array
+				Object[] fileArray = br.lines().toArray(); 
+				//count lines:
+				int lineFile = fileArray.length;
+
+				
+				//verify if line < number of line:
+				if(line < lineFile){
+					//if line ok, 
+					String linestr = fileArray[line].toString();
+					if ( linestr != null ){
+						try {
+							bw.write(linestr);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							br.close();
+							bw.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					line += 1;
+					
+					try {
+						if(parser == null){
+							parser = new MyParser(new FileReader(tmpFile));
+						}
+						else{
+							parser.ReInit(new FileReader(tmpFile));
+						}
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						System.err.println(e);
+					}
+					SimpleNode root = null;
+					try {
+						root = parser.prog();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						System.err.println(e);
+					}
+					/*
+					System.out.println("Abstract Syntax Tree:");
+					root.dump(" ");
+					 */
+					//System.out.println("Prog:");
+					vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
+					root.jjtAccept(vi,null);
+
+					//set fields memory:
+					fillVal();
+					textPane.setText(memory.printView());
+				}
+				else{//else end of debug and delete file
+					System.err.println("end of debug");
+					tmpFile.delete();
+					try {
+						br.close();
+						bw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//see to make button disable
+				}
+
+			}
+		});
+		btnNextStep.setBounds(94, 0, 141, 35);
+		frame.getContentPane().add(btnNextStep);
+
+	}//end initialize
 
 	private void fillVal(){
 		//Set fields register:
@@ -754,4 +784,5 @@ public class View {
 		textField_I.setText("0");
 		textField_F.setText("0");   
 	}
+
 }

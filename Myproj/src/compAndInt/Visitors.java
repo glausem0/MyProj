@@ -103,9 +103,6 @@ public class Visitors implements MyParserVisitor{
 		HashMap<String, Integer> branches = new HashMap<String, Integer>();
 		int pc = 0; //TODO set value of pc in programme 
 		
-		setWaitbool(true);
-		boolean waitB = getWaitbool();
-		
 		int i=0;
 		while(i<children){
 			
@@ -185,20 +182,6 @@ public class Visitors implements MyParserVisitor{
 				else i +=1;
 			}
 
-			break;
-
-			case("waitD"):{
-				//TODO change wait
-				System.out.println("Presse nextStep");
-				
-				waitB = getWaitbool();
-				
-				if(!waitB){
-					node.jjtGetChild(i).jjtAccept(this, data);
-					i+=1;
-				}
-				
-			}
 			break;
 
 			default:
