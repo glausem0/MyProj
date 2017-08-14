@@ -38,9 +38,9 @@ public class View {
 	Instruction inst = new Instruction(reg, AMem);
 
 	MyParser parser = null;
-	Visitors vi;
+	Visitors vi= new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 
-	File selectedFile;
+	static File selectedFile;
 	File tmpFile;
 
 	//for debug mode:
@@ -471,6 +471,7 @@ public class View {
 					//init fields for rerun:
 					initfieldsVal();
 					textPane.setText("");
+					vi.setPc(2);
 
 					try {
 						if(parser == null){
@@ -497,7 +498,6 @@ public class View {
 				root.dump(" ");
 					 */
 					//System.out.println("Prog:");
-					vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
 					root.jjtAccept(vi,null);
 
 
@@ -596,7 +596,10 @@ public class View {
 				
 				//init counter:
 				line = 0;
-
+				
+				vi.setPc(2);
+				
+				System.out.println("Debug mode, press Next step");
 			}
 		});
 		btnDebug.setBounds(0, 0, 93, 35);
@@ -644,6 +647,7 @@ public class View {
 							e.printStackTrace();
 						}
 					}
+					System.out.println("Line "+(line+1)+" executed...");
 					line += 1;
 					
 					try {
@@ -671,7 +675,7 @@ public class View {
 					root.dump(" ");
 					 */
 					//System.out.println("Prog:");
-					vi = new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
+					 
 					root.jjtAccept(vi,null);
 
 					//set fields memory:
@@ -679,7 +683,7 @@ public class View {
 					textPane.setText(memory.printView());
 				}
 				else{//else end of debug and delete file
-					System.err.println("end of debug");
+					System.err.println("End of debug mode");
 					try {
 						br.close();
 						bw.close();
@@ -790,7 +794,7 @@ public class View {
 		textField_F.setText("0");   
 	}
 	
-	public File getSelectedFile(){
+	public static File getSelectedFile(){
 		return selectedFile;
 	}
 

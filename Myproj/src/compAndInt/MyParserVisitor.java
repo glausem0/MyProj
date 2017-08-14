@@ -211,6 +211,5 @@ public interface MyParserVisitor
   public Object visit(ASThexa node, Object data);
   public Object visit(ASTnum node, Object data);
   public Object visit(ASTlabel node, Object data);
-  public Object visit(ASTwaitD node, Object data);
 }
-/* JavaCC - OriginalChecksum=6d765cebbc5f95db7ef5e4e238cfc1fa (do not edit this line) */
+/* JavaCC - OriginalChecksum=d9da23e2a915be7dc9e9de60a84f2776 (do not edit this line) */

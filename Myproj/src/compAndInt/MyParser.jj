@@ -78,9 +78,6 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ 
   /*SWP*/
 | < SWP : "swp" >
 
- /*WAIT NODE FOR DEBUG*/
-| < WAITD : "WAIT" >
-
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
 | < REGISTER  : "r0" | "r1" | "r2" | "r3" | "r4" | "r5" | "r6" | "r7" | "r8" | "r9" | "r10" | "r11" | "r12" | ("r13" | "sp") | ( "r14"| "lr") | ("r15"|"pc") >
@@ -160,8 +157,6 @@ void instr()      :
 
 | branch()
 | label()
-
-| waitD()
 
 }
 
@@ -6739,28 +6734,5 @@ void label():
      jjtree.closeNodeScope(jjtn000, true);
    }
  }
-/*@egen*/
-}
-
-void waitD():
-{/*@bgen(jjtree) waitD */
- ASTwaitD jjtn000 = new ASTwaitD(JJTWAITD);
- boolean jjtc000 = true;
- jjtree.openNodeScope(jjtn000);
-/*@egen*/Token t;}
-{/*@bgen(jjtree) waitD */
-  try {
-/*@egen*/
-  t = < WAITD >/*@bgen(jjtree)*/
-                {
-                  jjtree.closeNodeScope(jjtn000, true);
-                  jjtc000 = false;
-                }
-/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc000) {
-      jjtree.closeNodeScope(jjtn000, true);
-    }
-  }
 /*@egen*/
 }

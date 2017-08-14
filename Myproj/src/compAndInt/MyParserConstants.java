@@ -85,17 +85,15 @@ public interface MyParserConstants {
   /** RegularExpression Id. */
   int SWP = 41;
   /** RegularExpression Id. */
-  int WAITD = 42;
+  int NUMBER = 42;
   /** RegularExpression Id. */
-  int NUMBER = 43;
+  int REGISTER = 43;
   /** RegularExpression Id. */
-  int REGISTER = 44;
+  int HEXA = 44;
   /** RegularExpression Id. */
-  int HEXA = 45;
+  int NUM = 45;
   /** RegularExpression Id. */
-  int NUM = 46;
-  /** RegularExpression Id. */
-  int LABEL = 47;
+  int LABEL = 46;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -144,7 +142,6 @@ public interface MyParserConstants {
     "\"ldm\"",
     "\"stm\"",
     "\"swp\"",
-    "\"WAIT\"",
     "<NUMBER>",
     "<REGISTER>",
     "<HEXA>",
