@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTree;
-import javax.swing.JTabbedPane;
 
 public class HelpAcceptedInstructions {
 

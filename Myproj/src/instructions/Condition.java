@@ -2,8 +2,6 @@ package instructions;
 
 import java.util.HashMap;
 
-import registers.Register;
-
 public class Condition {
 	
 	HashMap<Object, Object> cpsr;

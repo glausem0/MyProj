@@ -9,8 +9,6 @@ import javax.swing.filechooser.FileSystemView;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
 
 import compAndInt.*;
 import controlView.MessageConsole;
@@ -95,10 +93,10 @@ public class View {
 		JScrollPane scrollBar = new JScrollPane(textArea);
 		scrollBar.setBounds(10, 61, 582, 493);
 		frame.getContentPane().add(scrollBar);
-		/*
+		
 		TextLineNumber tln = new TextLineNumber(textArea);
 		scrollBar.setRowHeaderView(tln);
-		 */
+		 
 		JTextArea outputTextArea = new JTextArea();
 		outputTextArea.setBounds(10, 477, 478, 158);
 		frame.getContentPane().add(outputTextArea);
@@ -468,45 +466,36 @@ public class View {
 			public void actionPerformed(ActionEvent ae){
 
 				try{
-					//init fields for rerun:
+					//init fields and elements:
 					initfieldsVal();
 					textPane.setText("");
 					vi.setPc(2);
-
+					vi.setChild(0);
+					HashMap<String, Integer> branches = new HashMap<String, Integer>();
+					vi.setBranches(branches);
+					BufferedReader br = null;
+					Object[] progArray = null;
 					try {
-						if(parser == null){
-							parser = new MyParser(new FileReader(selectedFile));
-						}
-						else{
-							parser.ReInit(new FileReader(selectedFile));
-						}
+						br = new BufferedReader(new FileReader(selectedFile));
+						progArray = br.lines().toArray();
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
-						//e.printStackTrace();
-						System.err.println(e);
+						e.printStackTrace();
 					}
-					SimpleNode root = null;
-					try {
-						root = parser.prog();
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						//e.printStackTrace();
-						System.err.println(e);
-					}
-					/*
-				System.out.println("Abstract Syntax Tree:");
-				root.dump(" ");
-					 */
-					//System.out.println("Prog:");
-					root.jjtAccept(vi,null);
-
-
+					vi.setProgArray(progArray);
+				
+					regData.clearRegister();
+					cpsr.clearCpsr();
+					memory.clearMemory();
+				
+					RunFile(selectedFile);
+					
 					//set fields memory:
 					fillVal();
 					textPane.setText(memory.printView());
 				}catch (RuntimeException e){
 					System.err.println(e);
-				}
+				} 
 
 			}
 		});
@@ -574,11 +563,39 @@ public class View {
 
 			public void actionPerformed(ActionEvent ae){
 				//Debug initial all variable needed:
+				//Run first time to field hashmap
+				initfieldsVal();
+				textPane.setText("");
+				vi.setPc(2);
+				vi.setChild(0);
+				HashMap<String, Integer> branches = new HashMap<String, Integer>();
+				vi.setBranches(branches);
+				BufferedReader br = null;
+				Object[] progArray = null;
+				try {
+					br = new BufferedReader(new FileReader(selectedFile));
+					progArray = br.lines().toArray();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				vi.setProgArray(progArray);
+			
+				regData.clearRegister();
+				cpsr.clearCpsr();
+				memory.clearMemory();
+			
+				RunFile(selectedFile);
+	
 				
 				//init filds:
 				initfieldsVal();
 				textPane.setText("");
-
+				
+				regData.clearRegister();
+				cpsr.clearCpsr();
+				memory.clearMemory();
+				
 				//Create tmp file:
 				String tmp = selectedFile.toString() ;
 				tmp = tmp.replace(".txt", "tmpDebug.txt");
@@ -598,6 +615,17 @@ public class View {
 				line = 0;
 				
 				vi.setPc(2);
+				vi.setChild(0);
+				progArray = null;
+				try {
+					br = new BufferedReader(new FileReader(selectedFile));
+					progArray = br.lines().toArray();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				vi.setProgArray(progArray);
+			
 				
 				System.out.println("Debug mode, press Next step");
 			}
@@ -631,7 +659,8 @@ public class View {
 				Object[] fileArray = br.lines().toArray(); 
 				//count lines:
 				int lineFile = fileArray.length;
-
+				
+				line = vi.getPc() -2;
 				
 				//verify if line < number of line:
 				if(line < lineFile){
@@ -647,40 +676,16 @@ public class View {
 							e.printStackTrace();
 						}
 					}
-					System.out.println("Line "+(line+1)+" executed...");
-					line += 1;
 					
-					try {
-						if(parser == null){
-							parser = new MyParser(new FileReader(tmpFile));
-						}
-						else{
-							parser.ReInit(new FileReader(tmpFile));
-						}
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						//e.printStackTrace();
-						System.err.println(e);
-					}
-					SimpleNode root = null;
-					try {
-						root = parser.prog();
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						//e.printStackTrace();
-						System.err.println(e);
-					}
-					/*
-					System.out.println("Abstract Syntax Tree:");
-					root.dump(" ");
-					 */
-					//System.out.println("Prog:");
-					 
-					root.jjtAccept(vi,null);
+					vi.setChild(0);
+					RunFile(tmpFile);
 
 					//set fields memory:
 					fillVal();
 					textPane.setText(memory.printView());
+					
+					System.out.println("Line "+(line+1)+" executed...");
+					line += 1;
 				}
 				else{//else end of debug and delete file
 					System.err.println("End of debug mode");
@@ -794,8 +799,26 @@ public class View {
 		textField_F.setText("0");   
 	}
 	
-	public static File getSelectedFile(){
-		return selectedFile;
+	private void RunFile(File file){
+		SimpleNode root = null;
+		try {
+			if(parser == null){
+				parser = new MyParser(new FileReader(file));
+			}
+			else{
+				parser.ReInit(new FileReader(file));
+			}
+			root = parser.prog();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			System.err.println(e);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		root.jjtAccept(vi,null);
 	}
-
+	
 }

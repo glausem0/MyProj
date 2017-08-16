@@ -18,6 +18,10 @@ public class Memory {
 		}
 	}
 	
+	public void clearMemory(){
+		memory.clear();
+	}
+	
 	public String printView(){
 		String ent = "Address              Value\n \n";
 		String ret = "";

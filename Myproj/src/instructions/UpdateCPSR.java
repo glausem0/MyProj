@@ -51,18 +51,26 @@ public class UpdateCPSR {
 		
 		if(negative(result)){
 			cpsr.put("N", 1);
+		}else{
+			cpsr.put("N", 0);
 		}
 		
 		if(zero(result)){
 			cpsr.put("Z", 1);
+		}else{
+			cpsr.put("Z", 0);
 		}
 		
 		if(carry(result)){
 			cpsr.put("C", 1);
+		}else{
+			cpsr.put("C", 0);
 		}
 		
 		if(overflow(result)){
 			cpsr.put("V", 1);
+		}else{
+			cpsr.put("V", 0);
 		}
 	}
 }

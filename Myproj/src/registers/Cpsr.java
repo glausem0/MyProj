@@ -22,6 +22,15 @@ public class Cpsr {
 		return cpsr;
 	}
 	
+	public void clearCpsr(){
+		cpsr.put("N", 0);
+		cpsr.put("Z", 0);
+		cpsr.put("C", 0);
+		cpsr.put("V", 0);
+		cpsr.put("I", 0); 
+		cpsr.put("F", 0); 
+	}
+	
 	public void print(){
 		for (Object key: cpsr.keySet()){
 			System.out.println(key+" "+ cpsr.get(key).toString() );
