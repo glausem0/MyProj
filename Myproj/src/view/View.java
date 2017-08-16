@@ -87,7 +87,7 @@ public class View {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(1, 1, 473, 589);
+		textArea.setBounds(10, 61, 582, 493);
 		frame.getContentPane().add(textArea);
 
 		JScrollPane scrollBar = new JScrollPane(textArea);
@@ -630,7 +630,7 @@ public class View {
 				System.out.println("Debug mode, press Next step");
 			}
 		});
-		btnDebug.setBounds(0, 0, 93, 35);
+		btnDebug.setBounds(90, 0, 89, 23);
 		frame.getContentPane().add(btnDebug);
 		
 		JButton btnNextStep = new JButton(new AbstractAction("Next step"){
@@ -702,8 +702,53 @@ public class View {
 
 			}
 		});
-		btnNextStep.setBounds(94, 0, 141, 35);
+		btnNextStep.setBounds(179, 0, 89, 23);
 		frame.getContentPane().add(btnNextStep);
+		
+		JButton btnRun = new JButton(new AbstractAction("Run"){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent ae){
+
+				try{
+					//init fields and elements:
+					initfieldsVal();
+					textPane.setText("");
+					vi.setPc(2);
+					vi.setChild(0);
+					HashMap<String, Integer> branches = new HashMap<String, Integer>();
+					vi.setBranches(branches);
+					BufferedReader br = null;
+					Object[] progArray = null;
+					try {
+						br = new BufferedReader(new FileReader(selectedFile));
+						progArray = br.lines().toArray();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					vi.setProgArray(progArray);
+				
+					regData.clearRegister();
+					cpsr.clearCpsr();
+					memory.clearMemory();
+				
+					RunFile(selectedFile);
+					
+					//set fields memory:
+					fillVal();
+					textPane.setText(memory.printView());
+				}catch (RuntimeException e){
+					System.err.println(e);
+				} 
+
+			}
+		});
+		btnRun.setBounds(0, 0, 89, 23);
+		frame.getContentPane().add(btnRun);
 
 	}//end initialize
 
@@ -820,5 +865,4 @@ public class View {
 		
 		root.jjtAccept(vi,null);
 	}
-	
 }
