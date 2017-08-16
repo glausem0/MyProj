@@ -486,7 +486,7 @@ public class Visitors implements MyParserVisitor{
 				}
 				else{
 					node.jjtGetChild(child).jjtAccept(this, data);
-					pc += 2;
+					pc += 1;
 					child += 1;
 				}
 				
