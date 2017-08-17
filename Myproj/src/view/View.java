@@ -104,7 +104,7 @@ public class View {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(SystemColor.inactiveCaption);
-		frame.setBounds(100, 100, 1208, 1041);
+		frame.setBounds(0, 0, 1208, 1034);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTextArea textArea = new JTextArea();
@@ -112,12 +112,12 @@ public class View {
 		frame.getContentPane().add(textArea);
 
 		JScrollPane scrollBar = new JScrollPane(textArea);
-		scrollBar.setBounds(10, 61, 578, 720);
+		scrollBar.setBounds(10, 34, 578, 720);
 		frame.getContentPane().add(scrollBar);
-		/*
+		
 		TextLineNumber tln = new TextLineNumber(textArea);
 		scrollBar.setRowHeaderView(tln);
-		 */
+		 
 		JTextArea outputTextArea = new JTextArea();
 		outputTextArea.setBounds(10, 477, 478, 158);
 		frame.getContentPane().add(outputTextArea);
@@ -128,7 +128,7 @@ public class View {
 		mc.setMessageLines(100);
 
 		JScrollPane scrollBarOutPut = new JScrollPane(outputTextArea);
-		scrollBarOutPut.setBounds(6, 792, 582, 165);
+		scrollBarOutPut.setBounds(10, 765, 578, 192);
 		frame.getContentPane().add(scrollBarOutPut);
 
 		//Menu bar:
@@ -141,7 +141,7 @@ public class View {
 		
 
 		JPanel registersUserPanel = new JPanel();
-		registersUserPanel.setBounds(602, 61, 193, 482);
+		registersUserPanel.setBounds(602, 34, 193, 482);
 		frame.getContentPane().add(registersUserPanel);
 		registersUserPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		registersUserPanel.setBackground(new Color(248, 248, 255));
@@ -298,7 +298,7 @@ public class View {
 		registersUserPanel.add(textFieldR15);
 
 		JPanel cpsrUserPanel = new JPanel();
-		cpsrUserPanel.setBounds(602, 546, 193, 235);
+		cpsrUserPanel.setBounds(602, 519, 193, 235);
 		frame.getContentPane().add(cpsrUserPanel);
 		cpsrUserPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		cpsrUserPanel.setBackground(new Color(248, 248, 255));
@@ -365,7 +365,7 @@ public class View {
 		cpsrUserPanel.add(textField_F);
 
 		JPanel memoryPanel = new JPanel();
-		memoryPanel.setBounds(600, 784, 585, 201);
+		memoryPanel.setBounds(600, 756, 585, 201);
 		frame.getContentPane().add(memoryPanel);
 		memoryPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		memoryPanel.setBackground(new Color(248, 248, 255));
@@ -389,7 +389,7 @@ public class View {
 		registersFIPanel.setLayout(null);
 		registersFIPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		registersFIPanel.setBackground(new Color(248, 248, 255));
-		registersFIPanel.setBounds(797, 61, 193, 482);
+		registersFIPanel.setBounds(797, 34, 193, 482);
 		frame.getContentPane().add(registersFIPanel);
 
 		JTextPane txtpnRegistersFastInterrupt = new JTextPane();
@@ -465,7 +465,7 @@ public class View {
 		spsrFIPanel.setLayout(null);
 		spsrFIPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		spsrFIPanel.setBackground(new Color(248, 248, 255));
-		spsrFIPanel.setBounds(797, 546, 193, 235);
+		spsrFIPanel.setBounds(797, 519, 193, 235);
 		frame.getContentPane().add(spsrFIPanel);
 
 		JTextPane txtpnSpsrFastInterrupt = new JTextPane();
@@ -532,7 +532,7 @@ public class View {
 		registersIntPanel.setLayout(null);
 		registersIntPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		registersIntPanel.setBackground(new Color(248, 248, 255));
-		registersIntPanel.setBounds(993, 61, 193, 482);
+		registersIntPanel.setBounds(992, 34, 193, 482);
 		frame.getContentPane().add(registersIntPanel);
 
 		JTextPane txtpnRegistersInterruptMode = new JTextPane();
@@ -563,7 +563,7 @@ public class View {
 		spsrIntPanel.setLayout(null);
 		spsrIntPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		spsrIntPanel.setBackground(new Color(248, 248, 255));
-		spsrIntPanel.setBounds(993, 546, 193, 235);
+		spsrIntPanel.setBounds(992, 519, 193, 235);
 		frame.getContentPane().add(spsrIntPanel);
 
 		JTextPane txtpnSpsrInterruptMode = new JTextPane();

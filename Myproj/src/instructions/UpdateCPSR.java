@@ -21,7 +21,7 @@ public class UpdateCPSR {
 
 	private boolean zero(int result){
 		boolean zer = false;
-		
+
 		if(result == 0){
 			zer = true;
 		}
@@ -47,30 +47,38 @@ public class UpdateCPSR {
 		return ove;
 	}
 
-	public void update(int result){
-		
-		if(negative(result)){
-			cpsr.put("N", 1);
-		}else{
-			cpsr.put("N", 0);
+	public void update(int result, boolean Nflag, boolean Zflag, boolean Cflag, boolean Vflag){
+
+		if(Nflag){
+			if(negative(result)){
+				cpsr.put("N", 1);
+			}else{
+				cpsr.put("N", 0);
+			}
 		}
-		
-		if(zero(result)){
-			cpsr.put("Z", 1);
-		}else{
-			cpsr.put("Z", 0);
+
+		if(Zflag){
+			if(zero(result)){
+				cpsr.put("Z", 1);
+			}else{
+				cpsr.put("Z", 0);
+			}
 		}
-		
-		if(carry(result)){
-			cpsr.put("C", 1);
-		}else{
-			cpsr.put("C", 0);
+
+		if(Cflag){
+			if(carry(result)){
+				cpsr.put("C", 1);
+			}else{
+				cpsr.put("C", 0);
+			}
 		}
-		
-		if(overflow(result)){
-			cpsr.put("V", 1);
-		}else{
-			cpsr.put("V", 0);
+
+		if(Vflag){
+			if(overflow(result)){
+				cpsr.put("V", 1);
+			}else{
+				cpsr.put("V", 0);
+			}
 		}
 	}
 }
