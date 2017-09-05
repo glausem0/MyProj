@@ -9,7 +9,7 @@ public class AccessMemory {
 	public AccessMemory(LinkedHashMap<Object, Object> memory){
 		this.memory = memory;
 	}
-
+	
 	/**
 	 * convert int to hexadecimal with exactly 8 bytes 
 	 * @param el
@@ -106,7 +106,7 @@ public class AccessMemory {
 
 		return b;
 	}
-
+	
 	/**
 	 * get the value of the corresponding address in memory.
 	 * 
@@ -127,7 +127,7 @@ public class AccessMemory {
 				elInt = toInt32(element.toString());
 			}
 			else{//if address doesn't exist: 
-				memory.put(hexAdd, "0x00000000");
+				memory.put(hexAdd, "0x00000064"); //begin to address 100
 				element = memory.get(hexAdd);
 				elInt = toInt32(element.toString());
 			}
@@ -159,7 +159,7 @@ public class AccessMemory {
 				}
 			}
 			else{//if address doesn't exist:
-				memory.put(hexAdd, "0x00000000");
+				memory.put(hexAdd, "0x00000064");  //begin to address 100
 				element = memory.get(hexAdd);
 				elInt = toInt32(element.toString());
 			}
@@ -225,7 +225,7 @@ public class AccessMemory {
 				elInt = toInt32(toHalfWord(toInt32(element.toString())));
 			}
 			else{//if address doesn't exist: 
-				memory.put(hexAdd, "0x00000000");
+				memory.put(hexAdd, "0x00000064"); //begin to address 100
 				element = memory.get(hexAdd);
 				elInt = toInt32(toHalfWord(toInt32(element.toString())));
 			}
@@ -257,7 +257,7 @@ public class AccessMemory {
 				}
 			}
 			else{//if address doesn't exist:
-				memory.put(hexAdd, "0x00000000");
+				memory.put(hexAdd, "0x00000064"); //begin to address 100
 				element = memory.get(hexAdd);
 				elInt = toInt32(toHalfWord(toInt32(element.toString())));
 			}
@@ -323,7 +323,7 @@ public class AccessMemory {
 				elInt = toInt32(toByte(toInt32(element.toString())));
 			}
 			else{//if address doesn't exist: 
-				memory.put(hexAdd, "0x00000000");
+				memory.put(hexAdd, "0x00000064"); //begin to address 100
 				element = memory.get(hexAdd);
 				elInt = toInt32(toByte(toInt32(element.toString())));
 			}
@@ -355,7 +355,7 @@ public class AccessMemory {
 				}
 			}
 			else{//if address doesn't exist:
-				memory.put(hexAdd, "0x00000000");
+				memory.put(hexAdd, "0x00000064"); //begin to address 100
 				element = memory.get(hexAdd);
 				elInt = toInt32(toByte(toInt32(element.toString())));
 			}
