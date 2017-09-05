@@ -15,85 +15,87 @@ public interface MyParserConstants {
   /** RegularExpression Id. */
   int H = 6;
   /** RegularExpression Id. */
-  int AMODE = 7;
+  int L = 7;
   /** RegularExpression Id. */
-  int COND = 8;
+  int AMODE = 8;
   /** RegularExpression Id. */
-  int SCND = 9;
+  int COND = 9;
   /** RegularExpression Id. */
-  int LSL = 10;
+  int SCND = 10;
   /** RegularExpression Id. */
-  int LSR = 11;
+  int LSL = 11;
   /** RegularExpression Id. */
-  int ASR = 12;
+  int LSR = 12;
   /** RegularExpression Id. */
-  int ROR = 13;
+  int ASR = 13;
   /** RegularExpression Id. */
-  int SHIFT = 14;
+  int ROR = 14;
   /** RegularExpression Id. */
-  int MOV = 15;
+  int SHIFT = 15;
   /** RegularExpression Id. */
-  int MVN = 16;
+  int MOV = 16;
   /** RegularExpression Id. */
-  int ADD = 17;
+  int MVN = 17;
   /** RegularExpression Id. */
-  int ADC = 18;
+  int ADD = 18;
   /** RegularExpression Id. */
-  int SUB = 19;
+  int ADC = 19;
   /** RegularExpression Id. */
-  int SBC = 20;
+  int SUB = 20;
   /** RegularExpression Id. */
-  int RSB = 21;
+  int SBC = 21;
   /** RegularExpression Id. */
-  int RSC = 22;
+  int RSB = 22;
   /** RegularExpression Id. */
-  int MLA = 23;
+  int RSC = 23;
   /** RegularExpression Id. */
-  int MUL = 24;
+  int MLA = 24;
   /** RegularExpression Id. */
-  int SMLAL = 25;
+  int MUL = 25;
   /** RegularExpression Id. */
-  int SMULL = 26;
+  int SMLAL = 26;
   /** RegularExpression Id. */
-  int UMLAL = 27;
+  int SMULL = 27;
   /** RegularExpression Id. */
-  int UMULL = 28;
+  int UMLAL = 28;
   /** RegularExpression Id. */
-  int CMP = 29;
+  int UMULL = 29;
   /** RegularExpression Id. */
-  int CMN = 30;
+  int CMP = 30;
   /** RegularExpression Id. */
-  int TEQ = 31;
+  int CMN = 31;
   /** RegularExpression Id. */
-  int TST = 32;
+  int TEQ = 32;
   /** RegularExpression Id. */
-  int AND = 33;
+  int TST = 33;
   /** RegularExpression Id. */
-  int BIC = 34;
+  int AND = 34;
   /** RegularExpression Id. */
-  int EOR = 35;
+  int BIC = 35;
   /** RegularExpression Id. */
-  int ORR = 36;
+  int EOR = 36;
   /** RegularExpression Id. */
-  int LDR = 37;
+  int ORR = 37;
   /** RegularExpression Id. */
-  int STR = 38;
+  int LDR = 38;
   /** RegularExpression Id. */
-  int LDM = 39;
+  int STR = 39;
   /** RegularExpression Id. */
-  int STM = 40;
+  int LDM = 40;
   /** RegularExpression Id. */
-  int SWP = 41;
+  int STM = 41;
   /** RegularExpression Id. */
-  int NUMBER = 42;
+  int SWP = 42;
   /** RegularExpression Id. */
-  int REGISTER = 43;
+  int NUMBER = 43;
   /** RegularExpression Id. */
-  int HEXA = 44;
+  int REGISTER = 44;
   /** RegularExpression Id. */
-  int NUM = 45;
+  int HEXA = 45;
   /** RegularExpression Id. */
-  int LABEL = 46;
+  int NUM = 46;
+  /** RegularExpression Id. */
+  int LABEL = 47;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -107,6 +109,7 @@ public interface MyParserConstants {
     "\"\\n\"",
     "\"b\"",
     "\"h\"",
+    "\"l\"",
     "<AMODE>",
     "<COND>",
     "\"s\"",
