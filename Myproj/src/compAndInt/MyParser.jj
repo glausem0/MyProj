@@ -22,12 +22,9 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ 
 /*@egen*/
 }PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
-  < B: "b" > /*use for branch and branch link too*/
+  < B: "b" >
 | < H: "h" >
   /*| < S: "s" > is already defined with SCND */
-
-  /*for branchLink*/
-|  < L: "l" >
 
   /*OPTIONS FOR STACK*/
 | < AMODE : "ia" | "fd" | "ib" | "ed" | "da" | "fa" | "db" | "ea" >
@@ -158,7 +155,7 @@ void instr()      :
 
 | swp()
 
-| branchNode()
+| branch()
 | label()
 
 }
@@ -6346,77 +6343,6 @@ void branch()      :
   }
 /*@egen*/           
 )
-}
-
-void branchLink()      :
-{}
-{ < B > < L >
-(/*@bgen(jjtree) #CbranchLink( 2) */
-  {
-    ASTCbranchLink jjtn001 = new ASTCbranchLink(JJTCBRANCHLINK);
-    boolean jjtc001 = true;
-    jjtree.openNodeScope(jjtn001);
-  }
-  try {
-/*@egen*/
-  ( cond() label())/*@bgen(jjtree)*/
-  } catch (Throwable jjte001) {
-    if (jjtc001) {
-      jjtree.clearNodeScope(jjtn001);
-      jjtc001 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte001 instanceof RuntimeException) {
-      throw (RuntimeException)jjte001;
-    }
-    if (jjte001 instanceof ParseException) {
-      throw (ParseException)jjte001;
-    }
-    throw (Error)jjte001;
-  } finally {
-    if (jjtc001) {
-      jjtree.closeNodeScope(jjtn001,  2);
-    }
-  }
-/*@egen*/                
-|/*@bgen(jjtree) #branchLink( 1) */
-  {
-    ASTbranchLink jjtn002 = new ASTbranchLink(JJTBRANCHLINK);
-    boolean jjtc002 = true;
-    jjtree.openNodeScope(jjtn002);
-  }
-  try {
-/*@egen*/ ( label())/*@bgen(jjtree)*/
-  } catch (Throwable jjte002) {
-    if (jjtc002) {
-      jjtree.clearNodeScope(jjtn002);
-      jjtc002 = false;
-    } else {
-      jjtree.popNode();
-    }
-    if (jjte002 instanceof RuntimeException) {
-      throw (RuntimeException)jjte002;
-    }
-    if (jjte002 instanceof ParseException) {
-      throw (ParseException)jjte002;
-    }
-    throw (Error)jjte002;
-  } finally {
-    if (jjtc002) {
-      jjtree.closeNodeScope(jjtn002,  1);
-    }
-  }
-/*@egen*/               
-)
-}
-
-void branchNode()      :
-{}
-{
-  LOOKAHEAD(2)
-  (branchLink())
-| (branch())  
 }
 
 void closeOrCAUp()      :

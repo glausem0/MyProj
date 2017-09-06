@@ -18,12 +18,9 @@ import registers.*;
 public class MyParser {
 }PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
-  < B: "b" > /*use for branch and branch link too*/
+  < B: "b" >
 | < H: "h" >
   /*| < S: "s" > is already defined with SCND */
-
-  /*for branchLink*/
-|  < L: "l" >
 
   /*OPTIONS FOR STACK*/
 | < AMODE : "ia" | "fd" | "ib" | "ed" | "da" | "fa" | "db" | "ea" >
@@ -123,7 +120,7 @@ void instr() #void:
 
 | swp()
 
-| branchNode()
+| branch()
 | label()
 
 }
@@ -1023,23 +1020,6 @@ void branch() #void:
   ( cond() label()) #Cbranch(2)
 | ( label()) #branch(1)
 )
-}
-
-void branchLink() #void:
-{}
-{ < B > < L >
-(
-  ( cond() label()) #CbranchLink(2)
-| ( label()) #branchLink(1)
-)
-}
-
-void branchNode() #void:
-{}
-{
-  LOOKAHEAD(2)
-  (branchLink())
-| (branch())  
 }
 
 void closeOrCAUp() #void:
