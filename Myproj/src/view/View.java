@@ -116,6 +116,8 @@ public class View {
 		frame.getContentPane().add(scrollBar);
 		
 		TextLineNumber tln = new TextLineNumber(textArea);
+		tln.setDigitAlignment(0.5f);
+		tln.setBorderGap(3);
 		scrollBar.setRowHeaderView(tln);
 		 
 		JTextArea outputTextArea = new JTextArea();
