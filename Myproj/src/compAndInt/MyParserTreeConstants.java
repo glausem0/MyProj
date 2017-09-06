@@ -195,22 +195,24 @@ public interface MyParserTreeConstants
   public int JJTSWPCB = 189;
   public int JJTCBRANCH = 190;
   public int JJTBRANCH = 191;
-  public int JJTCLOSEAUP = 192;
-  public int JJTCLOSE = 193;
-  public int JJTSHIFTLS = 194;
-  public int JJTSHIFTF = 195;
-  public int JJTAMODE = 196;
-  public int JJTCOND = 197;
-  public int JJTLSL = 198;
-  public int JJTLSR = 199;
-  public int JJTASR = 200;
-  public int JJTROR = 201;
-  public int JJTSHIFT = 202;
-  public int JJTREGISTER = 203;
-  public int JJTNUMBER = 204;
-  public int JJTHEXA = 205;
-  public int JJTNUM = 206;
-  public int JJTLABEL = 207;
+  public int JJTCBRANCHLINK = 192;
+  public int JJTBRANCHLINK = 193;
+  public int JJTCLOSEAUP = 194;
+  public int JJTCLOSE = 195;
+  public int JJTSHIFTLS = 196;
+  public int JJTSHIFTF = 197;
+  public int JJTAMODE = 198;
+  public int JJTCOND = 199;
+  public int JJTLSL = 200;
+  public int JJTLSR = 201;
+  public int JJTASR = 202;
+  public int JJTROR = 203;
+  public int JJTSHIFT = 204;
+  public int JJTREGISTER = 205;
+  public int JJTNUMBER = 206;
+  public int JJTHEXA = 207;
+  public int JJTNUM = 208;
+  public int JJTLABEL = 209;
 
 
   public String[] jjtNodeName = {
@@ -406,6 +408,8 @@ public interface MyParserTreeConstants
     "swpCB",
     "Cbranch",
     "branch",
+    "CbranchLink",
+    "branchLink",
     "closeAUp",
     "close",
     "shiftLS",
@@ -424,4 +428,4 @@ public interface MyParserTreeConstants
     "label",
   };
 }
-/* JavaCC - OriginalChecksum=eeb4d05f79488ea6c7dcf4dec0ba762f (do not edit this line) */
+/* JavaCC - OriginalChecksum=12f8fde54da601d9cdbb3817935cd42b (do not edit this line) */

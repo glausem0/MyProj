@@ -489,8 +489,113 @@ public class Visitors implements MyParserVisitor{
 					pc += 1;
 					child += 1;
 				}
-				
+
 				reg.put("r15", pc);
+			}
+			break;
+
+			case("branchLink"):{
+				int lr = 0;
+				String labelBranch = node.jjtGetChild(child).jjtAccept(this, data).toString();
+				if(branches.containsKey("label"+labelBranch)){//if label before branch
+					int newi = branches.get("label"+labelBranch);
+					int newLine = branches.get("lineLabel"+labelBranch);
+
+					pc = newLine + 2;
+					lr = pc-1;
+					child = newi;
+				}
+				else{//branch before label:
+					boolean in = true;
+					while(in){
+						if(!node.jjtGetChild(child).toString().equals("label")){ //if node not label
+							if(principalNode(node.jjtGetChild(child).toString())){
+								pc +=1;
+								lr = pc-1;
+							}
+							child +=1;
+						}
+						else if(    (node.jjtGetChild(child).toString().equals("label")) 
+								&& (!node.jjtGetChild(child).jjtAccept(this, data).equals(labelBranch)) ){ //if node is a label but not desire one
+							pc += 1; //because label.
+							lr = pc-1;
+							child +=1;
+						}
+						else if(    (node.jjtGetChild(child).toString().equals("label")) 
+								&& (node.jjtGetChild(child).jjtAccept(this, data).equals(labelBranch)) ){
+							int newi = child;
+							int newLine = searchLineProg(progArray, node.jjtGetChild(child).jjtAccept(this, data).toString());
+
+							pc = newLine + 2;
+							lr = pc-1;
+							child= newi;
+
+							in = false;
+						}
+					}
+				}
+				reg.put("r15", pc);
+				reg.put("r14", lr);
+			}
+			break;
+
+			case("CbranchLink"):{
+				int lr = 0;
+				String labelBranchC = node.jjtGetChild(child).jjtAccept(this, data).toString();
+				String[] condAndLab = labelBranchC.split(",");
+				String cond = condAndLab[0];
+				String labelBranch = condAndLab[1];
+
+				boolean c = condition.condAction(cond); 
+
+				if(c){
+					if(branches.containsKey("label"+labelBranch)){//if label before branch
+						int newi = branches.get("label"+labelBranch);
+						int newLine = branches.get("lineLabel"+labelBranch);
+
+						pc = newLine + 2;
+						lr = pc-1;
+						child = newi;
+					}
+					else{//branch before label:
+						boolean in = true;
+						while(in){
+							if(!node.jjtGetChild(child).toString().equals("label")){ //if node not label
+								if(principalNode(node.jjtGetChild(child).toString())){
+									pc +=1;
+									lr = pc-1;
+								}
+								child +=1;
+							}
+							else if(    (node.jjtGetChild(child).toString().equals("label")) 
+									&& (!node.jjtGetChild(child).jjtAccept(this, data).equals(labelBranch)) ){ //if node is a label but not desire one
+								pc += 1; //because label.
+								lr = pc-1;
+								child +=1;
+							}
+							else if(    (node.jjtGetChild(child).toString().equals("label")) 
+									&& (node.jjtGetChild(child).jjtAccept(this, data).equals(labelBranch)) ){
+								int newi = child;
+								int newLine = searchLineProg(progArray, node.jjtGetChild(child).jjtAccept(this, data).toString());
+
+								pc = newLine + 2;
+								lr = pc-1;
+								child= newi;
+
+								in = false;
+							}
+						}
+					}
+				}
+				else{
+					node.jjtGetChild(child).jjtAccept(this, data);
+					pc += 1;
+					lr = pc-1;
+					child += 1;
+				}
+
+				reg.put("r15", pc);
+				reg.put("r14", lr);
 			}
 			break;
 
@@ -3640,13 +3745,6 @@ public class Visitors implements MyParserVisitor{
 		return labelBranch;
 	}
 
-	//label
-	@Override
-	public Object visit(ASTlabel node, Object data) {
-		Object label = node.value.toString();
-		return label;
-	}
-
 	//condition and label
 	@Override
 	public Object visit(ASTCbranch node, Object data) {
@@ -3657,4 +3755,28 @@ public class Visitors implements MyParserVisitor{
 
 		return ret;
 	}
+
+	//branchlink
+	@Override
+	public Object visit(ASTbranchLink node, Object data) {
+		String labelBranchLink = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		return labelBranchLink;
+	}
+
+	@Override
+	public Object visit(ASTCbranchLink node, Object data) {
+		String cond = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		String labelLink = node.jjtGetChild(1).jjtAccept(this, data).toString();
+
+		String ret = cond+","+labelLink;
+
+		return ret;
+	}
+	
+	//label
+		@Override
+		public Object visit(ASTlabel node, Object data) {
+			Object label = node.value.toString();
+			return label;
+		}
 }
