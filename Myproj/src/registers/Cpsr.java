@@ -17,6 +17,8 @@ public class Cpsr {
 		cpsr.put("I", 0); //masque d'interruption
 		cpsr.put("F", 0); //masque d'interruption
 		
+		cpsr.put("mode", 10000); //user mode by default (10011 for supervisor mode)
+		
 		//cpsr.put("T", 0); thumb state
 		
 		return cpsr;
@@ -29,6 +31,7 @@ public class Cpsr {
 		cpsr.put("V", 0);
 		cpsr.put("I", 0); 
 		cpsr.put("F", 0); 
+		cpsr.put("mode", 10000); 
 	}
 	
 	public void print(){

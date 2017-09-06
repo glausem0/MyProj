@@ -631,11 +631,23 @@ public class Visitors implements MyParserVisitor{
 		return valInt;
 	}
 
-	//Hexadecimal
+	//Hexa
 	@Override
 	public Object visit(ASThexa node, Object data) {
 		String valStr = (String) node.data.get("hexa");
 		valStr = valStr.replace("#0x", "");
+		//to have signed integer from hex:
+		long valLong = Long.parseLong(valStr, 16);
+		int value = (int) valLong;
+
+		return value;
+	}
+	
+	//Hexadecimal
+	@Override
+	public Object visit(ASThexadecimal node, Object data) {
+		String valStr = (String) node.data.get("hexadecimal");
+		valStr = valStr.replace("0x", "");
 		//to have signed integer from hex:
 		long valLong = Long.parseLong(valStr, 16);
 		int value = (int) valLong;
@@ -3736,6 +3748,25 @@ public class Visitors implements MyParserVisitor{
 		}
 		return null;
 	}
+	
+	//*Software interrupt*//
+	//SWI
+	@Override
+	public Object visit(ASTswi node, Object data) {
+		String swi_Handler = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		return swi_Handler;
+	}
+
+
+	@Override
+	public Object visit(ASTCswi node, Object data) {
+		String cond = node.jjtGetChild(0).jjtAccept(this, data).toString();
+		String swi_Handler = node.jjtGetChild(1).jjtAccept(this, data).toString();
+		
+		String ret = cond+","+swi_Handler;
+		
+		return ret;
+	}
 
 	//*Branch*//
 	//branch
@@ -3779,4 +3810,6 @@ public class Visitors implements MyParserVisitor{
 			Object label = node.value.toString();
 			return label;
 		}
+
+		
 }

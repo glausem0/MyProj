@@ -3,7 +3,6 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="DataNode";
- /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyParser)package compAndInt;
@@ -77,10 +76,14 @@ public class MyParser {
   /*SWP*/
 | < SWP : "swp" >
 
+  /*SWI*/
+| < SWI : "swi" >
+
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
 | < REGISTER  : "r0" | "r1" | "r2" | "r3" | "r4" | "r5" | "r6" | "r7" | "r8" | "r9" | "r10" | "r11" | "r12" | ("r13" | "sp") | ( "r14"| "lr") | ("r15"|"pc") >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
+| < HEXADECIMAL : ("0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
 | < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {}
@@ -122,6 +125,8 @@ void instr() #void:
 | stm()
 
 | swp()
+
+| swi()
 
 | branchNode()
 | label()
@@ -1016,6 +1021,15 @@ void swp() #void:
 | (<B> register() "," register() "," "[" register() "]") #swpCB(4)  )  )
 }
 
+void swi() #void:
+{}
+{
+  <SWI>
+  (
+    (hexadecimal() #swi(1))
+  | (cond() hexadecimal() #Cswi(2))  ) 
+}
+
 void branch() #void:
 {}
 { < B >
@@ -1136,6 +1150,12 @@ void hexa():
 {Token t;}
 {
  t = < HEXA > { jjtThis.data.put("hexa", t.image.toString()); }
+}
+
+void hexadecimal():
+{Token t;}
+{
+ t = < HEXADECIMAL > { jjtThis.data.put("hexadecimal", t.image.toString()); }
 }
 
 void num():

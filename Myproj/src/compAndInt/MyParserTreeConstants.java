@@ -193,26 +193,29 @@ public interface MyParserTreeConstants
   public int JJTSWPB = 187;
   public int JJTSWPC = 188;
   public int JJTSWPCB = 189;
-  public int JJTCBRANCH = 190;
-  public int JJTBRANCH = 191;
-  public int JJTCBRANCHLINK = 192;
-  public int JJTBRANCHLINK = 193;
-  public int JJTCLOSEAUP = 194;
-  public int JJTCLOSE = 195;
-  public int JJTSHIFTLS = 196;
-  public int JJTSHIFTF = 197;
-  public int JJTAMODE = 198;
-  public int JJTCOND = 199;
-  public int JJTLSL = 200;
-  public int JJTLSR = 201;
-  public int JJTASR = 202;
-  public int JJTROR = 203;
-  public int JJTSHIFT = 204;
-  public int JJTREGISTER = 205;
-  public int JJTNUMBER = 206;
-  public int JJTHEXA = 207;
-  public int JJTNUM = 208;
-  public int JJTLABEL = 209;
+  public int JJTSWI = 190;
+  public int JJTCSWI = 191;
+  public int JJTCBRANCH = 192;
+  public int JJTBRANCH = 193;
+  public int JJTCBRANCHLINK = 194;
+  public int JJTBRANCHLINK = 195;
+  public int JJTCLOSEAUP = 196;
+  public int JJTCLOSE = 197;
+  public int JJTSHIFTLS = 198;
+  public int JJTSHIFTF = 199;
+  public int JJTAMODE = 200;
+  public int JJTCOND = 201;
+  public int JJTLSL = 202;
+  public int JJTLSR = 203;
+  public int JJTASR = 204;
+  public int JJTROR = 205;
+  public int JJTSHIFT = 206;
+  public int JJTREGISTER = 207;
+  public int JJTNUMBER = 208;
+  public int JJTHEXA = 209;
+  public int JJTHEXADECIMAL = 210;
+  public int JJTNUM = 211;
+  public int JJTLABEL = 212;
 
 
   public String[] jjtNodeName = {
@@ -406,6 +409,8 @@ public interface MyParserTreeConstants
     "swpb",
     "swpC",
     "swpCB",
+    "swi",
+    "Cswi",
     "Cbranch",
     "branch",
     "CbranchLink",
@@ -424,8 +429,9 @@ public interface MyParserTreeConstants
     "register",
     "number",
     "hexa",
+    "hexadecimal",
     "num",
     "label",
   };
 }
-/* JavaCC - OriginalChecksum=12f8fde54da601d9cdbb3817935cd42b (do not edit this line) */
+/* JavaCC - OriginalChecksum=492a000c08d43e212dba76ee9e96ab59 (do not edit this line) */

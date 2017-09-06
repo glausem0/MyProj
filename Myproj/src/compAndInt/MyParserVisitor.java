@@ -193,6 +193,8 @@ public interface MyParserVisitor
   public Object visit(ASTswpb node, Object data);
   public Object visit(ASTswpC node, Object data);
   public Object visit(ASTswpCB node, Object data);
+  public Object visit(ASTswi node, Object data);
+  public Object visit(ASTCswi node, Object data);
   public Object visit(ASTCbranch node, Object data);
   public Object visit(ASTbranch node, Object data);
   public Object visit(ASTCbranchLink node, Object data);
@@ -211,7 +213,8 @@ public interface MyParserVisitor
   public Object visit(ASTregister node, Object data);
   public Object visit(ASTnumber node, Object data);
   public Object visit(ASThexa node, Object data);
+  public Object visit(ASThexadecimal node, Object data);
   public Object visit(ASTnum node, Object data);
   public Object visit(ASTlabel node, Object data);
 }
-/* JavaCC - OriginalChecksum=a821492f73d472da903771be2c221b27 (do not edit this line) */
+/* JavaCC - OriginalChecksum=fee74bed61e8d7f136337257a1b27c95 (do not edit this line) */

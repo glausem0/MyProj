@@ -4,7 +4,6 @@
  */options{              
                 
                          
- /*COMMON_TOKEN_ACTION=true;*/
  /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyParser)package compAndInt;
@@ -81,10 +80,14 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ 
   /*SWP*/
 | < SWP : "swp" >
 
+  /*SWI*/
+| < SWI : "swi" >
+
   /*VAR*/
 | < NUMBER : ("#") ("-") ([ "0"-"9" ])+ | ("#") ([ "0"-"9" ])+  >
 | < REGISTER  : "r0" | "r1" | "r2" | "r3" | "r4" | "r5" | "r6" | "r7" | "r8" | "r9" | "r10" | "r11" | "r12" | ("r13" | "sp") | ( "r14"| "lr") | ("r15"|"pc") >
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
+| < HEXADECIMAL : ("0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
 | < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
 {/*@bgen(jjtree) prog */
@@ -157,6 +160,8 @@ void instr()      :
 | stm()
 
 | swp()
+
+| swi()
 
 | branchNode()
 | label()
@@ -6285,6 +6290,69 @@ void swp()      :
 /*@egen*/            )  )
 }
 
+void swi()      :
+{}
+{
+  <SWI>
+  (
+    (/*@bgen(jjtree) #swi( 1) */
+     {
+       ASTswi jjtn001 = new ASTswi(JJTSWI);
+       boolean jjtc001 = true;
+       jjtree.openNodeScope(jjtn001);
+     }
+     try {
+/*@egen*/hexadecimal()/*@bgen(jjtree)*/
+     } catch (Throwable jjte001) {
+       if (jjtc001) {
+         jjtree.clearNodeScope(jjtn001);
+         jjtc001 = false;
+       } else {
+         jjtree.popNode();
+       }
+       if (jjte001 instanceof RuntimeException) {
+         throw (RuntimeException)jjte001;
+       }
+       if (jjte001 instanceof ParseException) {
+         throw (ParseException)jjte001;
+       }
+       throw (Error)jjte001;
+     } finally {
+       if (jjtc001) {
+         jjtree.closeNodeScope(jjtn001,  1);
+       }
+     }
+/*@egen*/        )
+  | (cond()/*@bgen(jjtree) #Cswi( 2) */
+            {
+              ASTCswi jjtn002 = new ASTCswi(JJTCSWI);
+              boolean jjtc002 = true;
+              jjtree.openNodeScope(jjtn002);
+            }
+            try {
+/*@egen*/ hexadecimal()/*@bgen(jjtree)*/
+            } catch (Throwable jjte002) {
+              if (jjtc002) {
+                jjtree.clearNodeScope(jjtn002);
+                jjtc002 = false;
+              } else {
+                jjtree.popNode();
+              }
+              if (jjte002 instanceof RuntimeException) {
+                throw (RuntimeException)jjte002;
+              }
+              if (jjte002 instanceof ParseException) {
+                throw (ParseException)jjte002;
+              }
+              throw (Error)jjte002;
+            } finally {
+              if (jjtc002) {
+                jjtree.closeNodeScope(jjtn002,  2);
+              }
+            }
+/*@egen*/         )  ) 
+}
+
 void branch()      :
 {}
 { < B >
@@ -6757,6 +6825,29 @@ void hexa():
                 jjtc000 = false;
               }
 /*@egen*/ { jjtn000.data.put("hexa", t.image.toString()); }/*@bgen(jjtree)*/
+ } finally {
+   if (jjtc000) {
+     jjtree.closeNodeScope(jjtn000, true);
+   }
+ }
+/*@egen*/
+}
+
+void hexadecimal():
+{/*@bgen(jjtree) hexadecimal */
+ ASThexadecimal jjtn000 = new ASThexadecimal(JJTHEXADECIMAL);
+ boolean jjtc000 = true;
+ jjtree.openNodeScope(jjtn000);
+/*@egen*/Token t;}
+{/*@bgen(jjtree) hexadecimal */
+ try {
+/*@egen*/
+ t = < HEXADECIMAL >/*@bgen(jjtree)*/
+                     {
+                       jjtree.closeNodeScope(jjtn000, true);
+                       jjtc000 = false;
+                     }
+/*@egen*/ { jjtn000.data.put("hexadecimal", t.image.toString()); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
      jjtree.closeNodeScope(jjtn000, true);
