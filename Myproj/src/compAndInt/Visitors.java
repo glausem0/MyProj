@@ -12,7 +12,7 @@ import instructions.Condition;
 import instructions.Instruction;
 import instructions.UpdateCPSR;
 import memory.Memory;
-import registers.Cpsr;
+import registers.Cpsr_Spsr;
 import registers.Register;
 import view.View;
 
@@ -20,8 +20,8 @@ public class Visitors implements MyParserVisitor{
 
 	private Register regData;
 	private HashMap<Object, Object> reg; 
-	private Cpsr cpsr; 
-	private HashMap<Object, Object> cpsrReg; 
+	private Cpsr_Spsr C_S_psr; 
+	private HashMap<Object, Object> C_S_psrReg; 
 	private Memory memory; 
 	private LinkedHashMap<Object, Object> memor; 
 	private Condition condition;
@@ -37,8 +37,8 @@ public class Visitors implements MyParserVisitor{
 
 	public Visitors(Register regData, 
 			HashMap<Object, Object> reg, 
-			Cpsr cpsr, 
-			HashMap<Object, Object> cpsrReg, 
+			Cpsr_Spsr C_S_psr,  
+			HashMap<Object, Object> C_S_psrReg, 
 			Memory memory, 
 			LinkedHashMap<Object, Object> memor, 
 			Condition condition,
@@ -47,8 +47,8 @@ public class Visitors implements MyParserVisitor{
 			Instruction inst){
 		this.regData = regData;
 		this.reg = reg;
-		this.cpsr = cpsr;
-		this.cpsrReg = cpsrReg;
+		this.C_S_psr = C_S_psr;
+		this.C_S_psrReg = C_S_psrReg; 
 		this.memory = memory;
 		this.memor = memor;
 		this.condition = condition;
@@ -90,28 +90,56 @@ public class Visitors implements MyParserVisitor{
 	}
 	
 	/**
-	 * map register sp to r13, lr, to r14, pc to r15
+	 * first look if we're in user mode or supervisor mode, then map the 
+	 * name of registers corresponding to the mode 
+	 * example: in user mode r14 = r14 and sp = r14; in supervisor mode r14 = r14_svc and sp = r14_svc
 	 * @param register
 	 * @return
 	 */
 	private String mapRegisters(Object register){
-		String returnStr;
+		String returnStr = null;
 
-		switch(register.toString()){
-		case "sp":
-			returnStr = "r13";
-			break;
+		if( C_S_psrReg.get("mode").equals("10000") ){ //user mode
+			switch(register.toString()){
+			case "sp":
+				returnStr = "r13";
+				break;
 
-		case "lr":
-			returnStr = "r14";
-			break;
+			case "lr":
+				returnStr = "r14";
+				break;
 
-		case "pc":
-			returnStr = "r15";
-			break;
+			case "pc":
+				returnStr = "r15";
+				break;
+			default:
+				returnStr = register.toString();
+			}
+		}
+		else if( C_S_psrReg.get("mode").equals("10011") ){ //supervisor mode 
+			switch(register.toString()){
+			case("r13"):
+				returnStr = "r13_svc";
+				break;
+			
+			case "sp":
+				returnStr = "r13_svc";
+				break;
+				
+			case("r14"):
+				returnStr = "r14_svc";
+				break;
+				
+			case "lr":
+				returnStr = "r14_svc";
+				break;
 
-		default:
-			returnStr = register.toString();
+			case "pc":
+				returnStr = "r15";
+				break;
+			default:
+				returnStr = register.toString();
+			}
 		}
 
 		return returnStr;
@@ -402,7 +430,7 @@ public class Visitors implements MyParserVisitor{
 			}
 			break;
 
-			case("branch"):{
+			case("branch"):{//simple branch (juste "B")
 				String labelBranch = node.jjtGetChild(child).jjtAccept(this, data).toString();
 				if(branches.containsKey("label"+labelBranch)){//if label before branch
 					int newi = branches.get("label"+labelBranch);
@@ -441,7 +469,7 @@ public class Visitors implements MyParserVisitor{
 			}
 			break;
 
-			case("Cbranch"):{
+			case("Cbranch"):{ //branch with condition (B<cond>)
 				String labelBranchC = node.jjtGetChild(child).jjtAccept(this, data).toString();
 				String[] condAndLab = labelBranchC.split(",");
 				String cond = condAndLab[0];
@@ -494,7 +522,7 @@ public class Visitors implements MyParserVisitor{
 			}
 			break;
 
-			case("branchLink"):{
+			case("branchLink"):{ //simple branch link (BL)
 				int lr = 0;
 				String labelBranch = node.jjtGetChild(child).jjtAccept(this, data).toString();
 				if(branches.containsKey("label"+labelBranch)){//if label before branch
@@ -539,7 +567,7 @@ public class Visitors implements MyParserVisitor{
 			}
 			break;
 
-			case("CbranchLink"):{
+			case("CbranchLink"):{ //branch link and condition (BL<cond>)
 				int lr = 0;
 				String labelBranchC = node.jjtGetChild(child).jjtAccept(this, data).toString();
 				String[] condAndLab = labelBranchC.split(",");
@@ -596,6 +624,19 @@ public class Visitors implements MyParserVisitor{
 
 				reg.put("r15", pc);
 				reg.put("r14", lr);
+			}
+			break;
+			
+			case("swi"):{
+				String swi_h = node.jjtGetChild(child).jjtAccept(this, data).toString(); //get the swi number
+				//enter in supervisor mode -> change cpsr:
+				C_S_psrReg.put("mode", 10011); //change mode in cpsr
+				//TODO le reste
+			}
+			break;
+			
+			case("Cswi"):{
+				
 			}
 			break;
 
@@ -920,7 +961,7 @@ public class Visitors implements MyParserVisitor{
 		//add the two arguments:
 		int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
 		String ret = String.valueOf(re);
-		String C = cpsrReg.get("C").toString();
+		String C = C_S_psrReg.get("C").toString();
 
 		//Then add the C (carry):
 		inst.addInstr(reg, ret, C);
@@ -937,7 +978,7 @@ public class Visitors implements MyParserVisitor{
 		//add the two arguments:
 		int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
 		String ret = String.valueOf(re);
-		String C = cpsrReg.get("C").toString();
+		String C = C_S_psrReg.get("C").toString();
 
 		//Then add the C (carry):
 		int result = inst.addInstr(reg, ret, C);
@@ -958,7 +999,7 @@ public class Visitors implements MyParserVisitor{
 			//add the two arguments:
 			int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
 			String ret = String.valueOf(re);
-			String C = cpsrReg.get("C").toString();
+			String C = C_S_psrReg.get("C").toString();
 
 			//Then add the C (carry):
 			inst.addInstr(reg, ret, C);
@@ -978,7 +1019,7 @@ public class Visitors implements MyParserVisitor{
 			//add the two arguments:
 			int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
 			String ret = String.valueOf(re);
-			String C = cpsrReg.get("C").toString();
+			String C = C_S_psrReg.get("C").toString();
 
 			//Then add the C (carry):
 			int result = inst.addInstr(reg, ret, C);
@@ -1052,7 +1093,7 @@ public class Visitors implements MyParserVisitor{
 		//Sub the two arguments first
 		int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
 		String ret = String.valueOf(re);
-		String C = cpsrReg.get("C").toString();
+		String C = C_S_psrReg.get("C").toString();
 
 		//Then sub the C (carry):
 		inst.subInstr(reg, ret, C);
@@ -1069,7 +1110,7 @@ public class Visitors implements MyParserVisitor{
 		//Sub the two arguments first
 		int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
 		String ret = String.valueOf(re);
-		String C = cpsrReg.get("C").toString();
+		String C = C_S_psrReg.get("C").toString();
 
 		//Then sub the C (carry):
 		int result = inst.subInstr(reg, ret, C);
@@ -1090,7 +1131,7 @@ public class Visitors implements MyParserVisitor{
 			//Sub the two arguments first
 			int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
 			String ret = String.valueOf(re);
-			String C = cpsrReg.get("C").toString();
+			String C = C_S_psrReg.get("C").toString();
 
 			//Then sub the C (carry):
 			inst.subInstr(reg, ret, C);
@@ -1110,7 +1151,7 @@ public class Visitors implements MyParserVisitor{
 			//Sub the two arguments first
 			int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
 			String ret = String.valueOf(re);
-			String C = cpsrReg.get("C").toString();
+			String C = C_S_psrReg.get("C").toString();
 
 			//Then sub the C (carry):
 			int result = inst.subInstr(reg, ret, C);
@@ -1186,7 +1227,7 @@ public class Visitors implements MyParserVisitor{
 		//Sub the two arguments first:
 		int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
 		String ret = String.valueOf(re);
-		String C = cpsrReg.get("C").toString();
+		String C = C_S_psrReg.get("C").toString();
 
 		if (C.equals("1")) C = "0";
 		else C="1";
@@ -1206,7 +1247,7 @@ public class Visitors implements MyParserVisitor{
 		//Sub the two arguments first:
 		int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
 		String ret = String.valueOf(re);
-		String C = cpsrReg.get("C").toString();
+		String C = C_S_psrReg.get("C").toString();
 
 		if (C.equals("1")) C = "0";
 		else C="1";
@@ -1229,7 +1270,7 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
 			String ret = String.valueOf(re);
-			String C = cpsrReg.get("C").toString();
+			String C = C_S_psrReg.get("C").toString();
 
 			if (C.equals("1")) C = "0";
 			else C="1";
@@ -1251,7 +1292,7 @@ public class Visitors implements MyParserVisitor{
 			//Sub the two arguments first:
 			int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
 			String ret = String.valueOf(re);
-			String C = cpsrReg.get("C").toString();
+			String C = C_S_psrReg.get("C").toString();
 
 			if (C.equals("1")) C = "0";
 			else C="1";

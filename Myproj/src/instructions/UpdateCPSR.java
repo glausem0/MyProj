@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 public class UpdateCPSR {
 
-	HashMap<Object, Object> cpsr;
+	HashMap<Object, Object> C_S_psr;
 
-	public UpdateCPSR(HashMap<Object, Object> cpsr){
-		this.cpsr = cpsr;
+	public UpdateCPSR(HashMap<Object, Object> C_S_psr){
+		this.C_S_psr = C_S_psr;
 	}
 
 	private boolean negative(int result){
@@ -49,36 +49,72 @@ public class UpdateCPSR {
 
 	public void update(int result, boolean Nflag, boolean Zflag, boolean Cflag, boolean Vflag){
 
-		if(Nflag){
-			if(negative(result)){
-				cpsr.put("N", 1);
-			}else{
-				cpsr.put("N", 0);
+		if( C_S_psr.get("mode").equals("10000") ){ //user mode
+			if(Nflag){
+				if(negative(result)){
+					C_S_psr.put("N", 1);
+				}else{
+					C_S_psr.put("N", 0);
+				}
 			}
-		}
 
-		if(Zflag){
-			if(zero(result)){
-				cpsr.put("Z", 1);
-			}else{
-				cpsr.put("Z", 0);
+			if(Zflag){
+				if(zero(result)){
+					C_S_psr.put("Z", 1);
+				}else{
+					C_S_psr.put("Z", 0);
+				}
 			}
-		}
 
-		if(Cflag){
-			if(carry(result)){
-				cpsr.put("C", 1);
-			}else{
-				cpsr.put("C", 0);
+			if(Cflag){
+				if(carry(result)){
+					C_S_psr.put("C", 1);
+				}else{
+					C_S_psr.put("C", 0);
+				}
 			}
-		}
 
-		if(Vflag){
-			if(overflow(result)){
-				cpsr.put("V", 1);
-			}else{
-				cpsr.put("V", 0);
+			if(Vflag){
+				if(overflow(result)){
+					C_S_psr.put("V", 1);
+				}else{
+					C_S_psr.put("V", 0);
+				}
 			}
 		}
+		else if( C_S_psr.get("mode").equals("10011") ){ //supervisor mode
+			if(Nflag){
+				if(negative(result)){
+					C_S_psr.put("N_svc", 1);
+				}else{
+					C_S_psr.put("N_svc", 0);
+				}
+			}
+
+			if(Zflag){
+				if(zero(result)){
+					C_S_psr.put("Z_svc", 1);
+				}else{
+					C_S_psr.put("Z_svc", 0);
+				}
+			}
+
+			if(Cflag){
+				if(carry(result)){
+					C_S_psr.put("C_svc", 1);
+				}else{
+					C_S_psr.put("C_svc", 0);
+				}
+			}
+
+			if(Vflag){
+				if(overflow(result)){
+					C_S_psr.put("V_svc", 1);
+				}else{
+					C_S_psr.put("V_svc", 0);
+				}
+			}
+		}
+		
 	}
 }

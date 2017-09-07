@@ -24,19 +24,19 @@ public class View {
 	Register regData = new Register();
 	private HashMap<Object, Object> reg = regData.init();
 
-	Cpsr cpsr = new Cpsr();
-	private HashMap<Object, Object> cpsrReg = cpsr.init();
-
+	Cpsr_Spsr C_S_psr = new Cpsr_Spsr();
+	private HashMap<Object, Object> C_S_psrReg = C_S_psr.init();
+	
 	Memory memory = new Memory();
 	private LinkedHashMap<Object, Object> memor = memory.init();
 
-	Condition condition = new Condition(cpsrReg);
-	UpdateCPSR upCpsr = new UpdateCPSR(cpsrReg);
+	Condition condition = new Condition(C_S_psrReg);
+	UpdateCPSR upCpsr = new UpdateCPSR(C_S_psrReg);
 	AccessMemory AMem = new AccessMemory(memor);
 	Instruction inst = new Instruction(reg, AMem);
 
 	MyParser parser = null;
-	Visitors vi= new Visitors(regData, reg, cpsr, cpsrReg, memory, memor, condition, upCpsr, AMem, inst);
+	Visitors vi= new Visitors(regData, reg, C_S_psr, C_S_psrReg, memory, memor, condition, upCpsr, AMem, inst);
 
 	static File selectedFile;
 	File tmpFile;
@@ -63,21 +63,25 @@ public class View {
 	private JTextField textFieldR13;
 	private JTextField textFieldR14;
 	private JTextField textFieldR15;
+	
 	private JTextField textField_N;
 	private JTextField textField_Z;
 	private JTextField textField_C;
 	private JTextField textField_V;
 	private JTextField textField_I;
 	private JTextField textField_F;
+	private JTextField textField_mode;
+	
 	private JTextField textFieldR13Sup;
 	private JTextField textFieldR14Sup;
+	
 	private JTextField textField_N_Sup;
 	private JTextField textField_Z_Sup;
 	private JTextField textField_C_Sup;
 	private JTextField textField_V_Sup;
 	private JTextField textField_I_Sup;
 	private JTextField textField_F_Sup;
-	private JTextField textField_mode;
+	
 
 	/**
 	 * Create the application.
@@ -623,7 +627,7 @@ public class View {
 					vi.setProgArray(progArray);
 
 					regData.clearRegister();
-					cpsr.clearCpsr();
+					C_S_psr.clearCpsr();
 					memory.clearMemory();
 
 					RunFile(selectedFile);
@@ -694,7 +698,7 @@ public class View {
 				vi.setProgArray(progArray);
 
 				regData.clearRegister();
-				cpsr.clearCpsr();
+				C_S_psr.clearCpsr();
 				memory.clearMemory();
 
 				RunFile(selectedFile);
@@ -705,7 +709,7 @@ public class View {
 				textPane.setText("");
 
 				regData.clearRegister();
-				cpsr.clearCpsr();
+				C_S_psr.clearCpsr();
 				memory.clearMemory();
 
 				//Create tmp file:
@@ -845,7 +849,7 @@ public class View {
 					vi.setProgArray(progArray);
 
 					regData.clearRegister();
-					cpsr.clearCpsr();
+					C_S_psr.clearCpsr();
 					memory.clearMemory();
 
 					RunFile(selectedFile);
@@ -869,17 +873,26 @@ public class View {
 		hexFields();
 
 		//set fields cpsr:
-		textField_N.setText(cpsrReg.get("N").toString());
-		textField_Z.setText(cpsrReg.get("Z").toString());
-		textField_C.setText(cpsrReg.get("C").toString());
-		textField_V.setText(cpsrReg.get("V").toString());
-		textField_I.setText(cpsrReg.get("I").toString());
-		textField_F.setText(cpsrReg.get("F").toString()); 
-		textField_mode.setText(cpsrReg.get("mode").toString()); 
+		textField_N.setText(C_S_psrReg.get("N").toString());
+		textField_Z.setText(C_S_psrReg.get("Z").toString());
+		textField_C.setText(C_S_psrReg.get("C").toString());
+		textField_V.setText(C_S_psrReg.get("V").toString());
+		textField_I.setText(C_S_psrReg.get("I").toString());
+		textField_F.setText(C_S_psrReg.get("F").toString()); 
+		textField_mode.setText(C_S_psrReg.get("mode").toString()); 
+		
+		//set fields spsr:
+		textField_N_Sup.setText(C_S_psrReg.get("N_svc").toString());
+		textField_Z_Sup.setText(C_S_psrReg.get("Z_svc").toString());
+		textField_C_Sup.setText(C_S_psrReg.get("C_svc").toString());
+		textField_V_Sup.setText(C_S_psrReg.get("V_svc").toString());
+		textField_I_Sup.setText(C_S_psrReg.get("I_svc").toString());
+		textField_F_Sup.setText(C_S_psrReg.get("F_svc").toString()); 
 		
 	}
 
 	private void IntegerFields(){
+		//user mode:
 		textFieldR0.setText(reg.get("r0").toString());
 		textFieldR1.setText(reg.get("r1").toString());
 		textFieldR2.setText(reg.get("r2").toString());
@@ -896,6 +909,11 @@ public class View {
 		textFieldR13.setText(reg.get("r13").toString());
 		textFieldR14.setText(reg.get("r14").toString());
 		textFieldR15.setText(reg.get("r15").toString());
+		
+		//supervisor mode:
+		textFieldR13Sup.setText(reg.get("r13_svc").toString());
+		textFieldR14Sup.setText(reg.get("r14_svc").toString());
+		
 	}
 
 	public String toHex(String el){
@@ -912,6 +930,7 @@ public class View {
 	}
 
 	private void hexFields(){
+		//user mode:
 		textFieldR0.setText(toHex(reg.get("r0").toString()));
 		textFieldR1.setText(toHex(reg.get("r1").toString()));
 		textFieldR2.setText(toHex(reg.get("r2").toString()));
@@ -928,6 +947,10 @@ public class View {
 		textFieldR13.setText(toHex(reg.get("r13").toString()));
 		textFieldR14.setText(toHex(reg.get("r14").toString()));
 		textFieldR15.setText(toHex(reg.get("r15").toString()));
+		
+		//supervisor mode:
+		textFieldR13Sup.setText(toHex(reg.get("r13_svc").toString()));
+		textFieldR14Sup.setText(toHex(reg.get("r14_svc").toString()));
 	}
 
 	private void initfieldsVal(){
@@ -948,6 +971,9 @@ public class View {
 		textFieldR13.setText("0");
 		textFieldR14.setText("0");
 		textFieldR15.setText("0");
+		
+		textFieldR13Sup.setText("0");
+		textFieldR14Sup.setText("0");
 
 		//set fields cpsr:
 		textField_N.setText("0");
@@ -957,6 +983,14 @@ public class View {
 		textField_I.setText("0");
 		textField_F.setText("0"); 
 		textField_mode.setText("10000"); 
+		
+		//set fields spsr:
+		textField_N_Sup.setText("0");
+		textField_Z_Sup.setText("0");
+		textField_C_Sup.setText("0");
+		textField_V_Sup.setText("0");
+		textField_I_Sup.setText("0");
+		textField_F_Sup.setText("0"); 
 	}
 
 	private void RunFile(File file){

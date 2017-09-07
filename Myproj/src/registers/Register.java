@@ -26,6 +26,10 @@ public class Register {
 		registers.put("r14", 0); //lr
 		registers.put("r15", 0); //pc 
 								 //cpsr
+		
+		registers.put("r13_svc", 0); //sp r13 supervisor mode
+		registers.put("r14_svc", 0); //lr r14 supervisor mode
+		
 		return registers;
 	}
 	

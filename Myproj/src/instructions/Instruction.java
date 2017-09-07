@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Instruction {
 
-	private final static Long LONG_MASK = 0xffffffffL;
+	//private final static Long LONG_MASK = 0xffffffffL;
 	private HashMap<Object, Object> regData;
 	private AccessMemory mem;
 

@@ -4,207 +4,354 @@ import java.util.HashMap;
 
 public class Condition {
 	
-	HashMap<Object, Object> cpsr;
+	HashMap<Object, Object> C_S_psr;
 	
-	public Condition(HashMap<Object, Object> cpsr){
-		this.cpsr = cpsr;
+	public Condition(HashMap<Object, Object> C_S_psr){
+		this.C_S_psr = C_S_psr;
 	}
 	
-	private boolean condEq(){
+	private boolean condEq(String mode){
 		boolean response = false;
-		if (cpsr.get("Z").toString().equals("1")){
-			response = true;
+
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("Z").toString().equals("1")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("Z_svc").toString().equals("1")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condNe(){
+	private boolean condNe(String mode){
 		boolean response = false;
-		if (cpsr.get("Z").toString().equals("0")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("Z").toString().equals("0")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("Z_svc").toString().equals("0")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condCs(){
+	private boolean condCs(String mode){
 		boolean response = false;
-		if (cpsr.get("C").toString().equals("1")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("C").toString().equals("1")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("C_svc").toString().equals("1")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	//same as Cs
-	private boolean condHs(){
+	private boolean condHs(String mode){
 		boolean response = false;
-		if (cpsr.get("C").toString().equals("1")){
-			response = true;
+
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("C").toString().equals("1")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("C_svc").toString().equals("1")){
+				response = true;
+			}
+		}
+
 		return response;
 	}
 	
-	private boolean condCc(){
+	private boolean condCc(String mode){
 		boolean response = false;
-		if (cpsr.get("C").toString().equals("0")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("C").toString().equals("0")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("C_svc").toString().equals("0")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	//same as CC
-	private boolean condLo(){
+	private boolean condLo(String mode){
 		boolean response = false;
-		if (cpsr.get("C").toString().equals("0")){
-			response = true;
+
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("C").toString().equals("0")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("C_svc").toString().equals("0")){
+				response = true;
+			}
+		}
+
 		return response;
 	}
 	
-	private boolean condMi(){
+	private boolean condMi(String mode){
 		boolean response = false;
-		if (cpsr.get("N").toString().equals("1")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("N").toString().equals("1")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("N_svc").toString().equals("1")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condPl(){
+	private boolean condPl(String mode){
 		boolean response = false;
-		if (cpsr.get("N").toString().equals("0")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("N").toString().equals("0")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("N_svc").toString().equals("0")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condVs(){
+	private boolean condVs(String mode){
 		boolean response = false;
-		if (cpsr.get("V").toString().equals("1")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("V").toString().equals("1")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("V_svc").toString().equals("1")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condVc(){
+	private boolean condVc(String mode){
 		boolean response = false;
-		if (cpsr.get("V").toString().equals("0")){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("V").toString().equals("0")){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("V_svc").toString().equals("0")){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condHi(){
+	private boolean condHi(String mode){
 		boolean response = false;
-		if (cpsr.get("C").toString().equals("1") && cpsr.get("Z").toString().equals("0") ){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("C").toString().equals("1") && C_S_psr.get("Z").toString().equals("0") ){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("C_svc").toString().equals("1") && C_S_psr.get("Z_svc").toString().equals("0") ){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condLs(){
+	private boolean condLs(String mode){
 		boolean response = false;
-		if (cpsr.get("C").toString().equals("0") || cpsr.get("Z").toString().equals("1") ){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (C_S_psr.get("C").toString().equals("0") || C_S_psr.get("Z").toString().equals("1") ){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (C_S_psr.get("C_svc").toString().equals("0") || C_S_psr.get("Z_svc").toString().equals("1") ){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condGe(){
+	private boolean condGe(String mode){
 		boolean response = false;
-		if ( cpsr.get("N").toString().equals(cpsr.get("V").toString()) ){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if ( C_S_psr.get("N").toString().equals(C_S_psr.get("V").toString()) ){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if ( C_S_psr.get("N_svc").toString().equals(C_S_psr.get("V_svc").toString()) ){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condLt(){
+	private boolean condLt(String mode){
 		boolean response = false;
-		if ( !cpsr.get("N").toString().equals(cpsr.get("V").toString()) ){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if ( !C_S_psr.get("N").toString().equals(C_S_psr.get("V").toString()) ){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if ( !C_S_psr.get("N_svc").toString().equals(C_S_psr.get("V_svc").toString()) ){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condGt(){
+	private boolean condGt(String mode){
 		boolean response = false;
-		if ( cpsr.get("N").toString().equals(cpsr.get("V").toString()) && cpsr.get("Z").toString().equals("0") ){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if ( C_S_psr.get("N").toString().equals(C_S_psr.get("V").toString()) && C_S_psr.get("Z").toString().equals("0") ){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if ( C_S_psr.get("N_svc").toString().equals(C_S_psr.get("V_svc").toString()) && C_S_psr.get("Z_svc").toString().equals("0") ){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
-	private boolean condLe(){
+	private boolean condLe(String mode){
 		boolean response = false;
-		if (  !(cpsr.get("N").toString().equals(cpsr.get("V").toString())) || cpsr.get("Z").toString().equals("1") ){
-			response = true;
+		
+		if(mode.equals("10000")){//user mode
+			if (  !(C_S_psr.get("N").toString().equals(C_S_psr.get("V").toString())) || C_S_psr.get("Z").toString().equals("1") ){
+				response = true;
+			}
 		}
+		else if(mode.equals("10011")){ //supervisor mode:
+			if (  !(C_S_psr.get("N_svc").toString().equals(C_S_psr.get("V_svc").toString())) || C_S_psr.get("Z_svc").toString().equals("1") ){
+				response = true;
+			}
+		}
+		
 		return response;
 	}
 	
 	
 	public boolean condAction(String cond){
 		boolean condReturn = false;
+		
+		String mode = C_S_psr.get("mode").toString();
+		
 		switch (cond){
 		
 		case "eq":
-			condReturn = condEq();
+			condReturn = condEq(mode);
 			break;
 		
 		case "ne":
-			condReturn = condNe();
+			condReturn = condNe(mode);
 			break;
 		
 		case "cs":
-			condReturn = condCs();
+			condReturn = condCs(mode);
 			break;
 			
 		case "hs":
-			condReturn = condHs();
+			condReturn = condHs(mode);
 			break;
 			
 		case "cc":
-			condReturn = condCc();
+			condReturn = condCc(mode);
 			break;
 			
 		case "lo":
-			condReturn = condLo();
+			condReturn = condLo(mode);
 			break;
 			
 		case "mi":
-			condReturn = condMi();
+			condReturn = condMi(mode);
 			break;
 		
 		case "pl":
-			condReturn = condPl();
+			condReturn = condPl(mode);
 			break;
 		
 		case "vs":
-			condReturn = condVs();
+			condReturn = condVs(mode);
 			break;
 			
 		case "vc":
-			condReturn = condVc();
+			condReturn = condVc(mode);
 			break;
 			
 		case "hi":
-			condReturn = condHi();
+			condReturn = condHi(mode);
 			break;
 			
 		case "ls":
-			condReturn = condLs();
+			condReturn = condLs(mode);
 			break;
 			
 		case "ge":
-			condReturn = condGe();
+			condReturn = condGe(mode);
 			break;
 			
 		case "lt":
-			condReturn = condLt();
+			condReturn = condLt(mode);
 			break;
 			
 		case "gt":
-			condReturn = condGt();
+			condReturn = condGt(mode);
 			break;
 			
 		case "le":
-			condReturn = condLe();
+			condReturn = condLe(mode);
 			break;	
 		}
 		
