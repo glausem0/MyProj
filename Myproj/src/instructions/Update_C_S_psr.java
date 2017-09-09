@@ -2,11 +2,11 @@ package instructions;
 
 import java.util.HashMap;
 
-public class UpdateCPSR {
+public class Update_C_S_psr {
 
 	HashMap<Object, Object> C_S_psr;
 
-	public UpdateCPSR(HashMap<Object, Object> C_S_psr){
+	public Update_C_S_psr(HashMap<Object, Object> C_S_psr){
 		this.C_S_psr = C_S_psr;
 	}
 
@@ -49,7 +49,7 @@ public class UpdateCPSR {
 
 	public void update(int result, boolean Nflag, boolean Zflag, boolean Cflag, boolean Vflag){
 
-		if( C_S_psr.get("mode").equals("10000") ){ //user mode
+		if( C_S_psr.get("mode").toString().equals("10000") ){ //user mode
 			if(Nflag){
 				if(negative(result)){
 					C_S_psr.put("N", 1);
@@ -82,7 +82,7 @@ public class UpdateCPSR {
 				}
 			}
 		}
-		else if( C_S_psr.get("mode").equals("10011") ){ //supervisor mode
+		else if( C_S_psr.get("mode").toString().equals("10011") ){ //supervisor mode
 			if(Nflag){
 				if(negative(result)){
 					C_S_psr.put("N_svc", 1);
