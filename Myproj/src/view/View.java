@@ -627,7 +627,7 @@ public class View {
 					vi.setProgArray(progArray);
 
 					regData.clearRegister();
-					C_S_psr.clearCpsr();
+					C_S_psr.clearC_S_psr();
 					memory.clearMemory();
 
 					RunFile(selectedFile);
@@ -698,7 +698,7 @@ public class View {
 				vi.setProgArray(progArray);
 
 				regData.clearRegister();
-				C_S_psr.clearCpsr();
+				C_S_psr.clearC_S_psr();
 				memory.clearMemory();
 
 				RunFile(selectedFile);
@@ -709,7 +709,7 @@ public class View {
 				textPane.setText("");
 
 				regData.clearRegister();
-				C_S_psr.clearCpsr();
+				C_S_psr.clearC_S_psr();
 				memory.clearMemory();
 
 				//Create tmp file:
@@ -849,7 +849,7 @@ public class View {
 					vi.setProgArray(progArray);
 
 					regData.clearRegister();
-					C_S_psr.clearCpsr();
+					C_S_psr.clearC_S_psr();
 					memory.clearMemory();
 
 					RunFile(selectedFile);

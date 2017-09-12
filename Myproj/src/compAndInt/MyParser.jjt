@@ -911,13 +911,13 @@ void ldm() #void:
  | amode() register() 
     ("," "{" register()
      ( 
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmSimple(3) 
-    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #ldmList(4)
+      (closeOrCAUp()) #ldmSimple(4) 
+    | ("-" register() closeOrCAUp()) #ldmList(5)
      )
 	| "!" "," "{" register()
 	 (
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #MldmSimple(3)
-    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmList(4)
+      (closeOrCAUp()) #MldmSimple(4)
+    | ("-" register() closeOrCAUp()) #MldmList(5)
       )
      )
    )
@@ -926,13 +926,13 @@ void ldm() #void:
 | cond() amode() register()
  ("," "{" register()
      ( 
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #ldmCSimple(4)
-    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #ldmCList(5)
+      (closeOrCAUp()) #ldmCSimple(5)
+    | ( "-" register() closeOrCAUp()) #ldmCList(6)
      )
 	| "!" "," "{" register()
 	 (
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #MldmCSimple(4)
-    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MldmCList(5)
+      (closeOrCAUp()) #MldmCSimple(5)
+    | ("-" register() closeOrCAUp()) #MldmCList(6)
       )
      )
    )   )
@@ -942,16 +942,16 @@ void ldmEnums() #void:
 {}
 {
  LOOKAHEAD(4) 
-  (amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #MldmEnum
-| (amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #ldmEnum
+  (amode() register() "!" "," "{" register()( ("," register())+ closeOrCAUp()) ) #MldmEnum
+| (amode() register() "," "{" register() ( ("," register())+ closeOrCAUp()) ) #ldmEnum
 }
 
 void ldmCEnums() #void:
 {}
 {
  LOOKAHEAD(4)
- (cond() amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #ldmCEnum
-|(cond() amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #MldmCEnum
+ (cond() amode() register() "!" "," "{" register()( ("," register())+ closeOrCAUp()) ) #ldmCEnum
+|(cond() amode() register() "," "{" register() ( ("," register())+ closeOrCAUp()) ) #MldmCEnum
 }
 
 void stm() #void:
@@ -960,35 +960,34 @@ void stm() #void:
   < STM >
 (
   ( LOOKAHEAD(6)
-    stmEnums()  | amode() register()
+    stmEnums() | amode() register() 
     ("," "{" register()
      ( 
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #stmSimple(3)
-    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #stmList(4)
+      (closeOrCAUp()) #stmSimple(4) 
+    | ("-" register() closeOrCAUp()) #stmList(5)
      )
 	| "!" "," "{" register()
 	 (
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmSimple(3)
-    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmList(4)
+      (closeOrCAUp()) #MstmSimple(4)
+    | ("-" register() closeOrCAUp()) #MstmList(5)
       )
      )
    )
-   
- | (LOOKAHEAD(7)
+|(LOOKAHEAD(7)
    stmCEnums()
- | cond() amode() register()
+| cond() amode() register()
  ("," "{" register()
      ( 
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #stmCSimple(4)
-    | (LOOKAHEAD(4) ("-" register() "}") | ( "-" register() "}" "^")) #stmCList(5)
+      (closeOrCAUp()) #stmCSimple(5)
+    | ( "-" register() closeOrCAUp()) #stmCList(6)
      )
 	| "!" "," "{" register()
 	 (
-      (LOOKAHEAD(2) ("}") | ("}" "^")) #MstmCSimple(4)
-    | (LOOKAHEAD(4) ("-" register() "}") | ("-" register() "}" "^")) #MstmCList(5)
+      (closeOrCAUp()) #MstmCSimple(5)
+    | ("-" register() closeOrCAUp()) #MstmCList(6)
       )
      )
-   )  
+   )   
 )
 }
 
@@ -996,16 +995,16 @@ void stmEnums() #void:
 {}
 {
  LOOKAHEAD(4) 
-  (amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register() )+ "}") | ( ("," register())+ "}" "^")) ) #MstmEnum
-| (amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #stmEnum
+  (amode() register() "!" "," "{" register()( ("," register())+ closeOrCAUp()) ) #MstmEnum
+| (amode() register() "," "{" register() ( ("," register())+ closeOrCAUp()) ) #stmEnum
 }
 
 void stmCEnums() #void:
 {}
 {
  LOOKAHEAD(4)
- (cond() amode() register() "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #stmCEnum
-|(cond() amode() register() "!" "," "{" register() ( LOOKAHEAD(3)( ("," register())+ "}") | ( ("," register())+ "}" "^")) ) #MstmCEnum
+ (cond() amode() register() "!" "," "{" register()( ("," register())+ closeOrCAUp()) ) #stmCEnum
+|(cond() amode() register() "," "{" register() ( ("," register())+ closeOrCAUp()) ) #MstmCEnum
 }
 
 void swp() #void:
@@ -1059,9 +1058,16 @@ void branchNode() #void:
 void closeOrCAUp() #void:
 {}
 {
-  LOOKAHEAD(2)
+  (    LOOKAHEAD(2)
   ("]" "!") #closeAUp()
 | ("]") #close()
+ )
+ 
+  (    LOOKAHEAD(2)
+  ("}" "^") #closeAUp()
+| ("}") #close()
+   )
+
 }
 
 void regOrRegShift() #void:

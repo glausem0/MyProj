@@ -159,246 +159,6 @@ public class Visitors implements MyParserVisitor{
 	}
 	
 	/**
-	 * @param node
-	 * @return true if node is a non terminal node.
-	 */
-	/*private boolean principalNode(String node){
-		switch(node){
-		case("decl"): return true;
-		case("declS"): return true;
-		case("declC"): return true;
-		case("declCS"): return true;
-
-		case("decln"): return true;
-		case("declnS"): return true;
-		case("declnC"): return true;
-		case("declnCS"): return true;
-
-		case("add"): return true;
-		case("addS"): return true;
-		case("addC"): return true;
-		case("addCS"): return true;
-
-		case("adc"): return true;
-		case("adcS"): return true;
-		case("adcC"): return true;
-		case("adcCS"): return true;
-
-		case("sub"): return true;
-		case("subS"): return true;
-		case("subC"): return true;
-		case("subCS"): return true;
-
-		case("sbc"): return true;
-		case("sbcS"): return true;
-		case("sbcC"): return true;
-		case("sbcCS"): return true;
-
-		case("rsb"): return true;
-		case("rsbS"): return true;
-		case("rsbC"): return true;
-		case("rsbCS"): return true;
-
-		case("rsc"): return true;
-		case("rscS"): return true;
-		case("rscC"): return true;
-		case("rscCS"): return true;
-
-		case("mla"): return true;
-		case("mlaS"): return true;
-		case("mlaC"): return true;
-		case("mlaCS"): return true;
-
-		case("mul"): return true;
-		case("mulS"): return true;
-		case("mulC"): return true;
-		case("mulCS"): return true;
-
-		case("smlal"): return true;
-		case("smlalS"): return true;
-		case("smlalC"): return true;
-		case("smlalCS"): return true;
-
-		case("smull"): return true;
-		case("smullS"): return true;
-		case("smullC"): return true;
-		case("smullCS"): return true;
-
-		case("umlal"): return true;
-		case("umlalS"): return true;
-		case("umlalC"): return true;
-		case("umlalCS"): return true;
-
-		case("umull"): return true;
-		case("umullS"): return true;
-		case("umullC"): return true;
-		case("umullCS"): return true;
-
-		case("cmp"): return true;
-		case("cmpC"): return true;
-
-		case("cmn"): return true;
-		case("cmnC"): return true;
-
-		case("teq"): return true;
-		case("teqC"): return true;
-
-		case("tst"): return true;
-		case("tstC"): return true;
-
-		case("and"): return true;
-		case("andS"): return true;
-		case("andC"): return true;
-		case("andCS"): return true;
-
-		case("bic"): return true;
-		case("bicS"): return true;
-		case("bicC"): return true;
-		case("bicCS"): return true;
-
-		case("eor"): return true;
-		case("eorS"): return true;
-		case("eorC"): return true;
-		case("eorCS"): return true;
-
-		case("orr"): return true;
-		case("orrS"): return true;
-		case("orrC"): return true;
-		case("orrCS"): return true;
-
-		case("ldrPreNeg"): return true;
-		case("ldrPrePos"): return true;
-		case("ldrPostNeg"): return true;
-		case("ldrPostPos"): return true;
-		case("ldrSimple"): return true;
-
-		case("ldrBPreNeg"): return true;
-		case("ldrBPrePos"): return true;
-		case("ldrBPostNeg"): return true;
-		case("ldrBPostPos"): return true;
-		case("ldrBSimple"): return true;
-
-		case("ldrHPreNeg"): return true;
-		case("ldrHPrePos"): return true;
-		case("ldrHPostNeg"): return true;
-		case("ldrHPostPos"): return true;
-		case("ldrHSimple"): return true;
-
-		case("ldrSBPreNeg"): return true;
-		case("ldrSBPrePos"): return true;
-		case("ldrSBPostNeg"): return true;
-		case("ldrSBPostPos"): return true;
-		case("ldrSBSimple"): return true;
-
-		case("ldrSHPreNeg"): return true;
-		case("ldrSHPrePos"): return true;
-		case("ldrSHPostNeg"): return true;
-		case("ldrSHPostPos"): return true;
-		case("ldrSHSimple"): return true;
-
-		case("ldrCPreNeg"): return true;
-		case("ldrCPrePos"): return true;
-		case("ldrCPostNeg"): return true;
-		case("ldrCPostPos"): return true;
-		case("ldrCSimple"): return true;
-
-		case("ldrCBPreNeg"): return true;
-		case("ldrCBPrePos"): return true;
-		case("ldrCBPostNeg"): return true;
-		case("ldrCBPostPos"): return true;
-		case("ldrCBSimple"): return true;
-
-		case("ldrCHPreNeg"): return true;
-		case("ldrCHPrePos"): return true;
-		case("ldrCHPostNeg"): return true;
-		case("ldrCHPostPos"): return true;
-		case("ldrCHSimple"): return true;
-
-		case("ldrCSBPreNeg"): return true;
-		case("ldrCSBPrePos"): return true;
-		case("ldrCSBPostNeg"): return true;
-		case("ldrCSBPostPos"): return true;
-		case("ldrCSBSimple"): return true;
-
-		case("ldrCSHPreNeg"): return true;
-		case("ldrCSHPrePos"): return true;
-		case("ldrCSHPostNeg"): return true;
-		case("ldrCSHPostPos"): return true;
-		case("ldrCSHSimple"): return true;
-
-		case("strPreNeg"): return true;
-		case("strPrePos"): return true;
-		case("strPostNeg"): return true;
-		case("strPostPos"): return true;
-		case("strSimple"): return true;
-
-		case("strBPreNeg"): return true;
-		case("strBPrePos"): return true;
-		case("strBPostNeg"): return true;
-		case("strBPostPos"): return true;
-		case("strBSimple"): return true;
-
-		case("strHPreNeg"): return true;
-		case("strHPrePos"): return true;
-		case("strHPostNeg"): return true;
-		case("strHPostPos"): return true;
-		case("strHSimple"): return true;
-
-		case("strCPreNeg"): return true;
-		case("strCPrePos"): return true;
-		case("strCPostNeg"): return true;
-		case("strCPostPos"): return true;
-		case("strCSimple"): return true;
-
-		case("strCBPreNeg"): return true;
-		case("strCBPrePos"): return true;
-		case("strCBPostNeg"): return true;
-		case("strCBPostPos"): return true;
-		case("strCBSimple"): return true;
-
-		case("strCHPreNeg"): return true;
-		case("strCHPrePos"): return true;
-		case("strCHPostNeg"): return true;
-		case("strCHPostPos"): return true;
-		case("strCHSimple"): return true;
-
-		case("ldmSimple"): return true;
-		case("ldmList"): return true;
-		case("MldmSimple"): return true;
-		case("MldmList"): return true;
-		case("ldmCSimple"): return true;
-		case("ldmCList"): return true;
-		case("MldmCSimple"): return true;
-		case("MldmCList"): return true;
-		case("MldmEnum"): return true;
-		case("ldmEnum"): return true;
-		case("ldmCEnum"): return true;
-		case("MldmCEnum"): return true;
-
-		case("stmSimple"): return true;
-		case("stmList"): return true;
-		case("MstmSimple"): return true;
-		case("MstmList"): return true;
-		case("stmCSimple"): return true;
-		case("stmCList"): return true;
-		case("MstmCSimple"): return true;
-		case("MstmCList"): return true;
-		case("MstmEnum"): return true;
-		case("stmEnum"): return true;
-		case("stmCEnum"): return true;
-		case("MstmCEnum"): return true;
-
-		case("swp"): return true;
-		case("swpb"): return true;
-		case("swpC"): return true;
-		case("swpCB"): return true;
-
-		default: return false;
-
-		}
-	}
-*/
-	/**
 	 * @param progArray
 	 * @param elementLine
 	 * @return the line of the in the programme of the node 
@@ -812,6 +572,7 @@ public class Visitors implements MyParserVisitor{
 		return ror;
 	}
 
+	/*
 	//shift(<< and >>)
 	@Override
 	public Object visit(ASTshift node, Object data) {
@@ -819,6 +580,7 @@ public class Visitors implements MyParserVisitor{
 
 		return fle;		
 	}
+	*/
 
 	//condition and update
 	@Override
@@ -833,7 +595,7 @@ public class Visitors implements MyParserVisitor{
 		String c = "C";
 		return c;
 	}
-
+	
 	//***Non terminal node***//
 	//*Shift*//
 
@@ -849,6 +611,7 @@ public class Visitors implements MyParserVisitor{
 		return shiftVal;	
 	}
 
+	/*
 	//shift "<<" 
 	@Override
 	public Object visit(ASTshiftF node, Object data) {
@@ -860,38 +623,64 @@ public class Visitors implements MyParserVisitor{
 
 		return shiftVal;
 	}
+	*/
 
 	//*Arithmetic*//	
 	//MOV
 	@Override
 	public Object visit(ASTdecl node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
-		inst.movInstr(reg, val);
-
+		inst.movInstr(reg1, val);
+		
+		if(reg1.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTdeclC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.movInstr(reg, val);
+			inst.movInstr(reg1, val);
+			
+			if(reg1.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTdeclS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
-		inst.movInstr(reg, val);
+		inst.movInstr(reg1, val);
 		upCSpsr.update( Integer.parseInt(val.toString()),true, true, true, false);
+
+		if(reg1.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -899,12 +688,27 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTdeclCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.movInstr(reg, val);
+			inst.movInstr(reg1, val);
 			upCSpsr.update( Integer.parseInt(val.toString()),true, true, true, false);
+			
+			if(reg1.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -913,21 +717,41 @@ public class Visitors implements MyParserVisitor{
 	//MVN
 	@Override
 	public Object visit(ASTdecln node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
-		inst.mvnInstr(reg, val.toString());
+		inst.mvnInstr(reg1, val.toString());
+		
+		if(reg1.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTdeclnS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
-		inst.mvnInstr(reg, val.toString());
+		inst.mvnInstr(reg1, val.toString());
 		upCSpsr.update( Integer.parseInt(val.toString()) ,true, true, true, false);
+		
+		if(reg1.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -935,11 +759,16 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTdeclnC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.mvnInstr(reg, val.toString());
+			inst.mvnInstr(reg1, val.toString());
+			
+			if(reg1.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -947,12 +776,27 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTdeclnCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.mvnInstr(reg, val.toString());
+			inst.mvnInstr(reg1, val.toString());
 			upCSpsr.update( Integer.parseInt(val.toString()),true, true, true, false);
+			
+			if(reg1.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1009,9 +853,13 @@ public class Visitors implements MyParserVisitor{
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(C_S_psrReg.get("mode").toString().equals("10011")){
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
 			copySpsrInCpsr();
 			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
 		}
 		
 		return null;
@@ -1027,17 +875,20 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, true);
+			
 			if(reg.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
-			//if in supervisor mode, copy the spsr into the cpsr:
-			if(C_S_psrReg.get("mode").toString().equals("10011")){
+			//if in supervisor mode, copy the spsr into the cpsr, return to user mode:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
 				copySpsrInCpsr();
 				C_S_psrReg.put("mode", 10000);
 				C_S_psrReg.put("I", 0);
-				//TODO clear spsr.
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
 			}
 		}
 
@@ -1052,12 +903,18 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//add the two arguments:
-		int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(re);
+		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+		String ret = String.valueOf(result);
 		String C = C_S_psrReg.get("C").toString();
 
 		//Then add the C (carry):
-		inst.addInstr(reg, ret, C);
+		result = inst.addInstr(reg, ret, C);
+		
+		//if reg = pc then make a jump
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1069,14 +926,29 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//add the two arguments:
-		int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(re);
+		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+		String ret = String.valueOf(result);
 		String C = C_S_psrReg.get("C").toString();
 
 		//Then add the C (carry):
-		int result = inst.addInstr(reg, ret, C);
+		result = inst.addInstr(reg, ret, C);
 
 		upCSpsr.update(result, true, true, true, true);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -1090,12 +962,17 @@ public class Visitors implements MyParserVisitor{
 
 		if ( condition.condAction(cond.toString()) ){
 			//add the two arguments:
-			int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(re);
+			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+			String ret = String.valueOf(result);
 			String C = C_S_psrReg.get("C").toString();
 
 			//Then add the C (carry):
-			inst.addInstr(reg, ret, C);
+			result = inst.addInstr(reg, ret, C);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -1110,14 +987,29 @@ public class Visitors implements MyParserVisitor{
 
 		if ( condition.condAction(cond.toString()) ){
 			//add the two arguments:
-			int re = inst.addInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(re);
+			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+			String ret = String.valueOf(result);
 			String C = C_S_psrReg.get("C").toString();
 
 			//Then add the C (carry):
-			int result = inst.addInstr(reg, ret, C);
+			result = inst.addInstr(reg, ret, C);
 
 			upCSpsr.update(result, true, true, true, true);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1130,7 +1022,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		inst.subInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1143,7 +1040,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.subInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -1157,6 +1059,21 @@ public class Visitors implements MyParserVisitor{
 
 		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
 		upCSpsr.update(result, true, true, true, true);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -1171,6 +1088,21 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, true);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1184,12 +1116,17 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first
-		int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(re);
+		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+		String ret = String.valueOf(result);
 		String C = C_S_psrReg.get("C").toString();
 
 		//Then sub the C (carry):
-		inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg, ret, C);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1201,14 +1138,29 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first
-		int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(re);
+		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+		String ret = String.valueOf(result);
 		String C = C_S_psrReg.get("C").toString();
 
 		//Then sub the C (carry):
-		int result = inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg, ret, C);
 
 		upCSpsr.update(result, true, true, true, true);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -1222,12 +1174,17 @@ public class Visitors implements MyParserVisitor{
 
 		if ( condition.condAction(cond.toString()) ){
 			//Sub the two arguments first
-			int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(re);
+			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+			String ret = String.valueOf(result);
 			String C = C_S_psrReg.get("C").toString();
 
 			//Then sub the C (carry):
-			inst.subInstr(reg, ret, C);
+			result = inst.subInstr(reg, ret, C);
+
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -1242,14 +1199,29 @@ public class Visitors implements MyParserVisitor{
 
 		if ( condition.condAction(cond.toString()) ){
 			//Sub the two arguments first
-			int re = inst.subInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(re);
+			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+			String ret = String.valueOf(result);
 			String C = C_S_psrReg.get("C").toString();
 
 			//Then sub the C (carry):
-			int result = inst.subInstr(reg, ret, C);
+			result = inst.subInstr(reg, ret, C);
 
 			upCSpsr.update(result, true, true, true, true);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1264,7 +1236,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		inst.subInstr(reg, arg2.toString(), arg1.toString());
+		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1277,7 +1254,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.subInstr(reg, arg2.toString(), arg1.toString());
+			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}		
 		}
 
 		return null;
@@ -1291,6 +1273,21 @@ public class Visitors implements MyParserVisitor{
 
 		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
 		upCSpsr.update(result, true, true, true, true);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -1305,6 +1302,21 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
 			upCSpsr.update(result, true, true, true, true);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1318,15 +1330,20 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first:
-		int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
-		String ret = String.valueOf(re);
+		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+		String ret = String.valueOf(result);
 		String C = C_S_psrReg.get("C").toString();
 
 		if (C.equals("1")) C = "0";
 		else C="1";
 
 		//Then sub the C:
-		inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg, ret, C);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1338,17 +1355,32 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first:
-		int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
-		String ret = String.valueOf(re);
+		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+		String ret = String.valueOf(result);
 		String C = C_S_psrReg.get("C").toString();
 
 		if (C.equals("1")) C = "0";
 		else C="1";
 
 		//Then sub the C:
-		int result = inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg, ret, C);
 
 		upCSpsr.update(result, true, true, true, true);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -1361,15 +1393,21 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
-			String ret = String.valueOf(re);
+			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+			String ret = String.valueOf(result);
 			String C = C_S_psrReg.get("C").toString();
 
 			if (C.equals("1")) C = "0";
 			else C="1";
 
 			//Then sub the C:
-			inst.subInstr(reg, ret, C);
+			result = inst.subInstr(reg, ret, C);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
 		}
 		return null;
 	}
@@ -1383,22 +1421,37 @@ public class Visitors implements MyParserVisitor{
 
 		if ( condition.condAction(cond.toString()) ){
 			//Sub the two arguments first:
-			int re = inst.subInstr(reg, arg2.toString(), arg1.toString());
-			String ret = String.valueOf(re);
+			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+			String ret = String.valueOf(result);
 			String C = C_S_psrReg.get("C").toString();
 
 			if (C.equals("1")) C = "0";
 			else C="1";
 
 			//Then sub the C:
-			int result = inst.subInstr(reg, ret, C);
+			result = inst.subInstr(reg, ret, C);
 
 			upCSpsr.update(result, true, true, true, true);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 		return null;
 	}
 
-	//MLA
+	//MLA (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTmla node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1407,7 +1460,7 @@ public class Visitors implements MyParserVisitor{
 		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
-
+	
 		return null;
 	}
 
@@ -1421,7 +1474,7 @@ public class Visitors implements MyParserVisitor{
 		int result = inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
 
 		upCSpsr.update(result, true, true, false, false);
-
+		
 		return null;
 	}
 
@@ -1455,7 +1508,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//MUL
+	//MUL (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTmul node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1507,7 +1560,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//SMLAL
+	//SMLAL (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTsmlal node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1567,7 +1620,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//SMULL
+	//SMULL (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTsmull node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1631,7 +1684,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//UMLAL
+	//UMLAL (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTumlal node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1694,7 +1747,7 @@ public class Visitors implements MyParserVisitor{
 	}
 
 
-	//UMULL
+	//UMULL (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTumull node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1759,7 +1812,7 @@ public class Visitors implements MyParserVisitor{
 
 
 	//*Comparaison*//
-	//CMP
+	//CMP (doesn't effect jump if reg1 is pc,)
 	@Override
 	public Object visit(ASTcmp node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1789,7 +1842,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//CMN
+	//CMN (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTcmn node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1818,7 +1871,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//TEQ
+	//TEQ (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTteq node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1848,7 +1901,7 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	//TST
+	//TST (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTtst node, Object data) {
 		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1886,7 +1939,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		inst.andInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1900,6 +1958,21 @@ public class Visitors implements MyParserVisitor{
 		int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
 		upCSpsr.update(result, true, true, true, false);
 
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
+		
 		return null;
 	}
 
@@ -1911,7 +1984,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.andInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -1927,6 +2005,21 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, false);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1939,7 +2032,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
 
 		return null;
 	}
@@ -1952,6 +2050,21 @@ public class Visitors implements MyParserVisitor{
 
 		int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
 		upCSpsr.update(result, true, true, true, false);
+		
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
 
 		return null;
 	}
@@ -1964,7 +2077,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.bicInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}			
 		}
 
 		return null;
@@ -1980,6 +2098,21 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, false);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -1992,8 +2125,13 @@ public class Visitors implements MyParserVisitor{
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		inst.eorInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
 
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+		
 		return null;
 	}
 
@@ -2006,6 +2144,21 @@ public class Visitors implements MyParserVisitor{
 		int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
 		upCSpsr.update(result, true, true, true, false);
 
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
+		
 		return null;
 	}
 
@@ -2017,7 +2170,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.eorInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -2033,6 +2191,21 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, false);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -2045,8 +2218,13 @@ public class Visitors implements MyParserVisitor{
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		inst.orrInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
 
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+		
 		return null;
 	}
 
@@ -2059,6 +2237,21 @@ public class Visitors implements MyParserVisitor{
 		int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
 		upCSpsr.update(result, true, true, true, false);
 
+		if(reg.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();
+			C_S_psrReg.put("mode", 10000);
+			C_S_psrReg.put("I", 0);
+			
+			//clear spsr
+			C_S_psr.clearSPSR();
+		}
+		
 		return null;
 	}
 
@@ -2070,7 +2263,12 @@ public class Visitors implements MyParserVisitor{
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			inst.orrInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -2086,6 +2284,21 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, false);
+			
+			if(reg.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+				
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
 		}
 
 		return null;
@@ -2105,6 +2318,11 @@ public class Visitors implements MyParserVisitor{
 		String val="null";
 
 		inst.ldrIntr(regLdr.toString(), regV.toString(), val, close,"pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2120,6 +2338,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){	
 			inst.ldrIntr(regLdr.toString(), regV.toString(), val, close,"pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2132,6 +2355,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(),"pre", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2146,6 +2374,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(),"pre", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 
 		return null;
@@ -2159,6 +2392,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2173,6 +2411,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2186,6 +2429,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2201,6 +2449,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2215,6 +2468,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2230,6 +2488,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2242,6 +2505,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2256,6 +2524,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2268,6 +2541,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 
@@ -2283,6 +2561,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2296,6 +2579,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2311,6 +2599,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2324,6 +2617,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2339,6 +2637,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2352,6 +2655,11 @@ public class Visitors implements MyParserVisitor{
 		String val = "null";
 
 		inst.ldrBInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2367,6 +2675,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrBInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2380,6 +2693,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2394,6 +2712,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2406,6 +2729,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2420,6 +2748,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2433,6 +2766,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2448,6 +2786,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2461,6 +2804,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2476,6 +2824,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "post", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2489,6 +2842,11 @@ public class Visitors implements MyParserVisitor{
 		String val = "null";
 
 		inst.ldrHInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2504,6 +2862,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrHInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2516,6 +2879,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2530,6 +2898,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2542,6 +2915,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2556,6 +2934,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2569,6 +2952,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2585,6 +2973,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2598,6 +2991,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2614,6 +3012,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSHInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2627,6 +3030,11 @@ public class Visitors implements MyParserVisitor{
 		String val = "null";
 
 		inst.ldrSHInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2642,6 +3050,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSHInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2654,6 +3067,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2668,6 +3086,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2680,6 +3103,11 @@ public class Visitors implements MyParserVisitor{
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2694,6 +3122,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2708,6 +3141,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2723,6 +3161,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "n");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2736,6 +3179,11 @@ public class Visitors implements MyParserVisitor{
 		String close = "null";
 
 		inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2751,6 +3199,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSBInstr(regLdr.toString(), regV.toString(), val.toString(), close, "post", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -2764,6 +3217,11 @@ public class Visitors implements MyParserVisitor{
 		String val = "null";
 
 		inst.ldrSBInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+		
+		if(regLdr.toString().equals("r15")){
+			setPc(Integer.parseInt(reg.get("r15").toString()));
+			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		}
 
 		return null;
 	}
@@ -2779,6 +3237,11 @@ public class Visitors implements MyParserVisitor{
 
 		if(condition.condAction(cond.toString())){
 			inst.ldrSBInstr(regLdr.toString(), regV.toString(), val, close.toString(), "pre", "p");
+			
+			if(regLdr.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 		}
 		return null;
 	}
@@ -3476,11 +3939,36 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
-
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
+		
 		String regEnd = "null";
 
-		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+		if(close.toString().equals("C")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
 
+			if(regStart.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+		}
+		else if(close.toString().equals("CU")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+
+			if(regStart.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+
+			if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
+		}
+		
 		return null;
 	}
 
@@ -3490,11 +3978,36 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);
 
 		String regEnd = "null";
 
 		if(condition.condAction(cond.toString())){
-			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+			if(close.toString().equals("C")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+
+				if(regStart.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			else if(close.toString().equals("CU")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, false, amode.toString());
+
+				if(regStart.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+
+				if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}
+			}
 		}
 		return null;
 	}
@@ -3504,14 +4017,48 @@ public class Visitors implements MyParserVisitor{
 		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
+		
+		boolean inList = false;
 
-		String[] list = new String[children-2];
+		String[] list = new String[children-3];
 
-		for(int i=2; i<children; i++){
+		for(int i=2; i<(children-1); i++){
 			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
 		}		
-		inst.ldmInst(regL.toString(), list, false, amode.toString());
 
+		if(close.toString().equals("C")){
+			inst.ldmInst(regL.toString(), list, false, amode.toString());
+			
+			for(int i=0; i<list.length; i++){
+				if(list[i].equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			
+		}
+		else if(close.toString().equals("CU")){
+			inst.ldmInst(regL.toString(), list, false, amode.toString());
+			
+			for(int i=0; i<list.length; i++){
+				if(list[i].equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+					inList = true;
+				}
+			}
+			
+			if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}	
+		}
+		
 		return null;
 	}
 
@@ -3522,14 +4069,48 @@ public class Visitors implements MyParserVisitor{
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
 
 		if(condition.condAction(cond.toString())){
-			String[] list = new String[children-3];
+			String[] list = new String[children-4];
+			
+			boolean inList = false;
 
-			for(int i=3; i<children; i++){
+			for(int i=3; i<(children-1); i++){
 				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
 			}		
-			inst.ldmInst(regL.toString(), list, false, amode.toString());
+			
+			if(close.toString().equals("C")){
+				inst.ldmInst(regL.toString(), list, false, amode.toString());
+				
+				for(int i=0; i<list.length; i++){
+					if(list[i].equals("r15")){
+						setPc(Integer.parseInt(reg.get("r15").toString()));
+						setChild(Integer.parseInt(reg.get("r15").toString())-2);
+					}
+				}
+				
+			}
+			else if(close.toString().equals("CU")){
+				inst.ldmInst(regL.toString(), list, false, amode.toString());
+				
+				for(int i=0; i<list.length; i++){
+					if(list[i].equals("r15")){
+						setPc(Integer.parseInt(reg.get("r15").toString()));
+						setChild(Integer.parseInt(reg.get("r15").toString())-2);
+						inList = true;
+					}
+				}
+				
+				if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}	
+			}
 		}
 		return null;
 	}
@@ -3540,9 +4121,34 @@ public class Visitors implements MyParserVisitor{
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);		
 
-		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+		if(close.toString().equals("C")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+			
+			if(regEnd.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+		}
+		else if(close.toString().equals("CU")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+			
+			if(regEnd.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+			
+			if(regEnd.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
 
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}	
+		}
+		
 		return null;
 	}
 
@@ -3554,9 +4160,34 @@ public class Visitors implements MyParserVisitor{
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
-
+		Object close = node.jjtGetChild(5).jjtAccept(this, data);
+		
 		if(condition.condAction(cond.toString())){
-			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+			if(close.toString().equals("C")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+				
+				if(regEnd.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			else if(close.toString().equals("CU")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), false, amode.toString());
+				
+				if(regEnd.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+				
+				if(regEnd.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}	
+			}
 		}
 		return null;
 	}
@@ -3566,11 +4197,36 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String regEnd = "null";
 
-		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+		if(close.toString().equals("C")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
 
+			if(regStart.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+		}
+		else if(close.toString().equals("CU")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+
+			if(regStart.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+
+			if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
+		}
+		
 		return null;
 	}
 
@@ -3580,11 +4236,36 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);
 
 		String regEnd = "null";
 
 		if(condition.condAction(cond.toString())){
-			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+			if(close.toString().equals("C")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+
+				if(regStart.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			else if(close.toString().equals("CU")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd, true, amode.toString());
+
+				if(regStart.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+
+				if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}
+			}
 		}
 
 		return null;
@@ -3595,13 +4276,47 @@ public class Visitors implements MyParserVisitor{
 		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
 
-		String[] list = new String[children-2];
+		String[] list = new String[children-3];
+		
+		boolean inList = false;
 
-		for(int i=2; i<children; i++){
+		for(int i=2; i<(children-1); i++){
 			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
 		}		
-		inst.ldmInst(regL.toString(), list, true, amode.toString());
+		
+		if(close.toString().equals("C")){
+			inst.ldmInst(regL.toString(), list, true, amode.toString());
+
+			for(int i=0; i<list.length; i++){
+				if(list[i].equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+		}
+		else if(close.toString().equals("CU")){
+			inst.ldmInst(regL.toString(), list, true, amode.toString());
+			
+			for(int i=0; i<list.length; i++){
+				if(list[i].equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+					inList = true;
+				}
+			}
+			
+			if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}	
+			
+		}
 
 		return null;
 	}
@@ -3612,14 +4327,48 @@ public class Visitors implements MyParserVisitor{
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
 
 		if(condition.condAction(cond.toString())){
-			String[] list = new String[children-3];
+			String[] list = new String[children-4];
+			
+			boolean inList = false;
 
-			for(int i=3; i<children; i++){
+			for(int i=3; i<(children-1); i++){
 				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
 			}		
-			inst.ldmInst(regL.toString(), list, true, amode.toString());
+			
+			if(close.toString().equals("C")){
+				inst.ldmInst(regL.toString(), list, true, amode.toString());
+
+				for(int i=0; i<list.length; i++){
+					if(list[i].equals("r15")){
+						setPc(Integer.parseInt(reg.get("r15").toString()));
+						setChild(Integer.parseInt(reg.get("r15").toString())-2);
+					}
+				}
+			}
+			else if(close.toString().equals("CU")){
+				inst.ldmInst(regL.toString(), list, true, amode.toString());
+				
+				for(int i=0; i<list.length; i++){
+					if(list[i].equals("r15")){
+						setPc(Integer.parseInt(reg.get("r15").toString()));
+						setChild(Integer.parseInt(reg.get("r15").toString())-2);
+						inList = true;
+					}
+				}
+				
+				if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}	
+				
+			}
 		}
 
 		return null;
@@ -3631,8 +4380,33 @@ public class Visitors implements MyParserVisitor{
 		Object regLd = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(close.toString().equals("C")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			
+			if(regEnd.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+		}
+		else if(close.toString().equals("CU")){
+			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			
+			if(regEnd.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+			
+			if(regEnd.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
 
-		inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}	
+		}
 
 		return null;
 	}
@@ -3644,9 +4418,34 @@ public class Visitors implements MyParserVisitor{
 		Object regLd = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		Object close = node.jjtGetChild(5).jjtAccept(this, data);
 
 		if(condition.condAction(cond.toString())){
-			inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			if(close.toString().equals("C")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+				
+				if(regEnd.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			else if(close.toString().equals("CU")){
+				inst.ldmInst(regLd.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+				
+				if(regEnd.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+				
+				if(regEnd.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}	
+			}
 		}
 
 		return null;
@@ -3658,10 +4457,35 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String regEnd = "null";
+		
+		if(close.toString().equals("C")){
+			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
+			
+			if(regStart.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+		}
+		else if(close.toString().equals("CU")){
+			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
+			
+			if(regStart.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
 
-		inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
+			if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}
+		}
 
 		return null;
 	}
@@ -3672,11 +4496,36 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);
 
 		String regEnd = "null";
 
 		if(condition.condAction(cond.toString())){
-			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
+			if(close.toString().equals("C")){
+				inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
+				
+				if(regStart.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			else if(close.toString().equals("CU")){
+				inst.stmInst(regSt.toString(), regStart.toString(), regEnd, false, amode.toString());
+				
+				if(regStart.toString().equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+
+				if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+					copySpsrInCpsr();
+					C_S_psrReg.put("mode", 10000);
+					C_S_psrReg.put("I", 0);
+
+					//clear spsr
+					C_S_psr.clearSPSR();
+				}
+			}
 		}
 		return null;
 	}
@@ -3686,13 +4535,47 @@ public class Visitors implements MyParserVisitor{
 		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
 
-		String[] list = new String[children-2];
+		String[] list = new String[children-3];
+		
+		boolean inList = false;
 
-		for(int i=2; i<children; i++){
+		for(int i=2; i<(children-1); i++){
 			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
 		}		
-		inst.stmInst(regL.toString(), list, false, amode.toString());
+		
+		if(close.toString().equals("C")){
+			inst.stmInst(regL.toString(), list, false, amode.toString());
+			
+			for(int i=0; i<list.length; i++){
+				if(list[i].equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+			}
+			
+		}
+		else if(close.toString().equals("CU")){
+			inst.stmInst(regL.toString(), list, false, amode.toString());
+			
+			for(int i=0; i<list.length; i++){
+				if(list[i].equals("r15")){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+					inList = true;
+				}
+			}
+			
+			if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();
+				C_S_psrReg.put("mode", 10000);
+				C_S_psrReg.put("I", 0);
+
+				//clear spsr
+				C_S_psr.clearSPSR();
+			}	
+		}
 
 		return null;
 	}
@@ -3747,10 +4630,16 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String regEnd = "null";
 
-		inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
+		if(close.toString().equals("C")){
+			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
+		}
+		else if(close.toString().equals("CU")){
+			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
+		}
 
 		return null;
 	}
@@ -3761,11 +4650,17 @@ public class Visitors implements MyParserVisitor{
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);
 
 		String regEnd = "null";
 
 		if(condition.condAction(cond.toString())){
-			inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
+			if(close.toString().equals("C")){
+				inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
+			}
+			else if(close.toString().equals("CU")){
+				inst.stmInst(regSt.toString(), regStart.toString(), regEnd, true, amode.toString());
+			}
 		}
 		return null;
 	}
@@ -3776,13 +4671,21 @@ public class Visitors implements MyParserVisitor{
 		int children = node.jjtGetNumChildren();
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(1).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
 
-		String[] list = new String[children-2];
+		String[] list = new String[children-3];
 
-		for(int i=2; i<children; i++){
+		for(int i=2; i<(children-1); i++){
 			list[i-2] = node.jjtGetChild(i).jjtAccept(this, data).toString();
-		}		
-		inst.stmInst(regL.toString(), list, true, amode.toString());
+		}	
+		
+		if(close.toString().equals("C")){
+			inst.stmInst(regL.toString(), list, true, amode.toString());
+		}
+		else if(close.toString().equals("CU")){
+			inst.stmInst(regL.toString(), list, true, amode.toString());
+		}
+		
 		return null;
 	}
 
@@ -3792,14 +4695,21 @@ public class Visitors implements MyParserVisitor{
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object amode = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regL = node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(children-1).jjtAccept(this, data);
 
 		if(condition.condAction(cond.toString())){
-			String[] list = new String[children-3];
+			String[] list = new String[children-4];
 
-			for(int i=3; i<children; i++){
+			for(int i=3; i<(children-1); i++){
 				list[i-3] = node.jjtGetChild(i).jjtAccept(this, data).toString();
-			}		
-			inst.stmInst(regL.toString(), list, true, amode.toString());
+			}	
+			
+			if(close.toString().equals("C")){
+				inst.stmInst(regL.toString(), list, true, amode.toString());
+			}
+			else if(close.toString().equals("CU")){
+				inst.stmInst(regL.toString(), list, true, amode.toString());
+			}
 		}
 		return null;
 	}
@@ -3810,8 +4720,14 @@ public class Visitors implements MyParserVisitor{
 		Object regSt = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(3).jjtAccept(this, data);
-
-		inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		Object close = node.jjtGetChild(4).jjtAccept(this, data);
+		
+		if(close.toString().equals("C")){
+			inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		}
+		else if(close.toString().equals("CU")){
+			inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+		}
 
 		return null;
 	}
@@ -3823,9 +4739,15 @@ public class Visitors implements MyParserVisitor{
 		Object regSt = node.jjtGetChild(2).jjtAccept(this, data);
 		Object regStart = node.jjtGetChild(3).jjtAccept(this, data);
 		Object regEnd = node.jjtGetChild(4).jjtAccept(this, data);
+		Object close = node.jjtGetChild(5).jjtAccept(this, data);
 
 		if(condition.condAction(cond.toString())){
-			inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			if(close.toString().equals("C")){
+				inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			}
+			else if(close.toString().equals("CU")){
+				inst.stmInst(regSt.toString(), regStart.toString(), regEnd.toString(), true, amode.toString());
+			}
 		}
 		return null;
 	}
@@ -3945,5 +4867,18 @@ public class Visitors implements MyParserVisitor{
 			return label;
 		}
 
+		@Override
+		public Object visit(ASTshiftF node, Object data) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object visit(ASTshift node, Object data) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	
 		
 }
