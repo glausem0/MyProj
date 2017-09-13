@@ -1725,13 +1725,14 @@ public class Instruction {
 	 * @param update
 	 * @param amode
 	 */
-	public void stmInst(String regS, String regStart, String regEnd, boolean update, String amode){
+	public void stmInst(String regS, String regStart, String regEnd, boolean update, String amode, boolean isSVC){
 		int length=0;
 		int address = (int) regData.get(regS);
 		int start;
 		int end;
 
 		regStart = regStart.replace("r", "");
+		if(regStart.contains("_svc")) regStart = regStart.replace("_svc", "");
 		start = Integer.parseInt(regStart);
 
 		if(regEnd.equals("null")){
@@ -1739,6 +1740,7 @@ public class Instruction {
 		}
 		else{
 			regEnd = regEnd.replace("r", "");
+			if(regEnd.contains("_svc")) regEnd = regEnd.replace("_svc", "");
 			end = Integer.parseInt(regEnd);
 
 			length = Math.abs(end-start)+1;
@@ -1754,7 +1756,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg = "r"+reg;
+				if(isSVC && reg==13) tmpReg = "r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg = "r"+reg+"_svc";
+				else tmpReg = "r"+reg;
+				
 				elements[i] = (int) regData.get(tmpReg);
 				reg += 1;
 			}
@@ -1774,7 +1779,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg = "r"+reg;
+				if(isSVC && reg==13) tmpReg = "r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg = "r"+reg+"_svc";
+				else tmpReg = "r"+reg;
+				
 				elements[i] = (int) regData.get(tmpReg);
 				reg += 1;
 			}
@@ -1794,7 +1802,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg = "r"+reg;
+				if(isSVC && reg==13) tmpReg = "r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg = "r"+reg+"_svc";
+				else tmpReg = "r"+reg;
+				
 				elements[i] = (int) regData.get(tmpReg);
 				reg += 1;
 			}
@@ -1814,7 +1825,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg = "r"+reg;
+				if(isSVC && reg==13) tmpReg = "r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg = "r"+reg+"_svc";
+				else tmpReg = "r"+reg;
+				
 				elements[i] = (int) regData.get(tmpReg);
 				reg += 1;
 			}
