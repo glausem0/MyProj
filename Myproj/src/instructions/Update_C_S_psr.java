@@ -47,6 +47,14 @@ public class Update_C_S_psr {
 		return ove;
 	}
 
+	/**
+	 * update the value of the cpsr or sprs depending on the mode
+	 * @param result
+	 * @param Nflag
+	 * @param Zflag
+	 * @param Cflag
+	 * @param Vflag
+	 */
 	public void update(int result, boolean Nflag, boolean Zflag, boolean Cflag, boolean Vflag){
 
 		if( C_S_psr.get("mode").toString().equals("10000") ){ //user mode

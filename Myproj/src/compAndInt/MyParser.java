@@ -190,7 +190,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
     case REGISTER:
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case REGISTER:
-        ASTdecl jjtn001 = new ASTdecl(JJTDECL);
+        ASTmov jjtn001 = new ASTmov(JJTMOV);
         boolean jjtc001 = true;
         jjtree.openNodeScope(jjtn001);
         try {
@@ -232,7 +232,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
         }
         break;
       case SCND:
-        ASTdeclS jjtn002 = new ASTdeclS(JJTDECLS);
+        ASTmovS jjtn002 = new ASTmovS(JJTMOVS);
         boolean jjtc002 = true;
         jjtree.openNodeScope(jjtn002);
         try {
@@ -284,7 +284,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
       cond();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case REGISTER:
-        ASTdeclC jjtn003 = new ASTdeclC(JJTDECLC);
+        ASTmovC jjtn003 = new ASTmovC(JJTMOVC);
         boolean jjtc003 = true;
         jjtree.openNodeScope(jjtn003);
         try {
@@ -326,7 +326,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
         }
         break;
       case SCND:
-        ASTdeclCS jjtn004 = new ASTdeclCS(JJTDECLCS);
+        ASTmovCS jjtn004 = new ASTmovCS(JJTMOVCS);
         boolean jjtc004 = true;
         jjtree.openNodeScope(jjtn004);
         try {
@@ -388,7 +388,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
     case REGISTER:
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case REGISTER:
-        ASTdecln jjtn001 = new ASTdecln(JJTDECLN);
+        ASTmvn jjtn001 = new ASTmvn(JJTMVN);
         boolean jjtc001 = true;
         jjtree.openNodeScope(jjtn001);
         try {
@@ -430,7 +430,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
         }
         break;
       case SCND:
-        ASTdeclnS jjtn002 = new ASTdeclnS(JJTDECLNS);
+        ASTmvnS jjtn002 = new ASTmvnS(JJTMVNS);
         boolean jjtc002 = true;
         jjtree.openNodeScope(jjtn002);
         try {
@@ -482,7 +482,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
       cond();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case REGISTER:
-        ASTdeclnC jjtn003 = new ASTdeclnC(JJTDECLNC);
+        ASTmvnC jjtn003 = new ASTmvnC(JJTMVNC);
         boolean jjtc003 = true;
         jjtree.openNodeScope(jjtn003);
         try {
@@ -524,7 +524,7 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
         }
         break;
       case SCND:
-        ASTdeclnCS jjtn004 = new ASTdeclnCS(JJTDECLNCS);
+        ASTmvnCS jjtn004 = new ASTmvnCS(JJTMVNCS);
         boolean jjtc004 = true;
         jjtree.openNodeScope(jjtn004);
         try {
@@ -11695,6 +11695,11 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
     finally { jj_save(102, xla); }
   }
 
+  static private boolean jj_3R_171() {
+    if (jj_3R_179()) return true;
+    return false;
+  }
+
   static private boolean jj_3R_79() {
     if (jj_3R_162()) return true;
     return false;
@@ -13547,11 +13552,6 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants, MyParser
   static private boolean jj_3_55() {
     if (jj_scan_token(53)) return true;
     if (jj_scan_token(50)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_171() {
-    if (jj_3R_179()) return true;
     return false;
   }
 

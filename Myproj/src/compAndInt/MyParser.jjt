@@ -3,7 +3,6 @@
  */options{ multi = true;
  VISITOR = true;
  NODE_EXTENDS="DataNode";
- /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyParser)package compAndInt;
 
@@ -19,7 +18,6 @@ public class MyParser {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" > /*use for branch and branch link too*/
 | < H: "h" >
-  /*| < S: "s" > is already defined with SCND */
 
   /*for branchLink*/
 |  < L: "l" >
@@ -139,13 +137,13 @@ void mov() #void:
    <MOV>
    (
     (
-      (register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #decl(2)
-    | (<SCND> register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #declS(2)
+      (register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #mov(2)
+    | (<SCND> register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #movS(2)
     )
    |cond() 
     (
-      (register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #declC(3)
-    | (<SCND>  register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #declCS(3)
+      (register() "," ( hexa()| numOrNumShift() | regOrRegShift())) #movC(3)
+    | (<SCND>  register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #movCS(3)
     )
    )
 }
@@ -156,13 +154,13 @@ void mvn() #void:
    <MVN>
    (
     (
-      (register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #decln(2)
-    | (<SCND> register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #declnS(2)
+      (register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #mvn(2)
+    | (<SCND> register() "," ( hexa()| numOrNumShift() | regOrRegShift() )) #mvnS(2)
     )
    |cond() 
     (
-      (register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #declnC(3)
-    | (<SCND> register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #declnCS(3)
+      (register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #mvnC(3)
+    | (<SCND> register() "," (hexa()| numOrNumShift() | regOrRegShift() )) #mvnCS(3)
     )
    )
 }

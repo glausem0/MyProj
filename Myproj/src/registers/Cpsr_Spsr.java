@@ -31,6 +31,9 @@ public class Cpsr_Spsr {
 		return C_S_psr;
 	}
 
+	/**
+	 * put all the values to 0 of the cpsr and spsr
+	 */
 	public void clearC_S_psr(){
 		//Cpsr
 		C_S_psr.put("N", 0);
@@ -50,6 +53,9 @@ public class Cpsr_Spsr {
 		C_S_psr.put("F_svc", 0); 
 	}
 
+	/**
+	 * put all the values to 0 of the spsr only
+	 */
 	public void clearSPSR(){
 		//Spsr:
 		C_S_psr.put("N_svc", 0);
@@ -58,12 +64,6 @@ public class Cpsr_Spsr {
 		C_S_psr.put("V_svc", 0);
 		C_S_psr.put("I_svc", 0); 
 		C_S_psr.put("F_svc", 0);
-	}
-
-	public void print(){
-		for (Object key: C_S_psr.keySet()){
-			System.out.println(key+" "+ C_S_psr.get(key).toString() );
-		}
 	}
 
 }

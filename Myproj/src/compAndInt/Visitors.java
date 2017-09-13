@@ -572,7 +572,7 @@ public class Visitors implements MyParserVisitor{
 		return ror;
 	}
 
-	/*
+	
 	//shift(<< and >>)
 	@Override
 	public Object visit(ASTshift node, Object data) {
@@ -580,16 +580,15 @@ public class Visitors implements MyParserVisitor{
 
 		return fle;		
 	}
-	*/
 
-	//condition and update
+	//close and update
 	@Override
 	public Object visit(ASTcloseAUp node, Object data) {
 		String cu = "CU"; //close and update
 		return cu;
 	}
 
-	//condition only
+	//close only
 	@Override
 	public Object visit(ASTclose node, Object data) {
 		String c = "C";
@@ -611,7 +610,6 @@ public class Visitors implements MyParserVisitor{
 		return shiftVal;	
 	}
 
-	/*
 	//shift "<<" 
 	@Override
 	public Object visit(ASTshiftF node, Object data) {
@@ -622,28 +620,28 @@ public class Visitors implements MyParserVisitor{
 		int shiftVal = inst.shiftInstr(shift.toString(), number.toString(), val.toString());
 
 		return shiftVal;
-	}
-	*/
+	}	
 
 	//*Arithmetic*//	
 	//MOV
 	@Override
-	public Object visit(ASTdecl node, Object data) {
+	public Object visit(ASTmov node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
 		inst.movInstr(reg1, val);
 		
+		//verify if reg1 = pc, then effects a jump to the calculated address
 		if(reg1.toString().equals("r15")){
-			setPc(Integer.parseInt(reg.get("r15").toString()));
-			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			setPc( Integer.parseInt(reg.get("r15").toString()) );
+			setChild( Integer.parseInt(reg.get("r15").toString()) - 2 );
 		}
 		
 		return null;
 	}
 
 	@Override
-	public Object visit(ASTdeclC node, Object data) {
+	public Object visit(ASTmovC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
@@ -651,63 +649,82 @@ public class Visitors implements MyParserVisitor{
 		if ( condition.condAction(cond.toString()) ){
 			inst.movInstr(reg1, val);
 			
-			if(reg1.toString().equals("r15")){
-				setPc(Integer.parseInt(reg.get("r15").toString()));
-				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			if( reg1.toString().equals("r15") ){
+				setPc( Integer.parseInt(reg.get("r15").toString()) );
+				setChild( Integer.parseInt(reg.get("r15").toString()) - 2 );
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public Object visit(ASTdeclS node, Object data) {
+	public Object visit(ASTmovS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
-
+		Object typeVal = node.jjtGetChild(1);
+		
 		inst.movInstr(reg1, val);
-		upCSpsr.update( Integer.parseInt(val.toString()),true, true, true, false);
-
-		if(reg1.toString().equals("r15")){
-			setPc(Integer.parseInt(reg.get("r15").toString()));
-			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		
+		if(typeVal.toString().equals("shiftLS")){
+			upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, true, false);
+		}
+		else{
+			upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, false, false);
+		}
+		
+		//verify if reg1 = pc, then effects a jump to the calculated address
+		if( reg1.toString().equals("r15") ){
+			setPc( Integer.parseInt(reg.get("r15").toString()) );
+			setChild( Integer.parseInt(reg.get("r15").toString()) - 2 );
 		}
 
-		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		//if in supervisor mode, copy the spsr into the cpsr, return to user mode:
+		if( reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011") ){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
 
-			//clear spsr
-			C_S_psr.clearSPSR();
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
 		return null;
 	}
 
 	@Override
-	public Object visit(ASTdeclCS node, Object data) {
+	public Object visit(ASTmovCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeVal = node.jjtGetChild(2);
 
 		if ( condition.condAction(cond.toString()) ){
 			inst.movInstr(reg1, val);
-			upCSpsr.update( Integer.parseInt(val.toString()),true, true, true, false);
 			
-			if(reg1.toString().equals("r15")){
-				setPc(Integer.parseInt(reg.get("r15").toString()));
-				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			if(typeVal.toString().equals("shiftLS")){
+				upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, true, false);
+			}
+			else{
+				upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, false, false);
+			}
+			
+			if( reg1.toString().equals("r15") ){
+				setPc( Integer.parseInt(reg.get("r15").toString()) );
+				setChild( Integer.parseInt(reg.get("r15").toString()) - 2 );
 			}
 
-			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			//if in supervisor mode, copy the spsr into the cpsr, return to user mode:
+			if( reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011") ){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
 
-				//clear spsr
-				C_S_psr.clearSPSR();
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -716,86 +733,104 @@ public class Visitors implements MyParserVisitor{
 
 	//MVN
 	@Override
-	public Object visit(ASTdecln node, Object data) {
+	public Object visit(ASTmvn node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
 
 		inst.mvnInstr(reg1, val.toString());
 		
-		if(reg1.toString().equals("r15")){
+		if( reg1.toString().equals("r15") ){
 			setPc(Integer.parseInt(reg.get("r15").toString()));
 			setChild(Integer.parseInt(reg.get("r15").toString())-2);
 		}
 
 		return null;
 	}
+	
+	@Override
+	public Object visit(ASTmvnC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+
+		if ( condition.condAction(cond.toString()) ){
+			inst.mvnInstr(reg1, val.toString());
+			
+			if(reg1.toString().equals("r15")){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+		}
+		return null;
+	}
 
 	@Override
-	public Object visit(ASTdeclnS node, Object data) {
+	public Object visit(ASTmvnS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object val = node.jjtGetChild(1).jjtAccept(this, data);
+		Object typeVal = node.jjtGetChild(1);
 
 		inst.mvnInstr(reg1, val.toString());
-		upCSpsr.update( Integer.parseInt(val.toString()) ,true, true, true, false);
 		
-		if(reg1.toString().equals("r15")){
-			setPc(Integer.parseInt(reg.get("r15").toString()));
-			setChild(Integer.parseInt(reg.get("r15").toString())-2);
+		if(typeVal.toString().equals("shiftLS")){
+			upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, true, false);
+		}
+		else{
+			upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, false, false);
+		}
+		
+		if( reg1.toString().equals("r15") ){
+			setPc( Integer.parseInt(reg.get("r15").toString()) );
+			setChild( Integer.parseInt(reg.get("r15").toString()) - 2 );
 		}
 
-		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		//if in supervisor mode, copy the spsr into the cpsr, return to user mode:
+		if( reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011") ){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
 
-			//clear spsr
-			C_S_psr.clearSPSR();
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
 		return null;
 	}
 
 	@Override
-	public Object visit(ASTdeclnC node, Object data) {
+	public Object visit(ASTmvnCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeVal = node.jjtGetChild(2);
 
 		if ( condition.condAction(cond.toString()) ){
 			inst.mvnInstr(reg1, val.toString());
 			
-			if(reg1.toString().equals("r15")){
-				setPc(Integer.parseInt(reg.get("r15").toString()));
-				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			if(typeVal.toString().equals("shiftLS")){
+				upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, true, false);
 			}
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTdeclnCS node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-
-		if ( condition.condAction(cond.toString()) ){
-			inst.mvnInstr(reg1, val.toString());
-			upCSpsr.update( Integer.parseInt(val.toString()),true, true, true, false);
+			else{
+				upCSpsr.update( Integer.parseInt(reg.get(reg1).toString()),true, true, false, false);
+			}
 			
-			if(reg1.toString().equals("r15")){
-				setPc(Integer.parseInt(reg.get("r15").toString()));
-				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			if( reg1.toString().equals("r15") ){
+				setPc( Integer.parseInt(reg.get("r15").toString()) );
+				setChild( Integer.parseInt(reg.get("r15").toString()) - 2 );
 			}
 
-			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			//if in supervisor mode, copy the spsr into the cpsr, return to user mode:
+			if( reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011") ){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
 
-				//clear spsr
-				C_S_psr.clearSPSR();
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -805,13 +840,13 @@ public class Visitors implements MyParserVisitor{
 	//ADD
 	@Override
 	public Object visit(ASTadd node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
 		
-		if(reg.toString().equals("r15")){
+		if( reg1.toString().equals("r15") ){
 			setPc(result);
 			setChild(result-2);
 		}
@@ -822,13 +857,14 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTaddC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
-			if(reg.toString().equals("r15")){
+			int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
+
+			if( reg1.toString().equals("r15") ){
 				setPc(result);
 				setChild(result-2);
 			}
@@ -839,27 +875,30 @@ public class Visitors implements MyParserVisitor{
 
 	@Override
 	public Object visit(ASTaddS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
+		
 		//update cpsr or spsr depending on the mode we are:
 		upCSpsr.update(result, true, true, true, true);
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 		
 		return null;
@@ -868,27 +907,31 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTaddCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
+			
+			//update cpsr or spsr depending on the mode we are:
 			upCSpsr.update(result, true, true, true, true);
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
-			//if in supervisor mode, copy the spsr into the cpsr, return to user mode:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			//if in supervisor mode, copy the spsr into the cpsr:
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -898,22 +941,48 @@ public class Visitors implements MyParserVisitor{
 	//ADC
 	@Override
 	public Object visit(ASTadc node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//add the two arguments:
-		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(result);
-		String C = C_S_psrReg.get("C").toString();
-
+		int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
+		
+		String resultStr = String.valueOf(result);
+		String CStr = C_S_psrReg.get("C").toString();
 		//Then add the C (carry):
-		result = inst.addInstr(reg, ret, C);
+		result = inst.addInstr(reg1, resultStr, CStr);
 		
 		//if reg = pc then make a jump
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
+		}
+
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTadcC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		if ( condition.condAction(cond.toString()) ){
+			//add the two arguments:
+			int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
+			
+			String resultStr = String.valueOf(result);
+			String CStr = C_S_psrReg.get("C").toString();
+			//Then add the C (carry):
+			result = inst.addInstr(reg1, resultStr, CStr);
+			
+			//if reg = pc then make a jump
+			if(reg1.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -921,58 +990,35 @@ public class Visitors implements MyParserVisitor{
 
 	@Override
 	public Object visit(ASTadcS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//add the two arguments:
-		int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(result);
-		String C = C_S_psrReg.get("C").toString();
+		int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
 
+		String resultStr = String.valueOf(result);
+		String CStr = C_S_psrReg.get("C").toString();
 		//Then add the C (carry):
-		result = inst.addInstr(reg, ret, C);
+		result = inst.addInstr(reg1, resultStr, CStr);
 
 		upCSpsr.update(result, true, true, true, true);
-		
-		if(reg.toString().equals("r15")){
+
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
-		}
 
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTadcC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		if ( condition.condAction(cond.toString()) ){
-			//add the two arguments:
-			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(result);
-			String C = C_S_psrReg.get("C").toString();
-
-			//Then add the C (carry):
-			result = inst.addInstr(reg, ret, C);
-			
-			if(reg.toString().equals("r15")){
-				setPc(result);
-				setChild(result-2);
-			}
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
 		return null;
@@ -981,34 +1027,36 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTadcCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
 			//add the two arguments:
-			int result = inst.addInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(result);
-			String C = C_S_psrReg.get("C").toString();
+			int result = inst.addInstr(reg1, arg1.toString(), arg2.toString());
 
+			String resultStr = String.valueOf(result);
+			String CStr = C_S_psrReg.get("C").toString();
 			//Then add the C (carry):
-			result = inst.addInstr(reg, ret, C);
+			result = inst.addInstr(reg1, resultStr, CStr);
 
 			upCSpsr.update(result, true, true, true, true);
-			
-			if(reg.toString().equals("r15")){
+
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -1018,13 +1066,13 @@ public class Visitors implements MyParserVisitor{
 	//SUB
 	@Override
 	public Object visit(ASTsub node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
@@ -1035,14 +1083,14 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTsubC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
@@ -1053,26 +1101,28 @@ public class Visitors implements MyParserVisitor{
 
 	@Override
 	public Object visit(ASTsubS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
 		upCSpsr.update(result, true, true, true, true);
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
 		return null;
@@ -1081,27 +1131,29 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTsubCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
+			int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
 			upCSpsr.update(result, true, true, true, true);
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -1111,21 +1163,56 @@ public class Visitors implements MyParserVisitor{
 	//SBC
 	@Override
 	public Object visit(ASTsbc node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first
-		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(result);
-		String C = C_S_psrReg.get("C").toString();
-
-		//Then sub the C (carry):
-		result = inst.subInstr(reg, ret, C);
+		int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
 		
-		if(reg.toString().equals("r15")){
+		String resultStr = String.valueOf(result);
+		String CStr;
+		
+		//because result - (~C)
+		if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+		else CStr = "0";
+		
+		//Then sub the C (carry):
+		result = inst.subInstr(reg1, resultStr, CStr);
+		
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
+		}
+
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTsbcC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		if ( condition.condAction(cond.toString()) ){
+			//Sub the two arguments first
+			int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
+			
+			String resultStr = String.valueOf(result);
+			String CStr;
+			
+			//because result - (~C)
+			if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+			else CStr = "0";
+			
+			//Then sub the C (carry):
+			result = inst.subInstr(reg1, resultStr, CStr);
+			
+			if(reg1.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -1133,58 +1220,40 @@ public class Visitors implements MyParserVisitor{
 
 	@Override
 	public Object visit(ASTsbcS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first
-		int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
-		String ret = String.valueOf(result);
-		String C = C_S_psrReg.get("C").toString();
+		int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
+		
+		String resultStr = String.valueOf(result);
+		String CStr;
+		
+		//because result - (~C)
+		if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+		else CStr = "0";
 
 		//Then sub the C (carry):
-		result = inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg1, resultStr, CStr);
 
 		upCSpsr.update(result, true, true, true, true);
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
-		}
 
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTsbcC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		if ( condition.condAction(cond.toString()) ){
-			//Sub the two arguments first
-			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(result);
-			String C = C_S_psrReg.get("C").toString();
-
-			//Then sub the C (carry):
-			result = inst.subInstr(reg, ret, C);
-
-			if(reg.toString().equals("r15")){
-				setPc(result);
-				setChild(result-2);
-			}
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
 		return null;
@@ -1193,52 +1262,58 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTsbcCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
 			//Sub the two arguments first
-			int result = inst.subInstr(reg, arg1.toString(), arg2.toString());
-			String ret = String.valueOf(result);
-			String C = C_S_psrReg.get("C").toString();
+			int result = inst.subInstr(reg1, arg1.toString(), arg2.toString());
+			
+			String resultStr = String.valueOf(result);
+			String CStr;
+			
+			//because result - (~C)
+			if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+			else CStr = "0";
 
 			//Then sub the C (carry):
-			result = inst.subInstr(reg, ret, C);
+			result = inst.subInstr(reg1, resultStr, CStr);
 
 			upCSpsr.update(result, true, true, true, true);
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
 		return null;
 	}
 
-
 	//RSB
 	//same as sub, reverse arguments
 	@Override
 	public Object visit(ASTrsb node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
-		
-		if(reg.toString().equals("r15")){
+		int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
+
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
@@ -1249,14 +1324,14 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTrsbC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
-			
-			if(reg.toString().equals("r15")){
+			int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
+
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}		
@@ -1267,26 +1342,28 @@ public class Visitors implements MyParserVisitor{
 
 	@Override
 	public Object visit(ASTrsbS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+		int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
 		upCSpsr.update(result, true, true, true, true);
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
 		return null;
@@ -1295,27 +1372,29 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTrsbCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
+			int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
 			upCSpsr.update(result, true, true, true, true);
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -1325,127 +1404,137 @@ public class Visitors implements MyParserVisitor{
 	//RSC
 	@Override
 	public Object visit(ASTrsc node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		//Sub the two arguments first:
-		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
-		String ret = String.valueOf(result);
-		String C = C_S_psrReg.get("C").toString();
-
-		if (C.equals("1")) C = "0";
-		else C="1";
+		int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
+		
+		String resultStr = String.valueOf(result);
+		String CStr;
+		
+		//because result - (~C)
+		if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+		else CStr = "0";
 
 		//Then sub the C:
-		result = inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg1, resultStr, CStr);
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTrscC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		if ( condition.condAction(cond.toString()) ){
+			//Sub the two arguments first:
+			int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
+			
+			String resultStr = String.valueOf(result);
+			String CStr;
+			
+			//because result - (~C)
+			if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+			else CStr = "0";
+
+			//Then sub the C:
+			result = inst.subInstr(reg1, resultStr, CStr);
+			
+			if(reg1.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTrscS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		//Sub the two arguments first:
-		int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
-		String ret = String.valueOf(result);
-		String C = C_S_psrReg.get("C").toString();
-
-		if (C.equals("1")) C = "0";
-		else C="1";
+		int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
+		
+		String resultStr = String.valueOf(result);
+		String CStr;
+		
+		//because result - (~C)
+		if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+		else CStr = "0";
 
 		//Then sub the C:
-		result = inst.subInstr(reg, ret, C);
+		result = inst.subInstr(reg1, resultStr, CStr);
 
 		upCSpsr.update(result, true, true, true, true);
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTrscC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		if ( condition.condAction(cond.toString()) ){
-			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
-			String ret = String.valueOf(result);
-			String C = C_S_psrReg.get("C").toString();
-
-			if (C.equals("1")) C = "0";
-			else C="1";
-
-			//Then sub the C:
-			result = inst.subInstr(reg, ret, C);
-			
-			if(reg.toString().equals("r15")){
-				setPc(result);
-				setChild(result-2);
-			}
-
-		}
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTrscCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			//Sub the two arguments first:
-			int result = inst.subInstr(reg, arg2.toString(), arg1.toString());
-			String ret = String.valueOf(result);
-			String C = C_S_psrReg.get("C").toString();
-
-			if (C.equals("1")) C = "0";
-			else C="1";
+			int result = inst.subInstr(reg1, arg2.toString(), arg1.toString());
+			
+			String resultStr = String.valueOf(result);
+			String CStr;
+			
+			//because result - (~C)
+			if(C_S_psrReg.get("C").toString().equals("0")) CStr = "1";
+			else CStr = "0";
 
 			//Then sub the C:
-			result = inst.subInstr(reg, ret, C);
+			result = inst.subInstr(reg1, resultStr, CStr);
 
 			upCSpsr.update(result, true, true, true, true);
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 		return null;
@@ -1463,21 +1552,7 @@ public class Visitors implements MyParserVisitor{
 	
 		return null;
 	}
-
-	@Override
-	public Object visit(ASTmlaS node, Object data) {
-		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		int result = inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
-
-		upCSpsr.update(result, true, true, false, false);
-		
-		return null;
-	}
-
+	
 	@Override
 	public Object visit(ASTmlaC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1492,6 +1567,19 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
+	@Override
+	public Object visit(ASTmlaS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		int result = inst.mlaInstr(reg1, reg2.toString(), reg3.toString(), reg4.toString());
+
+		upCSpsr.update(result, true, true, false, false);
+		
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTmlaCS node, Object data) {
@@ -1519,6 +1607,19 @@ public class Visitors implements MyParserVisitor{
 
 		return null;
 	}
+	
+	@Override
+	public Object visit(ASTmulC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			inst.mulInstr(reg1, reg2.toString(), reg3.toString());
+		}
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTmulS node, Object data) {
@@ -1530,19 +1631,6 @@ public class Visitors implements MyParserVisitor{
 
 		upCSpsr.update(result, true, true, false, false);
 
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTmulC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.mulInstr(reg1, reg2.toString(), reg3.toString());
-		}
 		return null;
 	}
 
@@ -1572,6 +1660,21 @@ public class Visitors implements MyParserVisitor{
 
 		return null;
 	}
+	
+	@Override
+	public Object visit(ASTsmlalC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		}
+
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTsmlalS node, Object data) {
@@ -1588,20 +1691,6 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	@Override
-	public Object visit(ASTsmlalC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.smlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		}
-
-		return null;
-	}
 
 	@Override
 	public Object visit(ASTsmlalCS node, Object data) {
@@ -1633,23 +1722,6 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-
-	@Override
-	public Object visit(ASTsmullS node, Object data) {
-		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		long result = inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		int resultHi = (int) reg.get(reg2.toString());
-		upCSpsr.update(resultHi, true, false, false, false);
-		upCSpsr.update((int)result, false, true, false, false);
-
-		return null;
-	}
-
-
 	@Override
 	public Object visit(ASTsmullC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1665,6 +1737,20 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
+	@Override
+	public Object visit(ASTsmullS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		long result = inst.smullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		int resultHi = (int) reg.get(reg2.toString());
+		upCSpsr.update(resultHi, true, false, false, false);
+		upCSpsr.update((int)result, false, true, false, false);
+
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTsmullCS node, Object data) {
@@ -1697,6 +1783,19 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
+	@Override
+	public Object visit(ASTumlalC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
+
+		if(condition.condAction(cond.toString())){
+			inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		}
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTumlalS node, Object data) {
@@ -1712,22 +1811,6 @@ public class Visitors implements MyParserVisitor{
 
 		return null;
 	}
-
-
-	@Override
-	public Object visit(ASTumlalC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(3).jjtAccept(this, data);
-		Object reg4 = node.jjtGetChild(4).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.umlalInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		}
-		return null;
-	}
-
 
 	@Override
 	public Object visit(ASTumlalCS node, Object data) {
@@ -1746,7 +1829,6 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-
 	//UMULL (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTumull node, Object data) {
@@ -1759,23 +1841,6 @@ public class Visitors implements MyParserVisitor{
 
 		return null;
 	}
-
-
-	@Override
-	public Object visit(ASTumullS node, Object data) {
-		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		long result = inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
-		int resultHi = (int) reg.get(reg2.toString());
-		upCSpsr.update(resultHi, true, false, false, false);
-		upCSpsr.update((int)result, false, true, false, false);
-
-		return null;
-	}
-
 
 	@Override
 	public Object visit(ASTumullC node, Object data) {
@@ -1791,7 +1856,21 @@ public class Visitors implements MyParserVisitor{
 
 		return null;
 	}
+	
+	@Override
+	public Object visit(ASTumullS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object reg4 = node.jjtGetChild(3).jjtAccept(this, data);
 
+		long result = inst.umullInstr(reg1, reg2, reg3.toString(), reg4.toString());
+		int resultHi = (int) reg.get(reg2.toString());
+		upCSpsr.update(resultHi, true, false, false, false);
+		upCSpsr.update((int)result, false, true, false, false);
+
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTumullCS node, Object data) {
@@ -1810,16 +1889,15 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-
 	//*Comparaison*//
 	//CMP (doesn't effect jump if reg1 is pc,)
 	@Override
 	public Object visit(ASTcmp node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 
 		//cpsr set on the result of reg-arg1:
-		int result = inst.cmpInstr(reg, arg1.toString());
+		int result = inst.cmpInstr(reg1, arg1.toString());
 
 		upCSpsr.update(result, true, true, true, true);
 
@@ -1829,12 +1907,12 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTcmpC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
 			//cpsr set on the result of reg-arg1:
-			int result = inst.cmpInstr(reg, arg1.toString());
+			int result = inst.cmpInstr(reg1, arg1.toString());
 
 			upCSpsr.update(result, true, true, true, true);
 		}
@@ -1845,11 +1923,11 @@ public class Visitors implements MyParserVisitor{
 	//CMN (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTcmn node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 
 		//cpsr set on the result of reg+arg1:
-		int result = inst.cmnInstr(reg, arg1.toString());
+		int result = inst.cmnInstr(reg1, arg1.toString());
 
 		upCSpsr.update(result, true, true, true, true);
 
@@ -1859,12 +1937,12 @@ public class Visitors implements MyParserVisitor{
 	@Override
 	public Object visit(ASTcmnC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			//cpsr set on the result of reg-arg1:
-			int result = inst.cmnInstr(reg, arg1.toString());
+			//cpsr set on the result of reg+arg1:
+			int result = inst.cmnInstr(reg1, arg1.toString());
 
 			upCSpsr.update(result, true, true, true, true);
 		}
@@ -1874,28 +1952,40 @@ public class Visitors implements MyParserVisitor{
 	//TEQ (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTteq node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object typeArg1 = node.jjtGetChild(1);
 
 		//cpsr set on the result of reg^arg1:
-		int result = inst.teqInstr(reg, arg1.toString());
+		int result = inst.teqInstr(reg1, arg1.toString());
 
-		upCSpsr.update(result, true, true, true, false);
-
+		if(typeArg1.toString().equals("shiftLS")){
+			upCSpsr.update(result, true, true, true, false);
+		}
+		else{
+			upCSpsr.update(result, true, true, false, false);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTteqC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeArg1 = node.jjtGetChild(2);
 
 		if ( condition.condAction(cond.toString()) ){
 			//cpsr set on the result of reg^arg1:
-			int result = inst.teqInstr(reg, arg1.toString());
+			int result = inst.teqInstr(reg1, arg1.toString());
 
-			upCSpsr.update(result, true, true, true, false);
+			if(typeArg1.toString().equals("shiftLS")){
+				upCSpsr.update(result, true, true, true, false);
+			}
+			else{
+				upCSpsr.update(result, true, true, false, false);
+			}
 		}
 
 		return null;
@@ -1904,28 +1994,40 @@ public class Visitors implements MyParserVisitor{
 	//TST (doesn't effect jump if reg1 is pc, any precision for spsr)
 	@Override
 	public Object visit(ASTtst node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object typeArg1 = node.jjtGetChild(1);
 
 		//cpsr set on the result of reg&arg1:
-		int result = inst.tstInstr(reg, arg1.toString());
+		int result = inst.tstInstr(reg1, arg1.toString());
 
-		upCSpsr.update(result, true, true, true, false);
-
+		if(typeArg1.toString().equals("shiftLS")){
+			upCSpsr.update(result, true, true, true, false);
+		}
+		else{
+			upCSpsr.update(result, true, true, false, false);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTtstC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeArg1 = node.jjtGetChild(2);
 
 		if ( condition.condAction(cond.toString()) ){
 			//cpsr set on the result of reg&arg1:
-			int result = inst.tstInstr(reg, arg1.toString());
+			int result = inst.tstInstr(reg1, arg1.toString());
 
-			upCSpsr.update(result, true, true, true, false);
+			if(typeArg1.toString().equals("shiftLS")){
+				upCSpsr.update(result, true, true, true, false);
+			}
+			else{
+				upCSpsr.update(result, true, true, false, false);
+			}
 		}
 
 		return null;
@@ -1935,15 +2037,34 @@ public class Visitors implements MyParserVisitor{
 	//AND
 	@Override
 	public Object visit(ASTand node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.andInstr(reg1, arg1.toString(), arg2.toString());
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
+		}
+
+		return null;
+	}
+	
+	@Override
+	public Object visit(ASTandC node, Object data) {
+		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+
+		if ( condition.condAction(cond.toString()) ){
+			int result = inst.andInstr(reg1, arg1.toString(), arg2.toString());
+			
+			if(reg1.toString().equals("r15")){
+				setPc(result);
+				setChild(result-2);
+			}
 		}
 
 		return null;
@@ -1951,74 +2072,73 @@ public class Visitors implements MyParserVisitor{
 
 	@Override
 	public Object visit(ASTandS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(2);
+		
+		int result = inst.andInstr(reg1, arg1.toString(), arg2.toString());
 
-		int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
-		upCSpsr.update(result, true, true, true, false);
-
-		if(reg.toString().equals("r15")){
+		if(typeArg2.toString().equals("shiftLS")){
+			upCSpsr.update(result, true, true, true, false);
+		}
+		else{
+			upCSpsr.update(result, true, true, false, false);
+		}
+		
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
 			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
 		}
 		
 		return null;
 	}
 
 	@Override
-	public Object visit(ASTandC node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
-
-		if ( condition.condAction(cond.toString()) ){
-			int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
-			
-			if(reg.toString().equals("r15")){
-				setPc(result);
-				setChild(result-2);
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public Object visit(ASTandCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(3);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.andInstr(reg, arg1.toString(), arg2.toString());
-			upCSpsr.update(result, true, true, true, false);
+			int result = inst.andInstr(reg1, arg1.toString(), arg2.toString());
+
+			if(typeArg2.toString().equals("shiftLS")){
+				upCSpsr.update(result, true, true, true, false);
+			}
+			else{
+				upCSpsr.update(result, true, true, false, false);
+			}
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -2028,58 +2148,31 @@ public class Visitors implements MyParserVisitor{
 	//BIC
 	@Override
 	public Object visit(ASTbic node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.bicInstr(reg1, arg1.toString(), arg2.toString());
 		
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 
 		return null;
 	}
-
-	@Override
-	public Object visit(ASTbicS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
-
-		int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
-		upCSpsr.update(result, true, true, true, false);
-		
-		if(reg.toString().equals("r15")){
-			setPc(result);
-			setChild(result-2);
-		}
-
-		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
-			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
-		}
-
-		return null;
-	}
-
+	
 	@Override
 	public Object visit(ASTbicC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
-		
-			if(reg.toString().equals("r15")){
+			int result = inst.bicInstr(reg1, arg1.toString(), arg2.toString());
+			
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}			
@@ -2089,29 +2182,74 @@ public class Visitors implements MyParserVisitor{
 	}
 
 	@Override
+	public Object visit(ASTbicS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(2);
+
+		int result = inst.bicInstr(reg1, arg1.toString(), arg2.toString());
+		
+		if(typeArg2.toString().equals("shiftLS")){
+			upCSpsr.update(result, true, true, true, false);
+		}
+		else{
+			upCSpsr.update(result, true, true, false, false);
+		}
+		
+		if(reg1.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
+			C_S_psrReg.put("I", 0);
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
+		}
+
+		return null;
+	}
+
+	@Override
 	public Object visit(ASTbicCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(3);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.bicInstr(reg, arg1.toString(), arg2.toString());
-			upCSpsr.update(result, true, true, true, false);
+			int result = inst.bicInstr(reg1, arg1.toString(), arg2.toString());
 			
-			if(reg.toString().equals("r15")){
+			if(typeArg2.toString().equals("shiftLS")){
+				upCSpsr.update(result, true, true, true, false);
+			}
+			else{
+				upCSpsr.update(result, true, true, false, false);
+			}
+			
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -2121,90 +2259,108 @@ public class Visitors implements MyParserVisitor{
 	//EOR
 	@Override
 	public Object visit(ASTeor node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.eorInstr(reg1, arg1.toString(), arg2.toString());
 
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 		
 		return null;
 	}
-
-	@Override
-	public Object visit(ASTeorS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
-
-		int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
-		upCSpsr.update(result, true, true, true, false);
-
-		if(reg.toString().equals("r15")){
-			setPc(result);
-			setChild(result-2);
-		}
-
-		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
-			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
-		}
-		
-		return null;
-	}
-
+	
 	@Override
 	public Object visit(ASTeorC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
-			
-			if(reg.toString().equals("r15")){
+			int result = inst.eorInstr(reg1, arg1.toString(), arg2.toString());
+
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 		}
 
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTeorS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(2);
+		
+		int result = inst.eorInstr(reg1, arg1.toString(), arg2.toString());
+		
+		if(typeArg2.toString().equals("shiftLS")){
+			upCSpsr.update(result, true, true, true, false);
+		}
+		else{
+			upCSpsr.update(result, true, true, false, false);
+		}
+
+		if(reg1.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
+			C_S_psrReg.put("I", 0);
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTeorCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(3);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.eorInstr(reg, arg1.toString(), arg2.toString());
-			upCSpsr.update(result, true, true, true, false);
+			int result = inst.eorInstr(reg1, arg1.toString(), arg2.toString());
 			
-			if(reg.toString().equals("r15")){
+			if(typeArg2.toString().equals("shiftLS")){
+				upCSpsr.update(result, true, true, true, false);
+			}
+			else{
+				upCSpsr.update(result, true, true, false, false);
+			}
+
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -2214,90 +2370,108 @@ public class Visitors implements MyParserVisitor{
 	//ORR
 	@Override
 	public Object visit(ASTorr node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
 
-		int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
+		int result = inst.orrInstr(reg1, arg1.toString(), arg2.toString());
 
-		if(reg.toString().equals("r15")){
+		if(reg1.toString().equals("r15")){
 			setPc(result);
 			setChild(result-2);
 		}
 		
 		return null;
 	}
-
-	@Override
-	public Object visit(ASTorrS node, Object data) {
-		Object reg = node.jjtGetChild(0).jjtAccept(this, data);
-		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
-
-		int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
-		upCSpsr.update(result, true, true, true, false);
-
-		if(reg.toString().equals("r15")){
-			setPc(result);
-			setChild(result-2);
-		}
-
-		//if in supervisor mode, copy the spsr into the cpsr:
-		if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-			copySpsrInCpsr();
-			C_S_psrReg.put("mode", 10000);
-			C_S_psrReg.put("I", 0);
-			
-			//clear spsr
-			C_S_psr.clearSPSR();
-		}
-		
-		return null;
-	}
-
+	
 	@Override
 	public Object visit(ASTorrC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
-			
-			if(reg.toString().equals("r15")){
+			int result = inst.orrInstr(reg1, arg1.toString(), arg2.toString());
+
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 		}
 
+		return null;
+	}
+
+	@Override
+	public Object visit(ASTorrS node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object arg1 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object arg2 = node.jjtGetChild(2).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(2);
+
+		int result = inst.orrInstr(reg1, arg1.toString(), arg2.toString());
+
+		if(typeArg2.toString().equals("shiftLS")){
+			upCSpsr.update(result, true, true, true, false);
+		}
+		else{
+			upCSpsr.update(result, true, true, false, false);
+		}
+		
+		if(reg1.toString().equals("r15")){
+			setPc(result);
+			setChild(result-2);
+		}
+
+		//if in supervisor mode, copy the spsr into the cpsr:
+		if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+			copySpsrInCpsr();//copy
+			C_S_psrReg.put("mode", 10000);//return to user mode
+			C_S_psrReg.put("I", 0);
+
+			C_S_psr.clearSPSR(); //clear spsr
+			//clear registers of spsr:
+			reg.put("r13_svc", 0);
+			reg.put("r14_svc", 0);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Object visit(ASTorrCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg1 = node.jjtGetChild(1).jjtAccept(this, data);
 		Object arg1 = node.jjtGetChild(2).jjtAccept(this, data);
 		Object arg2 = node.jjtGetChild(3).jjtAccept(this, data);
+		Object typeArg2 = node.jjtGetChild(3);
 
 		if ( condition.condAction(cond.toString()) ){
-			int result = inst.orrInstr(reg, arg1.toString(), arg2.toString());
-			upCSpsr.update(result, true, true, true, false);
+			int result = inst.orrInstr(reg1, arg1.toString(), arg2.toString());
+
+			if(typeArg2.toString().equals("shiftLS")){
+				upCSpsr.update(result, true, true, true, false);
+			}
+			else{
+				upCSpsr.update(result, true, true, false, false);
+			}
 			
-			if(reg.toString().equals("r15")){
+			if(reg1.toString().equals("r15")){
 				setPc(result);
 				setChild(result-2);
 			}
 
 			//if in supervisor mode, copy the spsr into the cpsr:
-			if(reg.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+			if(reg1.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
-				
-				//clear spsr
-				C_S_psr.clearSPSR();
+
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 
@@ -2306,18 +2480,16 @@ public class Visitors implements MyParserVisitor{
 
 
 	//*LDR/STR*//	
-
-
 	//LDR
 	@Override
 	public Object visit(ASTldrSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(2).jjtAccept(this, data);
+		Object close = node.jjtGetChild(2).jjtAccept(this, data);
 
 		String val="null";
 
-		inst.ldrIntr(regLdr.toString(), regV.toString(), val, close,"pre", "p");
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val, close.toString() ,"pre", "p");
 		
 		if(regLdr.toString().equals("r15")){
 			setPc(Integer.parseInt(reg.get("r15").toString()));
@@ -2332,12 +2504,12 @@ public class Visitors implements MyParserVisitor{
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
 		Object regLdr = node.jjtGetChild(1).jjtAccept(this, data);
 		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
+		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
 		String val="null";
 
 		if(condition.condAction(cond.toString())){	
-			inst.ldrIntr(regLdr.toString(), regV.toString(), val, close,"pre", "p");
+			inst.ldrIntr(regLdr.toString(), regV.toString(), val, close.toString() ,"pre", "p");
 			
 			if(regLdr.toString().equals("r15")){
 				setPc(Integer.parseInt(reg.get("r15").toString()));
@@ -2354,7 +2526,7 @@ public class Visitors implements MyParserVisitor{
 		Object val = node.jjtGetChild(2).jjtAccept(this, data);
 		Object close = node.jjtGetChild(3).jjtAccept(this, data);
 
-		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString(),"pre", "n");
+		inst.ldrIntr(regLdr.toString(), regV.toString(), val.toString(), close.toString() ,"pre", "n");
 		
 		if(regLdr.toString().equals("r15")){
 			setPc(Integer.parseInt(reg.get("r15").toString()));
@@ -3657,280 +3829,6 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-	/*
-	@Override
-	public Object visit(ASTstrSHPreNeg node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
-
-		inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "n");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSHPreNeg node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(4).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "n");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSHPrePos node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
-
-		inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "p");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSHPrePos node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(4).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "p");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSHPostNeg node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-
-		String close = "null";
-
-		inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "n");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSHPostNeg node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-
-		String close = "null";
-
-		if(condition.condAction(cond.toString())){
-			inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "n");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSHPostPos node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-
-		String close = "null";
-
-		inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "p");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSHPostPos node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-
-		String close = "null";
-
-		if(condition.condAction(cond.toString())){
-			inst.strSHInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "p");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSHSimple node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object close = node.jjtGetChild(2).jjtAccept(this, data);
-
-		String val = "null";
-
-		inst.strSHInstr(regStr.toString(), regV.toString(), val, close.toString(), "pre", "p");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSHSimple node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object close = node.jjtGetChild(3).jjtAccept(this, data);
-
-		String val = "null";
-
-		if(condition.condAction(cond.toString())){
-			inst.strSHInstr(regStr.toString(), regV.toString(), val, close.toString(), "pre", "p");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSBPreNeg node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
-
-		inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "n");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSBPreNeg node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(4).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "n");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSBPrePos node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(3).jjtAccept(this, data);
-
-		inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "p");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSBPrePos node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-		String close = (String) node.jjtGetChild(4).jjtAccept(this, data);
-
-		if(condition.condAction(cond.toString())){
-			inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "pre", "p");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSBPostNeg node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-
-		String close = "null";
-
-		inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "n");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSBPostNeg node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-
-		String close = "null";
-
-		if(condition.condAction(cond.toString())){
-			inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "n");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSBPostPos node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object val = node.jjtGetChild(2).jjtAccept(this, data);
-
-		String close = "null";
-
-		inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "p");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSBPostPos node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object val = node.jjtGetChild(3).jjtAccept(this, data);
-
-		String close = "null";
-		if(condition.condAction(cond.toString())){
-			inst.strSBInstr(regStr.toString(), regV.toString(), val.toString(), close, "post", "p");
-		}
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrSBSimple node, Object data) {
-		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(1).jjtAccept(this, data);
-		Object close = node.jjtGetChild(2).jjtAccept(this, data);
-
-		String val = "null";
-
-		inst.strSBInstr(regStr.toString(), regV.toString(), val, close.toString(), "pre", "p");
-
-		return null;
-	}
-
-	@Override
-	public Object visit(ASTstrCSBSimple node, Object data) {
-		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
-		Object regStr = node.jjtGetChild(1).jjtAccept(this, data);
-		Object regV = node.jjtGetChild(2).jjtAccept(this, data);
-		Object close = node.jjtGetChild(3).jjtAccept(this, data);
-
-		String val = "null";
-
-		if(condition.condAction(cond.toString())){
-			inst.strSBInstr(regStr.toString(), regV.toString(), val, close.toString(), "pre", "p");
-		}
-
-		return null;
-	}
-	 */
-
 	//*LDM / STM*//
 
 	//LDM
@@ -3960,12 +3858,14 @@ public class Visitors implements MyParserVisitor{
 			}
 
 			if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
 
-				//clear spsr
-				C_S_psr.clearSPSR();
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}
 		}
 		
@@ -4000,12 +3900,14 @@ public class Visitors implements MyParserVisitor{
 				}
 
 				if(regStart.toString().equals("r15") && C_S_psrReg.get("mode").toString().equals("10011")){
-					copySpsrInCpsr();
-					C_S_psrReg.put("mode", 10000);
+					copySpsrInCpsr();//copy
+					C_S_psrReg.put("mode", 10000);//return to user mode
 					C_S_psrReg.put("I", 0);
 
-					//clear spsr
-					C_S_psr.clearSPSR();
+					C_S_psr.clearSPSR(); //clear spsr
+					//clear registers of spsr:
+					reg.put("r13_svc", 0);
+					reg.put("r14_svc", 0);
 				}
 			}
 		}
@@ -4039,23 +3941,40 @@ public class Visitors implements MyParserVisitor{
 			
 		}
 		else if(close.toString().equals("CU")){
-			inst.ldmInst(regL.toString(), list, false, amode.toString());
 			
 			for(int i=0; i<list.length; i++){
 				if(list[i].equals("r15")){
-					setPc(Integer.parseInt(reg.get("r15").toString()));
-					setChild(Integer.parseInt(reg.get("r15").toString())-2);
 					inList = true;
 				}
 			}
 			
+			if(!inList){
+				for(int i=0; i<list.length; i++){
+					if(list[i].equals("r13_svc")){
+						list[i] = "r13";
+					}
+					if(list[i].equals("r14_svc")){
+						list[i] = "r14";
+					}
+				}
+			}
+			
+			inst.ldmInst(regL.toString(), list, false, amode.toString());
+			
+			if(inList){
+				setPc(Integer.parseInt(reg.get("r15").toString()));
+				setChild(Integer.parseInt(reg.get("r15").toString())-2);
+			}
+
 			if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
-				copySpsrInCpsr();
-				C_S_psrReg.put("mode", 10000);
+				copySpsrInCpsr();//copy
+				C_S_psrReg.put("mode", 10000);//return to user mode
 				C_S_psrReg.put("I", 0);
 
-				//clear spsr
-				C_S_psr.clearSPSR();
+				C_S_psr.clearSPSR(); //clear spsr
+				//clear registers of spsr:
+				reg.put("r13_svc", 0);
+				reg.put("r14_svc", 0);
 			}	
 		}
 		
@@ -4092,23 +4011,40 @@ public class Visitors implements MyParserVisitor{
 				
 			}
 			else if(close.toString().equals("CU")){
-				inst.ldmInst(regL.toString(), list, false, amode.toString());
 				
 				for(int i=0; i<list.length; i++){
 					if(list[i].equals("r15")){
-						setPc(Integer.parseInt(reg.get("r15").toString()));
-						setChild(Integer.parseInt(reg.get("r15").toString())-2);
 						inList = true;
 					}
 				}
 				
+				if(!inList){
+					for(int i=0; i<list.length; i++){
+						if(list[i].equals("r13_svc")){
+							list[i] = "r13";
+						}
+						if(list[i].equals("r14_svc")){
+							list[i] = "r14";
+						}
+					}
+				}
+				
+				inst.ldmInst(regL.toString(), list, false, amode.toString());
+				
+				if(inList){
+					setPc(Integer.parseInt(reg.get("r15").toString()));
+					setChild(Integer.parseInt(reg.get("r15").toString())-2);
+				}
+
 				if(inList && C_S_psrReg.get("mode").toString().equals("10011")){
-					copySpsrInCpsr();
-					C_S_psrReg.put("mode", 10000);
+					copySpsrInCpsr();//copy
+					C_S_psrReg.put("mode", 10000);//return to user mode
 					C_S_psrReg.put("I", 0);
 
-					//clear spsr
-					C_S_psr.clearSPSR();
+					C_S_psr.clearSPSR(); //clear spsr
+					//clear registers of spsr:
+					reg.put("r13_svc", 0);
+					reg.put("r14_svc", 0);
 				}	
 			}
 		}
@@ -4765,19 +4701,6 @@ public class Visitors implements MyParserVisitor{
 		return null;
 	}
 
-
-	@Override
-	public Object visit(ASTswpb node, Object data) {
-		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
-		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
-		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
-
-		inst.swapInstr(reg1, reg2.toString(), reg3.toString(), true);
-
-		return null;
-	}
-
-
 	@Override
 	public Object visit(ASTswpC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4790,7 +4713,17 @@ public class Visitors implements MyParserVisitor{
 		}
 		return null;
 	}
+	
+	@Override
+	public Object visit(ASTswpb node, Object data) {
+		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
+		Object reg2 = node.jjtGetChild(1).jjtAccept(this, data);
+		Object reg3 = node.jjtGetChild(2).jjtAccept(this, data);
 
+		inst.swapInstr(reg1, reg2.toString(), reg3.toString(), true);
+
+		return null;
+	}
 
 	@Override
 	public Object visit(ASTswpCB node, Object data) {
@@ -4812,7 +4745,6 @@ public class Visitors implements MyParserVisitor{
 		String swi_Handler = node.jjtGetChild(0).jjtAccept(this, data).toString();
 		return swi_Handler;
 	}
-
 
 	@Override
 	public Object visit(ASTCswi node, Object data) {
@@ -4866,19 +4798,4 @@ public class Visitors implements MyParserVisitor{
 			Object label = node.value.toString();
 			return label;
 		}
-
-		@Override
-		public Object visit(ASTshiftF node, Object data) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Object visit(ASTshift node, Object data) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-	
-		
 }

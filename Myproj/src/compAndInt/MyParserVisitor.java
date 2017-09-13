@@ -5,14 +5,14 @@ public interface MyParserVisitor
 {
   public Object visit(SimpleNode node, Object data);
   public Object visit(ASTprog node, Object data);
-  public Object visit(ASTdecl node, Object data);
-  public Object visit(ASTdeclS node, Object data);
-  public Object visit(ASTdeclC node, Object data);
-  public Object visit(ASTdeclCS node, Object data);
-  public Object visit(ASTdecln node, Object data);
-  public Object visit(ASTdeclnS node, Object data);
-  public Object visit(ASTdeclnC node, Object data);
-  public Object visit(ASTdeclnCS node, Object data);
+  public Object visit(ASTmov node, Object data);
+  public Object visit(ASTmovS node, Object data);
+  public Object visit(ASTmovC node, Object data);
+  public Object visit(ASTmovCS node, Object data);
+  public Object visit(ASTmvn node, Object data);
+  public Object visit(ASTmvnS node, Object data);
+  public Object visit(ASTmvnC node, Object data);
+  public Object visit(ASTmvnCS node, Object data);
   public Object visit(ASTadd node, Object data);
   public Object visit(ASTaddS node, Object data);
   public Object visit(ASTaddC node, Object data);
@@ -217,4 +217,4 @@ public interface MyParserVisitor
   public Object visit(ASTnum node, Object data);
   public Object visit(ASTlabel node, Object data);
 }
-/* JavaCC - OriginalChecksum=fee74bed61e8d7f136337257a1b27c95 (do not edit this line) */
+/* JavaCC - OriginalChecksum=92c58a666a0d6a15e0f112e6a39a78fb (do not edit this line) */

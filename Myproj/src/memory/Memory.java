@@ -21,12 +21,9 @@ public class Memory {
 		return memory;
 	}
 	
-	public void print(){
-		for (Object key : memory.keySet()) {
-			System.out.println(key + " " + memory.get(key).toString());
-		}
-	}
-	
+	/**
+	 * erase all the value of the memory and restored base values
+	 */
 	public void clearMemory(){
 		memory.clear();
 		memory.put("0x00000000", "0x00000000"); //RESET

@@ -33,6 +33,9 @@ public class Register {
 		return registers;
 	}
 	
+	/**
+	 * put all the values to 0
+	 */
 	public void clearRegister(){
 		registers.put("r0", 0);
 		registers.put("r1", 0);
@@ -50,12 +53,9 @@ public class Register {
 		registers.put("r13", 0); //sp
 		registers.put("r14", 0); //lr
 		registers.put("r15", 0); //pc 
-	}
-	
-	public void print(){
-		for (Object key : registers.keySet()) {
-			System.out.println(key + " " + registers.get(key).toString());
-		}
+		
+		registers.put("r13_svc", 0);
+		registers.put("r14_svc", 0);
 	}
 	
 }

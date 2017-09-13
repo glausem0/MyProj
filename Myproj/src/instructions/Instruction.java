@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public class Instruction {
 
-	//private final static Long LONG_MASK = 0xffffffffL;
 	private HashMap<Object, Object> regData;
 	private AccessMemory mem;
 
@@ -47,7 +46,7 @@ public class Instruction {
 	 * @param shiftType
 	 * @param val1
 	 * @param val2
-	 * @return
+	 * @return the shifted value
 	 */
 	public int shiftInstr(String shiftType, String val1, String val2){	
 		int regOrVal = toInt(val1);
@@ -84,10 +83,10 @@ public class Instruction {
 				retVal = regOrVal >> value;
 			}
 			else if (value == 0) {
-				retVal = -regOrVal;
+				retVal = regOrVal;
 			}
 			else {
-				retVal = regOrVal;
+				retVal = -regOrVal;
 			}
 		break;
 
@@ -1380,140 +1379,6 @@ public class Instruction {
 	}
 
 	/**
-	 * store instruction signed byte (8 bits)
-	 * @param regL
-	 * @param regV
-	 * @param val
-	 * @param close
-	 * @param PrePost
-	 * @param PosNeg
-	 */
-	public void strSBInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
-		switch(PrePost){
-		case "pre":
-		{
-			int regVInt = toInt(regV);
-			switch(PosNeg){
-			case("n"):
-				if(close.equals("CU")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-
-						regData.put(regV, add);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt - valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-
-						regData.put(regV, add);
-					}
-				}
-				else if (close.equals("C")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt - valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-					}
-				}
-			break;
-
-			case("p"):
-				if(close.equals("CU")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-
-						regData.put(regV, add);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt + valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-
-						regData.put(regV, add);
-					}
-				}
-				else if (close.equals("C")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt + valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement8(add, valueStr);
-					}
-				}
-			break;
-			}
-		}
-		break;
-
-		case "post":
-		{
-			int regVInt = toInt(regV);
-			int valInt = toInt(val);
-
-			int add; int valueStr; int tmp;
-
-			switch(PosNeg){
-			case("n"):
-				add = regVInt;
-			valueStr = toInt(regL);
-
-			mem.setMemoryElement8(add, valueStr);
-
-			tmp = regVInt - valInt;
-			regData.put(regV, tmp);
-			break;
-
-			case("p"):
-				add = regVInt;
-			valueStr = toInt(regL);
-
-			mem.setMemoryElement8(add, valueStr);
-
-			tmp = regVInt + valInt;
-			regData.put(regV, tmp);
-			break;
-			}
-		}
-		break;
-
-		}
-	}
-
-	/**
 	 * store instruction unsigned half-word (16 bits)
 	 * @param regL
 	 * @param regV
@@ -1524,141 +1389,6 @@ public class Instruction {
 	 */
 	public void strHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
 
-		switch(PrePost){
-		case "pre":
-		{
-			int regVInt = toInt(regV);
-			switch(PosNeg){
-			case("n"):
-				if(close.equals("CU")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-
-						regData.put(regV, add);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt - valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-
-						regData.put(regV, add);
-					}
-				}
-				else if (close.equals("C")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt - valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-					}
-				}
-			break;
-
-			case("p"):
-				if(close.equals("CU")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-
-						regData.put(regV, add);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt + valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-
-						regData.put(regV, add);
-					}
-				}
-				else if (close.equals("C")){
-					if(val.equals("null")){
-
-						int add = regVInt;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-					}
-					else{
-						int valInt = toInt(val);
-
-						int add = regVInt + valInt ;
-						int valueStr = toInt(regL);
-
-						mem.setMemoryElement16(add, valueStr);
-					}
-				}
-			break;
-			}
-		}
-		break;
-
-		case "post":
-		{
-			int regVInt = toInt(regV);
-			int valInt = toInt(val);
-
-			int add; int valueStr; int tmp;
-
-			switch(PosNeg){
-			case("n"):
-				add = regVInt;
-			valueStr = toInt(regL);
-
-			mem.setMemoryElement16(add, valueStr);
-
-			tmp = regVInt - valInt;
-			regData.put(regV, tmp);
-			break;
-
-			case("p"):
-				add = regVInt;
-			valueStr = toInt(regL);
-
-			mem.setMemoryElement16(add, valueStr);
-
-			tmp = regVInt + valInt;
-			regData.put(regV, tmp);
-			break;
-			}
-		}
-		break;
-
-		}
-	}
-
-	/**
-	 * store instruction signed half-word (16 bits)
-	 * 
-	 * @param regL
-	 * @param regV
-	 * @param val
-	 * @param close
-	 * @param PrePost
-	 * @param PosNeg
-	 */
-	public void strSHInstr(String regL, String regV, String val, String close, String PrePost, String PosNeg){
 		switch(PrePost){
 		case "pre":
 		{

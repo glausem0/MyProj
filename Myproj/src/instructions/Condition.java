@@ -282,7 +282,11 @@ public class Condition {
 		return response;
 	}
 	
-	
+	/**
+	 * look if condition is respected 
+	 * @param cond
+	 * @return true when condition is respected
+	 */
 	public boolean condAction(String cond){
 		boolean condReturn = false;
 		

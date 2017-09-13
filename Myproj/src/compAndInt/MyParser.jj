@@ -4,7 +4,6 @@
  */options{              
                 
                          
- /*DEBUG_PARSER = true;*/
 }
 PARSER_BEGIN(MyParser)package compAndInt;
 
@@ -23,7 +22,6 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ 
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" > /*use for branch and branch link too*/
 | < H: "h" >
-  /*| < S: "s" > is already defined with SCND */
 
   /*for branchLink*/
 |  < L: "l" >
@@ -173,9 +171,9 @@ void mov()      :
 {
    <MOV>
    (
-    (/*@bgen(jjtree) #decl( 2) */
+    (/*@bgen(jjtree) #mov( 2) */
       {
-        ASTdecl jjtn001 = new ASTdecl(JJTDECL);
+        ASTmov jjtn001 = new ASTmov(JJTMOV);
         boolean jjtc001 = true;
         jjtree.openNodeScope(jjtn001);
       }
@@ -201,10 +199,10 @@ void mov()      :
           jjtree.closeNodeScope(jjtn001,  2);
         }
       }
-/*@egen*/         
-    |/*@bgen(jjtree) #declS( 2) */
+/*@egen*/        
+    |/*@bgen(jjtree) #movS( 2) */
       {
-        ASTdeclS jjtn002 = new ASTdeclS(JJTDECLS);
+        ASTmovS jjtn002 = new ASTmovS(JJTMOVS);
         boolean jjtc002 = true;
         jjtree.openNodeScope(jjtn002);
       }
@@ -229,12 +227,12 @@ void mov()      :
           jjtree.closeNodeScope(jjtn002,  2);
         }
       }
-/*@egen*/          
+/*@egen*/         
     )
    |cond() 
-    (/*@bgen(jjtree) #declC( 3) */
+    (/*@bgen(jjtree) #movC( 3) */
       {
-        ASTdeclC jjtn003 = new ASTdeclC(JJTDECLC);
+        ASTmovC jjtn003 = new ASTmovC(JJTMOVC);
         boolean jjtc003 = true;
         jjtree.openNodeScope(jjtn003);
       }
@@ -260,10 +258,10 @@ void mov()      :
           jjtree.closeNodeScope(jjtn003,  3);
         }
       }
-/*@egen*/          
-    |/*@bgen(jjtree) #declCS( 3) */
+/*@egen*/         
+    |/*@bgen(jjtree) #movCS( 3) */
       {
-        ASTdeclCS jjtn004 = new ASTdeclCS(JJTDECLCS);
+        ASTmovCS jjtn004 = new ASTmovCS(JJTMOVCS);
         boolean jjtc004 = true;
         jjtree.openNodeScope(jjtn004);
       }
@@ -288,7 +286,7 @@ void mov()      :
           jjtree.closeNodeScope(jjtn004,  3);
         }
       }
-/*@egen*/           
+/*@egen*/          
     )
    )
 }
@@ -298,9 +296,9 @@ void mvn()      :
 {
    <MVN>
    (
-    (/*@bgen(jjtree) #decln( 2) */
+    (/*@bgen(jjtree) #mvn( 2) */
       {
-        ASTdecln jjtn001 = new ASTdecln(JJTDECLN);
+        ASTmvn jjtn001 = new ASTmvn(JJTMVN);
         boolean jjtc001 = true;
         jjtree.openNodeScope(jjtn001);
       }
@@ -326,10 +324,10 @@ void mvn()      :
           jjtree.closeNodeScope(jjtn001,  2);
         }
       }
-/*@egen*/          
-    |/*@bgen(jjtree) #declnS( 2) */
+/*@egen*/        
+    |/*@bgen(jjtree) #mvnS( 2) */
       {
-        ASTdeclnS jjtn002 = new ASTdeclnS(JJTDECLNS);
+        ASTmvnS jjtn002 = new ASTmvnS(JJTMVNS);
         boolean jjtc002 = true;
         jjtree.openNodeScope(jjtn002);
       }
@@ -354,12 +352,12 @@ void mvn()      :
           jjtree.closeNodeScope(jjtn002,  2);
         }
       }
-/*@egen*/           
+/*@egen*/         
     )
    |cond() 
-    (/*@bgen(jjtree) #declnC( 3) */
+    (/*@bgen(jjtree) #mvnC( 3) */
       {
-        ASTdeclnC jjtn003 = new ASTdeclnC(JJTDECLNC);
+        ASTmvnC jjtn003 = new ASTmvnC(JJTMVNC);
         boolean jjtc003 = true;
         jjtree.openNodeScope(jjtn003);
       }
@@ -385,10 +383,10 @@ void mvn()      :
           jjtree.closeNodeScope(jjtn003,  3);
         }
       }
-/*@egen*/           
-    |/*@bgen(jjtree) #declnCS( 3) */
+/*@egen*/         
+    |/*@bgen(jjtree) #mvnCS( 3) */
       {
-        ASTdeclnCS jjtn004 = new ASTdeclnCS(JJTDECLNCS);
+        ASTmvnCS jjtn004 = new ASTmvnCS(JJTMVNCS);
         boolean jjtc004 = true;
         jjtree.openNodeScope(jjtn004);
       }
@@ -413,7 +411,7 @@ void mvn()      :
           jjtree.closeNodeScope(jjtn004,  3);
         }
       }
-/*@egen*/            
+/*@egen*/          
     )
    )
 }

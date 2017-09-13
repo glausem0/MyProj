@@ -5,14 +5,14 @@ public interface MyParserTreeConstants
 {
   public int JJTPROG = 0;
   public int JJTVOID = 1;
-  public int JJTDECL = 2;
-  public int JJTDECLS = 3;
-  public int JJTDECLC = 4;
-  public int JJTDECLCS = 5;
-  public int JJTDECLN = 6;
-  public int JJTDECLNS = 7;
-  public int JJTDECLNC = 8;
-  public int JJTDECLNCS = 9;
+  public int JJTMOV = 2;
+  public int JJTMOVS = 3;
+  public int JJTMOVC = 4;
+  public int JJTMOVCS = 5;
+  public int JJTMVN = 6;
+  public int JJTMVNS = 7;
+  public int JJTMVNC = 8;
+  public int JJTMVNCS = 9;
   public int JJTADD = 10;
   public int JJTADDS = 11;
   public int JJTADDC = 12;
@@ -221,14 +221,14 @@ public interface MyParserTreeConstants
   public String[] jjtNodeName = {
     "prog",
     "void",
-    "decl",
-    "declS",
-    "declC",
-    "declCS",
-    "decln",
-    "declnS",
-    "declnC",
-    "declnCS",
+    "mov",
+    "movS",
+    "movC",
+    "movCS",
+    "mvn",
+    "mvnS",
+    "mvnC",
+    "mvnCS",
     "add",
     "addS",
     "addC",
@@ -434,4 +434,4 @@ public interface MyParserTreeConstants
     "label",
   };
 }
-/* JavaCC - OriginalChecksum=492a000c08d43e212dba76ee9e96ab59 (do not edit this line) */
+/* JavaCC - OriginalChecksum=7a618bee9bd80f12c4af688ec815fe8c (do not edit this line) */
