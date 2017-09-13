@@ -1522,7 +1522,7 @@ public class Instruction {
 	 * @param update
 	 * @param amode
 	 */
-	public void ldmInst(String regL, String regStart, String regEnd, boolean update, String amode){
+	public void ldmInst(String regL, String regStart, String regEnd, boolean update, String amode, boolean isSVC){
 		int[] elements;
 		int length;
 		int address = (int) regData.get(regL);
@@ -1530,14 +1530,15 @@ public class Instruction {
 		int end;
 
 		regStart = regStart.replace("r", "");
+		if(regStart.contains("_svc")) regStart = regStart.replace("_svc", ""); 
 		start = Integer.parseInt(regStart);
 
 		if(regEnd.equals("null")){
 			length = 1;
 		}
 		else{
-
 			regEnd = regEnd.replace("r", "");
+			if(regEnd.contains("_svc")) regEnd = regEnd.replace("_svc", "");
 			end = Integer.parseInt(regEnd);
 
 			length = Math.abs(start-end)+1;
@@ -1554,7 +1555,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg="r"+reg;
+				if(isSVC && reg==13) tmpReg="r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg="r"+reg+"_svc";
+				else tmpReg="r"+reg;
+				
 				regData.put(tmpReg, elements[i]);
 				reg += 1;
 			}
@@ -1572,7 +1576,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg="r"+reg;
+				if(isSVC && reg==13) tmpReg="r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg="r"+reg+"_svc";
+				else tmpReg="r"+reg;
+				
 				regData.put(tmpReg, elements[i]);
 				reg += 1;
 			}
@@ -1591,7 +1598,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg="r"+reg;
+				if(isSVC && reg==13) tmpReg="r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg="r"+reg+"_svc";
+				else tmpReg="r"+reg;
+				
 				regData.put(tmpReg, elements[i]);
 				reg += 1;
 			}
@@ -1610,7 +1620,10 @@ public class Instruction {
 			String tmpReg;
 
 			for(int i=0; i<length; i++){
-				tmpReg="r"+reg;
+				if(isSVC && reg==13) tmpReg="r"+reg+"_svc";
+				else if(isSVC && reg==14) tmpReg="r"+reg+"_svc";
+				else tmpReg="r"+reg;
+				
 				regData.put(tmpReg, elements[i]);
 				reg += 1;
 			}
