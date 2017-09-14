@@ -1,9 +1,5 @@
 package compAndInt;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -14,7 +10,6 @@ import instructions.Update_C_S_psr;
 import memory.Memory;
 import registers.Cpsr_Spsr;
 import registers.Register;
-import view.View;
 
 public class Visitors implements MyParserVisitor{
 
@@ -466,7 +461,7 @@ public class Visitors implements MyParserVisitor{
 	//Register
 	@Override
 	public Object visit(ASTregister node, Object data) {
-		String valStr = (String) node.data.get("reg");
+		String valStr = node.value.toString();
 
 		return mapRegisters(valStr);
 	}
@@ -474,7 +469,7 @@ public class Visitors implements MyParserVisitor{
 	//Number
 	@Override
 	public Object visit(ASTnumber node, Object data) {
-		String valStr = (String) node.data.get("value");
+		String valStr = node.value.toString();
 		valStr = valStr.replace("#", "");
 		int valInt = Integer.parseInt(valStr);	
 
@@ -484,7 +479,7 @@ public class Visitors implements MyParserVisitor{
 	//Hexa
 	@Override
 	public Object visit(ASThexa node, Object data) {
-		String valStr = (String) node.data.get("hexa");
+		String valStr = node.value.toString();
 		valStr = valStr.replace("#0x", "");
 		//to have signed integer from hex:
 		long valLong = Long.parseLong(valStr, 16);
@@ -496,7 +491,7 @@ public class Visitors implements MyParserVisitor{
 	//Hexadecimal
 	@Override
 	public Object visit(ASThexadecimal node, Object data) {
-		String valStr = (String) node.data.get("hexadecimal");
+		String valStr = node.value.toString();
 		valStr = valStr.replace("0x", "");
 		//to have signed integer from hex:
 		long valLong = Long.parseLong(valStr, 16);
@@ -508,7 +503,7 @@ public class Visitors implements MyParserVisitor{
 	//num
 	@Override
 	public Object visit(ASTnum node, Object data) {
-		String val = (String) node.data.get("num");
+		String val = node.value.toString();
 
 		return val;
 	}

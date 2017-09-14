@@ -2,16 +2,8 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{ multi = true;
  VISITOR = true;
- NODE_EXTENDS="DataNode";
 }
 PARSER_BEGIN(MyParser)package compAndInt;
-
-import java.io.*;
-import java.util.HashMap;
-
-import instructions.*;
-import memory.Memory;
-import registers.*;
 
 public class MyParser {
 }PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
@@ -1099,13 +1091,13 @@ void num_shift() #void:
 void amode():
 {Token t;}
 {
-  t = < AMODE > { jjtThis.value = t.image;  }
+  t = < AMODE > { jjtThis.value = t.image.toString();  }
 }
   
 void cond():
 {Token t;}
 {
-  t = < COND > { jjtThis.value = t.image; jjtThis.data.put("reg", t.image.toString()); }
+  t = < COND > { jjtThis.value = t.image.toString(); }
 }
 
 void lsl():
@@ -1141,31 +1133,31 @@ void shift():
 void register() :
 {Token t;}
 {
-  t= < REGISTER > { jjtThis.data.put("reg", t.image.toString()); }
+  t= < REGISTER > { jjtThis.value = t.image.toString(); }
 }
 
 void number():
 {Token t;}
 {
-  t= < NUMBER > { jjtThis.data.put("value", t.image.toString()); }
+  t= < NUMBER > { jjtThis.value = t.image.toString(); }
 }
 
 void hexa():
 {Token t;}
 {
- t = < HEXA > { jjtThis.data.put("hexa", t.image.toString()); }
+ t = < HEXA > { jjtThis.value = t.image.toString(); }
 }
 
 void hexadecimal():
 {Token t;}
 {
- t = < HEXADECIMAL > { jjtThis.data.put("hexadecimal", t.image.toString()); }
+ t = < HEXADECIMAL > { jjtThis.value = t.image.toString(); }
 }
 
 void num():
 {Token t;}
 {
- t = < NUM >  { jjtThis.data.put("num", t.image.toString()); }
+ t = < NUM >  { jjtThis.value = t.image.toString(); }
 }
 
 void label():

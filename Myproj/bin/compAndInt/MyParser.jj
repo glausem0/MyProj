@@ -3,16 +3,8 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
  */options{              
                 
-                         
 }
 PARSER_BEGIN(MyParser)package compAndInt;
-
-import java.io.*;
-import java.util.HashMap;
-
-import instructions.*;
-import memory.Memory;
-import registers.*;
 
 public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
   protected static JJTMyParserState jjtree = new JJTMyParserState();
@@ -6759,7 +6751,7 @@ void amode():
                   jjtree.closeNodeScope(jjtn000, true);
                   jjtc000 = false;
                 }
-/*@egen*/ { jjtn000.value = t.image;  }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image.toString();  }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -6782,7 +6774,7 @@ void cond():
                  jjtree.closeNodeScope(jjtn000, true);
                  jjtc000 = false;
                }
-/*@egen*/ { jjtn000.value = t.image; jjtn000.data.put("reg", t.image.toString()); }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -6920,7 +6912,7 @@ void register() :
                     jjtree.closeNodeScope(jjtn000, true);
                     jjtc000 = false;
                   }
-/*@egen*/ { jjtn000.data.put("reg", t.image.toString()); }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -6943,7 +6935,7 @@ void number():
                   jjtree.closeNodeScope(jjtn000, true);
                   jjtc000 = false;
                 }
-/*@egen*/ { jjtn000.data.put("value", t.image.toString()); }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
   } finally {
     if (jjtc000) {
       jjtree.closeNodeScope(jjtn000, true);
@@ -6966,7 +6958,7 @@ void hexa():
                 jjtree.closeNodeScope(jjtn000, true);
                 jjtc000 = false;
               }
-/*@egen*/ { jjtn000.data.put("hexa", t.image.toString()); }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
      jjtree.closeNodeScope(jjtn000, true);
@@ -6989,7 +6981,7 @@ void hexadecimal():
                        jjtree.closeNodeScope(jjtn000, true);
                        jjtc000 = false;
                      }
-/*@egen*/ { jjtn000.data.put("hexadecimal", t.image.toString()); }/*@bgen(jjtree)*/
+/*@egen*/ { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
      jjtree.closeNodeScope(jjtn000, true);
@@ -7012,7 +7004,7 @@ void num():
                 jjtree.closeNodeScope(jjtn000, true);
                 jjtc000 = false;
               }
-/*@egen*/  { jjtn000.data.put("num", t.image.toString()); }/*@bgen(jjtree)*/
+/*@egen*/  { jjtn000.value = t.image.toString(); }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
      jjtree.closeNodeScope(jjtn000, true);
