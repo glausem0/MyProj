@@ -36,7 +36,7 @@ public class View {
 	Instruction inst = new Instruction(reg, AMem);
 
 	MyParser parser = null;
-	Visitors vi= new Visitors(regData, reg, C_S_psr, C_S_psrReg, memory, memor, condition, upCpsr, AMem, inst);
+	Visitor vi= new Visitor(regData, reg, C_S_psr, C_S_psrReg, memory, memor, condition, upCpsr, AMem, inst);
 
 	static File selectedFile;
 	File tmpFile;

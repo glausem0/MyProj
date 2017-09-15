@@ -11,7 +11,7 @@ import memory.Memory;
 import registers.Cpsr_Spsr;
 import registers.Register;
 
-public class Visitors implements MyParserVisitor{
+public class Visitor implements MyParserVisitor{
 
 	private Register regData;
 	private HashMap<Object, Object> reg; 
@@ -30,7 +30,7 @@ public class Visitors implements MyParserVisitor{
 	Object[] progArray;
 	HashMap<String, Integer> branches;
 
-	public Visitors(Register regData, 
+	public Visitor(Register regData, 
 			HashMap<Object, Object> reg, 
 			Cpsr_Spsr C_S_psr,  
 			HashMap<Object, Object> C_S_psrReg, 
