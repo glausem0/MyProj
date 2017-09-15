@@ -596,53 +596,6 @@ public class View {
 		});
 		mnFile.add(mntmSave);
 
-		JMenu mnRun = new JMenu("Run");
-		menuBar.add(mnRun);
-
-		JMenuItem mntmRun = new JMenuItem(new AbstractAction("Run"){
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent ae){
-
-				try{
-					//init fields and elements:
-					initfieldsVal();
-					textPane.setText("");
-					vi.setPc(2);
-					vi.setChild(0);
-					HashMap<String, Integer> branches = new HashMap<String, Integer>();
-					vi.setBranches(branches);
-					BufferedReader br = null;
-					Object[] progArray = null;
-					try {
-						br = new BufferedReader(new FileReader(selectedFile));
-						progArray = br.lines().toArray();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					vi.setProgArray(progArray);
-
-					regData.clearRegister();
-					C_S_psr.clearC_S_psr();
-					memory.clearMemory();
-
-					RunFile(selectedFile);
-
-					//set fields memory:
-					fillVal();
-					textPane.setText(memory.printView());
-				}catch (RuntimeException e){
-					System.err.println(e);
-				} 
-
-			}
-		});
-		mnRun.add(mntmRun);
-
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
