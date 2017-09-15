@@ -39,7 +39,7 @@ public class HelpUse {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 788, 723);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JTextArea textArea = new JTextArea();
