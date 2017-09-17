@@ -91,7 +91,12 @@ public class HelpAcceptedInstructions {
 						+"SWP<cond> \n"
 						+"\n"
 						+"Branch: \n"
-						+"B<cond> .label"
+						+"B<cond> .label\n"
+						+"BL<cond> .label\n"
+						+"\n"
+						+"SWI\n"
+						+"SWI<cond> \n"
+						
 						);
 		
 	}

@@ -52,18 +52,21 @@ public class HelpUse {
 		
 		textArea.setText("Instructions: \n \n"
 				+"Create a file: \n"
-				+ "File the area with desire texte and save contant. \n \n"
+				+ "Field the area with desire texte and save contant. \n \n"
 				+"Open a file: \n"
 				+ "Go to ''File'', ''Open file'', selecte file and open. \n"
 				+ "Only .txt are alowed \n \n"
 				+"Save a file: \n"
 				+ "Go to ''File'', enter the name of the new file, and click ''save''\n \n"
 				+ "Run the programm: \n"
-				+ "Make sure the file is save first, or open a file. Then go to ''Run'' and click ''Run''. \n"
+				+ "Make sure the file is save first, or open a file. Then click ''Run''. \n"
 				+ "The content of registers will be display in ''Register'' window. \n"
 				+ "Flags's status are display in ''CPSR'' window.\n"
 				+ "If the Memory accessed or a value is set, the content will be display in ''Memory'' window,\n"
-				+ "othewise it remained empty. ");
+				+ "othewise it remained empty.\n \n "
+				+ "Debug mode:\n"
+				+ "Click ''Debug'' button, you enter in debug mode. To execute lines press ''Next step''.\n \n"
+				+ "To see content of register in integer press button ''Integer'', return to hexadecimal clicking ''Hexadecimal'' button");
 
 	}
 
