@@ -10,6 +10,11 @@ public class Condition {
 		this.C_S_psr = C_S_psr;
 	}
 	
+	/**
+	 * verify equal condition
+	 * @param mode
+	 * @return true if Z==1, false otherwise
+	 */
 	private boolean condEq(String mode){
 		boolean response = false;
 
@@ -27,6 +32,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify not equal condition
+	 * @param mode
+	 * @return true if Z==0, false otherwise
+	 */
 	private boolean condNe(String mode){
 		boolean response = false;
 		
@@ -44,6 +54,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify Carry set condition
+	 * @param mode
+	 * @return true id C==1, false otherwise
+	 */
 	private boolean condCs(String mode){
 		boolean response = false;
 		
@@ -60,7 +75,13 @@ public class Condition {
 		
 		return response;
 	}
+	
 	//same as Cs
+	/**
+	 * verify unsigned Higher or Same condition
+	 * @param mode
+	 * @return true C==1, false otherwise
+	 */
 	private boolean condHs(String mode){
 		boolean response = false;
 
@@ -78,6 +99,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify Carry Clear condition
+	 * @param mode
+	 * @return true if C==0, false otherwise
+	 */
 	private boolean condCc(String mode){
 		boolean response = false;
 		
@@ -94,7 +120,13 @@ public class Condition {
 		
 		return response;
 	}
+	
 	//same as CC
+	/**
+	 * verify unsigned lower
+	 * @param mode
+	 * @return true if C==0, false otherwise
+	 */
 	private boolean condLo(String mode){
 		boolean response = false;
 
@@ -112,6 +144,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify minus condition
+	 * @param mode
+	 * @return true if N==1, false otherwise
+	 */
 	private boolean condMi(String mode){
 		boolean response = false;
 		
@@ -129,6 +166,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify plus condition
+	 * @param mode
+	 * @return true if N==0, false otherwise
+	 */
 	private boolean condPl(String mode){
 		boolean response = false;
 		
@@ -146,6 +188,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify V flag set
+	 * @param mode
+	 * @return true if V==1, false otherwise
+	 */
 	private boolean condVs(String mode){
 		boolean response = false;
 		
@@ -163,6 +210,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify V flag clear
+	 * @param mode
+	 * @return true if V==0, false otherwise
+	 */
 	private boolean condVc(String mode){
 		boolean response = false;
 		
@@ -180,6 +232,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify unsigned Higher
+	 * @param mode
+	 * @return true if C==1 && Z==0, false otherwise
+	 */
 	private boolean condHi(String mode){
 		boolean response = false;
 		
@@ -197,6 +254,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify lower or same condition
+	 * @param mode
+	 * @return true if C==0||Z==1, false otherwise
+	 */
 	private boolean condLs(String mode){
 		boolean response = false;
 		
@@ -214,6 +276,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify signed greater than or equal condition
+	 * @param mode
+	 * @return true if N==V, false otherwise
+	 */
 	private boolean condGe(String mode){
 		boolean response = false;
 		
@@ -231,6 +298,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify signed less than condition
+	 * @param mode
+	 * @return true if N!=V, false otherwise 
+	 */
 	private boolean condLt(String mode){
 		boolean response = false;
 		
@@ -248,6 +320,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify greater than condition
+	 * @param mode
+	 * @return true if N==V && Z==0, false otherwise
+	 */
 	private boolean condGt(String mode){
 		boolean response = false;
 		
@@ -265,6 +342,11 @@ public class Condition {
 		return response;
 	}
 	
+	/**
+	 * verify Less than or equal condition
+	 * @param mode
+	 * @return true if N!=V || Z==1
+	 */
 	private boolean condLe(String mode){
 		boolean response = false;
 		

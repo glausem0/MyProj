@@ -32,7 +32,7 @@ public class Cpsr_Spsr {
 	}
 
 	/**
-	 * put all the values to 0 of the cpsr and spsr
+	 * put all values of the cpsr and spsr to 0
 	 */
 	public void clearC_S_psr(){
 		//Cpsr

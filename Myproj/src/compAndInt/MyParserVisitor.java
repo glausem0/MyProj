@@ -199,10 +199,10 @@ public interface MyParserVisitor
   public Object visit(ASTbranch node, Object data);
   public Object visit(ASTCbranchLink node, Object data);
   public Object visit(ASTbranchLink node, Object data);
-  public Object visit(ASTcloseAUp node, Object data);
-  public Object visit(ASTclose node, Object data);
   public Object visit(ASTshiftLS node, Object data);
   public Object visit(ASTshiftF node, Object data);
+  public Object visit(ASTcloseAUp node, Object data);
+  public Object visit(ASTclose node, Object data);
   public Object visit(ASTamode node, Object data);
   public Object visit(ASTcond node, Object data);
   public Object visit(ASTlsl node, Object data);
@@ -217,4 +217,4 @@ public interface MyParserVisitor
   public Object visit(ASTnum node, Object data);
   public Object visit(ASTlabel node, Object data);
 }
-/* JavaCC - OriginalChecksum=92c58a666a0d6a15e0f112e6a39a78fb (do not edit this line) */
+/* JavaCC - OriginalChecksum=ec300275906d7419349fb6a7c4501cfb (do not edit this line) */

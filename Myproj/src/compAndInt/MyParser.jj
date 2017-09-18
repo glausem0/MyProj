@@ -6,11 +6,10 @@
 }
 PARSER_BEGIN(MyParser)package compAndInt;
 
-public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
+public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/{/*@bgen(jjtree)*/
   protected static JJTMyParserState jjtree = new JJTMyParserState();
 
-/*@egen*/
-}PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+/*@egen*/}PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" > /*use for branch and branch link too*/
 | < H: "h" >
@@ -79,7 +78,8 @@ public class MyParser/*@bgen(jjtree)*/implements MyParserTreeConstants/*@egen*/ 
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < HEXADECIMAL : ("0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
-| < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
+| < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}
+/*NON TERMINAL NODES*/SimpleNode prog():
 {/*@bgen(jjtree) prog */
   ASTprog jjtn000 = new ASTprog(JJTPROG);
   boolean jjtc000 = true;
@@ -6588,73 +6588,6 @@ void branchNode()      :
 | (branch())  
 }
 
-void closeOrCAUp()      :
-{}
-{
-  (    LOOKAHEAD(2)/*@bgen(jjtree) #closeAUp(true) */
-  {
-    ASTcloseAUp jjtn001 = new ASTcloseAUp(JJTCLOSEAUP);
-    boolean jjtc001 = true;
-    jjtree.openNodeScope(jjtn001);
-  }
-  try {
-/*@egen*/
-  ("]" "!")/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc001) {
-      jjtree.closeNodeScope(jjtn001, true);
-    }
-  }
-/*@egen*/            
-|/*@bgen(jjtree) #close(true) */
-  {
-    ASTclose jjtn002 = new ASTclose(JJTCLOSE);
-    boolean jjtc002 = true;
-    jjtree.openNodeScope(jjtn002);
-  }
-  try {
-/*@egen*/ ("]")/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc002) {
-      jjtree.closeNodeScope(jjtn002, true);
-    }
-  }
-/*@egen*/         
- )
- 
-  (    LOOKAHEAD(2)/*@bgen(jjtree) #closeAUp(true) */
-  {
-    ASTcloseAUp jjtn003 = new ASTcloseAUp(JJTCLOSEAUP);
-    boolean jjtc003 = true;
-    jjtree.openNodeScope(jjtn003);
-  }
-  try {
-/*@egen*/
-  ("}" "^")/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc003) {
-      jjtree.closeNodeScope(jjtn003, true);
-    }
-  }
-/*@egen*/            
-|/*@bgen(jjtree) #close(true) */
-  {
-    ASTclose jjtn004 = new ASTclose(JJTCLOSE);
-    boolean jjtc004 = true;
-    jjtree.openNodeScope(jjtn004);
-  }
-  try {
-/*@egen*/ ("}")/*@bgen(jjtree)*/
-  } finally {
-    if (jjtc004) {
-      jjtree.closeNodeScope(jjtn004, true);
-    }
-  }
-/*@egen*/         
-   )
-
-}
-
 void regOrRegShift()      :
 {}
 {
@@ -6735,6 +6668,76 @@ void num_shift()      :
    }
  }
 /*@egen*/           
+}
+
+/*TERMINAL NODES*/
+void closeOrCAUp()      :
+{}
+{
+  (
+    LOOKAHEAD(2)/*@bgen(jjtree) #closeAUp(true) */
+  {
+    ASTcloseAUp jjtn001 = new ASTcloseAUp(JJTCLOSEAUP);
+    boolean jjtc001 = true;
+    jjtree.openNodeScope(jjtn001);
+  }
+  try {
+/*@egen*/
+  ("]" "!")/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc001) {
+      jjtree.closeNodeScope(jjtn001, true);
+    }
+  }
+/*@egen*/            
+|/*@bgen(jjtree) #close(true) */
+  {
+    ASTclose jjtn002 = new ASTclose(JJTCLOSE);
+    boolean jjtc002 = true;
+    jjtree.openNodeScope(jjtn002);
+  }
+  try {
+/*@egen*/ ("]")/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc002) {
+      jjtree.closeNodeScope(jjtn002, true);
+    }
+  }
+/*@egen*/         
+ )
+ 
+  (
+    LOOKAHEAD(2)/*@bgen(jjtree) #closeAUp(true) */
+  {
+    ASTcloseAUp jjtn003 = new ASTcloseAUp(JJTCLOSEAUP);
+    boolean jjtc003 = true;
+    jjtree.openNodeScope(jjtn003);
+  }
+  try {
+/*@egen*/
+  ("}" "^")/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc003) {
+      jjtree.closeNodeScope(jjtn003, true);
+    }
+  }
+/*@egen*/            
+|/*@bgen(jjtree) #close(true) */
+  {
+    ASTclose jjtn004 = new ASTclose(JJTCLOSE);
+    boolean jjtc004 = true;
+    jjtree.openNodeScope(jjtn004);
+  }
+  try {
+/*@egen*/ ("}")/*@bgen(jjtree)*/
+  } finally {
+    if (jjtc004) {
+      jjtree.closeNodeScope(jjtn004, true);
+    }
+  }
+/*@egen*/         
+   )
+
 }
 
 void amode():

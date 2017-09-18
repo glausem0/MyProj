@@ -22,7 +22,7 @@ public class Memory {
 	}
 	
 	/**
-	 * erase all the value of the memory and restored base values
+	 * erase all values of the memory and restore bases values
 	 */
 	public void clearMemory(){
 		memory.clear();

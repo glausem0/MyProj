@@ -89,7 +89,7 @@ public class Visitor implements MyParserVisitor{
 	 * name of registers corresponding to the mode 
 	 * example: in user mode r14 = r14 and sp = r14; in supervisor mode r14 = r14_svc and sp = r14_svc
 	 * @param register
-	 * @return
+	 * @return register 
 	 */
 	private String mapRegisters(Object register){
 		String returnStr = null;
@@ -156,7 +156,7 @@ public class Visitor implements MyParserVisitor{
 	/**
 	 * @param progArray
 	 * @param elementLine
-	 * @return the line of the in the programme of the node 
+	 * @return the line of the in the program of the node 
 	 */
 	private int searchLineProg(Object[] progArray, String node){
 		int returnI=0;
@@ -167,7 +167,6 @@ public class Visitor implements MyParserVisitor{
 		}
 		return returnI;
 	}
-
 
 	//********************************Nodes definition********************************//
 
@@ -548,7 +547,6 @@ public class Visitor implements MyParserVisitor{
 		String ror = node.value.toString();
 		return ror;
 	}
-
 	
 	//shift(<< and >>)
 	@Override
@@ -570,10 +568,17 @@ public class Visitor implements MyParserVisitor{
 		String c = "C";
 		return c;
 	}
+
+	//label
+	@Override
+	public Object visit(ASTlabel node, Object data) {
+		Object label = node.value.toString();
+		return label;
+	}
 	
 	//***Non terminal node***//
+	
 	//*Shift*//
-
 	//shift LSL/LSR/ASR/ROR
 	@Override
 	public Object visit(ASTshiftLS node, Object data) {
@@ -599,6 +604,7 @@ public class Visitor implements MyParserVisitor{
 	}	
 
 	//*Arithmetic*//	
+	//MOV//
 	//MOV
 	@Override
 	public Object visit(ASTmov node, Object data) {
@@ -615,7 +621,8 @@ public class Visitor implements MyParserVisitor{
 		
 		return null;
 	}
-
+	
+	//MOV<cond>
 	@Override
 	public Object visit(ASTmovC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -633,6 +640,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MOVS
 	@Override
 	public Object visit(ASTmovS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -669,6 +677,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MOV<cond>S
 	@Override
 	public Object visit(ASTmovCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -707,6 +716,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MVN//
 	//MVN
 	@Override
 	public Object visit(ASTmvn node, Object data) {
@@ -723,6 +733,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//MVN<cond>
 	@Override
 	public Object visit(ASTmvnC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -740,6 +751,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MVNS
 	@Override
 	public Object visit(ASTmvnS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -775,6 +787,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MVN<cond>S
 	@Override
 	public Object visit(ASTmvnCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -813,6 +826,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADD//
 	//ADD
 	@Override
 	public Object visit(ASTadd node, Object data) {
@@ -830,6 +844,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADD<cond>
 	@Override
 	public Object visit(ASTaddC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -849,6 +864,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADDS
 	@Override
 	public Object visit(ASTaddS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -880,6 +896,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADD<cond>S
 	@Override
 	public Object visit(ASTaddCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -914,6 +931,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADC//
 	//ADC
 	@Override
 	public Object visit(ASTadc node, Object data) {
@@ -938,6 +956,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//ADC<cond>
 	@Override
 	public Object visit(ASTadcC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -964,6 +983,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADCS
 	@Override
 	public Object visit(ASTadcS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1000,6 +1020,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ADC<cond>S
 	@Override
 	public Object visit(ASTadcCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1039,6 +1060,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SUB//
 	//SUB
 	@Override
 	public Object visit(ASTsub node, Object data) {
@@ -1056,6 +1078,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SUB<cond>
 	@Override
 	public Object visit(ASTsubC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1075,6 +1098,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SUBS
 	@Override
 	public Object visit(ASTsubS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1104,6 +1128,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SUB<cond>S
 	@Override
 	public Object visit(ASTsubCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1136,6 +1161,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SBC//
 	//SBC
 	@Override
 	public Object visit(ASTsbc node, Object data) {
@@ -1164,6 +1190,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//SBC<cond>
 	@Override
 	public Object visit(ASTsbcC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1194,6 +1221,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SBCS
 	@Override
 	public Object visit(ASTsbcS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1235,6 +1263,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SBC<cond>S
 	@Override
 	public Object visit(ASTsbcCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1279,8 +1308,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSB// same as sub, reverse arguments
 	//RSB
-	//same as sub, reverse arguments
 	@Override
 	public Object visit(ASTrsb node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1297,6 +1326,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSB<cond>
 	@Override
 	public Object visit(ASTrsbC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1316,6 +1346,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSBS
 	@Override
 	public Object visit(ASTrsbS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1345,6 +1376,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSB<cond>S
 	@Override
 	public Object visit(ASTrsbCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1377,6 +1409,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSC//
 	//RSC
 	@Override
 	public Object visit(ASTrsc node, Object data) {
@@ -1405,6 +1438,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//RSC<cond>
 	@Override
 	public Object visit(ASTrscC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1434,6 +1468,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSCS
 	@Override
 	public Object visit(ASTrscS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1474,6 +1509,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//RSC<cond>S
 	@Override
 	public Object visit(ASTrscCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1516,7 +1552,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//MLA (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//MLA// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//MLA
 	@Override
 	public Object visit(ASTmla node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1529,6 +1566,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//MLA<cond>
 	@Override
 	public Object visit(ASTmlaC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1543,6 +1581,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MLAS
 	@Override
 	public Object visit(ASTmlaS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1557,6 +1596,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MLA<cond>S
 	@Override
 	public Object visit(ASTmlaCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1572,7 +1612,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//MUL (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//MUL// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//MUL
 	@Override
 	public Object visit(ASTmul node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1584,6 +1625,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//MUL<cond>
 	@Override
 	public Object visit(ASTmulC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1597,6 +1639,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MULS
 	@Override
 	public Object visit(ASTmulS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1610,6 +1653,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//MUL<cond>S
 	@Override
 	public Object visit(ASTmulCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1624,7 +1668,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//SMLAL (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//SMLAL// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//SMLAL
 	@Override
 	public Object visit(ASTsmlal node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1637,6 +1682,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//SMLAL<cond>
 	@Override
 	public Object visit(ASTsmlalC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1652,6 +1698,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SMLALS
 	@Override
 	public Object visit(ASTsmlalS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1667,7 +1714,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//SMLAL<cond>S
 	@Override
 	public Object visit(ASTsmlalCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1685,7 +1732,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//SMULL (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//SMULL// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//SMULL
 	@Override
 	public Object visit(ASTsmull node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1698,6 +1746,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SMULL<cond>
 	@Override
 	public Object visit(ASTsmullC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1713,6 +1762,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SMULLS
 	@Override
 	public Object visit(ASTsmullS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1728,6 +1778,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SMULL<cond>S
 	@Override
 	public Object visit(ASTsmullCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1746,7 +1797,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//UMLAL (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//UMLAL// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//UMLAL
 	@Override
 	public Object visit(ASTumlal node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1759,6 +1811,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//UMLAL<cond>
 	@Override
 	public Object visit(ASTumlalC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1773,6 +1826,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//UMLALS
 	@Override
 	public Object visit(ASTumlalS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1788,6 +1842,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//UMLAL<cond>S
 	@Override
 	public Object visit(ASTumlalCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1805,7 +1860,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//UMULL (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//UMULL// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//UMULL
 	@Override
 	public Object visit(ASTumull node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1818,6 +1874,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//UMULL<cond>
 	@Override
 	public Object visit(ASTumullC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1833,6 +1890,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//UMULLS
 	@Override
 	public Object visit(ASTumullS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1848,6 +1906,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//UMULL<cond>S
 	@Override
 	public Object visit(ASTumullCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1866,7 +1925,8 @@ public class Visitor implements MyParserVisitor{
 	}
 
 	//*Comparaison*//
-	//CMP (doesn't effect jump if reg1 is pc,)
+	//CMP// (doesn't effect jump if reg1 is pc,)
+	//CMP
 	@Override
 	public Object visit(ASTcmp node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1880,6 +1940,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//CMP<cond>
 	@Override
 	public Object visit(ASTcmpC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1896,7 +1957,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//CMN (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//CMN //(doesn't effect jump if reg1 is pc, any precision for spsr)
+	//CMN
 	@Override
 	public Object visit(ASTcmn node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1910,6 +1972,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//CMN<cond>
 	@Override
 	public Object visit(ASTcmnC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1925,7 +1988,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//TEQ (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//TEQ// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//TEQ
 	@Override
 	public Object visit(ASTteq node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1945,6 +2009,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//TEQ<cond>
 	@Override
 	public Object visit(ASTteqC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1967,7 +2032,8 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-	//TST (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//TST// (doesn't effect jump if reg1 is pc, any precision for spsr)
+	//TST
 	@Override
 	public Object visit(ASTtst node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -1987,6 +2053,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//TST<cond>
 	@Override
 	public Object visit(ASTtstC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2010,6 +2077,7 @@ public class Visitor implements MyParserVisitor{
 	}
 
 	//*Logique*//
+	//AND//
 	//AND
 	@Override
 	public Object visit(ASTand node, Object data) {
@@ -2027,6 +2095,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//AND<cond>
 	@Override
 	public Object visit(ASTandC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2046,6 +2115,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ANDS
 	@Override
 	public Object visit(ASTandS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2082,6 +2152,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//AND<cond>S
 	@Override
 	public Object visit(ASTandCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2121,6 +2192,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//BIC//
 	//BIC
 	@Override
 	public Object visit(ASTbic node, Object data) {
@@ -2138,6 +2210,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//BIC<cond>
 	@Override
 	public Object visit(ASTbicC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2157,6 +2230,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//BICS
 	@Override
 	public Object visit(ASTbicS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2193,6 +2267,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//BIC<cond>S
 	@Override
 	public Object visit(ASTbicCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2232,6 +2307,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//EOR//
 	//EOR
 	@Override
 	public Object visit(ASTeor node, Object data) {
@@ -2249,6 +2325,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//EOR<cond>
 	@Override
 	public Object visit(ASTeorC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2268,6 +2345,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//EORS
 	@Override
 	public Object visit(ASTeorS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2304,6 +2382,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//EOR<cond>S
 	@Override
 	public Object visit(ASTeorCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2343,6 +2422,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ORR//
 	//ORR
 	@Override
 	public Object visit(ASTorr node, Object data) {
@@ -2360,6 +2440,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//ORR<cond>
 	@Override
 	public Object visit(ASTorrC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2379,6 +2460,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ORRS
 	@Override
 	public Object visit(ASTorrS node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2415,6 +2497,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//ORR<cond>S
 	@Override
 	public Object visit(ASTorrCS node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2456,7 +2539,7 @@ public class Visitor implements MyParserVisitor{
 
 
 	//*LDR/STR*//	
-	//LDR
+	//LDR 
 	@Override
 	public Object visit(ASTldrSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2475,6 +2558,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>
 	@Override
 	public Object visit(ASTldrCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2495,6 +2579,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR
 	@Override
 	public Object visit(ASTldrPreNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2512,6 +2597,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>
 	@Override
 	public Object visit(ASTldrCPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2532,6 +2618,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR
 	@Override
 	public Object visit(ASTldrPrePos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2549,6 +2636,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>
 	@Override
 	public Object visit(ASTldrCPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2568,6 +2656,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR
 	@Override
 	public Object visit(ASTldrPostNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2586,6 +2675,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>
 	@Override
 	public Object visit(ASTldrCPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2606,7 +2696,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDR
 	@Override
 	public Object visit(ASTldrPostPos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2625,6 +2715,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>
 	@Override
 	public Object visit(ASTldrCPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2645,6 +2736,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRB
 	@Override
 	public Object visit(ASTldrBPreNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2662,6 +2754,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>B
 	@Override
 	public Object visit(ASTldrCBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2681,6 +2774,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRB
 	@Override
 	public Object visit(ASTldrBPrePos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2696,9 +2790,9 @@ public class Visitor implements MyParserVisitor{
 		}
 
 		return null;
-
 	}
 
+	//LDR<cond>B
 	@Override
 	public Object visit(ASTldrCBPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2718,6 +2812,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRB
 	@Override
 	public Object visit(ASTldrBPostNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2736,6 +2831,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>B
 	@Override
 	public Object visit(ASTldrCBPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2756,6 +2852,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRB
 	@Override
 	public Object visit(ASTldrBPostPos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2774,6 +2871,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>B
 	@Override
 	public Object visit(ASTldrCBPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2794,6 +2892,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRB
 	@Override
 	public Object visit(ASTldrBSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2812,6 +2911,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>B
 	@Override
 	public Object visit(ASTldrCBSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2832,7 +2932,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDRH
 	@Override
 	public Object visit(ASTldrHPreNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2850,6 +2950,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>H
 	@Override
 	public Object visit(ASTldrCHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2869,6 +2970,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRH
 	@Override
 	public Object visit(ASTldrHPrePos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2886,6 +2988,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>
 	@Override
 	public Object visit(ASTldrCHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2905,6 +3008,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRH
 	@Override
 	public Object visit(ASTldrHPostNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2923,6 +3027,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>H
 	@Override
 	public Object visit(ASTldrCHPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2943,6 +3048,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRH
 	@Override
 	public Object visit(ASTldrHPostPos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2961,6 +3067,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>H
 	@Override
 	public Object visit(ASTldrCHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2981,6 +3088,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRH
 	@Override
 	public Object visit(ASTldrHSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -2999,6 +3107,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>H
 	@Override
 	public Object visit(ASTldrCHSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3019,6 +3128,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSH
 	@Override
 	public Object visit(ASTldrSHPreNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3036,6 +3146,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SH
 	@Override
 	public Object visit(ASTldrCSHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3055,6 +3166,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSH
 	@Override
 	public Object visit(ASTldrSHPrePos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3072,6 +3184,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SH
 	@Override
 	public Object visit(ASTldrCSHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3091,6 +3204,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSH
 	@Override
 	public Object visit(ASTldrSHPostNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3109,7 +3223,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDR<cond>SH
 	@Override
 	public Object visit(ASTldrCSHPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3130,6 +3244,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSH
 	@Override
 	public Object visit(ASTldrSHPostPos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3148,7 +3263,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDR<cond>SH
 	@Override
 	public Object visit(ASTldrCSHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3169,6 +3284,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSH
 	@Override
 	public Object visit(ASTldrSHSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3187,6 +3303,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SH
 	@Override
 	public Object visit(ASTldrCSHSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3207,6 +3324,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSB
 	@Override
 	public Object visit(ASTldrSBPreNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3224,6 +3342,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SB
 	@Override
 	public Object visit(ASTldrCSBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3243,6 +3362,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSB
 	@Override
 	public Object visit(ASTldrSBPrePos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3260,6 +3380,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SB
 	@Override
 	public Object visit(ASTldrCSBPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3279,7 +3400,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDRSB
 	@Override
 	public Object visit(ASTldrSBPostNeg node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3298,6 +3419,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SB
 	@Override
 	public Object visit(ASTldrCSBPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3318,6 +3440,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSB
 	@Override
 	public Object visit(ASTldrSBPostPos node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3336,6 +3459,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SB
 	@Override
 	public Object visit(ASTldrCSBPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3356,6 +3480,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDRSB
 	@Override
 	public Object visit(ASTldrSBSimple node, Object data) {
 		Object regLdr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3374,6 +3499,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDR<cond>SB
 	@Override
 	public Object visit(ASTldrCSBSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3394,7 +3520,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//STR//
 	//STR
 	@Override
 	public Object visit(ASTstrSimple node, Object data) {
@@ -3409,6 +3535,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>
 	@Override
 	public Object visit(ASTstrCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3424,6 +3551,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR
 	@Override
 	public Object visit(ASTstrPreNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3436,6 +3564,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>
 	@Override
 	public Object visit(ASTstrCPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3450,6 +3579,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR
 	@Override
 	public Object visit(ASTstrPrePos node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3462,6 +3592,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>
 	@Override
 	public Object visit(ASTstrCPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3476,6 +3607,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR
 	@Override
 	public Object visit(ASTstrPostNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3489,6 +3621,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>
 	@Override
 	public Object visit(ASTstrCPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3504,6 +3637,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR
 	@Override
 	public Object visit(ASTstrPostPos node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3517,6 +3651,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>
 	@Override
 	public Object visit(ASTstrCPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3532,6 +3667,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRB
 	@Override
 	public Object visit(ASTstrBPreNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3544,6 +3680,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>B
 	@Override
 	public Object visit(ASTstrCBPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3558,6 +3695,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRB
 	@Override
 	public Object visit(ASTstrBPrePos node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3570,6 +3708,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>B
 	@Override
 	public Object visit(ASTstrCBPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3584,6 +3723,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRB
 	@Override
 	public Object visit(ASTstrBPostNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3597,6 +3737,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>B
 	@Override
 	public Object visit(ASTstrCBPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3612,6 +3753,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRB
 	@Override
 	public Object visit(ASTstrBPostPos node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3625,6 +3767,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>B
 	@Override
 	public Object visit(ASTstrCBPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3640,6 +3783,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRB
 	@Override
 	public Object visit(ASTstrBSimple node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3653,6 +3797,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>B
 	@Override
 	public Object visit(ASTstrCBSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3667,6 +3812,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRH
 	@Override
 	public Object visit(ASTstrHPreNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3679,6 +3825,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>H
 	@Override
 	public Object visit(ASTstrCHPreNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3693,6 +3840,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRH
 	@Override
 	public Object visit(ASTstrHPrePos node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3705,6 +3853,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>H
 	@Override
 	public Object visit(ASTstrCHPrePos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3719,6 +3868,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STRH
 	@Override
 	public Object visit(ASTstrHPostNeg node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3732,6 +3882,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>H
 	@Override
 	public Object visit(ASTstrCHPostNeg node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3747,7 +3898,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//STRH
 	@Override
 	public Object visit(ASTstrHPostPos node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3761,6 +3912,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>H
 	@Override
 	public Object visit(ASTstrCHPostPos node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3776,7 +3928,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//STRH
 	@Override
 	public Object visit(ASTstrHSimple node, Object data) {
 		Object regStr = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3790,6 +3942,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STR<cond>H
 	@Override
 	public Object visit(ASTstrCHSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3807,6 +3960,7 @@ public class Visitor implements MyParserVisitor{
 
 	//*LDM / STM*//
 
+	//LDM//
 	//LDM
 	@Override
 	public Object visit(ASTldmSimple node, Object data) {
@@ -3852,6 +4006,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM<cond>
 	@Override
 	public Object visit(ASTldmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -3898,6 +4053,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM
 	@Override
 	public Object visit(ASTldmEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -3965,7 +4121,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDM<cond>
 	@Override
 	public Object visit(ASTldmCEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4035,6 +4191,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM
 	@Override
 	public Object visit(ASTldmList node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4081,7 +4238,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//LDM<cond>
 	@Override
 	public Object visit(ASTldmCList node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4130,6 +4287,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM
 	@Override
 	public Object visit(ASTMldmSimple node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4174,6 +4332,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM<cond>
 	@Override
 	public Object visit(ASTMldmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4221,6 +4380,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM
 	@Override
 	public Object visit(ASTMldmEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4288,6 +4448,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM<cond>
 	@Override
 	public Object visit(ASTMldmCEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4358,6 +4519,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM
 	@Override
 	public Object visit(ASTMldmList node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4404,6 +4566,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//LDM<cond>
 	@Override
 	public Object visit(ASTMldmCList node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4454,6 +4617,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM//
 	//STM
 	@Override
 	public Object visit(ASTstmSimple node, Object data) {
@@ -4479,6 +4643,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM<cond>
 	@Override
 	public Object visit(ASTstmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4505,6 +4670,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM
 	@Override
 	public Object visit(ASTstmEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4536,6 +4702,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM<cond>
 	@Override
 	public Object visit(ASTstmCEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4570,6 +4737,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM
 	@Override
 	public Object visit(ASTstmList node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4593,6 +4761,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM<cond>
 	@Override
 	public Object visit(ASTstmCList node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4618,6 +4787,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM
 	@Override
 	public Object visit(ASTMstmSimple node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4642,6 +4812,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM<cond>
 	@Override
 	public Object visit(ASTMstmCSimple node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4668,7 +4839,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
-
+	//STM
 	@Override
 	public Object visit(ASTMstmEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4700,6 +4871,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM<cond>
 	@Override
 	public Object visit(ASTMstmCEnum node, Object data) {
 		int children = node.jjtGetNumChildren();
@@ -4733,6 +4905,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM
 	@Override
 	public Object visit(ASTMstmList node, Object data) {
 		Object amode = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4756,6 +4929,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//STM<cond>
 	@Override
 	public Object visit(ASTMstmCList node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4782,6 +4956,7 @@ public class Visitor implements MyParserVisitor{
 	}
 
 	//*Swap*//
+	//SWP//
 	//SWP
 	@Override
 	public Object visit(ASTswp node, Object data) {
@@ -4794,6 +4969,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SWP<cond>
 	@Override
 	public Object visit(ASTswpC node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4807,6 +4983,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 	
+	//SWPB
 	@Override
 	public Object visit(ASTswpb node, Object data) {
 		Object reg1 = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4818,6 +4995,7 @@ public class Visitor implements MyParserVisitor{
 		return null;
 	}
 
+	//SWP<cond>B
 	@Override
 	public Object visit(ASTswpCB node, Object data) {
 		Object cond = node.jjtGetChild(0).jjtAccept(this, data);
@@ -4832,6 +5010,7 @@ public class Visitor implements MyParserVisitor{
 	}
 	
 	//*Software interrupt*//
+	//SWI//
 	//SWI
 	@Override
 	public Object visit(ASTswi node, Object data) {
@@ -4839,6 +5018,7 @@ public class Visitor implements MyParserVisitor{
 		return swi_Handler;
 	}
 
+	//SWI<cond>
 	@Override
 	public Object visit(ASTCswi node, Object data) {
 		String cond = node.jjtGetChild(0).jjtAccept(this, data).toString();
@@ -4875,6 +5055,7 @@ public class Visitor implements MyParserVisitor{
 		return labelBranchLink;
 	}
 
+	//condition and label
 	@Override
 	public Object visit(ASTCbranchLink node, Object data) {
 		String cond = node.jjtGetChild(0).jjtAccept(this, data).toString();
@@ -4884,11 +5065,4 @@ public class Visitor implements MyParserVisitor{
 
 		return ret;
 	}
-	
-	//label
-		@Override
-		public Object visit(ASTlabel node, Object data) {
-			Object label = node.value.toString();
-			return label;
-		}
 }

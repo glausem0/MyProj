@@ -199,10 +199,10 @@ public interface MyParserTreeConstants
   public int JJTBRANCH = 193;
   public int JJTCBRANCHLINK = 194;
   public int JJTBRANCHLINK = 195;
-  public int JJTCLOSEAUP = 196;
-  public int JJTCLOSE = 197;
-  public int JJTSHIFTLS = 198;
-  public int JJTSHIFTF = 199;
+  public int JJTSHIFTLS = 196;
+  public int JJTSHIFTF = 197;
+  public int JJTCLOSEAUP = 198;
+  public int JJTCLOSE = 199;
   public int JJTAMODE = 200;
   public int JJTCOND = 201;
   public int JJTLSL = 202;
@@ -415,10 +415,10 @@ public interface MyParserTreeConstants
     "branch",
     "CbranchLink",
     "branchLink",
-    "closeAUp",
-    "close",
     "shiftLS",
     "shiftF",
+    "closeAUp",
+    "close",
     "amode",
     "cond",
     "lsl",
@@ -434,4 +434,4 @@ public interface MyParserTreeConstants
     "label",
   };
 }
-/* JavaCC - OriginalChecksum=7a618bee9bd80f12c4af688ec815fe8c (do not edit this line) */
+/* JavaCC - OriginalChecksum=ccac4aa1eb80ac588652007889aedc0b (do not edit this line) */

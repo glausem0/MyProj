@@ -5,8 +5,7 @@
 }
 PARSER_BEGIN(MyParser)package compAndInt;
 
-public class MyParser {
-}PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
+public class MyParser{}PARSER_END(MyParser)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : {
   /*CONDITIONS FOR LDR/STR*/
   < B: "b" > /*use for branch and branch link too*/
 | < H: "h" >
@@ -75,7 +74,8 @@ public class MyParser {
 | < HEXA : ("#0x") (["0"-"9","a"-"f"])+ >
 | < HEXADECIMAL : ("0x") (["0"-"9","a"-"f"])+ >
 | < NUM : ([ "0"-"9" ])+ >
-| < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}SimpleNode prog():
+| < LABEL : (".") (["0"-"9","a"-"z","A"-"Z"])+ >}
+/*NON TERMINAL NODES*/SimpleNode prog():
 {}
 {
   (instr())* < EOF > { return jjtThis;}}
@@ -1045,21 +1045,6 @@ void branchNode() #void:
 | (branch())  
 }
 
-void closeOrCAUp() #void:
-{}
-{
-  (    LOOKAHEAD(2)
-  ("]" "!") #closeAUp()
-| ("]") #close()
- )
- 
-  (    LOOKAHEAD(2)
-  ("}" "^") #closeAUp()
-| ("}") #close()
-   )
-
-}
-
 void regOrRegShift() #void:
 {}
 {
@@ -1086,6 +1071,24 @@ void num_shift() #void:
 {}
 {
  (number() shift() num()) #shiftF(3)
+}
+
+/*TERMINAL NODES*/
+void closeOrCAUp() #void:
+{}
+{
+  (
+    LOOKAHEAD(2)
+  ("]" "!") #closeAUp()
+| ("]") #close()
+ )
+ 
+  (
+    LOOKAHEAD(2)
+  ("}" "^") #closeAUp()
+| ("}") #close()
+   )
+
 }
 
 void amode():

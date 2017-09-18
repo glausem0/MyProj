@@ -10,6 +10,10 @@ public class Update_C_S_psr {
 		this.C_S_psr = C_S_psr;
 	}
 
+	/**
+	 * @param result
+	 * @return true if result is negative, false otherwise
+	 */
 	private boolean negative(int result){
 		boolean neg = false;
 
@@ -19,6 +23,10 @@ public class Update_C_S_psr {
 		return neg;
 	}
 
+	/**
+	 * @param result
+	 * @return true if result is zero, false otherwise 
+	 */
 	private boolean zero(int result){
 		boolean zer = false;
 
@@ -27,8 +35,12 @@ public class Update_C_S_psr {
 		}
 		return zer;
 	}
-
+	
 	//unsigned overflow
+	/**
+	 * @param result
+	 * @return true if result is unsigned, false otherwise
+	 */
 	private boolean carry(int result){
 		boolean car = false;
 		long tmpInt = Integer.MAX_VALUE;
@@ -39,6 +51,10 @@ public class Update_C_S_psr {
 	}	
 
 	//signed overflow
+	/**
+	 * @param result
+	 * @return true if result is signed, false otherwise
+	 */
 	private boolean overflow(int result){
 		boolean ove = false;
 		if( (result<Integer.MIN_VALUE) || (result>Integer.MAX_VALUE)){
