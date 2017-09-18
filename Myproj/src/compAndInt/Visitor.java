@@ -504,7 +504,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTnum node, Object data) {
 		String val = node.value.toString();
-
 		return val;
 	}
 
@@ -512,7 +511,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTamode node, Object data) {
 		String amode = node.value.toString();
-
 		return amode;
 	}
 
@@ -520,7 +518,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTcond node, Object data) {
 		String cond = node.value.toString();
-
 		return cond;
 	}
 
@@ -528,7 +525,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTlsl node, Object data) {
 		String lsl = node.value.toString();
-
 		return lsl;
 	}
 
@@ -536,7 +532,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTlsr node, Object data) {
 		String lsr = node.value.toString();
-
 		return lsr;
 	}
 
@@ -544,7 +539,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTasr node, Object data) {
 		String asr = node.value.toString();
-
 		return asr;
 	}
 
@@ -552,7 +546,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTror node, Object data) {
 		String ror = node.value.toString();
-
 		return ror;
 	}
 
@@ -561,7 +554,6 @@ public class Visitor implements MyParserVisitor{
 	@Override
 	public Object visit(ASTshift node, Object data) {
 		String fle = node.value.toString();
-
 		return fle;		
 	}
 

@@ -526,11 +526,9 @@ public class View {
 				jfc.addChoosableFileFilter(filter);
 
 				int returnValue = jfc.showOpenDialog(null);
-				// int returnValue = jfc.showSaveDialog(null);
 
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					selectedFile = jfc.getSelectedFile();
-					//System.out.println(selectedFile.getAbsolutePath());
 				}
 
 				//when selected text file, open it in textArea (clean before):
@@ -545,15 +543,10 @@ public class View {
 						line = in.readLine();
 					}
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
 					System.err.println(e);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
 					System.err.println(e);
 				}
-
 			}
 		});
 		mnFile.add(mntmOpenFile);
@@ -577,7 +570,6 @@ public class View {
 				jfc.addChoosableFileFilter(filter);
 
 				int returnValue = jfc.showDialog(null, "Save");
-				// int returnValue = jfc.showSaveDialog(null);
 
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					selectedFile = jfc.getSelectedFile();
@@ -587,7 +579,6 @@ public class View {
 					try{
 						textArea.write(new OutputStreamWriter(new FileOutputStream(selectedFile), "utf-8"));
 					}catch	(IOException e) {
-						//e.printStackTrace();
 						System.err.println(e);
 					}
 				}
@@ -641,11 +632,11 @@ public class View {
 				vi.setBranches(branches);
 				BufferedReader br = null;
 				Object[] progArray = null;
+				
 				try {
 					br = new BufferedReader(new FileReader(selectedFile));
 					progArray = br.lines().toArray();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				vi.setProgArray(progArray);
@@ -655,7 +646,6 @@ public class View {
 				memory.clearMemory();
 
 				RunFile(selectedFile);
-
 
 				//init filds:
 				initfieldsVal();
@@ -675,7 +665,6 @@ public class View {
 					try {
 						Files.delete(tmpFile.toPath());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -690,11 +679,9 @@ public class View {
 					br = new BufferedReader(new FileReader(selectedFile));
 					progArray = br.lines().toArray();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				vi.setProgArray(progArray);
-
 
 				System.out.println("Debug mode, press Next step");
 			}
@@ -717,10 +704,8 @@ public class View {
 					br = new BufferedReader(new FileReader(selectedFile.toString()));
 					bw = new BufferedWriter(new FileWriter(tmpFile.toString()));
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -741,7 +726,6 @@ public class View {
 							br.close();
 							bw.close();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -763,10 +747,8 @@ public class View {
 						bw.close();
 						Files.delete(tmpFile.toPath());
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					//see to make button disable
 				}
 
 			}
@@ -796,7 +778,6 @@ public class View {
 						br = new BufferedReader(new FileReader(selectedFile));
 						progArray = br.lines().toArray();
 					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					vi.setProgArray(progArray);
@@ -841,7 +822,6 @@ public class View {
 		textField_V_Sup.setText(C_S_psrReg.get("V_svc").toString());
 		textField_I_Sup.setText(C_S_psrReg.get("I_svc").toString());
 		textField_F_Sup.setText(C_S_psrReg.get("F_svc").toString()); 
-		
 	}
 
 	private void IntegerFields(){
@@ -866,7 +846,6 @@ public class View {
 		//supervisor mode:
 		textFieldR13Sup.setText(reg.get("r13_svc").toString());
 		textFieldR14Sup.setText(reg.get("r14_svc").toString());
-		
 	}
 
 	public String toHex(String el){
@@ -957,11 +936,8 @@ public class View {
 			}
 			root = parser.prog();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			System.err.println(e);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
